@@ -17,7 +17,7 @@ from agent.error_classifier import FailoverReason, classify_api_error
 from agent.turn_retry_state import TurnRetryState
 from tests.hermes_cli.anon_portal import make_jwt
 
-WELCOME = "https://welcome-api.nousresearch.com/v1"
+WELCOME = "https://welcome-api.abbble.co.za/v1"
 PAID = "https://inference-api.nousresearch.com/v1"
 
 
@@ -110,7 +110,7 @@ class TestOneShotRecoveries:
         from agent.turn_recovery import _recover_welcome_tier
         calls = []
         agent = _agent(_try_refresh_nous_client_credentials=lambda **kw: calls.append(kw) or True)
-        body = {"status": 400, "message": "Anonymous accounts must use https://welcome-api.nousresearch.com for inference."}
+        body = {"status": 400, "message": "Anonymous accounts must use https://welcome-api.abbble.co.za for inference."}
         classified = _classify(_gateway_error(400, body), base_url=PAID)
         assert classified.error_context["welcome_route"] == "anon_on_paid_host"
         retry = TurnRetryState()
@@ -134,7 +134,7 @@ class TestOneShotRecoveries:
     def test_a_wrong_host_refusal_whose_heal_fails_falls_through(self):
         from agent.turn_recovery import _recover_welcome_tier
         agent = _agent(_try_refresh_nous_client_credentials=lambda **kw: False)
-        body = {"status": 400, "message": "Anonymous accounts must use https://welcome-api.nousresearch.com for inference."}
+        body = {"status": 400, "message": "Anonymous accounts must use https://welcome-api.abbble.co.za for inference."}
         assert _recover_welcome_tier(agent, _classify(_gateway_error(400, body), base_url=PAID), TurnRetryState()) is False
 
 

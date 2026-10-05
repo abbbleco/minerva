@@ -457,3 +457,189 @@ python -m pytest tests/scripts/test_release_http_store.py tests/scripts/test_rel
 # source-update origin resolution
 python -c "import hermes_cli.source_releases as s; print(s.public_base(), s.OFFICIAL_REPOSITORY)"
 ```
+
+---
+
+# Session 3 — management-plane ports (ABBBLE equivalents)
+
+The inference link was repointed in Session 2. This session ports the
+management-plane APIs the Python backend calls, so nothing resolves to Nous.
+
+## 16. /api/oauth/account (new)
+
+minerva-monorepo/apps/portal/app/api/oauth/account/route.ts. Projects the
+ABBBLE model (Supabase Auth + agencies + subscriptions) into the exact shape
+hermes_cli/nous_account.py parses: user, organisation, paid_service_access,
+subscription, 	ool_access, ccount_tier, managed_tools.
+
+Accepts either credential the backend holds: a Supabase JWT (verified, then
+first active membership becomes the org) or a router qkt_sec_* key (hashed,
+looked up in gency_api_keys; user is null and the client falls back to the
+org id, exactly as for a key-only Nous credential).
+
+Deliberate non-features: 	ool_access always disabled with empty coverage,
+managed_tools always false (no managed tool pool to claim), ccount_tier
+always "standard" (free tier is a *plan*, not an identity; only the guest
+identity renders the free-tier view and it never reaches this endpoint).
+
+Python: hermes_cli/nous_account.py:154,484 defaults repointed. The call path
+(/api/oauth/account) already matched, so no path change was needed.
+
+## 17. /api/nous/recommended-models (new)
+
+minerva-monorepo/apps/portal/app/api/nous/recommended-models/route.ts.
+Returns curated {paid,free}RecommendedModels: [{modelName}] plus the four
+compaction/vision picks ({modelName} | null), every id a router wire id the
+router actually serves. Curated by hand, not derived — a recommendation is a
+human pick. Free vision is 
+ull (no free-tier model advertises vision input;
+null beats a guess, and the client already handles it).
+
+Python: hermes_cli/models.py:379,416 fallbacks repointed. The fetch path
+(/api/nous/recommended-models) already matched.
+
+## 18. /api/billing/* (new: 2 reads + 7 typed stubs)
+
+Reads are adapters over agencies/subscriptions/ledger, with tier rows from
+@minerva/billing (the same source the portal's own /plans renders, so the
+desktop, website and API can never disagree on a price):
+
+- GET /api/billing/state — balance, usage, org, role; card/charge_presets/
+  monthly_cap/uto_reload are null/empty, can_charge and
+  cli_billing_enabled are false.
+- GET /api/billing/subscription — plan, tiers, usage; can_change_plan false;
+  context is personal/	eam from member count.
+
+Mutations (charge, charge/[id], uto-top-up, subscription/preview,
+pending-change PUT/DELETE, subscription/upgrade) return typed 501
+{"error": "endpoint_unavailable"} with a portal_url, via the shared
+pp/lib/billing-unavailable.ts helper. There is no card processor behind this
+API — top-ups and plan changes happen on the website (/manage-subscription),
+where payment completes in the browser. A typed refusal lets the backend map it
+to the "go to the portal" action instead of crashing on an HTML 404; the
+credential is still validated first, so unauthenticated callers learn nothing.
+
+Python: hermes_cli/nous_billing.py:19 default repointed. Call paths already
+matched.
+
+## 19. /api/anonymous/* (new: create, token, promotion-intent, promotion-status)
+
+Guest access without sign-up, backed by a new portal_anon_grants table
+(migration  38_portal_anon_grants.sql — grant-hash only, salted IP throttle,
+RLS with no permissive policies, safe to re-run).
+
+- create returns {user_id, org_id, token, idle_ttl_days}; the token starts
+  with non_ (the client requires the prefix) and is shown once.
+- 	oken exchanges once for {access_token, expires_in, inference_base_url,
+  user_id, org_id}. The access token IS the guest router key (opaque to the
+  client, which falls back to expires_in for expiry and defaults the tier to
+  anonymous). Replays report consumed without minting a second key.
+- promotion-intent links a grant to a device flow the user started elsewhere;
+  promotion-status observes that flow (pending/completed/denied/
+  expired). Completion is observed, not performed — the device approval mints
+  the real credential and the client settles onto it.
+
+The ABBBLE guest model is single-step (mint a key) where Nous was four-step
+(create → token → promotion-intent → promotion-status with account transfer).
+The four endpoints preserve the client's expected shapes; what changes is that
+there is no account transfer server-side to observe beyond the device approval.
+
+Python: no change needed — non_auth.py resolves via the shared default
+(already ABBBLE), and the response shapes match what its parsers require
+(non_ prefix, ccess_token presence, claim_code presence).
+
+## 20. OAuth authorize + token + JWKS (new)
+
+Full authorization-code + PKCE server for first-party clients (the local
+dashboard), because the dashboard plugin verifies ud = bare client_id,
+iss = portal origin, and oauth_contract_version = 1 against JWKS:
+
+- Migration  39_portal_oauth.sql: portal_oauth_clients (registered
+  client_ids with exact redirect URIs — no open registration),
+  portal_oauth_codes (single-use, 10 min, PKCE-bound), and
+  portal_oauth_refresh_tokens (24h, rotating; presenting a consumed token
+  revokes the chain, which is how a stolen refresh is contained). Seeds the
+  minerva-dashboard client with loopback redirect URIs. Safe to re-run.
+- GET /oauth/authorize validates client/redirect/challenge, sends unsigned
+  users to login (with 
+ext back), signed-in users to /oauth/consent.
+  Malformed requests are JSON errors, never redirects to unregistered URIs.
+- /oauth/consent renders what the client asked for; the form POSTs the
+  decision back. Deny redirects with ?error=access_denied.
+- POST /api/oauth/token (form-encoded, as OAuth clients send): code exchange
+  (verifies liveness, PKCE, redirect binding, then consumes) and refresh
+  rotation (link-then-consume ordering so a crash never strands the client).
+  Access JWTs carry exactly the claims the plugin checks.
+- GET /.well-known/jwks.json publishes the public key (cacheable; rotation
+  is additive).
+- pp/lib/oauth-jwt.ts: ES256 with node:crypto only (raw R‖S, not DER);
+  key from OAUTH_JWT_PRIVATE_KEY_PEM, stable kid = public-key thumbprint.
+  Documented in .env.example with the generation command.
+- Login/signup pages now accept ?next= so an authorize flow interrupted by
+  sign-in resumes instead of landing on /minerva.
+
+Python: plugins/dashboard_auth/nous/__init__.py:33 default repointed. Its
+_token_url (/api/oauth/token) and _authorize_url (/oauth/authorize)
+paths already match the new routes.
+
+## 21. Artifact mirror (ops, not code)
+
+pm/artifact-mirror.json, scripts/install.sh, scripts/install.ps1 still
+point at hermes-assets.nousresearch.com/upstream/sha256/* because those 10
+pinned blobs must EXIST on the new host before the flip — otherwise the
+installer breaks. Mirror each object byte-for-byte, verify SHA-256, then flip:
+
+\\\
+for digest in 0643b9fb… 0db54010… 4343217d… 4c9f5226… 546f7f8a… \\
+              600cf9a7… b23350c7… b365da79… bb66cb52… fa513fca…; do
+  curl -fsSL \"https://hermes-assets.nousresearch.com/upstream/sha256/\\" \\
+    -o "/srv/minerva-assets/upstream/sha256/\"
+  echo "\  /srv/minerva-assets/upstream/sha256/\" | sha256sum -c -
+done
+\\\
+
+(Full digests in scripts/install.sh:179-204 and install.ps1:83-102; the
+minerva-assets app serves any key under eleases/ and, with
+MINERVA_ASSETS_ROOT pointed at the same tree, these paths resolve without a
+code change.) Only after all ten verify: flip the three origins, then the two
+install-e2e workflow defaults (bootstrap installer — a separate artifact class
+the origin does not serve; those two stay until the setup binaries are
+published to the new host).
+
+## 22. Deliberately still on Nous
+
+| Item | Reason |
+|---|---|
+| DEFAULT_NOUS_WELCOME_URL (welcome-api.nousresearch.com) | Free-tier anonymous inference host. The ABBBLE guest model mints router keys instead of JWTs, so there is no welcome-host equivalent; changing it would point guest inference at a host that cannot serve it. Retire with the guest flow, not before. |
+| models.py recommended-models *path* | Now served by §17; the path itself (/api/nous/recommended-models) is the contract and stays. |
+| hermes-agent.nousresearch.com (docs/skills/catalog), *.agents.nousresearch.com (Cloud fleet), discord.gg/NousResearch | Different services, not the portal. |
+
+---
+
+# Session 4 — migrations 034–039 applied
+
+\pnpm --filter @minerva/database db:generate\ (Session pooler, \DATABASE_URL\
+from \minerva-monorepo/.env.local\) applied 6 migrations: 034 (fixed, see
+below), 035, 036, 037, 038, 039. Verified: all 5 new tables exist with RLS on,
+\minerva-dashboard\ OAuth client seeded, all six recorded in
+\_minerva_migrations\.
+
+## 034 ordering bug (pre-existing, found by the run)
+
+\ 34_portal_tiers.sql\ updated rows to \'plus'\ while the 030 CHECK
+constraint (\'free','pro','agency'\) was still in place — every touched row
+failed with "new row violates check constraint". Fixed by reordering only
+(drop both old constraints → migrate data → add new constraints); the end
+state is identical. The failed attempt rolled back cleanly (one implicit
+transaction) and was never recorded, so the retry ran the corrected file from
+scratch. Same latent bug shape existed for \gencies\ in the same file.
+
+## Notes
+
+- The direct \db.*.supabase.co:5432\ hostname does not resolve from here;
+  migrations require the **Session pooler** (\ws-0-*.pooler.supabase.com:6543\).
+  Transaction-mode poolers reject the multi-statement files; Session mode is
+  required, matching the runner's \max: 1\ comment.
+- Guest keys now stamp \expires_at\ (24h) in both \nonymous/token\ and
+  \portal/guest/mint\, matching the lifetime the clients are told. The router
+  already enforces the column; previously the rows lived forever.

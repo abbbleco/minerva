@@ -7,8 +7,8 @@ import webbrowser
 from hermes_cli.colors import Colors, color
 from hermes_cli.config import load_config
 
-DEFAULT_PORTAL_URL = "https://portal.nousresearch.com"
-SUBSCRIPTION_URL = "https://portal.nousresearch.com/manage-subscription"
+DEFAULT_PORTAL_URL = "https://portal.abbble.co.za"
+SUBSCRIPTION_URL = "https://portal.abbble.co.za/manage-subscription"
 DOCS_URL = "https://hermes-agent.nousresearch.com/docs/user-guide/features/tool-gateway"
 # Static `portal tools` catalog — the partners Tool Gateway routes to today: (key, label, partner).
 _CATALOG = [

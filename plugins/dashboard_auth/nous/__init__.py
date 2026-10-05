@@ -30,7 +30,7 @@ from plugins.dashboard_auth._shared import (
 logger = logging.getLogger(__name__)
 _TAG = "dashboard-auth-nous"
 
-_DEFAULT_PORTAL_URL = "https://portal.nousresearch.com"
+_DEFAULT_PORTAL_URL = "https://portal.abbble.co.za"
 _SCOPE = "agent_dashboard:access"  # contract C3
 _EXPECTED_CONTRACT_VERSION = 1  # contract C11
 

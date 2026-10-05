@@ -601,8 +601,11 @@ async def _start_abbble_device_code(profile: Optional[str]) -> Dict[str, Any]:
 
 
 _DEVICE_CODE_STARTERS = {
+    # Both ids start the ABBBLE Portal device flow. "nous" is the historical
+    # provider id kept for stored auth state; there is no separate Nous
+    # provider and no Nous device endpoint anymore.
     "abbble": _start_abbble_device_code,
-    "nous": _start_nous_device_code, "openai-codex": _start_codex_device_code,
+    "nous": _start_abbble_device_code, "openai-codex": _start_codex_device_code,
     "minimax-oauth": _start_minimax_device_code, "xai-oauth": _start_xai_device_code,
 }
 

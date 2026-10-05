@@ -505,7 +505,7 @@ def test_model_flow_nous_does_not_restore_stale_custom_api_key(tmp_path, monkeyp
     model = config.get("model")
     assert model["provider"] == "nous"
     assert model["default"] == selected_model
-    assert model["base_url"] == "https://inference-api.nousresearch.com/v1"
+    assert model["base_url"] == "https://minrouter.abbble.co.za/v1"
     assert "api_key" not in model
     assert "api_mode" not in model
 

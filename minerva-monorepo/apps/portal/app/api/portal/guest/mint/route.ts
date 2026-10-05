@@ -87,6 +87,10 @@ export async function POST(request: NextRequest) {
         key_prefix: gen.prefix,
         key_last4: gen.last4,
         key_hash: gen.hash,
+        // Guest keys are day credentials: the row must agree with the
+        // lifetime the client is told, or a key the client considers dead
+        // stays valid server-side indefinitely.
+        expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
       })
       .select("id")
       .single();

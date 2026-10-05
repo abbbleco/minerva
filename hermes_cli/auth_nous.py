@@ -109,6 +109,8 @@ def _migrate_stale_nous_portal_url(providers: Dict[str, Any]) -> None:
 # the NOUS_INFERENCE_BASE_URL env override bypasses it (documented dev/staging escape hatch, the
 # user set it themselves).
 _ALLOWED_NOUS_INFERENCE_HOSTS: FrozenSet[str] = frozenset({
+    "minrouter.abbble.co.za",
+    "welcome-api.abbble.co.za",
     "inference-api.nousresearch.com",
     # Free-tier (anonymous) host: serves the single ``nous/welcome`` model.
     "welcome-api.nousresearch.com"})

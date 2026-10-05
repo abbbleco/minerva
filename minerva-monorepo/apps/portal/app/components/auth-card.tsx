@@ -4,7 +4,16 @@ import Link from "next/link";
 import { useState } from "react";
 import { getSupabaseBrowser } from "../lib/supabase-browser";
 
-export default function AuthCard({ mode, authError }: { mode: "login" | "signup"; authError?: string }) {
+export default function AuthCard({
+  mode,
+  authError,
+  next,
+}: {
+  mode: "login" | "signup";
+  authError?: string;
+  /** Where to land after sign-in. Defaults to the console. */
+  next?: string;
+}) {
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
   const [busyProvider, setBusyProvider] = useState<"google" | "github" | null>(null);
@@ -12,7 +21,8 @@ export default function AuthCard({ mode, authError }: { mode: "login" | "signup"
   const [error, setError] = useState<string | null>(authError ?? null);
 
   function callbackUrl() {
-    return `${window.location.origin}/auth/callback?next=${encodeURIComponent("/minerva")}`;
+    const target = next && next.startsWith("/") && !next.startsWith("//") ? next : "/minerva";
+    return `${window.location.origin}/auth/callback?next=${encodeURIComponent(target)}`;
   }
 
   async function continueWithEmail(e: React.FormEvent) {

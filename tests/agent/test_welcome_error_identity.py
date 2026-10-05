@@ -9,7 +9,7 @@ from tests.hermes_cli.anon_portal import make_jwt
 from agent.error_surface import build_error_surface_from_result
 from agent.turn_recovery import max_retries_exhausted_result, nonretryable_client_error_result
 
-WELCOME = "https://welcome-api.nousresearch.com/v1"
+WELCOME = "https://welcome-api.abbble.co.za/v1"
 NAMED = "https://inference-api.nousresearch.com/v1"
 
 

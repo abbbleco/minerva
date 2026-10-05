@@ -51,13 +51,16 @@ else:
 AUTH_STORE_VERSION = 1
 AUTH_LOCK_TIMEOUT_SECONDS = 15.0
 
-# ABBBLE Portal defaults
-DEFAULT_NOUS_PORTAL_URL = "https://portal.nousresearch.com"
-DEFAULT_NOUS_INFERENCE_URL = "https://inference-api.nousresearch.com/v1"
+# ABBBLE Portal defaults. The `DEFAULT_NOUS_*` names are historical: the `nous`
+# provider id is referenced by stored auth state across installs, so the id
+# stays while everything it resolves to is ABBBLE. There is no separate Nous
+# provider; the single device-code row below IS the ABBBLE/router provider.
+DEFAULT_NOUS_PORTAL_URL = "https://portal.abbble.co.za"
+DEFAULT_NOUS_INFERENCE_URL = "https://minrouter.abbble.co.za/v1"
 # The free tier's (anonymous account) inference host. NAS hands it to the client on every token
 # exchange (``inference_base_url``); this literal is the fallback when that field is absent or fails
 # the host allowlist, because the paid host cross-refuses an anonymous JWT with a 400.
-DEFAULT_NOUS_WELCOME_URL = "https://welcome-api.nousresearch.com/v1"
+DEFAULT_NOUS_WELCOME_URL = "https://welcome-api.abbble.co.za/v1"
 DEFAULT_NOUS_CLIENT_ID = "hermes-cli"
 NOUS_INFERENCE_INVOKE_SCOPE = "inference:invoke"
 NOUS_BILLING_MANAGE_SCOPE = "billing:manage"

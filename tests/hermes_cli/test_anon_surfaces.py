@@ -30,7 +30,7 @@ from hermes_cli import (
 from hermes_cli.auth import _load_auth_store  # noqa: F401  (store import name kept for parity with core tests)
 from hermes_constants import get_hermes_home
 
-WELCOME = "https://welcome-api.nousresearch.com/v1"
+WELCOME = "https://welcome-api.abbble.co.za/v1"
 # Words that must never appear on a user-facing free-tier surface.
 _FORBIDDEN = re.compile(r"guest|anonymous|user id|org id|nas_user|nas_organisation", re.IGNORECASE)
 

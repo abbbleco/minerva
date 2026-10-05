@@ -6,13 +6,19 @@
 
 BEGIN;
 
--- Retired `pro` becomes `plus` before the enum tightens (same paid-access principle
--- as 030's `enterprise` -> `agency` mapping).
+-- Drop the old enums FIRST. The data migration below writes 'plus', which the
+-- 030 constraint ('free', 'pro', 'agency') rejects — updating before dropping
+-- fails every row it touches with "new row violates check constraint".
+ALTER TABLE agencies DROP CONSTRAINT IF EXISTS agencies_plan_check;
+ALTER TABLE agency_subscriptions DROP CONSTRAINT IF EXISTS agency_subscriptions_plan_check;
+
+-- Retired `pro` becomes `plus` (closest paid tier — paid access is preserved,
+-- never downgraded to free). Same paid-access principle as 030's
+-- `enterprise` -> `agency` mapping.
 UPDATE agencies SET plan = 'plus' WHERE plan = 'pro';
 UPDATE agency_subscriptions SET plan = 'plus' WHERE plan = 'pro';
 
 -- agencies.plan gains the three portal tiers, loses `pro`.
-ALTER TABLE agencies DROP CONSTRAINT IF EXISTS agencies_plan_check;
 UPDATE agencies SET plan = 'free'
   WHERE plan IS NULL OR plan NOT IN ('free', 'agency', 'plus', 'super', 'ultra');
 ALTER TABLE agencies
@@ -20,7 +26,6 @@ ALTER TABLE agencies
     CHECK (plan IN ('free', 'agency', 'plus', 'super', 'ultra'));
 
 -- agency_subscriptions.plan gains the three portal tiers, loses `pro`.
-ALTER TABLE agency_subscriptions DROP CONSTRAINT IF EXISTS agency_subscriptions_plan_check;
 UPDATE agency_subscriptions SET plan = 'free'
   WHERE plan NOT IN ('free', 'agency', 'plus', 'super', 'ultra');
 ALTER TABLE agency_subscriptions
