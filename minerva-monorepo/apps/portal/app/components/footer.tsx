@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="flex flex-wrap items-center justify-between gap-4 border-t border-white/10 px-6 py-8 text-[11px] tracking-wide text-white/40 uppercase md:px-10">
       <p>
-        The internet&apos;s own AI
+        The internet&apos;s MINERVA moment!
         <br />© 2026, ABBBLE CO
       </p>
       <div className="flex items-center gap-3" aria-hidden="true">
@@ -21,7 +21,7 @@ export default function Footer() {
           Privacy
         </Link>
         <br />
-        MIT License · 2026
+        ALL RIGHTS RESERVED · 2026
       </p>
     </footer>
   );

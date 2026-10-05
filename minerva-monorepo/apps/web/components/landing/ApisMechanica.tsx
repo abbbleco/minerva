@@ -1111,7 +1111,7 @@ frame();
         <a className="primary" href="https://portal.abbble.co.za/console">
           ENTER CONSOLE →
         </a>
-        <a href="https://portal.abbble.co.za/pricing">PRICING</a>
+        <a href="https://portal.abbble.co.za/plans">PRICING</a>
         <a href="https://portal.abbble.co.za/login">LOGIN</a>
       </nav>
       <div id="note" className="ui">
