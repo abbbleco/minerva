@@ -177,7 +177,7 @@ export default function OverviewPage() {
             Top up · $10 · $25 · $50 · $100 · $200
           </p>
           <Link href="/plans" className="nous-btn !py-2.5">
-            Pay with Stripe
+            Pay with Card
           </Link>
         </div>
       </section>

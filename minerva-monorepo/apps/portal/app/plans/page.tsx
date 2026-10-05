@@ -3,6 +3,7 @@ import Link from "next/link";
 import Topbar from "../components/topbar";
 import Footer from "../components/footer";
 import { PORTAL_PLANS } from "../lib/plans";
+import AgencyCard from "./agency-card";
 
 export const metadata: Metadata = { title: "Plans | ABBBLE Portal" };
 
@@ -54,6 +55,7 @@ export default function PlansPage() {
             </article>
           ))}
         </div>
+        <AgencyCard />
         <p className="mt-8 max-w-[80ch] text-[13px] leading-relaxed text-white/60">
           Credits are USD-denominated inference at catalog price; paid tiers grant monthly credits on
           invoice paid and the router debits per call. Prices exclude VAT · billed monthly ·

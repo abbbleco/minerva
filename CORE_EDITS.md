@@ -863,3 +863,54 @@ function). One file, invisible to \	sc\ (include globs are \**/*.ts\ only).
 
 Verify: redeploy; the \No Output Directory named "public"\ error clears the
 same way the router's did.
+
+---
+
+# Session 8 — function timeout 60 to 240, router + welcome-api (2026-10-05)
+
+Long chat streams were at risk of being killed mid-stream at the old 60s
+ceiling (the welcome-api relay timeout is 300s, but the function dies first,
+so the function limit was always the real ceiling).
+
+Set to 240 in all four places that must agree (route export + \ercel.json\
+functions block, per app): \pps/router/api/[[...route]].ts\,
+\pps/router/vercel.json\, \pps/welcome-api/api/[[...route]].ts\,
+\pps/welcome-api/vercel.json\. The welcome-api config previously read 65
+while everything else read 60 — aligned to 240 with the rest rather than
+preserved.
+
+Verified: welcome-api \	sc\ clean, router \	ypecheck\ exit 0. Change is
+numeric literals only; no behavior change besides the ceiling.
+
+---
+
+# Session 9 — Agency tier card + contact-sales via Mailtrap (2026-10-05)
+
+Plans page gains a full-width AGENCY card (the sales-led legacy tier: custom
+volume, invoicing, onboarding — no self-serve Subscribe button, a conversation
+instead) with an inline contact form plus a mailto:sales@abbble.co.za fallback.
+
+- \minerva-monorepo/apps/portal/app/plans/agency-card.tsx\ (new, client):
+  two-column card (pitch + form); fields name / work email / company / team
+  size / notes; per-button busy state; success panel; honeypot field rendered
+  invisibly and never tabbable.
+- \minerva-monorepo/apps/portal/app/api/contact-sales/route.ts\ (new):
+  strict validation with small caps; honeypot accepted-and-discarded with
+  success so bots cannot probe the shape; per-IP throttle (5/hour) backed by
+  a hash-only table; delivery via Mailtrap sending API (fetch, no SMTP to
+  hold open on serverless). Submitter goes in Reply-To header + body; sales
+  replies to the human, never the no-reply sender. Missing Mailtrap config is
+  an explicit 503 naming the email fallback.
+- \packages/database/migrations/040_portal_contact_requests.sql\ (new, NOT
+  yet applied): ip_hash + created_at only — never names, emails or messages.
+  RLS on, no permissive policies, safe to re-run.
+- \.env.example\: MAILTRAP_API_TOKEN (server-only), MAILTRAP_FROM_EMAIL
+  (must be a Mailtrap-verified sender or every send is rejected — dashboard
+  step, not code), MAILTRAP_FROM_NAME, SALES_TO_EMAIL (default
+  sales@abbble.co.za).
+
+Verified: tsc 0, eslint 0, next build registers ƒ /api/contact-sales; live
+against \
+ext start\: honeypot → 201 ok, bad email → 400, valid-but-uncon-
+figured → 503 with the fallback message, /plans → 200 rendering the card.
+The actual Mailtrap send needs a token and cannot be exercised from here.
