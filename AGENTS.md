@@ -1,5 +1,13 @@
 # Hermes Agent - Development Guide
 
+> **Fork notice.** This tree is a clone/fork of Hermes Agent, rebranded as
+> **Minerva** (`github.com/abbbleco/minerva`, branch `main`). Product identity
+> is Minerva / ABBBLE CO: user-visible names, default origins (portal, assets,
+> router, welcome hosts) and provider defaults point at ABBBLE infrastructure,
+> not Nous Research. The engineering rules below are inherited unchanged; where
+> a rule names an upstream path, account or host, read it as the fork's
+> equivalent unless the text says otherwise.
+
 Instructions for AI coding assistants and developers working on the hermes-agent codebase.
 This root file holds only what applies everywhere. Each area has its own `AGENTS.md` (aim for
 ~8k chars; `agent/subdirectory_hints.py` delivers up to 32k and truncates head/tail with a warning
@@ -373,6 +381,14 @@ that guidance.
 - Tests per fix: 1–2 INVARIANT tests (behaviour contract, proven red on base), never
   change-detectors; ≤ 2 tests is the salvage bar too. Reject/rewrite in salvaged diffs:
   appendages to facades, new god helpers, compat aliases, wrappers.
+- **Record every edit session in `CORE_EDITS.md`.** This is a rebranded fork, so
+  the diff against upstream is the product: after any session that changes
+  tracked files, append a dated section describing what changed and why —
+  never rewrite earlier sections, never delete. Include: the mapping for any
+  renamed identity/origin (old → new), endpoints added with their contracts,
+  migrations written (and whether applied), what was deliberately *not* changed
+  and why, and the exact verify commands with their results. A change without a
+  `CORE_EDITS.md` entry is an unreviewable change.
 
 ## Testing (applies everywhere)
 

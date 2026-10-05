@@ -643,3 +643,206 @@ scratch. Same latent bug shape existed for \gencies\ in the same file.
 - Guest keys now stamp \expires_at\ (24h) in both \nonymous/token\ and
   \portal/guest/mint\, matching the lifetime the clients are told. The router
   already enforces the column; previously the rows lived forever.
+
+
+---
+
+# Session 5 — router deploy fix, portal auth, inference migration, welcome-api
+
+## 23. Router Vercel build fix
+
+Vercel failed with 19 errors, all one root cause: `@minerva/billing` and
+`@minerva/database` hand out TypeScript source (`exports` points at
+`./index.ts`), and the router compiled that source under its own `NodeNext`
+options — where extensionless ESM imports are a hard TS2835 error. Every
+TS2305 "has no exported member" was fallout; none was a real missing export.
+
+- `apps/router/tsconfig.json`: `module`/`moduleResolution` NodeNext to
+  ESNext/bundler. Matches both runtimes (Docker runs via tsx, Vercel bundles
+  the function) and matches what `packages/*/tsconfig.json` already use.
+- `turbo.json` `globalEnv`: added the 9 vars Vercel warned would otherwise be
+  unavailable to the application.
+- `apps/router/public/robots.txt` (new): the router is API-only, so no static
+  site is ever produced and Vercel's required Output Directory did not exist.
+  `Disallow: /` — an API service is not a website; `/api/*` still hits the
+  function.
+
+Verified: reproduced the exact errors locally, then `turbo run build
+--filter=@minerva/router` reports 2 successful; the app boots (`GET /health`
+returns 200); billing tests pass 2/2. Vercel project itself still pointed at
+the wrong repo when diagnosed — Repository must be the product repo with Root
+Directory at the vendored monorepo, or fixed code never deploys.
+
+Left as a follow-up: `packages/database` declares `"turbo": {"build":
+{"outputs": []}}` while emitting to `dist`, and nothing consumes that `dist`.
+That source-leaking shape is what made this bug class possible; pointing
+exports at built output changes every consumer and belongs in its own change.
+
+## 24. Portal auth: Google + GitHub only
+
+Portal sign-in (shared `AuthCard` for `/login` and `/signup`) offered Microsoft
+(Supabase `azure`) and a Continue with ChatGPT link alongside Google and
+GitHub. Both removed; what remains is email OTP plus two real OAuth providers,
+all through Supabase Auth.
+
+- `app/components/auth-card.tsx`: `oauth()` narrowed to Google and GitHub.
+  Google sends scopes `openid email profile` with `access_type: offline` and
+  `prompt: consent`; GitHub sends `read:user user:email`. Per-provider busy
+  state included.
+- `app/auth/callback/route.ts` (new): exchanges `?code=` for a session and
+  redirects to a validated `?next=` (internal paths only). Previously every
+  flow redirected straight to `/minerva`, so the session was never established
+  server-side.
+- `app/login/page.tsx`, `app/signup/page.tsx`: accept `?next=` and pass it
+  through, so an authorize flow interrupted by sign-in resumes instead of
+  landing on `/minerva`; callback failures arrive as `?error=` and render on
+  the form.
+- `app/help/page.tsx`: copy now reads Email plus Google/GitHub.
+
+Verified: `tsc` clean, `eslint` clean, `next build` registers the callback
+route plus login and signup.
+
+Dashboard action that code cannot do: Supabase → Authentication → Providers —
+enable Google and GitHub (Azure can now be switched off), with redirect URLs
+for the portal host plus localhost in the allow-list, or every flow fails with
+a redirect error no code change can fix.
+
+## 25. Inference link to Minerva router, single provider
+
+The desktop never calls inference directly; the backend provider registry does.
+The `nous` row was labelled "ABBBLE Portal" while its inference URL pointed at
+the Nous inference API, and the portal-host allowlist silently fell back any
+stored ABBBLE URL to Nous.
+
+The row keeps its id — hundreds of files key on the `"nous"` provider id, so
+renaming it would be a migration rather than a rebrand. The id is just a key;
+everything it resolves to is now ABBBLE. There is no second Nous provider.
+
+- `hermes_cli/auth_constants.py`: portal default now points at the ABBBLE
+  portal host, inference default at the Minerva router `/v1`. The welcome-host
+  default was left for §26, which retires it properly.
+- `hermes_cli/web_routers/oauth.py`: the `"nous"` starter switched from the
+  Nous device-code flow (whose token endpoint does not exist on the ABBBLE
+  portal) to the ABBBLE device flow. A URL-only repoint would have broken
+  sign-in entirely; the flow had to move with the URLs. The poller travels
+  with the session, so in-flight logins are unaffected; old refresh-token
+  sessions decay naturally and re-login through the new flow.
+- `hermes_cli/auth.py`: the new portal host admitted to the allowlist and the
+  old Nous portal host removed — stale stored Nous URLs now fall back to
+  ABBBLE (migration) instead of working against Nous. The stale-host migrator
+  only knew the old API host, so this fallback is the path old installs
+  actually take.
+- `hermes_cli/auth_nous.py`: the router host admitted to the JWT-forwarding
+  allowlist (refresh responses naming it would otherwise be rejected);
+  legacy Nous hosts kept so in-flight sessions refresh instead of breaking.
+- Four more inference defaults saying the same thing (`providers.py`,
+  `models_pricing.py`, `agent/auxiliary_client.py`, `agent/usage_pricing.py`).
+- `plugins/model-providers/nous`: base URL to the router, display name to
+  Minerva, signup to the portal; registry name and old aliases kept so
+  existing configs resolve.
+- `plugins/dashboard_auth/nous`: default portal URL repointed (its token and
+  authorize paths already match the new OAuth routes).
+
+Verified by import: the registry `nous` entry resolves to the ABBBLE portal
+plus the router `/v1`, and both starters map to the ABBBLE flow. Tests
+asserting old defaults updated; everything passing explicit URLs (refresh and
+poll mocks, JWKS fixtures, host-matcher units, the client-rebuild mock) left
+alone — those test logic, not defaults.
+
+Deliberately not repointed (no ABBBLE equivalent exists; changing them breaks
+the feature instead of migrating it): the billing API surface, the model
+recommendations path, guest promotion in `anon_auth`, the artifact mirror plus
+installer mirrors (objects must be mirrored first), and the other Nous hosts
+(agents fleet, docs and skills site, support chat link), which are different
+services.
+
+## 26. Welcome-api (new app: `minerva-monorepo/apps/welcome-api`)
+
+The last Nous default was the free-tier fallback host. The guest model here
+mints router keys rather than JWTs, so there is no welcome-host equivalent to
+adopt — instead there is a new origin for the fallback to point at.
+
+Design: a policy gate in front of the router, not a second inference engine.
+It authenticates the guest credential, enforces free-models-only, then relays
+to the router with the caller's own Authorization header intact, so metering,
+ledger and attribution land exactly as a direct call. No upstream credentials
+held, no ledger rows written. That matches why the welcome host exists at all:
+the Python fallback needs a stable origin whose only promise is free tier.
+
+- `src/policy.ts`: Bearer must be an active, unexpired router key whose agency
+  has no paid subscription — paid keys are rejected (serving them free models
+  would silently downgrade what they paid for). Requested model must be in the
+  free set (same variable plus wire-ID format the billing package uses; either
+  spelling the router would honour), else 402 with the allowed list — the same
+  code the router returns, so clients need no second error path. Omitted model
+  passes through (the router's free meta-router always resolves inside the
+  free set).
+- `src/app.ts`: health, models (free only, no prices — the price here is
+  always zero), chat completions streaming and not; malformed JSON is a local
+  400, never a relayed 502; hop-by-hop headers stripped, request id preserved
+  for idempotent retries.
+- Entry points mirror the router (`src/index.ts` for Docker/tsx,
+  `api/[[...route]].ts` for Vercel) including the corrected relative depth and
+  bundler module resolution from §23, plus Dockerfile, vercel config, env
+  example and README.
+- Python: welcome default now points at the new host; the welcome-host set
+  contains only it (which is what makes route pinning, model pinning and
+  free-tier banners trigger); the new host admitted to the JWT-forwarding
+  allowlist; 14 test fixtures updated (all use it as "a welcome-host URL",
+  which is exactly what routing logic keys on — paid fixtures left alone
+  since not-welcome is their whole job).
+
+Verified: typecheck clean; `scripts/smoke.mjs` boots the real server against
+stub Supabase plus stub upstream — 13 of 13 green: health, free-only catalog,
+the three 401 shapes, paid-key rejection, non-free 402 with allowed list,
+byte-identical relay with credential and request id forwarded intact, both
+model-id spellings, omitted model, malformed JSON rejected locally. Source
+tree has zero remaining references to the old welcome host; the cross-refusal
+message tests now simulate the new server telling clients to use the new host,
+which is what a real refusal will say.
+
+## 27. How to verify this session
+
+Router (the exact Vercel failure, reproduced then fixed):
+
+    pnpm turbo run build --filter=@minerva/router   # was 19 errors, now 2 successful
+
+Portal auth:
+
+    cd minerva-monorepo/apps/portal && npx tsc --noEmit && npx next build
+    # registers the auth callback; login and signup accept ?next=
+
+Provider resolution (product repo):
+
+    python -c "from hermes_cli.auth import PROVIDER_REGISTRY as r; n=r['nous']; print(n.portal_base_url, n.inference_base_url)"
+    # ABBBLE portal host plus router /v1
+
+Welcome-api:
+
+    cd minerva-monorepo/apps/welcome-api && npx tsc --noEmit && node scripts/smoke.mjs
+    # 13 of 13 against stub Supabase plus stub upstream
+
+Welcome fallback:
+
+    python -c "from hermes_cli import anon_auth; from hermes_cli.auth_constants import DEFAULT_NOUS_WELCOME_URL as u; print(u, sorted(anon_auth.welcome_hosts()), anon_auth.route_is_welcome_host(u+'/v1'))"
+    # new host, single-entry set, True
+
+---
+
+# Session 6 — AGENTS.md: fork identity + edit log rule (2026-10-05)
+
+Two additions to the root `AGENTS.md`, no code touched:
+
+- Fork notice under the title: this tree is a Hermes Agent clone/fork
+  rebranded as Minerva (`github.com/abbbleco/minerva`, branch `main`), with
+  product identity (names, default origins, provider defaults) pointing at
+  ABBBLE infrastructure. Inherited engineering rules apply unchanged; upstream
+  paths/accounts/hosts named in rules read as their fork equivalents.
+- New bullet in Commits/Merges/PRs: every edit session that changes tracked
+  files must append a dated `CORE_EDITS.md` section (what changed and why;
+  never rewrite or delete earlier sections), covering renamed identities and
+  origins, added endpoints with contracts, migrations written and applied or
+  not, deliberate non-changes with reasons, and exact verify commands plus
+  results.
+
+Verify: `git diff --stat -- AGENTS.md CORE_EDITS.md` shows only these two files.
