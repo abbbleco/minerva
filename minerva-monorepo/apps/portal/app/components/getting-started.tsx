@@ -9,7 +9,7 @@ import Link from "next/link";
 
 const COLS = [
   { k: "API", title: "ABBBLE Account", img: "/placeholders/images.jpg", cta: "Power your Minerva", href: "/signup" },
-  { k: "TUI", title: "Terminal Velocity", img: "/placeholders/img_7895.jpg", cta: "Install via terminal", href: "/minerva" },
+  // { k: "TUI", title: "Terminal Velocity", img: "/placeholders/img_7895.jpg", cta: "Install via terminal", href: "/minerva" },
   { k: "GUI", title: "Minerva Desktop", img: "/placeholders/Minerva.jpg", cta: "Download app", href: "/download" },
 ];
 
