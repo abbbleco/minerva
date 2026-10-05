@@ -24,6 +24,6 @@ import { app } from '../src/app.js';
  * supported target for production traffic; Hobby stays suitable for `/health`, `/v1/models`
  * and stub-mode previews.
  */
-export const maxDuration = 60;
+export const maxDuration = 240;
 
 export default handle(app);
