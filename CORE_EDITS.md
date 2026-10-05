@@ -846,3 +846,20 @@ Two additions to the root `AGENTS.md`, no code touched:
   results.
 
 Verify: `git diff --stat -- AGENTS.md CORE_EDITS.md` shows only these two files.
+
+---
+
+# Session 7 — welcome-api Vercel output dir (2026-10-05)
+
+Same failure mode as the router in §23: Vercel requires an Output Directory
+(\public/\) after the build, but the app is API-only (Hono behind
+\pi/[[...route]].ts\) so nothing ever created one — and git does not track
+the empty scaffolded \public/\ dir, so Vercel's clone had no \public/\ at
+all.
+
+Fix, mirroring §23: \minerva-monorepo/apps/welcome-api/public/robots.txt\
+with \Disallow: /\ (API service, not a website; \/api/*\ still hits the
+function). One file, invisible to \	sc\ (include globs are \**/*.ts\ only).
+
+Verify: redeploy; the \No Output Directory named "public"\ error clears the
+same way the router's did.

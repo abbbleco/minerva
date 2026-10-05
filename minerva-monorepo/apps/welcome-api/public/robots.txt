@@ -1,0 +1,5 @@
+# This is an API service, not a website. There is no UI to index.
+# The file exists so Vercel's required Output Directory ("public") resolves;
+# all real traffic is served by the serverless function at api/[[...route]].ts.
+User-agent: *
+Disallow: /
