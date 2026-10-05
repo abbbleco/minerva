@@ -1,0 +1,5 @@
+name: minerva-provider
+kind: model-provider
+version: 1.0.0
+description: Minerva Router - OpenAI-compatible credits gateway
+author: ABBBLE CO

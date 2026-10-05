@@ -1,0 +1,13 @@
+packages:
+  - apps/*
+  - ui-tui
+  - ui-tui/packages/*
+  - web
+  - tests-js
+allowBuilds:
+  electron: true
+  electron-winstaller: true
+  esbuild: true
+  get-windows: true
+  node-pty: true
+  unicode-animations: true

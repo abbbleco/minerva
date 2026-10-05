@@ -1,0 +1,8 @@
+name: supabase
+version: 1.0.0
+description: "Dashboard auth provider — email/password against Supabase Auth (Minerva portal accounts). Auto-activates when SUPABASE_URL + SUPABASE_ANON_KEY are set (env) or dashboard.supabase.url/anon_key in config.yaml. No service-role key: all reads go through the anon key with the user's JWT so RLS member policies apply."
+author: ABBBLE CO
+kind: backend
+requires_env:
+  - SUPABASE_URL
+  - SUPABASE_ANON_KEY
