@@ -1639,10 +1639,11 @@ def resolve_provider(
     """Determine which inference provider to use.
 
     "auto" priority (explicit intent beats a stale OAuth login): 1. CLI api_key/base_url ->
-    "openrouter"; 2. config.yaml ``model.provider``; 3. OPENROUTER_API_KEY (or an sk-or- key in
-    OPENAI_API_KEY) -> "openrouter"; 4. OpenRouter pool; 5. provider env keys; 6. auth.json ``active_provider``;
-    7. Nous free tier when it is on and its identity exists (never created here);
-    8. AWS Bedrock chain; 9. AuthError(no_provider_configured).
+    "openrouter"; 2. config.yaml ``model.provider``; 3. ABBBLE Portal sign-in
+    (usable ``MINERVA_ROUTER_KEY``) -> "minerva"; 4. OPENROUTER_API_KEY (or an sk-or- key in
+    OPENAI_API_KEY) -> "openrouter"; 5. OpenRouter pool; 6. provider env keys; 7. auth.json ``active_provider``;
+    8. Nous free tier when it is on and its identity exists (never created here);
+    9. AWS Bedrock chain; 10. AuthError(no_provider_configured).
 
     ``skip_free_tier`` hides rungs 6-for-a-free-tier-identity and 7: the boot bootstrap asks
     "what would carry inference if the free tier did not exist?" to decide whether a fresh identity
@@ -1670,6 +1671,15 @@ def resolve_provider(
         return cfg_provider
 
     _scoped_key_env = _scoped_key_env_reader()
+
+    # ABBBLE Portal sign-in wins over ambient third-party keys. This product
+    # onboards into ABBBLE (the `abbble` device flow persists MINERVA_ROUTER_KEY),
+    # so a usable router key is product intent — not the stale-login case #29285
+    # guards against. Explicit config above still wins; when no ABBBLE credential
+    # exists the tiers below behave exactly as before.
+    if get_abbble_auth_status().get("logged_in"):
+        return "minerva"
+
     if _openrouter_auto_detected(_scoped_key_env):
         _refuse_env_adoption_if_config_corrupt()
         return "openrouter"

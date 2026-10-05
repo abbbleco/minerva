@@ -206,7 +206,7 @@ class OpenRouterProfile(ProviderProfile):
 
 openrouter = OpenRouterProfile(
     name="openrouter", aliases=("or",), env_vars=("OPENROUTER_API_KEY",), display_name="OpenRouter",
-    description="OpenRouter — unified API for 200+ models", signup_url="https://openrouter.ai/keys",
+    description="OpenRouter — unified API for 400+ Models", signup_url="https://openrouter.ai/keys",
     base_url="https://openrouter.ai/api/v1", models_url="https://openrouter.ai/api/v1/models",
     fallback_models=(
         "anthropic/claude-sonnet-4.6", "openai/gpt-5.4", "deepseek/deepseek-chat", "google/gemini-3.8-flash",

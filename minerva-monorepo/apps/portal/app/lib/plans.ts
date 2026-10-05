@@ -20,7 +20,7 @@ function paidFeatures(tier: "plus" | "super" | "ultra"): string[] {
   return [
     `$${creditsForPlan(tier)} monthly credits`,
     `$${rolloverCapForPlan(tier)} rollover cap`,
-    "200+ Models",
+    "400+ Models",
     "Hosted tool usage",
     "High rate limits",
   ];

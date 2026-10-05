@@ -1416,6 +1416,13 @@ DEFAULT_CONFIG = {
         # Max continuation turns before auto-pause (/goal resume) — guards against judge false
         # negatives and unbounded spend.
         "max_turns": 20,
+        # Phase 3 passive tracking: after each tool-using turn, a cheap judge checks the
+        # turn against tracked registry goals. Proposals confirm-by-default (pending-confirmation
+        # + notification), never self-complete — unless tracking_auto_complete opts in, in
+        # which case confidence >= tracking_auto_threshold completes directly (reopen = undo).
+        "tracking_enabled": True,
+        "tracking_auto_complete": False,
+        "tracking_auto_threshold": 0.9,
     },
     # Loops — /loop re-runs a prompt or slash command on a cadence in-session. Fixed interval fires
     # on the user's clock; self-paced (no interval) starts at the floor and backs off exponentially

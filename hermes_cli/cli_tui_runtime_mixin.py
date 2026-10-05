@@ -168,6 +168,7 @@ class CLITuiRuntimeMixin:
         # /goal continuation (queued user input still preempts), then /loop tick completion.
         for hook, what in (
             (self._maybe_continue_goal_after_turn, "goal continuation"),
+            (self._maybe_track_goals_after_turn, "goal tracking"),
             (self._maybe_complete_loop_tick_after_turn, "loop completion"),
         ):
             try:

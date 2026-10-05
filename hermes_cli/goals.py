@@ -632,6 +632,21 @@ def _warn_dropped_write(manager: str, kind: str, session_id: str) -> None:
     )
 
 
+def _tracking_bind(fn_name: str, *args, **kwargs) -> None:
+    """Advisory Phase-3 registry binding (create/abandon/complete a tracked entry).
+
+    The registry is the *tracking* layer over this loop; the loop must never depend on
+    it. Both the import and the call are swallowed, so a missing/broken registry can
+    never break setting, clearing or completing a goal (see ``goal_registry``).
+    """
+    try:
+        from hermes_cli import goal_registry
+
+        getattr(goal_registry, fn_name)(*args, **kwargs)
+    except Exception as exc:  # noqa: BLE001 — tracking is best-effort by contract
+        logger.debug("goal registry binding %s skipped: %s", fn_name, exc)
+
+
 def load_goal(session_id: str) -> Optional[GoalState]:
     """Load the goal for a session, or None if none exists."""
     if not session_id:
@@ -1159,6 +1174,7 @@ class GoalManager:
         self._state.status = "paused"
         self._state.paused_reason = reason
         self._save()
+        _tracking_bind("session_goal_paused", self.session_id, reason)
 
     def _pause_decision(self, paused_reason: str, verdict: str, reason: str, message: str) -> Dict[str, Any]:
         self._pause_state(paused_reason)
@@ -1173,7 +1189,9 @@ class GoalManager:
             max_turns=int(max_turns) if max_turns else self.default_max_turns,
             contract=contract if contract is not None else GoalContract(),
         )
-        return self._save()
+        saved = self._save()
+        _tracking_bind("bind_session_goal", self.session_id, saved.goal, saved.contract)
+        return saved
 
     def set_contract(self, contract: GoalContract) -> Optional[GoalState]:
         """Attach or replace the completion contract on the active goal."""
@@ -1188,7 +1206,9 @@ class GoalManager:
         self._state.status = "paused"
         self._state.paused_reason = reason
         self._state.clear_wait()   # a wait barrier is meaningless once paused
-        return self._save()
+        saved = self._save()
+        _tracking_bind("session_goal_paused", self.session_id, reason)
+        return saved
 
     def resume(self, *, reset_budget: bool = True) -> Optional[GoalState]:
         if not self._state:
@@ -1198,7 +1218,9 @@ class GoalManager:
         self._state.clear_wait()   # resuming starts fresh
         if reset_budget:
             self._state.turns_used = 0
-        return self._save()
+        saved = self._save()
+        _tracking_bind("session_goal_resumed", self.session_id)
+        return saved
 
     def clear(self) -> None:
         if self._state is None:
@@ -1206,6 +1228,7 @@ class GoalManager:
         self._state.status = "cleared"
         self._save()
         self._state = None
+        _tracking_bind("session_goal_cleared", self.session_id)
 
     def mark_done(self, reason: str) -> None:
         if not self._state:
@@ -1214,6 +1237,7 @@ class GoalManager:
         self._state.last_verdict = "done"
         self._state.last_reason = reason
         self._save()
+        _tracking_bind("session_goal_done", self.session_id, reason)
 
     # --- /subgoal user controls ---------------------------------------
 
@@ -1533,6 +1557,7 @@ class GoalManager:
         if verdict == "done":
             state.status = "done"
             self._save()
+            _tracking_bind("session_goal_done", self.session_id, reason)
             return _decision("done", False, None, "done", reason, f"✓ Goal achieved: {reason}")
 
         # Persistent judge failures (API unreachable / unparseable output) auto-pause and point at the

@@ -750,3 +750,31 @@ class CLILoopsMixin:
                     self._pending_input.put(prompt)
                 except Exception as exc:
                     logging.debug("goal continuation enqueue failed: %s", exc)
+
+    def _maybe_track_goals_after_turn(self) -> None:
+        """Post-turn hook (Phase 3): propose completion for tracked registry goals.
+
+        Advisory tracking layer over the /goal loop. Runs only when the turn used
+        tools and at least one registry goal is active — a conversational turn
+        spends nothing. The judge is a sync aux-LLM call, acceptable on the CLI's
+        post-turn path (same posture as the goal judge above). Never raises.
+        """
+        try:
+            from hermes_cli import goal_registry
+
+            if not goal_registry.tracking_enabled():
+                return
+            messages = self.conversation_history
+            names = goal_registry.turn_tool_names(messages)
+            if not names:
+                return
+            proposals = goal_registry.track_turn(
+                getattr(self, "session_id", "") or "", messages, self._last_assistant_response_text())
+        except Exception as exc:
+            logging.debug("goal tracking hook failed: %s", exc)
+            return
+        if not proposals:
+            return
+        from cli import _DIM, _RST, _cprint
+        for proposal in proposals:
+            _cprint(f"  {_DIM}{goal_registry.render_proposal_notice(proposal)}{_RST}")

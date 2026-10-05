@@ -274,6 +274,7 @@ class GatewayGoalsMixin:
 
     async def _post_turn_goal_continuation(
         self, *, session_entry: Any, source: Any, final_response: str,
+        agent_result: Any = None, is_internal: bool = False,
     ) -> None:
         """Run the goal judge after a gateway turn (AFTER delivery) and, if still active, enqueue a
         continuation through the adapter FIFO so a simultaneous real user message takes priority."""
@@ -333,14 +334,54 @@ class GatewayGoalsMixin:
             return
         # Empty interrupted/errored responses must not drive /goal, but an in-flight /loop tick
         # still needs to be released and rescheduled.
-        hooks = [("loop completion", self._post_turn_loop_completion)]
+        hooks = []
         if final_text.strip():
-            hooks.insert(0, ("goal continuation", self._post_turn_goal_continuation))
+            hooks.append(("goal continuation", self._post_turn_goal_continuation))
+            hooks.append(("goal tracking", self._post_turn_goal_tracking))
+        hooks.append(("loop completion", self._post_turn_loop_completion))
         for label, hook in hooks:
             try:
-                await hook(session_entry=session_entry, source=source, final_response=final_text)
+                await hook(session_entry=session_entry, source=source, final_response=final_text,
+                           agent_result=agent_result, is_internal=is_internal)
             except Exception as exc:
                 logger.debug("%s hook failed: %s", label, exc)
+
+    async def _post_turn_goal_tracking(
+        self, *, session_entry: Any, source: Any, final_response: str,
+        agent_result: Any = None, is_internal: bool = False,
+    ) -> None:
+        """Phase-3 passive tracking (advisory): after a *tool-using* turn, ask the cheap
+        judge whether any tracked registry goal was accomplished, and surface proposals.
+
+        Strictly a tracking layer over the goal loop: it proposes (confirm-by-default),
+        never drives the conversation, and every failure is swallowed. Internal turns
+        (loop/heartbeat wakeups) are skipped so agent-driven work cannot re-trigger
+        itself. Sessions with no active tracked goals pay zero — no judge call.
+        """
+        if is_internal:
+            return
+        try:
+            from hermes_cli import goal_registry
+
+            if not goal_registry.tracking_enabled():
+                return
+            messages = agent_result.get("messages") if isinstance(agent_result, dict) else None
+            names = goal_registry.turn_tool_names(messages)
+            if not names:
+                return  # no tools this turn → no judge call at all
+            sid = getattr(session_entry, "session_id", None) or ""
+            # The judge is a sync aux-LLM HTTP call — keep it off the event loop, carrying
+            # the profile contextvars so credential resolution works under multiplexing.
+            proposals = await self._run_in_executor_with_context(
+                lambda: goal_registry.track_turn(sid, messages, final_response or ""),
+            )
+        except Exception as exc:
+            logger.debug("goal tracking hook failed: %s", exc)
+            return
+        if not proposals or source is None:
+            return
+        notice = "\n\n".join(goal_registry.render_proposal_notice(p) for p in proposals)
+        await self._defer_goal_status_notice_after_delivery(source, notice)
 
     @staticmethod
     def _final_text_for_post_turn_hooks(agent_result, event=None) -> str:
@@ -358,6 +399,7 @@ class GatewayGoalsMixin:
 
     async def _post_turn_loop_completion(
         self, *, session_entry: Any, source: Any, final_response: str,
+        agent_result: Any = None, is_internal: bool = False,
     ) -> None:
         """Complete a /loop wakeup tick after a gateway turn. No-op unless a tick is in flight
         (``awaiting_response``, set when the wakeup was injected); applies the LOOP_COMPLETE marker

@@ -412,6 +412,9 @@ export interface Translations {
     connecting: string
     continue: string
     bots: string
+    ideas: string
+    feeds: string
+    goals: string
     copied: string
     copy: string
     copyFailed: string

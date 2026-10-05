@@ -395,3 +395,60 @@ def post_subscription_upgrade(
     return _post_idempotent(
         "/api/billing/subscription/upgrade", {"subscriptionTypeId": subscription_type_id}, idempotency_key, "an upgrade", timeout
     )
+
+
+# --- Premium entitlement (flagship surfaces: Feeds, Ideas, Goals, PRDs) ---
+
+#: Tiers that unlock premium surfaces. Mirrors the renderer's
+#: ``apps/desktop/src/lib/entitlement.ts::PREMIUM_TIERS``; the two lists must
+#: stay identical (the renderer decides visibility, this module decides access).
+PREMIUM_TIERS = frozenset({"plus", "super", "ultra", "agency"})
+
+
+class PremiumRequiredError(BillingError):
+    """The caller's tier does not unlock this surface."""
+
+
+def is_premium_tier(tier_id: Any) -> bool:
+    """True for paid tiers. Unknown, missing and free tiers fail closed (deny),
+    so a tier the client has not heard of cannot silently unlock paid surfaces."""
+    return isinstance(tier_id, str) and tier_id.strip().lower() in PREMIUM_TIERS
+
+
+def current_tier_id(subscription: Any) -> Optional[str]:
+    """Active tier id from a subscription-state payload, or None when logged
+    out, free or unresolvable. Prefers ``current.tier_id``, falls back to the
+    ``is_current`` tier — the same precedence the renderer uses."""
+    if not isinstance(subscription, dict):
+        return None
+    current = subscription.get("current")
+    if isinstance(current, dict):
+        tier_id = current.get("tier_id")
+        if isinstance(tier_id, str) and tier_id:
+            return tier_id
+    tiers = subscription.get("tiers")
+    if isinstance(tiers, list):
+        for tier in tiers:
+            if isinstance(tier, dict) and tier.get("is_current"):
+                tier_id = tier.get("tier_id")
+                if isinstance(tier_id, str) and tier_id:
+                    return tier_id
+    return None
+
+
+def require_premium_tier(subscription: Any) -> str:
+    """Return the active premium tier id, or raise :class:`PremiumRequiredError`.
+
+    Takes an already-fetched subscription-state payload — fetching is the
+    caller's job, so this gate never performs network I/O itself and stays
+    safe to call on hot paths. Pair with ``get_subscription_state()``.
+    """
+    if isinstance(subscription, dict) and subscription.get("logged_in") is False:
+        raise PremiumRequiredError(
+            "Sign in to use this surface.", error="premium_required")
+    tier_id = current_tier_id(subscription)
+    if not is_premium_tier(tier_id):
+        raise PremiumRequiredError(
+            "This surface needs a paid plan.", error="premium_required")
+    assert isinstance(tier_id, str)
+    return tier_id

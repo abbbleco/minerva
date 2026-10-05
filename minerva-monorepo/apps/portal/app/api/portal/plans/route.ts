@@ -43,7 +43,7 @@ export async function GET() {
         features: [
           `$${creditsForPlan(id)} monthly credits`,
           `$${rolloverCapForPlan(id)} rollover cap`,
-          "200+ Models",
+          "400+ Models",
           "Hosted tool usage",
           "High rate limits",
         ],

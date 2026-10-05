@@ -914,3 +914,233 @@ against \
 ext start\: honeypot → 201 ok, bad email → 400, valid-but-uncon-
 figured → 503 with the fallback message, /plans → 200 rendering the card.
 The actual Mailtrap send needs a token and cannot be exercised from here.
+
+---
+
+# Session 10 — migration 040 applied (2026-10-05)
+
+Ran \pnpm --filter @minerva/database db:generate\ equivalent
+(\
+ode packages/database/scripts/migrate.mjs\ with pooler DATABASE_URL):
+\ 40_portal_contact_requests.sql\ applied, 1 migration. Verified afterwards:
+table present, RLS on, columns exactly \id, ip_hash, created_at\ (no PII
+columns by design), recorded in \_minerva_migrations\. The contact-sales
+throttle behind \/api/contact-sales\ is now live.
+
+---
+
+# Session 11 — premium features plan (docs only, 2026-10-05)
+
+New file \docs/premium-features-plan.md\ (new \docs/\ directory; the
+Docusaurus site under \website/docs/\ is user-facing, so a build plan does
+not belong there). Comprehensive implementation plan for five premium
+features — Feeds, Ideas, Goals, PRDs, website form intake API — ordered by
+dependency (Phase 0 shared foundations first, then 1 Ideas, 2 Feeds, 3 Goals,
+4 PRDs, 5 form intake), each with data model, backend, UI, tests and
+acceptance criteria plus cross-cutting rules (premium gating, i18n, repo test
+law, no core growth, intake privacy).
+
+Grounded in existing surfaces before writing: Bots roster pane
+(\pps/desktop/src/plugins/minerva-bots/\), goal state machine
+(\hermes_cli/goals.py\ + \goal_command.py\), kanban, cron scheduler,
+gateway platform intake, billing entitlement, and the Qontxt
+\pp/api/v1/intake/route.ts\ proxy pattern that Phase 5 mirrors. No code
+changed; status line in the doc reads planning.
+
+---
+
+# Session 12 — premium model policy (docs only, 2026-10-05)
+
+PRD creation (and all premium-feature model work) runs on the user's
+configured provider/model, never a pinned model. Recorded in
+\docs/premium-features-plan.md\ as a cross-cutting rule plus one-line
+amendments in Phases 2 (summarizer), 3 (judge) and 4 (triage classifier,
+drafting writer): invoke through the standard model-call path with its
+fallback chains; if the configured provider lacks a needed capability,
+degrade with a visible marker, never silently substitute.
+
+Verified Phase 0 already complies: no model ids, provider names or pinned
+defaults in \hermes_cli/intake.py\, \prd.py\, \ttachments.py\ or the
+three \src/lib\ mirrors; audio goes through the configured STT provider
+(\	ranscribe_audio(path, source="intake")\, model unset); images defer with
+\
+eeds_model_analysis\ for in-turn vision instead of calling any model.
+
+---
+
+# Session 13 — Phase 0 premium foundations (2026-10-05)
+
+Entitlement (renderer \src/lib/entitlement.ts\ + tests; backend
+\hermes_cli/nous_billing.py::PREMIUM_TIERS/is_premium_tier/current_tier_id/
+require_premium_tier\ + \	ests/hermes_cli/test_premium_entitlement.py\):
+paid tiers pass, everything else raises \PremiumRequiredError\
+(\error="premium_required"\); both sides assert the identical tier set and
+fail closed on unknown tiers. Renderer answers visibility, backend answers
+access; the gate takes already-fetched state and never performs I/O.
+
+Schemas: \hermes_cli/intake.py\ (IntakeEvent/IntakeAttachment, validation,
+\rom_message_event()\ mapping only public MessageEvent fields —
+\aw_message\ never survives) + \	ests/hermes_cli/test_intake.py\;
+\hermes_cli/prd.py\ (PrdDocument, draft→in_review→approved/rejected with
+history audit, \	o_markdown\) + \	ests/hermes_cli/test_prd.py\; TS mirrors
+\src/lib/intake.ts\ + \src/lib/prd.ts\ (validators) + tests.
+
+Pipeline: \hermes_cli/attachments.py\ dispatcher (audio→configured STT,
+text docs inline, images/non-text deferred with \
+eeds_model_analysis\;
+never raises, never inlines bytes, remote non-text decided from metadata
+without downloading; SSRF guard: http(s) only, 25MB/30s caps) +
+\	ests/hermes_cli/test_attachments.py\. No model ids or provider pins
+anywhere (model policy, Session 12).
+
+Verified: renderer tsc 0; vitest 37 passed (entitlement/intake/prd); Python
+24/24 via shim runner (pytest unavailable in .venv, env must not be mutated).
+Plan status line advanced to Phase 1.
+
+---
+
+# Session 14 — Phase 1 Ideas pane (2026-10-05)
+
+New plugin \pps/desktop/src/plugins/minerva-ideas/\ (auto-discovered via
+\contrib/plugins.ts\ glob, zero registry edits): \data.ts\ (12 cards,
+structure-only; all verbal copy in locale bundles), \i18n.ts\ (full en,
+chrome-only ja/zh/zh-hant with card bodies falling back to en per the
+established chain), \launcher.ts\ (fresh session + composer draft, slash
+starters through standard dispatch — one mechanism, no second dispatcher),
+\ideas-pane.tsx\ (search, premium lock → shared billing-settings recovery),
+\plugin.tsx\ (sessions-strip dock mirroring Bots).
+
+Core touch: \common.ideas\ added to core catalog (en, types, de/es/fr/ja/ru/zh;
+ar/zh-hant fall back). Uniform launch = new session + draft; user reviews and
+sends, nothing executes on click.
+
+Verified: renderer tsc 0; 68 tests pass across 8 files (pane render incl.
+search/lock/upsell, launcher order + lock matrix, catalog invariants, i18n
+completeness, entitlement/intake/prd mirrors); core i18n completeness 24 pass.
+
+---
+
+# Session 15 � Instagram feeds provider (2026-10-05)
+
+Instagram joins the feeds provider table beside Facebook. Same token-only UX:
+paste a token in the connect dialog, validate, poll. Graph API constraint is
+load-bearing: media lives under the Instagram Business/Creator account id, so
+the provider auto-discovers it via /me/accounts (first Page with a linked
+instagram_business_account wins) on every poll � no cached ids to go stale on
+relink; no linked account raises ProviderAuthError with the Business/Page
+requirement spelled out (Reconnect, not backoff). Captions stand in for body
+text (no video transcription); caption-less media skipped (no derivable title),
+same rule as empty Facebook posts.
+
+Backend (hermes_cli/feeds.py): fetch_instagram_feed + validate_instagram_token
++ _discover_instagram_account shared by both; register_provider("instagram").
+_facebook_api gained a product: str = "Facebook" param so Instagram errors read
+"Instagram rejected the credential" instead of Facebook. New PROVIDER_VALIDATORS
+table (facebook, instagram) with register_validator(); the validate RPC reads
+the table � a third provider adds rows, never branches. Sources list, provider
+status, and connect/disconnect all already read known_providers()/
+provider_token_env() (FEEDS_INSTAGRAM_TOKEN derives automatically).
+
+Renderer (apps/desktop/src/plugins/minerva-feeds/): i18n.ts gains
+providerInstagram + tokenHelpInstagram in type + all 4 locales (en/ja/zh/
+zh-hant; FeedsMessages now exported); feeds-pane.tsx replaces both provider
+ternaries with key tables (PROVIDER_LABEL_KEY, TOKEN_HELP_KEY) + exported
+providerLabel()/tokenHelp() helpers � unknown ids fall through to the raw id /
+generic placeholder. Picker, env bridge, and status were already generic.
+
+Tests: 6 new Python (discovery+media mapping, end-to-end poll, unlinked-account
+auth error, missing-credential reconnect, validate ok/empty/unlinked) with a
+sequenced urlopen fake for the two-call poll; 2 new vitest (label/help lookup
+matrix incl. unknown-provider passthrough).
+
+Verified: renderer tsc 0; vitest minerva-feeds 12/12, catalog+panes 23/23;
+Python 31/31 via shim runner.
+---
+
+# Session 16 � Phase 2 cron background polling (2026-10-05)
+
+Phase 2's last open item: polls only fired from the pane. Now one `no_agent`
+script job per profile (`Feeds background poll`, every 15m) runs the due
+poll; per-source intervals + backoff stay in `poll_due`, so the tick is
+frequent and each source still polls on its own cadence.
+
+New: `cron/scripts/feeds_poll.py` (`run()` with the poll-RPC seams �
+premium gate, `poll_due`, up to 5 ingest briefs via `call_llm` � plus
+`main()`). Success prints NOTHING (empty stdout is the scheduler's silent
+signal; unread counts update quietly in the pane, never via delivery); exit 0
+covers non-premium, no-sources, and per-source failures (degraded on the
+source row); only unexpected internals exit 1. New: `hermes_cli/
+feeds_cron.py` (shim install + `sync_poll_job` reconcile: create on first
+enabled source, pause-with-our-reason when none remain, resume only our own
+pause, user-paused jobs never touched, foreign file under our shim name blocks
+install fail-safe). The profile script is a version-stamped 5-line shim
+importing the repo logic, so checkout updates apply without reinstalls. Router
+add/patch/remove endpoints call sync after mutation; sync never raises, so a
+broken cron store can't break source management.
+
+Verified: 9 new tests in `tests/hermes_cli/test_feeds_cron.py` (sync matrix
++ script run/skip/model-failure/exit paths, real cron.jobs records, injected
+fetcher/complete_fn); full feed suite 40/40; router + script imports OK.
+Plan status advanced to Phase 3.
+
+---
+
+# Session 17 — Phase 3 Goals (2026-10-05)
+
+Tracked goals with agent-detected completion. Extends the existing /goal
+machine (`GoalManager`/`GoalState`/`GoalContract` + `dispatch_goal_command`)
+rather than replacing it: the session loop stays the *execution* engine (one
+active goal per session); a new per-profile *tracking* layer adds plural named
+goals, an audit history, a confirmation inbox and a judge hook.
+
+Backend — new `hermes_cli/goal_registry.py` (storage + transitions + migration
++ binding + detection + kanban bridge). One `state_meta` key
+(`goals:registry:v1`) under the profile home, so profiles stay isolated and no
+new DB is introduced. Statuses active/paused/pending-confirmation/complete/
+abandoned with a legal-transition table; every change appends a history row
+(trigger + detail + evidence) through the single `transition()` chokepoint.
+`confirm`/`dismiss` are pending-only. Legacy single session goals
+(`goal:<sid>` rows) migrate once per home per process (active/paused only).
+Detection (`detect_completions`) proposes, never completes — except above a
+high threshold when the default-off `goals.tracking_auto_complete` opts in
+(`reopen` = undo); evidence must be an exact substring of the turn or nothing
+is proposed; a turn with no tools never spends a judge call. `track_turn` +
+`turn_tool_names` derive the tools-ran gate from the turn's own messages
+(bounded by the last user message), so all three surfaces share one rule.
+`dispatch_to_kanban` mints a work item (idempotency key = goal id) and records
+the link — explicit, never automatic.
+
+Wiring — `GoalManager.set/clear/mark_done/pause/resume` and the loop's own
+`done` branch (`evaluate_after_turn`) call advisory `_tracking_bind(...)`
+helpers that swallow every failure, so tracking can never break the goal loop;
+the bound entry mirrors the session goal's status. Turn-end detection hooked
+into all three post-turn sites: gateway `gateway/run_goals.py`
+(`_post_turn_goal_tracking`, off-loop via `_run_in_executor_with_context`,
+skips internal turns, notice via the existing post-delivery path), TUI
+`tui_gateway/prompt_turn.py` (`_after_complete_turn`), CLI
+`hermes_cli/cli_loops_mixin.py` (`_maybe_track_goals_after_turn`, registered in
+`_tui_after_turn`). `/goal create|list|show|complete|abandon|confirm|dismiss|
+reopen|dispatch` added to `dispatch_goal_command` (adapters only, no new
+parser); `is_goal_control` covers the new verbs.
+
+REST — new `hermes_cli/web_routers/goals.py` (premium-gated like feeds,
+profile-scoped, `asyncio.to_thread`): list/create/show + complete/abandon/
+pause/resume/confirm/dismiss/reopen/dispatch; mounted in `hermes_cli/
+web_server.py`.
+
+Renderer — new `apps/desktop/src/plugins/minerva-goals/` (plugin.tsx,
+shared.ts, i18n.ts en/ja/zh/zh-hant, goals-pane.tsx with status chips, the
+confirmation inbox, and per-status actions) + `apps/desktop/src/api/goals.ts`.
+`common.goals` added to the core i18n catalog (types + all 7 locales).
+
+Tests: `tests/hermes_cli/test_goal_registry.py` (26 — CRUD, transitions,
+pending-only guards, migration, detection fixtures clear-complete/close-but-not/
+no-tools/bad-evidence/paused/auto-complete/threshold, config invariant +
+clamp + garbage fallback, /goal parity, kanban idempotency) and
+`tests/hermes_cli/test_goals_router.py` (5 — HTTP E2E incl. 402 gate);
+`apps/desktop/src/plugins/minerva-goals/*.test.tsx` (13 vitest).
+
+Verified: Python 31/31 via the shim runner; vitest minerva-goals 13/13,
+i18n 76/76 (catalog completeness), contrib 50/50; web server mounts all 10
+`/api/goals` routes (OpenAPI-confirmed); legacy goal loop + /goal verbs
+re-checked against the new bindings. Plan status advanced to Phase 4.

@@ -394,6 +394,23 @@ def _after_complete_turn(sid: str, session: dict, st: _TurnRun, raw: Any) -> Non
                     _emit("status.update", sid, {"kind": "loop", "text": loop_msg})
     except Exception as _loop_exc:
         _hook_failure("loop completion hook", _loop_exc)
+    # Phase-3 passive goal tracking: when this turn used tools, ask the cheap judge
+    # whether any tracked registry goal was accomplished and surface proposals. Runs
+    # on this turn worker thread (the judge is a sync aux-LLM call); advisory only.
+    try:
+        from hermes_cli import goal_registry
+
+        if goal_registry.tracking_enabled():
+            messages = st.result.get("messages") if isinstance(st.result, dict) else None
+            names = goal_registry.turn_tool_names(messages)
+            if names:
+                proposals = goal_registry.track_turn(
+                    session.get("session_key") or sid, messages, raw if isinstance(raw, str) else "")
+                for proposal in proposals:
+                    _emit("status.update", sid, {
+                        "kind": "goal", "text": goal_registry.render_proposal_notice(proposal)})
+    except Exception as _track_exc:
+        _hook_failure("goal tracking hook", _track_exc)
     # Apply pending_title now that the DB row exists — in the session-owned profile store.
     if _pending := session.get("pending_title"):
         _session_key = session.get("session_key") or sid

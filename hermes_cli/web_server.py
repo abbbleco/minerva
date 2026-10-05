@@ -997,6 +997,8 @@ from hermes_cli.web_routers import (  # noqa: E402
     messaging as _messaging_routes,
     oauth as _oauth_routes,
     cron as _cron_routes,
+    feeds as _feeds_routes,
+    goals as _goals_routes,
     mcp as _mcp_routes,
     ops as _ops_routes,
     skills as _skills_routes,
@@ -1029,6 +1031,8 @@ app.include_router(_oauth_routes.router)
 app.include_router(_sessions_routes.manage_router)
 app.include_router(_status_routes.logs_router)
 app.include_router(_cron_routes.router)
+app.include_router(_feeds_routes.router)
+app.include_router(_goals_routes.router)
 app.include_router(_mcp_routes.router)
 app.include_router(_ops_routes.router)
 app.include_router(_skills_routes.hub_router)

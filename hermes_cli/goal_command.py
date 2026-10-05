@@ -155,10 +155,121 @@ def _set(mgr, arg, *, drafting, last_user_message, render, progress):
     return GoalCommandResult(output, goals.goal_kick_prompt(state.goal, last_user_message), kickoff=True)
 
 
+# ── Phase-3 registry subcommands ────────────────────────────────────────────
+# Plural, named, tracked goals per profile (``hermes_cli.goal_registry``). These
+# adapt the registry onto the SAME command surface — no new parser, per the
+# slash-command rules. Plain-English output like the /goal gate and /goal wait
+# handlers above; the desktop pane localizes its own copy separately.
+
+def _registry_create(arg):
+    from hermes_cli import goal_registry
+    if not arg.strip():
+        return GoalCommandResult("Usage: /goal create <title>", error=True)
+    try:
+        entry = goal_registry.create_entry(arg)
+    except goal_registry.RegistryError as exc:
+        return GoalCommandResult(f"/goal create: {exc}", error=True)
+    return GoalCommandResult(f"⊙ Tracked goal created ({entry['id']}): {entry['title']}")
+
+
+def _registry_list(arg):
+    from hermes_cli import goal_registry
+    goals = goal_registry.load_registry()
+    if not goals:
+        return GoalCommandResult("No tracked goals. Create one with /goal create <title>.")
+    order = {status: index for index, status in enumerate(goal_registry.STATUSES)}
+    goals.sort(key=lambda g: (order.get(g.get("status"), 99), -(g.get("updated_at") or 0)))
+    lines = ["Tracked goals:"]
+    for goal in goals:
+        lines.append(f"  [{goal.get('status')}] {goal.get('id')}  {goal.get('title')}")
+    return GoalCommandResult("\n".join(lines))
+
+
+def _registry_show(arg):
+    from hermes_cli import goal_registry
+    entry = goal_registry.get_entry(arg.strip())
+    if entry is None:
+        return GoalCommandResult(f"/goal show: unknown tracked goal {arg.strip()!r}", error=True)
+    lines = [f"{entry.get('title')}  [{entry.get('status')}]", f"  id: {entry.get('id')}"]
+    contract = entry.get("contract") or {}
+    if isinstance(contract, dict):
+        for key in ("objective", "verification", "constraints"):
+            if contract.get(key):
+                lines.append(f"  {key}: {contract[key]}")
+    if entry.get("session_id"):
+        lines.append(f"  session: {entry['session_id']}")
+    if entry.get("kanban_task_id"):
+        lines.append(f"  kanban: {entry['kanban_task_id']}")
+    history = entry.get("history") or []
+    if history:
+        lines.append("  history:")
+        for item in history[-6:]:
+            detail = f" — {item['detail']}" if item.get("detail") else ""
+            lines.append(f"    {item.get('trigger')}{detail}")
+    return GoalCommandResult("\n".join(lines))
+
+
+def _registry_apply(verb: str, arg: str, action):
+    from hermes_cli import goal_registry
+    if not arg.strip():
+        return GoalCommandResult(f"Usage: /goal {verb} <id>", error=True)
+    try:
+        entry = action(goal_registry, arg.strip())
+    except goal_registry.RegistryError as exc:
+        return GoalCommandResult(f"/goal {verb}: {exc}", error=True)
+    return GoalCommandResult(f"✓ Goal {entry.get('id')} → {entry.get('status')}: {entry.get('title')}")
+
+
+def _registry_complete(arg):
+    return _registry_apply("complete", arg, lambda r, i: r.transition(
+        i, r.STATUS_COMPLETE, "user-completed", "completed by user"))
+
+
+def _registry_abandon(arg):
+    return _registry_apply("abandon", arg, lambda r, i: r.transition(
+        i, r.STATUS_ABANDONED, "abandoned", "abandoned by user"))
+
+
+def _registry_confirm(arg):
+    return _registry_apply("confirm", arg, lambda r, i: r.confirm_entry(i))
+
+
+def _registry_dismiss(arg):
+    return _registry_apply("dismiss", arg, lambda r, i: r.dismiss_proposal(i))
+
+
+def _registry_reopen(arg):
+    return _registry_apply("reopen", arg, lambda r, i: r.reopen_entry(i))
+
+
+def _registry_dispatch(arg):
+    from hermes_cli import goal_registry
+    if not arg.strip():
+        return GoalCommandResult("Usage: /goal dispatch <id>", error=True)
+    try:
+        result = goal_registry.dispatch_to_kanban(arg.strip())
+    except Exception as exc:  # noqa: BLE001 — surface any kanban/registry failure as a message
+        return GoalCommandResult(f"/goal dispatch: {exc}", error=True)
+    verb = "Minted" if result.get("created") else "Already linked"
+    return GoalCommandResult(
+        f"⚒ {verb} kanban task {result.get('task_id')} for goal {arg.strip()}.")
+
+
+_REGISTRY_HANDLERS = {
+    "create": _registry_create, "list": _registry_list, "ls": _registry_list,
+    "complete": _registry_complete, "abandon": _registry_abandon,
+    "confirm": _registry_confirm, "dismiss": _registry_dismiss,
+    "reopen": _registry_reopen, "dispatch": _registry_dispatch,
+}
+
+_REGISTRY_VERBS = frozenset(_REGISTRY_HANDLERS)
+
+
 def is_goal_control(arg: str) -> bool:
     """Whether this command controls an existing goal rather than replacing it."""
     normalized = arg.strip().lower()
-    return normalized in _EXACT_HANDLERS or normalized.split(None, 1)[0] in {"wait", "gate"}
+    verb = normalized.split(None, 1)[0] if normalized else ""
+    return normalized in _EXACT_HANDLERS or verb in {"wait", "gate"} or verb in _REGISTRY_VERBS
 
 
 def dispatch_goal_command(
@@ -179,6 +290,12 @@ def dispatch_goal_command(
     try:
         if handler := _EXACT_HANDLERS.get(arg.lower()):
             return handler(mgr, "", render)
+        if verb in _REGISTRY_HANDLERS:
+            prefix = f"/goal {verb}"
+            return _REGISTRY_HANDLERS[verb](rest)
+        if verb == "show" and rest:
+            prefix = "/goal show"
+            return _registry_show(rest)
         if verb == "wait":
             prefix = "/goal wait"
             return _wait(mgr, rest)
