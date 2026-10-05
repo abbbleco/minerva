@@ -4,11 +4,16 @@ import Link from "next/link";
 import { useState } from "react";
 import { getSupabaseBrowser } from "../lib/supabase-browser";
 
-export default function AuthCard({ mode }: { mode: "login" | "signup" }) {
+export default function AuthCard({ mode, authError }: { mode: "login" | "signup"; authError?: string }) {
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
+  const [busyProvider, setBusyProvider] = useState<"google" | "github" | null>(null);
   const [message, setMessage] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(authError ?? null);
+
+  function callbackUrl() {
+    return `${window.location.origin}/auth/callback?next=${encodeURIComponent("/minerva")}`;
+  }
 
   async function continueWithEmail(e: React.FormEvent) {
     e.preventDefault();
@@ -19,7 +24,7 @@ export default function AuthCard({ mode }: { mode: "login" | "signup" }) {
       const supabase = getSupabaseBrowser();
       const { error } = await supabase.auth.signInWithOtp({
         email: email.trim(),
-        options: { emailRedirectTo: `${window.location.origin}/minerva` },
+        options: { emailRedirectTo: callbackUrl() },
       });
       if (error) throw error;
       setMessage("Check your inbox — we sent you a sign-in link.");
@@ -30,19 +35,31 @@ export default function AuthCard({ mode }: { mode: "login" | "signup" }) {
     }
   }
 
-  async function oauth(provider: "google" | "azure" | "github") {
+  async function oauth(provider: "google" | "github") {
     setBusy(true);
+    setBusyProvider(provider);
     setError(null);
     try {
       const supabase = getSupabaseBrowser();
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
-        options: { redirectTo: `${window.location.origin}/minerva` },
+        options: {
+          redirectTo: callbackUrl(),
+          ...(provider === "google"
+            ? {
+                scopes: "openid email profile",
+                queryParams: { access_type: "offline", prompt: "consent" },
+              }
+            : {
+                scopes: "read:user user:email",
+              }),
+        },
       });
       if (error) throw error;
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
       setBusy(false);
+      setBusyProvider(null);
     }
   }
 
@@ -94,23 +111,12 @@ export default function AuthCard({ mode }: { mode: "login" | "signup" }) {
 
         <div className="mt-6 grid grid-cols-2 gap-3">
           <button type="button" onClick={() => oauth("google")} disabled={busy} className="nous-btn-outline w-full">
-            <span aria-hidden="true">G</span> Google
+            <span aria-hidden="true">G</span> {busyProvider === "google" ? "Connecting…" : "Google"}
           </button>
-          <button type="button" onClick={() => oauth("azure")} disabled={busy} className="nous-btn-outline w-full">
-            <span aria-hidden="true">▦</span> Microsoft
+          <button type="button" onClick={() => oauth("github")} disabled={busy} className="nous-btn-outline w-full">
+            <span aria-hidden="true">◉</span> {busyProvider === "github" ? "Connecting…" : "GitHub"}
           </button>
         </div>
-        <button
-          type="button"
-          onClick={() => oauth("github")}
-          disabled={busy}
-          className="nous-btn-outline mx-auto mt-3 flex w-56"
-        >
-          <span aria-hidden="true">◉</span> GitHub
-        </button>
-        <Link href="/minerva" className="nous-btn-outline mt-4 w-full !border-white !text-white">
-          <span aria-hidden="true">✦</span> Continue with ChatGPT
-        </Link>
 
         <p className="mt-6 text-center text-[13px] text-white/70">
           <Link href="/help" className="underline underline-offset-2">

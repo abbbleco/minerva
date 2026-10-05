@@ -10,7 +10,7 @@ const FAQS: Array<[string, string]> = [
   ["Minerva says 402 upgrade_required — what now?", "A free key hit a paid model. Omit model for the free router, or upgrade for the full catalog — the response lists allowed models."],
   ["Minerva says 402 credits_exhausted — what now?", "You are out of credits. Top up or wait for the monthly grant; check usage on /minerva. Free models never trip this."],
   ["Where is the Minerva dashboard?", "Run `minerva dashboard` locally (port 9119), or open the dashboard URL from /minerva. The portal links out to it — it never proxies it."],
-  ["Log in with Discord or a wallet?", "Email + Google/Microsoft/GitHub cover most members. For Discord or wallet sign-in, contact support and we will link the identity to your agency."],
+  ["Log in with Discord or a wallet?", "Email + Google/GitHub cover most members. For Discord or wallet sign-in, contact support and we will link the identity to your agency."],
 ];
 
 export default function HelpPage() {
