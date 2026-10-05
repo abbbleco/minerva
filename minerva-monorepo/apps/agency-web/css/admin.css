@@ -1,0 +1,217 @@
+/*
+ * Minerva CMS admin stylesheet.
+ *
+ * Isolation contract (plan §11.3): the public site is styled by Webflow CSS,
+ * so this entry loads Tailwind WITHOUT preflight (preflight would reset
+ * Webflow globals site-wide) and with the tw- prefix so utility names never
+ * collide with Webflow classnames. Imported ONLY by the admin layouts.
+ *
+ * Visual language: DESIGN.md v2 "bento-emerald-dashboard". Tokens below mirror
+ * that spec verbatim — never inline raw values in components; reference these
+ * custom properties.
+ */
+
+@layer theme, utilities;
+
+/* Identity fonts per DESIGN.md typography (Inter + JetBrains Mono). */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+
+@import "tailwindcss/theme.css" layer(theme) prefix(tw);
+@import "tailwindcss/utilities.css" layer(utilities) prefix(tw);
+
+/* ── Design-system root: atmospheric canvas ─────────────────────────── */
+.qcms {
+  /* Canvas & atmosphere */
+  --m-bg-root: #040706;
+  --m-canvas:
+    radial-gradient(640px 340px at 50% -140px, rgba(52, 211, 153, 0.16), transparent 70%),
+    radial-gradient(520px 340px at 4% 110%, rgba(52, 211, 153, 0.08), transparent 70%),
+    radial-gradient(420px 260px at 96% 108%, rgba(52, 211, 153, 0.05), transparent 70%),
+    linear-gradient(180deg, #060a08 0%, #040706 100%);
+  --m-vignette: radial-gradient(130% 120% at 50% 42%, transparent 55%, rgba(0, 0, 0, 0.5) 100%);
+
+  /* Card surfaces */
+  --m-card-surface:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0) 40%),
+    linear-gradient(160deg, #0f1513 0%, #0a0f0d 55%, #080c0a 100%);
+  --m-card-stroke: rgba(255, 255, 255, 0.07);
+  --m-card-top-light: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --m-card-shadow: 0 30px 60px -22px rgba(0, 0, 0, 0.65);
+
+  /* Emerald accents */
+  --m-primary: #34d877;
+  --m-primary-deep: #12a352;
+  --m-primary-text: #4ade80;
+  --m-glow-ring: rgba(134, 239, 172, 0.22);
+
+  /* Mint ramp (the single CTA surface) */
+  --m-mint-ramp:
+    radial-gradient(115% 145% at 101% 42%, rgba(214, 255, 227, 0.9) 0%, rgba(163, 244, 188, 0.5) 28%, rgba(126, 229, 160, 0.2) 52%, rgba(126, 229, 160, 0) 72%),
+    radial-gradient(60% 130% at -2% 55%, rgba(9, 56, 30, 0.38) 0%, rgba(9, 56, 30, 0) 62%),
+    linear-gradient(96deg, #2f9d58 0%, #3fb268 26%, #54c47b 52%, #74dc95 76%, #93edb0 100%);
+
+  /* Text */
+  --m-text: #e9eeeb;
+  --m-text-bright: #ffffff;
+  --m-text-secondary: rgba(233, 238, 235, 0.4);
+  --m-text-muted: rgba(233, 238, 235, 0.35);
+  --m-text-inverse: #0a130d;
+
+  /* Semantic */
+  --m-success: #4ade80;
+  --m-warning: #f6c445;
+  --m-danger: #ff4757;
+
+  /* Shapes & rhythm */
+  --m-radius-md: 9px;
+  --m-radius-lg: 15px;
+  --m-radius-card: 24px;
+  --m-radius-pill: 9999px;
+  --m-gap: 20px;
+  --m-font-ui: 'Inter', system-ui, -apple-system, sans-serif;
+  --m-font-mono: 'JetBrains Mono', monospace;
+
+  min-height: 100vh;
+  background: var(--m-bg-root);
+  background-image: var(--m-canvas);
+  color: var(--m-text);
+  font-family: var(--m-font-ui);
+}
+
+.qcms ::selection {
+  background: rgba(74, 222, 128, 0.35);
+  color: #fff;
+}
+
+/* Fixed atmosphere overlays sit above content, pointer-transparent. */
+.qcms-atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+}
+.qcms-atmosphere--vignette {
+  background: var(--m-vignette);
+}
+.qcms-atmosphere--grain {
+  z-index: 51;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* ── Bento card anatomy: head / middle / foot(margin-top:auto) ──────── */
+.qcms-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--m-card-surface);
+  border: 1px solid var(--m-card-stroke);
+  border-radius: var(--m-radius-card);
+  box-shadow: var(--m-card-top-light), var(--m-card-shadow);
+}
+
+/* Signature glow card — AT MOST ONE PER VIEW (breathing emerald hotspot). */
+.qcms-card--glow {
+  overflow: visible;
+  border-color: var(--m-glow-ring);
+  background:
+    radial-gradient(135% 105% at 12% -10%, rgba(150, 245, 182, 0.95) 0%, rgba(88, 218, 140, 0.55) 16%, rgba(40, 148, 88, 0.3) 34%, rgba(16, 66, 40, 0.14) 52%, rgba(6, 16, 11, 0) 68%),
+    radial-gradient(85% 75% at 92% 4%, rgba(56, 180, 104, 0.2), transparent 62%),
+    linear-gradient(162deg, #0b2114 0%, #081309 42%, #040806 100%);
+  box-shadow:
+    0 0 0 1px rgba(134, 239, 172, 0.1),
+    0 0 60px rgba(52, 211, 153, 0.22),
+    0 0 140px 10px rgba(52, 211, 153, 0.12),
+    0 30px 60px -18px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  animation: qcms-breathe 7s ease-in-out infinite;
+}
+
+@keyframes qcms-breathe {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(134, 239, 172, 0.1),
+      0 0 60px rgba(52, 211, 153, 0.22),
+      0 0 140px 10px rgba(52, 211, 153, 0.12),
+      0 30px 60px -18px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(134, 239, 172, 0.14),
+      0 0 80px rgba(52, 211, 153, 0.3),
+      0 0 140px 10px rgba(52, 211, 153, 0.12),
+      0 30px 60px -18px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qcms-card--glow {
+    animation: none;
+  }
+}
+
+/* ── Buttons (pill geometry, machined gradients) ────────────────────── */
+.qcms-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: var(--m-radius-pill);
+  background: linear-gradient(180deg, #151c17, #090d0b);
+  color: #f2f6f3;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  border: 1px solid var(--m-card-stroke);
+  box-shadow: 0 5px 12px rgba(8, 30, 16, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: filter 0.2s, transform 0.2s, background 0.2s;
+  cursor: pointer;
+}
+.qcms-btn:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+.qcms-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+  filter: none;
+  transform: none;
+}
+
+/* ── Pills & tags ───────────────────────────────────────────────────── */
+.qcms-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: var(--m-radius-md);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.6px;
+}
+.qcms-pill--live {
+  color: var(--m-primary-text);
+  border: 1px solid var(--m-glow-ring);
+  background: rgba(52, 211, 153, 0.08);
+}
+.qcms-pill--draft {
+  color: var(--m-text-secondary);
+  border: 1px solid var(--m-card-stroke);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Machine data (slugs, codes) — JetBrains Mono micro-tag idiom. */
+.qcms-mono {
+  font-family: var(--m-font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--m-text-secondary);
+}

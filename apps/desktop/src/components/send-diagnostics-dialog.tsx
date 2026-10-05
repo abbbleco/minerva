@@ -26,7 +26,7 @@ import { ExternalLink, Loader2Icon, Lock } from '@/lib/icons'
 import { $sendDiagnostics, confirmSendDiagnostics, dismissSendDiagnostics } from '@/store/send-diagnostics'
 
 const SUPPORT_LINKS = [
-  { key: 'github', url: 'https://github.com/NousResearch/hermes-agent/issues' },
+  { key: 'github', url: 'https://github.com/abbbleco/minerva/issues' },
   { key: 'portal', url: 'https://portal.abbble.co.za/help' },
   { key: 'discord', url: 'https://discord.gg/NousResearch' }
 ] as const

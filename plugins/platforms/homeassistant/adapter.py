@@ -81,7 +81,7 @@ def _connect_error_detail(exc: BaseException) -> str:
         return (
             f"{text} — macOS Local Network Privacy is blocking this launchd gateway from the LAN. "
             "Run `minerva gateway install` to regenerate the launchd job, then `minerva gateway restart`. "
-            "https://github.com/NousResearch/hermes-agent/issues/71206"
+            "https://github.com/abbbleco/minerva/issues/71206"
         )
     return text
 

@@ -1,0 +1,272 @@
+import type { JSX } from "react";
+
+/* eslint-disable @next/next/no-img-element */
+
+export default function Partners(): JSX.Element {
+  return (
+<section className="section_services-page-partners">
+            <div className="services-page_partnership-core-styles w-embed">
+              
+            </div>
+            <div className="w-layout-blockcontainer container w-container">
+              <div className="services-page-partners_title-wrapper">
+                <div className="services-page-partners_title">
+                  <h2 className="heading-style-h2 is-centered is-large">
+                    Turning projects into trusting partnerships
+                  </h2>
+                  <img
+                    src="/svg/03db507557a2.svg"
+                    loading="lazy"
+                    alt=""
+                    className="partners-title-undeline" />
+                </div>
+              </div>
+            </div>
+            <div className="services-page-partners_main">
+              <div className="services-page_partnership-marque">
+                <div className="services-page_partnership-marque-row">
+                  <div
+                    id="w-node-_50d31eb7-1f80-70d5-a158-18465179fb14-5179fb08"
+                    className="services-page_partnership-marque-col"
+                  >
+                    <img
+                      src="/svg/7c7f118c4bb0.svg"
+                      loading="lazy"
+                      alt="Wordpress"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/594e417580bc.svg"
+                      loading="lazy"
+                      alt="Automatic"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/bf9acbc06340.svg"
+                      loading="lazy"
+                      alt="Players Health"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/1551c4936995.svg"
+                      loading="lazy"
+                      alt="MYSO Finance"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/536dc86a2af2.svg"
+                      loading="lazy"
+                      alt="Voxe"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/60d07b59b712.svg"
+                      loading="lazy"
+                      alt="CCPayment"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/f701ee722c63.svg"
+                      loading="lazy"
+                      alt="New New"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/bb22ba4e8fc9.svg"
+                      loading="lazy"
+                      alt="Network For Good"
+                      className="services-page_partnership-marque-image" />
+                  </div>
+                  <div
+                    id="w-node-_50d31eb7-1f80-70d5-a158-18465179fb1d-5179fb08"
+                    className="services-page_partnership-marque-col"
+                  >
+                    <img
+                      src="/svg/7c7f118c4bb0.svg"
+                      loading="lazy"
+                      alt="Wordpress"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/594e417580bc.svg"
+                      loading="lazy"
+                      alt="Automatic"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/bf9acbc06340.svg"
+                      loading="lazy"
+                      alt="Players Health"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/1551c4936995.svg"
+                      loading="lazy"
+                      alt="MYSO Finance"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/536dc86a2af2.svg"
+                      loading="lazy"
+                      alt="Voxe"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/60d07b59b712.svg"
+                      loading="lazy"
+                      alt="CCPayment"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/f701ee722c63.svg"
+                      loading="lazy"
+                      alt="New New"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/bb22ba4e8fc9.svg"
+                      loading="lazy"
+                      alt="Network For Good"
+                      className="services-page_partnership-marque-image" />
+                  </div>
+                </div>
+                <div className="services-page_partnership-marque-row is-reverse">
+                  <div
+                    id="w-node-_50d31eb7-1f80-70d5-a158-18465179fb27-5179fb08"
+                    className="services-page_partnership-marque-col"
+                  >
+                    <img
+                      src="/svg/da3a2f25195d.svg"
+                      loading="lazy"
+                      alt="Xpence"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/721141fe771d.svg"
+                      loading="lazy"
+                      alt="ViewBlock"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/f0d2d64f35b1.svg"
+                      loading="lazy"
+                      alt="Qtalent"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/cd339ece1ca3.svg"
+                      loading="lazy"
+                      alt="Minty Swap"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/274fc258e182.svg"
+                      loading="lazy"
+                      alt="Fuse"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/937e100e2aa5.svg"
+                      loading="lazy"
+                      alt="Enhance D"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/8929b23064a8.svg"
+                      loading="lazy"
+                      alt="Bitbye"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/79b9262b42ed.svg"
+                      loading="lazy"
+                      alt="Squad Help"
+                      className="services-page_partnership-marque-image" />
+                  </div>
+                  <div
+                    id="w-node-_50d31eb7-1f80-70d5-a158-18465179fb30-5179fb08"
+                    className="services-page_partnership-marque-col"
+                  >
+                    <img
+                      src="/svg/da3a2f25195d.svg"
+                      loading="lazy"
+                      alt="Xpence"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/721141fe771d.svg"
+                      loading="lazy"
+                      alt="ViewBlock"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/f0d2d64f35b1.svg"
+                      loading="lazy"
+                      alt="Qtalent"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/cd339ece1ca3.svg"
+                      loading="lazy"
+                      alt="Minty Swap"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/274fc258e182.svg"
+                      loading="lazy"
+                      alt="Fuse"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/937e100e2aa5.svg"
+                      loading="lazy"
+                      alt="Enhance D"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/8929b23064a8.svg"
+                      loading="lazy"
+                      alt="Bitbye"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/79b9262b42ed.svg"
+                      loading="lazy"
+                      alt="Squad Help"
+                      className="services-page_partnership-marque-image" />
+                  </div>
+                </div>
+                <div className="services-page_partnership-marque-row">
+                  <div
+                    id="w-node-_50d31eb7-1f80-70d5-a158-18465179fb3a-5179fb08"
+                    className="services-page_partnership-marque-col"
+                  >
+                    <img
+                      src="/svg/340d4cf8c35c.svg"
+                      loading="lazy"
+                      alt="Virtana"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/d4a32f72dbe6.svg"
+                      loading="lazy"
+                      alt="4 Paradigm"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/276eef631c39.svg"
+                      loading="lazy"
+                      alt="Blockworks"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/a74eb45b9b93.svg"
+                      loading="lazy"
+                      alt="Cornix"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/459f57d4b88c.svg"
+                      loading="lazy"
+                      alt="Klasha"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/e419c32947d6.svg"
+                      loading="lazy"
+                      alt="Gradguide"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/6ffc5b01e932.svg"
+                      loading="lazy"
+                      alt="Mined"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/93c8054a664e.svg"
+                      loading="lazy"
+                      alt="Teachinguide"
+                      className="services-page_partnership-marque-image" />
+                  </div>
+                  <div
+                    id="w-node-_50d31eb7-1f80-70d5-a158-18465179fb43-5179fb08"
+                    className="services-page_partnership-marque-col"
+                  >
+                    <img
+                      src="/svg/340d4cf8c35c.svg"
+                      loading="lazy"
+                      alt="Virtana"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/d4a32f72dbe6.svg"
+                      loading="lazy"
+                      alt="4 Paradigm"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/276eef631c39.svg"
+                      loading="lazy"
+                      alt="Blockworks"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/a74eb45b9b93.svg"
+                      loading="lazy"
+                      alt="Cornix"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/459f57d4b88c.svg"
+                      loading="lazy"
+                      alt="Klasha"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/e419c32947d6.svg"
+                      loading="lazy"
+                      alt="Gradguide"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/6ffc5b01e932.svg"
+                      loading="lazy"
+                      alt="Mined"
+                      className="services-page_partnership-marque-image" /><img
+                      src="/svg/93c8054a664e.svg"
+                      loading="lazy"
+                      alt="Teachinguide"
+                      className="services-page_partnership-marque-image" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <img
+              src="/svg/d096f0209fc5.svg"
+              loading="lazy"
+              alt=""
+              className="services-page_partners-bg-1440" />
+          
+      <div className="section-separator"></div>
+    </section>
+  );
+}

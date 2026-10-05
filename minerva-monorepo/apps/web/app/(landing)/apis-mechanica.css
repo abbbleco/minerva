@@ -1,0 +1,160 @@
+/* Apis Mechanica study — ported from BeeConcept gpt6astra.html, scoped under
+   .apis-mechanica so it never leaks into /console, /dashboard, etc.
+   Minerva rebrand: copy + CTA nav only; interaction/visuals verbatim. */
+
+.apis-mechanica {
+  --paper:#e5e9eb; --ink:#243954; --metal:#234d8d;
+  --line:rgba(36,57,84,.22); --panel:rgba(229,233,235,.83);
+}
+.apis-mechanica,
+.apis-mechanica * { box-sizing:border-box }
+.apis-mechanica {
+  margin:0; width:100%; height:100svh; overflow:hidden;
+  position:fixed; inset:0;
+  background:var(--paper); color:var(--ink); font:12px Inter,sans-serif;
+}
+body.apis-mechanica-body { margin:0; overflow:hidden; }
+.apis-mechanica canvas#scene { position:fixed; inset:0; display:block }
+.apis-mechanica button,.apis-mechanica input { font:inherit }
+.apis-mechanica button { color:inherit; cursor:pointer }
+.apis-mechanica button:focus-visible,.apis-mechanica input:focus-visible,
+.apis-mechanica a:focus-visible { outline:2px solid var(--metal); outline-offset:5px }
+.apis-mechanica .ui { transition:opacity .7s ease; opacity:0 }
+.apis-mechanica.ready .ui { opacity:1 }
+.apis-mechanica.hidden .ui { opacity:0; pointer-events:none }
+.apis-mechanica header { position:fixed; top:42px; left:48px; pointer-events:none }
+.apis-mechanica .eyebrow,.apis-mechanica .mono,.apis-mechanica .caption,
+.apis-mechanica button,.apis-mechanica .status,.apis-mechanica .legend {
+  font-family:"JetBrains Mono",monospace;
+}
+.apis-mechanica .eyebrow { font-size:9px; letter-spacing:.18em; opacity:.64 }
+.apis-mechanica h1 { font:normal clamp(44px,4.1vw,78px)/.95 "Instrument Serif",serif; margin:19px 0 17px }
+.apis-mechanica h1 em { color:var(--metal); font-weight:normal }
+.apis-mechanica .caption { font-size:8px; letter-spacing:.12em; opacity:.6 }
+.apis-mechanica .topright { position:fixed; top:42px; right:48px; text-align:right }
+.apis-mechanica .themes {
+  display:flex; gap:3px; border:1px solid var(--line); padding:5px;
+  border-radius:30px; background:var(--panel); backdrop-filter:blur(16px);
+}
+.apis-mechanica .themes button { display:flex; align-items:center; gap:7px; font-size:8px;
+  border:0; background:transparent; padding:7px 10px; border-radius:22px;
+}
+.apis-mechanica .themes button.active { background:var(--line) }
+.apis-mechanica .hex { width:13px; height:15px; clip-path:polygon(50% 0,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%) }
+/* Sun/moon toggle icons for DELFT (light) / OBSIDIAN (dark). */
+.apis-mechanica .themes .theme-icon { font-size:14px; line-height:1; clip-path:none; width:auto; height:auto; }
+.apis-mechanica .status { margin-top:18px; font-size:9px; letter-spacing:.12em }
+.apis-mechanica .dot { color:var(--metal); display:inline-block; margin-right:8px }
+.apis-mechanica.flying .dot { animation:pulse 1.6s ease-in-out infinite }
+@keyframes pulse { 50% { opacity:.3 } }
+.apis-mechanica .spec { position:fixed; left:48px; bottom:156px; width:300px; pointer-events:none }
+.apis-mechanica .spec h2 { font:normal 30px "Instrument Serif",serif; margin:10px 0 }
+.apis-mechanica .spec p { font-size:11px; line-height:1.8; opacity:.72; min-height:55px }
+.apis-mechanica .spec .fact { font-size:10px; opacity:.55; min-height:32px }
+.apis-mechanica .metrics { display:flex; justify-content:space-between; border-top:1px solid var(--line);
+  padding-top:14px; margin-top:18px; font-size:8px; line-height:1.8 }
+.apis-mechanica .metrics b { font-weight:400; display:block; color:var(--metal); font-size:12px }
+.apis-mechanica .telemetry { opacity:0; transition:opacity .5s; margin-top:16px; font-size:8px }
+.apis-mechanica.flying .telemetry { opacity:1 }
+.apis-mechanica .telemetry .readings { display:flex; gap:13px }
+.apis-mechanica #scope { display:block; margin-top:8px; width:280px; height:35px; opacity:.65 }
+.apis-mechanica .controls {
+  position:fixed; left:50%; bottom:40px; transform:translateX(-50%);
+  display:flex; align-items:center; gap:15px; padding:13px 18px;
+  background:var(--panel); backdrop-filter:blur(18px);
+  border:1px solid var(--line); border-radius:40px; white-space:nowrap;
+  box-shadow:0 10px 45px #00000006;
+}
+.apis-mechanica .group { display:flex; align-items:center; gap:7px }
+.apis-mechanica .group label,.apis-mechanica .group>span { font:8px "JetBrains Mono",monospace; letter-spacing:.06em; opacity:.6 }
+.apis-mechanica .divider { width:1px; height:22px; background:var(--line) }
+.apis-mechanica .controls button { background:none; border:0; padding:7px 3px; font-size:8px; opacity:.6 }
+.apis-mechanica .controls button.active { opacity:1; color:var(--metal) }
+.apis-mechanica .controls #flight { background:var(--metal); color:var(--paper); padding:12px 20px;
+  border-radius:25px; opacity:1; min-width:119px; transition:filter .2s }
+.apis-mechanica .controls #flight:hover { filter:brightness(1.12) }
+.apis-mechanica .controls #consoleLink {
+  border:1px solid var(--line); padding:11px 18px; border-radius:25px;
+  font-size:8px; letter-spacing:.06em; text-decoration:none; color:var(--ink);
+  opacity:1; transition:filter .2s; font-family:"JetBrains Mono",monospace;
+}
+.apis-mechanica .controls #consoleLink:hover { filter:brightness(1.12); background:var(--line); }
+.apis-mechanica input[type=range] { appearance:none; width:80px; height:2px; background:var(--line); cursor:pointer }
+.apis-mechanica input[type=range]::-webkit-slider-thumb {
+  appearance:none; width:9px; height:9px; border-radius:50%;
+  background:var(--metal); border:2px solid var(--paper);
+  box-shadow:0 0 0 1px var(--metal);
+}
+.apis-mechanica input[type=range]::-moz-range-thumb {
+  width:7px; height:7px; border-radius:50%; background:var(--metal); border:2px solid var(--paper);
+}
+.apis-mechanica .legend { position:fixed; right:48px; bottom:154px; text-align:right;
+  font-size:8px; line-height:2.4; opacity:.58 }
+.apis-mechanica kbd { font:8px "JetBrains Mono",monospace; padding:2px 5px;
+  border:1px solid var(--line); border-radius:3px; margin-left:8px }
+.apis-mechanica .corner { position:fixed; width:17px; height:17px; border-color:var(--line); border-style:solid; pointer-events:none }
+.apis-mechanica .tl { left:22px;top:22px;border-width:1px 0 0 1px }
+.apis-mechanica .tr { right:22px;top:22px;border-width:1px 1px 0 0 }
+.apis-mechanica .bl { left:22px;bottom:22px;border-width:0 0 1px 1px }
+.apis-mechanica .br { right:22px;bottom:22px;border-width:0 1px 1px 0 }
+.apis-mechanica #labels,.apis-mechanica #leaders { position:fixed; inset:0; pointer-events:none; width:100%; height:100% }
+.apis-mechanica .partlabel { position:absolute; width:185px; transition:opacity .18s; }
+.apis-mechanica .partlabel strong { display:block; font:22px "Instrument Serif",serif; font-weight:normal }
+.apis-mechanica .partlabel small { display:block; font:8px "JetBrains Mono",monospace; opacity:.6; margin-top:4px }
+.apis-mechanica #note { position:fixed; left:50%; top:36px; transform:translateX(-50%);
+  font:8px "JetBrains Mono",monospace; letter-spacing:.15em; opacity:.5 }
+.apis-mechanica #loader { position:fixed; inset:0; display:grid; place-content:center;
+  background:var(--paper); font:11px "JetBrains Mono",monospace; z-index:20;
+  transition:opacity .6s; pointer-events:none }
+
+/* Minerva entry nav — same panel/mono language as the study UI. */
+.apis-mechanica .minerva-nav {
+  position:fixed; left:50%; top:64px; transform:translateX(-50%);
+  display:flex; align-items:center; gap:4px; padding:5px;
+  border:1px solid var(--line); border-radius:30px;
+  background:var(--panel); backdrop-filter:blur(16px);
+  font-family:"JetBrains Mono",monospace; font-size:8px; letter-spacing:.08em;
+  z-index:5; white-space:nowrap;
+}
+.apis-mechanica .minerva-nav a {
+  padding:8px 14px; border-radius:20px; text-decoration:none; color:var(--ink); opacity:.72;
+}
+.apis-mechanica .minerva-nav a:hover { opacity:1; background:var(--line); }
+.apis-mechanica .minerva-nav a.primary { background:var(--ink); color:var(--paper); opacity:1; }
+.apis-mechanica .minerva-nav a.primary:hover { filter:brightness(1.25); }
+
+@media(max-width:1350px) {
+  .apis-mechanica .controls { gap:9px; padding:12px }
+  .apis-mechanica .group { gap:4px } .apis-mechanica .controls button { font-size:7px }
+  .apis-mechanica .group label { font-size:7px } .apis-mechanica input[type=range] { width:55px }
+  .apis-mechanica .legend { right:30px } .apis-mechanica header,.apis-mechanica .spec { left:30px }
+  .apis-mechanica .topright { right:30px }
+}
+@media(max-width:1000px) {
+  .apis-mechanica header { top:30px } .apis-mechanica h1 { font-size:49px }
+  .apis-mechanica .topright { top:30px }
+  .apis-mechanica .themes button { font-size:0; padding:7px }
+  .apis-mechanica .themes button .hex { width:17px;height:19px }
+  .apis-mechanica .themes button .theme-icon { font-size:17px; width:auto; height:auto; }
+  .apis-mechanica .spec { width:225px; bottom:140px }
+  .apis-mechanica .legend { display:none }
+  .apis-mechanica .controls { width:calc(100% - 32px); flex-wrap:wrap; justify-content:center;
+    border-radius:20px; bottom:22px; white-space:normal }
+  .apis-mechanica .divider { display:none }
+  .apis-mechanica .spec p,.apis-mechanica .spec .fact { font-size:9px }
+  .apis-mechanica #note { display:none }
+  .apis-mechanica .minerva-nav { top:auto; bottom:120px; }
+}
+@media(max-width:600px) {
+  .apis-mechanica header { left:25px; top:28px } .apis-mechanica h1 { font-size:40px }
+  .apis-mechanica .eyebrow { font-size:7px; max-width:180px; line-height:1.7 }
+  .apis-mechanica header .caption { display:none }
+  .apis-mechanica .topright { right:22px; top:27px } .apis-mechanica .status { font-size:7px }
+  .apis-mechanica .spec { left:25px; bottom:159px; width:190px }
+  .apis-mechanica .spec h2 { font-size:24px } .apis-mechanica .spec p { min-height:0 }
+  .apis-mechanica .spec .fact,.apis-mechanica .telemetry { display:none }
+  .apis-mechanica .metrics { font-size:6px; gap:9px } .apis-mechanica .metrics b { font-size:10px }
+  .apis-mechanica .controls { gap:8px } .apis-mechanica .controls #flight { padding:10px 13px }
+  .apis-mechanica .minerva-nav { top:27px; bottom:auto; left:auto; right:22px; transform:none; }
+  .apis-mechanica .minerva-nav a:not(.primary) { display:none; }
+}

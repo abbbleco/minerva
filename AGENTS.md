@@ -138,7 +138,7 @@ scope authority; these are the rules that matter at submission time:
 - **Undisclosed vulnerabilities go private, never public.** If a finding is in scope under
   `SECURITY.md` §3.1 (isolation escape, unauthorized external-surface access, credential
   exfiltration, trust-model documentation violation), report it via
-  [GitHub Security Advisories](https://github.com/NousResearch/hermes-agent/security/advisories/new)
+  [GitHub Security Advisories](https://github.com/abbbleco/minerva/security/advisories/new)
   or security@nousresearch.com. Do not open a public issue or PR for it, and keep
   reproduction or exploit details out of commit messages, PR bodies, and comments.
 - **Out-of-scope hardening is ordinary public work.** §3.2 items — approval-gate, redaction,

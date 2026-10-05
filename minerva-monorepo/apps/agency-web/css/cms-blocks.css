@@ -1,0 +1,341 @@
+/*
+ * CMS block styles for public pages.
+ *
+ * The site is styled by Webflow CSS; these blocks are self-contained so they
+ * render correctly on any page without touching Webflow classnames. Accent
+ * uses the site's own token (--solution--mvp--toxic-green).
+ */
+
+.cms-scope {
+  --cms-accent: var(--solution--mvp--toxic-green, #d0f601);
+  --cms-ink: #0a0a0a;
+  --cms-ink-soft: rgba(10, 10, 10, 0.62);
+  --cms-line: rgba(10, 10, 10, 0.1);
+  --cms-radius: 18px;
+  color: var(--cms-ink);
+}
+
+/* ── layout primitives ── */
+.cms-section {
+  padding: clamp(56px, 9vw, 120px) 24px;
+}
+.cms-container {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+.cms-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: var(--cms-accent);
+  color: var(--cms-ink);
+  padding: 6px 12px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+}
+.cms-h1 {
+  font-size: clamp(38px, 6vw, 68px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin: 0 0 20px;
+}
+.cms-h2 {
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  font-weight: 700;
+  margin: 0 0 16px;
+}
+.cms-sub {
+  font-size: clamp(16px, 2vw, 19px);
+  line-height: 1.6;
+  color: var(--cms-ink-soft);
+  max-width: 60ch;
+}
+.cms-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 26px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.cms-btn:hover {
+  transform: translateY(-1px);
+}
+.cms-btn--primary {
+  background: var(--cms-ink);
+  color: #fff;
+}
+.cms-btn--accent {
+  background: var(--cms-accent);
+  color: var(--cms-ink);
+  box-shadow: 0 10px 30px -12px rgba(208, 246, 1, 0.55);
+}
+.cms-btn--ghost {
+  border: 1px solid var(--cms-line);
+  color: var(--cms-ink);
+}
+
+/* ── hero ── */
+.cms-hero {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 48px;
+  align-items: center;
+}
+@media (max-width: 860px) {
+  .cms-hero {
+    grid-template-columns: 1fr;
+  }
+}
+.cms-hero-media img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--cms-radius);
+  display: block;
+}
+.cms-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+/* ── rich text prose ── */
+.cms-prose {
+  max-width: 72ch;
+  font-size: 17px;
+  line-height: 1.75;
+}
+.cms-prose h1,
+.cms-prose h2,
+.cms-prose h3 {
+  letter-spacing: -0.01em;
+  margin: 1.6em 0 0.5em;
+  line-height: 1.2;
+}
+.cms-prose h1 { font-size: 34px; }
+.cms-prose h2 { font-size: 27px; }
+.cms-prose h3 { font-size: 21px; }
+.cms-prose p { margin: 0 0 1.1em; }
+.cms-prose a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--cms-accent);
+  text-decoration-thickness: 2px;
+}
+.cms-prose strong { font-weight: 700; }
+.cms-prose ul,
+.cms-prose ol {
+  margin: 0 0 1.1em 1.2em;
+  padding: 0;
+}
+.cms-prose ul { list-style: disc; }
+.cms-prose ol { list-style: decimal; }
+.cms-prose li { margin-bottom: 0.35em; }
+.cms-prose blockquote {
+  margin: 1.4em 0;
+  padding: 4px 0 4px 20px;
+  border-left: 3px solid var(--cms-accent);
+  color: var(--cms-ink-soft);
+}
+.cms-prose code {
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+  background: rgba(208, 246, 1, 0.16);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+.cms-prose hr {
+  border: none;
+  border-top: 1px solid var(--cms-line);
+  margin: 2em 0;
+}
+
+/* ── FAQ (native details — zero JS) ── */
+.cms-faq {
+  border-top: 1px solid var(--cms-line);
+}
+.cms-faq-item {
+  border-bottom: 1px solid var(--cms-line);
+}
+.cms-faq-q {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 22px 4px;
+  font-size: 17px;
+  font-weight: 600;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+.cms-faq-q::-webkit-details-marker { display: none; }
+.cms-faq-q::after {
+  content: "+";
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--cms-ink-soft);
+  transition: transform 0.2s ease;
+}
+.cms-faq-item[open] .cms-faq-q::after {
+  transform: rotate(45deg);
+}
+.cms-faq-a {
+  padding: 0 4px 22px;
+  max-width: 70ch;
+  color: var(--cms-ink-soft);
+  font-size: 15.5px;
+  line-height: 1.7;
+}
+
+/* ── card grids (reviews / team / cases / logos) ── */
+.cms-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 980px) {
+  .cms-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .cms-grid { grid-template-columns: 1fr; }
+}
+.cms-card {
+  border: 1px solid var(--cms-line);
+  border-radius: var(--cms-radius);
+  padding: 24px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.cms-card img {
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--cms-radius) - 6px);
+}
+.cms-quote {
+  font-size: 16px;
+  line-height: 1.65;
+}
+.cms-person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cms-person img {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+.cms-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+.cms-role {
+  font-size: 13px;
+  color: var(--cms-ink-soft);
+}
+.cms-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.cms-tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(208, 246, 1, 0.25);
+}
+.cms-logo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 36px;
+}
+.cms-logo-row img {
+  height: 34px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.75;
+}
+
+/* ── CTA band ── */
+.cms-band {
+  background: var(--cms-ink);
+  color: #fff;
+  border-radius: calc(var(--cms-radius) + 8px);
+  padding: clamp(32px, 5vw, 64px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.cms-band .cms-h2 { margin: 0 0 8px; }
+.cms-band .cms-sub { color: rgba(255, 255, 255, 0.66); }
+
+/* ── video ── */
+.cms-video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--cms-radius);
+  overflow: hidden;
+  background: var(--cms-ink);
+}
+.cms-video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ── blog post article ── */
+.cms-article-head {
+  max-width: 76ch;
+  margin: 0 auto 40px;
+}
+.cms-article-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 13px;
+  color: var(--cms-ink-soft);
+  margin-top: 14px;
+}
+
+/* ── blog index cards ── */
+.cms-post-card {
+  border: 1px solid var(--cms-line);
+  border-radius: var(--cms-radius);
+  padding: 26px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.cms-post-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 24px 48px -24px rgba(10, 10, 10, 0.25);
+}

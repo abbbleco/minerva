@@ -1,0 +1,23 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+
+fetchTimeout: 1800000
+fetchRetries: 8
+fetchRetryMintimeout: 10000
+fetchRetryMaxtimeout: 60000
+fetchWarnTimeoutMs: 30000
+fetchMinSpeedKiBps: 10
+
+# Upstream inference credentials are held by apps/router ONLY. `@google/genai` and any other
+# upstream SDK must never appear in apps/web or apps/agency-web dependencies.
+allowBuilds:
+  esbuild: true
+  protobufjs: true
+  sharp: true
+  unrs-resolver: true
+
+minimumReleaseAgeExclude:
+  - '@vercel/cli-config@0.3.1'
+  - '@vercel/functions@3.9.10'
+  - '@vercel/oidc@3.8.10'

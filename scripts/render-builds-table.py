@@ -57,7 +57,7 @@ from scripts.releases import handoff, r2, semver, stable, versioning  # noqa: E4
 
 MARKER = "<!-- HERMES_BUILDS_TABLE -->"
 END_MARKER = "<!-- /HERMES_BUILDS_TABLE -->"
-DEFAULT_REPO = "NousResearch/hermes-agent"
+DEFAULT_REPO = "abbbleco/minerva"
 
 # Asset name shapes (electron-builder artifactName in
 # apps/desktop/electron-builder.config.cjs):

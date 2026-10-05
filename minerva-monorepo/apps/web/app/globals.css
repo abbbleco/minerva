@@ -1,0 +1,386 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+body {
+  background: #040706;
+  color: #e9eeeb;
+  font-family:
+    var(--font-inter),
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+/* ── Bento-Emerald Dashboard System (DESIGN.md v2, from test/bento.html) ── */
+:root {
+  /* Emerald Accent Spectrum */
+  --m-primary: #34d877;
+  --m-primary-focus: #4ade80;
+  --m-primary-deep: #12a352;
+  --m-mint: #93edb0;
+  --m-warning: #f6c445;
+  --m-danger: #ff4757;
+
+  /* Canvas & Atmosphere */
+  --m-canvas:
+    radial-gradient(130% 120% at 50% 42%, transparent 55%, rgba(0, 0, 0, 0.5) 100%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.05'/></svg>"),
+    radial-gradient(640px 340px at 50% -140px, rgba(52, 211, 153, 0.16), transparent 70%),
+    radial-gradient(520px 340px at 4% 110%, rgba(52, 211, 153, 0.08), transparent 70%),
+    radial-gradient(420px 260px at 96% 108%, rgba(52, 211, 153, 0.05), transparent 70%),
+    linear-gradient(180deg, #060a08 0%, #040706 100%);
+  --m-canvas-repeat: no-repeat, repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+
+  /* Card Surfaces (layered gradients — not glass) */
+  --m-card-surface:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0) 40%),
+    linear-gradient(160deg, #0f1513 0%, #0a0f0d 55%, #080c0a 100%);
+  --m-stroke: rgba(255, 255, 255, 0.07);
+  --m-top-light: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --m-card-shadow: 0 30px 60px -22px rgba(0, 0, 0, 0.65);
+  --m-radius-card: 24px;
+
+  /* Elevation fallbacks */
+  --m-elevated: #0b100e;
+  --m-card-solid: #0f1513;
+
+  /* Text */
+  --m-text: #e9eeeb;
+  --m-inverse: #0a130d;
+
+  /* Mint ramp (CTA surfaces) */
+  --m-mint-ramp:
+    radial-gradient(115% 145% at 101% 42%, rgba(214, 255, 227, 0.9) 0%, rgba(163, 244, 188, 0.5) 28%, rgba(126, 229, 160, 0.2) 52%, rgba(126, 229, 160, 0) 72%),
+    linear-gradient(96deg, #2f9d58 0%, #3fb268 26%, #54c47b 52%, #74dc95 76%, #93edb0 100%);
+}
+
+::selection {
+  background: rgba(74, 222, 128, 0.35);
+  color: #fff;
+}
+
+.m-canvas {
+  background: var(--m-canvas);
+  background-repeat: var(--m-canvas-repeat);
+  color: var(--m-text);
+}
+
+.m-card {
+  position: relative;
+  background: var(--m-card-surface);
+  border: 1px solid var(--m-stroke);
+  border-radius: var(--m-radius-card);
+  padding: 24px;
+  box-shadow:
+    var(--m-top-light),
+    var(--m-card-shadow);
+  overflow: hidden;
+}
+a.m-card,
+button.m-card {
+  display: block;
+}
+
+.m-card-solid {
+  background: var(--m-card-solid);
+  border: 1px solid var(--m-stroke);
+  border-radius: var(--m-radius-card);
+  padding: 24px;
+}
+
+/* Signature glow card — at most one per view (see DESIGN.md §Glow Rules) */
+.m-card-defi {
+  border-color: rgba(134, 239, 172, 0.22);
+  background:
+    radial-gradient(135% 105% at 12% -10%, rgba(150, 245, 182, 0.95) 0%, rgba(88, 218, 140, 0.55) 16%, rgba(40, 148, 88, 0.3) 34%, rgba(16, 66, 40, 0.14) 52%, rgba(6, 16, 11, 0) 68%),
+    linear-gradient(162deg, #0b2114 0%, #081309 42%, #040806 100%);
+  box-shadow:
+    0 0 0 1px rgba(134, 239, 172, 0.1),
+    0 0 60px rgba(52, 211, 153, 0.22),
+    0 0 140px 10px rgba(52, 211, 153, 0.12),
+    0 30px 60px -18px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  animation: m-breathe 7s ease-in-out infinite;
+}
+@keyframes m-breathe {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(134, 239, 172, 0.1),
+      0 0 60px rgba(52, 211, 153, 0.22),
+      0 0 140px 10px rgba(52, 211, 153, 0.12),
+      0 30px 60px -18px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(134, 239, 172, 0.14),
+      0 0 80px rgba(52, 211, 153, 0.3),
+      0 0 170px 14px rgba(52, 211, 153, 0.16),
+      0 30px 60px -18px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .m-card-defi {
+    animation: none;
+  }
+}
+
+/* Mint ramp CTA card — inverse text */
+.m-card-mint {
+  background: var(--m-mint-ramp);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: var(--m-inverse);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 30px 70px -18px rgba(0, 0, 0, 0.55),
+    0 12px 44px -12px rgba(46, 170, 96, 0.35);
+}
+
+/* Card grain overlay (SVG turbulence, clipped to radius) */
+.m-noise {
+  position: relative;
+  min-height: 90vh;
+}
+.m-noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='0.07'/></svg>");
+  mix-blend-mode: overlay;
+}
+
+.m-nav {
+  background: rgba(8, 12, 10, 0.92);
+  border-color: var(--m-stroke);
+}
+
+.m-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-image: linear-gradient(96deg, #2f9d58 0%, #3fb268 40%, #54c47b 100%);
+  color: var(--m-inverse);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: 9999px;
+  padding: 10px 20px;
+  box-shadow:
+    0 5px 12px rgba(8, 30, 16, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 12px 44px -12px rgba(46, 170, 96, 0.35);
+  transition:
+    filter 0.2s ease,
+    transform 0.2s ease;
+}
+.m-btn:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+.m-btn:active {
+  transform: translateY(0);
+  filter: brightness(0.98);
+}
+.m-btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.m-btn-danger {
+  background-image: none;
+  background: rgba(255, 71, 87, 0.12);
+  color: #ff7585;
+  border: 1px solid rgba(255, 71, 87, 0.35);
+  box-shadow: none;
+}
+.m-btn-danger:hover {
+  background: rgba(255, 71, 87, 0.2);
+  box-shadow: none;
+}
+.m-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-image: linear-gradient(180deg, #1f2622, #121815);
+  color: #e9eeeb;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  border-radius: 9999px;
+  padding: 10px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 18px rgba(0, 0, 0, 0.4);
+  transition:
+    filter 0.2s ease,
+    transform 0.2s ease;
+}
+.m-btn-ghost:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+.m-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(180deg, #1a221d, #131a16);
+  color: rgba(233, 238, 235, 0.7);
+  font-size: 13px;
+  line-height: 1.4;
+  border-radius: 9999px;
+  padding: 4px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.m-chip-success {
+  background: rgba(52, 211, 153, 0.08);
+  color: var(--m-primary-focus);
+  border-color: rgba(74, 222, 128, 0.35);
+}
+.m-chip-warn {
+  background: rgba(246, 196, 69, 0.08);
+  color: var(--m-warning);
+  border-color: rgba(246, 196, 69, 0.35);
+}
+.m-chip-danger {
+  background: rgba(255, 71, 87, 0.08);
+  color: #ff7585;
+  border-color: rgba(255, 71, 87, 0.35);
+}
+.m-chip-info {
+  background: rgba(147, 237, 176, 0.06);
+  color: var(--m-mint);
+  border-color: rgba(147, 237, 176, 0.25);
+}
+
+.m-link {
+  color: var(--m-primary);
+  transition: color 0.15s ease;
+}
+.m-link:hover {
+  color: var(--m-primary-focus);
+}
+
+.m-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--m-stroke);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: var(--m-text);
+  font-size: 13px;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.m-input::placeholder {
+  color: rgba(233, 238, 235, 0.35);
+}
+.m-input:focus {
+  border-color: var(--m-primary);
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.35);
+}
+
+.m-table {
+  width: 100%;
+  font-size: 13px;
+}
+.m-table th {
+  text-align: left;
+  color: rgba(233, 238, 235, 0.35);
+  font-weight: 500;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--m-stroke);
+}
+.m-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--m-text);
+}
+
+.m-progress {
+  background: var(--m-elevated);
+  border-radius: 9999px;
+  height: 6px;
+  overflow: hidden;
+}
+.m-progress-fill {
+  background-image: linear-gradient(90deg, #2f9d58, #74dc95, #93edb0);
+  border-radius: 9999px;
+  height: 6px;
+}
+
+.m-title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--m-text);
+}
+.m-kpi {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .m-btn,
+  .m-btn-ghost {
+    transition: none;
+  }
+}
+
+/* ── Pitch-deck end-of-deck CTA (DESIGN.md btn-dark) ── */
+.pd-cta:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+  box-shadow:
+    0 5px 12px rgba(8, 30, 16, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 0 1px rgba(134, 239, 172, 0.28),
+    0 0 24px rgba(52, 211, 153, 0.18);
+}
+.pd-cta:active {
+  transform: translateY(0);
+  filter: brightness(0.98);
+}
+@media (prefers-reduced-motion: reduce) {
+  .pd-cta {
+    transition: none;
+  }
+}
+
+/* ── Pitch deck bento grid (DESIGN.md §Responsive Behavior) ── */
+.m-deck-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+}
+.m-deck-grid > article {
+  grid-column: span 12;
+  min-width: 0;
+}
+@media (max-width: 840px) {
+  .m-deck-grid {
+    grid-template-columns: 1fr;
+  }
+  .m-deck-grid > article {
+    grid-column: 1 / -1;
+  }
+}

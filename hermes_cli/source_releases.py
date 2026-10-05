@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from html.parser import HTMLParser
 import json
 import logging
+import os
 import re
 import subprocess
 import urllib.error
@@ -13,8 +14,29 @@ import urllib.request
 from hermes_cli.update_channel import STABLE_TAG_RE, is_canary_tag
 
 logger = logging.getLogger(__name__)
-_PUBLIC_BASE = "https://hermes-assets.nousresearch.com"
-OFFICIAL_REPOSITORY = "NousResearch/hermes-agent"
+
+# Public origin for source-release channel records. Production is the
+# self-hosted Minerva Assets origin, which also serves the desktop release
+# channel. Overridable so a staging or rehearsal archive needs no code change;
+# read at call time (never import time) so a test or a child process can point
+# it somewhere else.
+DEFAULT_PUBLIC_BASE = "https://minerva-assets.abbble.co.za"
+
+
+def public_base() -> str:
+    """The archive origin, validated on every read.
+
+    ``MINERVA_ASSETS_PUBLIC_URL`` is the fork's own name for the override;
+    ``CLOUDFLARE_R2_PUBLIC_URL`` is honoured so the release CI that already
+    exports it keeps working unchanged.
+    """
+    from hermes_cli.release_channels import public_base as validate_public_base
+
+    raw = os.environ.get("MINERVA_ASSETS_PUBLIC_URL") or os.environ.get("CLOUDFLARE_R2_PUBLIC_URL")
+    return validate_public_base(raw) if raw and raw.strip() else DEFAULT_PUBLIC_BASE
+
+
+OFFICIAL_REPOSITORY = "abbbleco/minerva"
 _GITHUB_ORIGIN = re.compile(
     r"^(?:https://github\.com/|git@github\.com:|ssh://git@github\.com/)"
     r"([A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?)(?:\.git)?/?$", re.IGNORECASE,
@@ -69,7 +91,7 @@ def _resolve_channel(name: str, repository: str):
     """
     from hermes_cli.release_channels import ChannelReader
 
-    return ChannelReader(_PUBLIC_BASE, repository=repository).resolve(name)
+    return ChannelReader(public_base(), repository=repository).resolve(name)
 
 
 def resolve_source_target(channel: str, git_cmd=None, cwd=None, *, repository=None) -> SourceTarget:
@@ -223,14 +245,14 @@ def _release_pointer(channel: str) -> tuple[str | None, str | None]:
     # Stable's completion job writes this before publishing the GitHub draft.
     # Publication is checked separately, so that interval fails closed.
     if channel == "stable":
-        text = _read(f"{_PUBLIC_BASE}/releases/stable/release-candidates.json", missing_ok=True)
+        text = _read(f"{public_base()}/releases/stable/release-candidates.json", missing_ok=True)
         if text is not None:
             data = json.loads(text)
             if (not isinstance(data, dict) or not _valid_tag(data.get("tag"), channel)
                     or not isinstance(data.get("commit"), str) or not _SHA.fullmatch(data["commit"])):
                 raise ValueError("Invalid stable release pointer")
             return data["tag"], data["commit"]
-    text = _read(f"{_PUBLIC_BASE}/releases/{channel}/index.html", missing_ok=True)
+    text = _read(f"{public_base()}/releases/{channel}/index.html", missing_ok=True)
     if text is None:
         return None, None
     page = _BuildMetadata()

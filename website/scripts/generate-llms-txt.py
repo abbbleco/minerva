@@ -310,7 +310,7 @@ def emit_llms_index() -> str:
         "(Linux, macOS, WSL2)"
     )
     lines.append("")
-    lines.append("Repo: https://github.com/NousResearch/hermes-agent")
+    lines.append("Repo: https://github.com/abbbleco/minerva")
     lines.append("")
 
     for section, items in SECTIONS:

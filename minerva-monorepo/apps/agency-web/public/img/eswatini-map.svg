@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480" width="400" height="480" fill="none">
+  <defs>
+    <filter id="eskglow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="10" />
+    </filter>
+    <linearGradient id="eskbody" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#14423B" />
+      <stop offset="1" stop-color="#0A2622" />
+    </linearGradient>
+  </defs>
+  <g filter="url(#eskglow)" fill="#2C73FE" opacity="0.35">
+    <polygon points="191,33 264,42 327,83 360,144 385,217 373,283 349,367 331,431 294,472 251,466 214,416 185,361 160,272 156,208 164,120 178,67" />
+  </g>
+  <polygon points="191,33 264,42 327,83 360,144 385,217 373,283 349,367 331,431 294,472 251,466 214,416 185,361 160,272 156,208 164,120 178,67" fill="url(#eskbody)" stroke="#D0F601" stroke-width="3" stroke-linejoin="round" />
+  <ellipse cx="336" cy="124" rx="14" ry="4" fill="#000000" opacity="0.18" />
+  <path d="M336 119 C336 119 318 100 318 88 A18 18 0 1 1 354 88 C354 100 336 119 336 119 Z" fill="#D0F601" />
+  <circle cx="336" cy="88" r="7" fill="#0B1210" />
+  <circle cx="333.5" cy="85.5" r="2.4" fill="#FFFFFF" opacity="0.85" />
+</svg>

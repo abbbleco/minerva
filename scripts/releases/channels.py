@@ -4,7 +4,9 @@ from __future__ import annotations
 from copy import deepcopy
 import hashlib
 import http.client
+import json
 import secrets
+import urllib.parse
 import uuid
 
 from hermes_cli.release_channels import (
@@ -90,6 +92,109 @@ class R2ChannelStore:
             if not token or token in seen:
                 raise ChannelError("Incomplete or repeated channel pagination token")
             seen.add(token)
+
+
+class HttpChannelStore:
+    """Channel store backed by the Minerva Assets origin's publish endpoint.
+
+    Same three operations as :class:`R2ChannelStore`, including ETag
+    compare-and-swap, so ``ChannelPublisher`` is unchanged by which store it is
+    given. The origin re-validates channel records and manifests against the
+    protocol before storing them, so a broken publish fails here as a 422
+    instead of becoming a fleet-wide outage.
+
+    The token is read from the environment, never from argv, so it does not
+    land in the process table or a CI log.
+    """
+
+    def __init__(self, origin: str, token: str, *, opener=None):
+        if not token:
+            raise ChannelError("Minerva Assets publish token is required")
+        self.origin = origin.rstrip("/")
+        self.token = token
+        # Every operation goes through the seam so a test can drive the whole
+        # client without touching the network.
+        self._opener = opener or self._request
+
+    def _auth(self) -> dict:
+        # Declared by the callers, not added inside the transport, so an injected
+        # opener observes exactly what would go on the wire.
+        return {"authorization": f"Bearer {self.token}"}
+
+    def _request(self, method: str, url: str, *, body: bytes | None = None,
+                 headers: dict | None = None) -> tuple[int, dict, bytes]:
+        import urllib.error
+        import urllib.request
+
+        request = urllib.request.Request(url, data=body, method=method)
+        for name, value in (headers or {}).items():
+            request.add_header(name, value)
+        try:
+            with urllib.request.urlopen(request, timeout=60) as response:
+                return response.status, dict(response.headers), response.read()
+        except urllib.error.HTTPError as exc:
+            # A 4xx body is the origin explaining itself (412 precondition,
+            # 409 immutable, 422 validation). It is a result, not a transport
+            # failure, so it is returned rather than raised.
+            return exc.code, dict(exc.headers or {}), exc.read()
+
+    def get(self, key: str) -> tuple[bytes, str] | None:
+        status, headers, body = self._opener("GET", f"{self.origin}/{artifact_key(key)}", headers=self._auth())
+        if status == 404:
+            return None
+        if status != 200:
+            raise ChannelError(f"Channel read failed (HTTP {status}) for {key}")
+        etag = headers.get("etag") or headers.get("ETag")
+        if not etag:
+            raise ChannelError("Channel read missing ETag")
+        if len(body) > 4 * 1024 * 1024:
+            raise ChannelError("Channel metadata exceeds size limit")
+        return body, etag
+
+    def put(self, key: str, body: bytes, etag: str | None = None) -> None:
+        target = artifact_key(key)
+        # S3 spelling, honoured by the origin: create-only when no ETag was
+        # read, replace-that-exact-object when one was.
+        condition = {"If-Match": etag} if etag is not None else {"If-None-Match": "*"}
+        url = f"{self.origin}/api/publish?key={urllib.parse.quote(target, safe='')}"
+        status, _, payload = self._opener(
+            "POST", url, body=body,
+            headers={**self._auth(), **condition, "content-type": "application/json"})
+
+        if status in (200, 201):
+            from scripts.releases.upload_summary import note
+            note(key)
+            return
+
+        if status == 412:
+            raise ChannelConflict(f"Channel write conflict: {key}") from None
+
+        # 409 means the origin refused to overwrite an already-published
+        # immutable object, and 422 means it rejected the document. Both mean
+        # this publisher is wrong, not that a retry might help.
+        if status in (409, 422):
+            raise ChannelError(
+                f"Channel write refused (HTTP {status}) for {key}: {payload[:400]!r}") from None
+        if status in (401, 403):
+            raise ChannelError(f"Channel write unauthorized for {key}") from None
+        if status == 503:
+            raise ChannelError(f"Channel origin is not configured to publish: {payload[:200]!r}") from None
+        raise ChannelError(f"Channel write outcome uncertain (HTTP {status}): {key}; inspect before retry") from None
+
+    def keys(self, prefix: str) -> list[str]:
+        status, _, body = self._opener(
+            "GET", f"{self.origin}/api/objects?prefix={urllib.parse.quote(prefix, safe='/')}",
+            headers=self._auth())
+        if status != 200:
+            raise ChannelError(f"Channel listing failed (HTTP {status})")
+        try:
+            payload = json.loads(body)
+            keys = payload["keys"]
+        except (ValueError, KeyError, TypeError) as exc:
+            raise ChannelError("Channel listing is malformed") from exc
+        if not isinstance(keys, list) or not all(isinstance(key, str) for key in keys):
+            raise ChannelError("Channel listing is malformed")
+        return [artifact_key(key) for key in keys]
 
 
 def preview_identity(name: str, token: str) -> dict:

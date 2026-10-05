@@ -1,0 +1,261 @@
+
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        html,
+        body {
+          font-size: 10px !important;
+          overflow-x: hidden !important;
+          width: 100vw;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* LINK STYLES */
+        .text-arrow-link .text-arrow-link-icon {
+          transition: all 0.25s ease;
+        }
+
+        .text-arrow-link:hover .text-arrow-link-icon {
+          transform: translateX(10px);
+        }
+
+        /* BUTTON STYLES */
+        .button>* {
+          transition: all 0.25s ease;
+          transition: color 0.1s ease;
+        }
+
+        .primary-button * {
+          transition: all 0.25s ease;
+        }
+
+        .button.is-disabled {
+          opacity: 0.5;
+        }
+
+        /* YELLOW */
+        .button.is-disabled {
+          opacity: 0.5;
+        }
+
+        .button:hover .button-arrow,
+        .button:hover .button-text-wrapper,
+        .primary-button:hover .primary-button_text-wrapper,
+        .primary-button:hover .primary-button_arrow {
+          background-color: #E4FF54;
+        }
+
+        /* BLACK */
+        .button:hover .button-arrow.is-black,
+        .button:hover .button-text-wrapper.is-black {
+          background-color: #D0F601;
+          color: #141515;
+        }
+
+        .button:hover .button-arrow.is-black svg path {
+          stroke: #141515;
+        }
+
+        /* WHITE + ARROW + BLACK ON HOVER V2 */
+        .button.arrow-button-black-hover:hover {
+          color: white;
+        }
+
+        .button.arrow-button-black-hover:hover svg path {
+          stroke: white;
+        }
+
+        /* WHITE + ARROW + WHITE FILL ON HOVER */
+        .button.white-outline:hover {
+          background: white;
+          border-color: white;
+          color: black;
+        }
+
+        .button.white-outline:hover svg path {
+          stroke: black;
+        }
+      
+
+
+        /* SOLUTION PAGE CASE CARDS GRADIENT VARIATIONS AND STYLES */
+        .solution-page_case-card.wordpress-case {
+          background: var(--cards-bg-dark-blue-gradient, linear-gradient(115deg, #7A91E9 -63.62%, #3451BE 85.59%));
+        }
+
+        .solution-page_case-card.players-health-case {
+          background: var(--cards-bg-sky-gradient, linear-gradient(304deg, #6462F1 27.09%, #AAA9FF 173.85%));
+        }
+
+        .solution-page_case-card.myso-case {
+          background: var(--cards-bg-olive-gradient, linear-gradient(299deg, #D1F0E2 43.89%, #A4B8FE 182.34%));
+        }
+
+        .solution-page_case-card-glow {
+          height: 100%;
+        }
+
+        /* SERVICES PAGE AWARDS CARDS VARIATIONS */
+        .services-page-awards_card.is-white {
+          border-radius: 0px 24px 24px 24px;
+          background: linear-gradient(91deg, #ACE1FF -61.77%, #FFF 87.06%);
+        }
+
+        .services-page-awards_card.is-white:hover {
+          background: var(--Cards-BG-Light-Blue-Gradient, linear-gradient(284deg, #1BADFF -13.73%, #FFF 84.32%));
+        }
+
+        /* SERVICES CONTACT CARDS VARIATIONS */
+        .services-page-contact_card.is-v-1 {
+          border-radius: 0px 24px 24px 24px;
+          background: linear-gradient(132deg, #003BFF -16.03%, #060F2B 72.68%);
+        }
+
+        .services-page-contact_card.is-v-2 {
+          border-radius: 24px 24px 0px 24px;
+          background: var(--Primary-White, #FFF);
+        }
+
+        /* SOLUTIONS CARDS VARIATIONS */
+        .solutions_card {
+          /*background: linear-gradient(91deg, #C7ACFF -61.77%, #FFF 87.06%), linear-gradient(0deg, #DFCFFF 0%, #DFCFFF 100%), linear-gradient(92deg, #C7ACFF -59.96%, #FFF 123.53%);*/
+          transition: all 0.25s ease;
+        }
+
+        .solutions_card .solutions_card-icon.is-hover {
+          opacity: 0;
+        }
+
+        .solutions_card .button.fill-black,
+        .solutions_card .button.fill-black svg path,
+        .solutions_card .solutions_card-icon,
+        .solutions_card-h-bg-1,
+        .solutions_card-h-bg-2,
+        .solutions_card-h-bg-3 {
+          transition: all 0.25s ease;
+        }
+
+        .solutions_card .solutions_card-top,
+        .solutions_card .solutions_card-middle,
+        .solutions_card .button {
+          position: relative;
+          z-index: 50;
+        }
+
+        .solutions_card:nth-child(1):hover {
+          /* background: linear-gradient(131.92deg, #003BFF -16.03%, #060F2B 72.68%); */
+          color: white !important;
+        }
+
+        .solutions_card:nth-child(1) .solutions_card-h-bg-1.is-hover {
+          opacity: 0;
+        }
+
+        .solutions_card:nth-child(1):hover .solutions_card-h-bg-1.is-hover {
+          opacity: 1;
+        }
+
+        .solutions_card:nth-child(2):hover {
+          /* background: linear-gradient(131.92deg, #003BFF -16.03%, #060F2B 72.68%); */
+          color: white !important;
+        }
+
+        .solutions_card:nth-child(2) .solutions_card-h-bg-2.is-hover {
+          opacity: 0;
+        }
+
+        .solutions_card:nth-child(2):hover .solutions_card-h-bg-2.is-hover {
+          opacity: 1;
+        }
+
+        .solutions_card.is-unique:hover {
+          /* background: linear-gradient(131.92deg, #003BFF -16.03%, #060F2B 72.68%); */
+          color: white !important;
+        }
+
+        .solutions_card:nth-child(3) .solutions_card-h-bg-3.is-hover {
+          opacity: 0;
+        }
+
+        .solutions_card:nth-child(3):hover .solutions_card-h-bg-3.is-hover {
+          opacity: 1;
+        }
+
+        .solutions_card:hover .solutions_card-icon.is-hover {
+          opacity: 1;
+        }
+
+        .solutions_card:hover .button.fill-black {
+          background: white;
+          color: black;
+        }
+
+        .solutions_card:hover .button.fill-black svg path {
+          stroke: black;
+        }
+
+        .solutions_card.is-unique:hover .button.fill-white {
+          background: #D0F601;
+          color: black;
+        }
+
+        .solutions_card.is-unique:hover .button.fill-white svg path {
+          stroke: black;
+        }
+
+        .solutions_card.is-unique
+
+        /* ABOUT CARDS VARIATIONS */
+        .about-p-market_card.funding-card-home-p {
+          background: var(--Cards-BG-Dark-4, linear-gradient(104deg, #2C2F45 2.19%, #1C1C1C 32.57%));
+        }
+
+        .about-p-market_card.team-card-home-p {
+          background: linear-gradient(91deg, #C7ACFF -61.77%, #FFF 87.06%), linear-gradient(91deg, #ACE1FF -61.77%, #FFF 87.06%);
+        }
+      
+
+
+          .navbar {
+            transform: translateY(0);
+            transition: all 0.4s ease;
+          }
+
+          .navbar.is-hidden {
+            transform: translateY(-100%);
+          }
+
+          .navbar_dropmenu-link .navbar_link-title-icon {
+            opacity: 0;
+            transition: opacity 0.35s ease;
+          }
+
+          .navbar_dropmenu-link:hover .navbar_link-title-icon {
+            opacity: 1;
+          }
+
+          .navbar *::-webkit-scrollbar {
+            display: none;
+            /* Hide scrollbar for Chrome, Safari and Opera */
+          }
+
+          .navbar * {
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+          }
+
+          .navbar_links-main,
+          .navbar_dropmenu-desktop {
+            overflow-x: hidden !important;
+          }
+
+          [data-wf--navbar--variant="white"] .navbar_dropdown-toggle-icon:not(.is-green) path {
+            fill: black;
+          }
+        

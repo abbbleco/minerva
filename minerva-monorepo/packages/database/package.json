@@ -1,0 +1,33 @@
+{
+  "name": "@minerva/database",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": {
+      "types": "./index.ts",
+      "default": "./index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "db:generate": "node scripts/migrate.mjs",
+    "db:seed": "node scripts/seed.mjs",
+    "db:verify": "node scripts/verify-rls.mjs",
+    "add-operator": "node scripts/add-operator.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.112.3",
+    "postgres": "^3.4.9"
+  },
+  "turbo": {
+    "build": {
+      "outputs": []
+    }
+  }
+}

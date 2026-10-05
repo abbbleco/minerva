@@ -1,0 +1,258 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-display: "Rules Compressed", "Arial Narrow", sans-serif;
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+/* Rules Compressed — self-hosted condensed gothic for all display type
+   (same cuts as the dashboard: web/public/fonts/RulesCompressed-*). */
+@font-face {
+  font-family: "Rules Compressed";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/RulesCompressed-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Rules Compressed";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/RulesCompressed-Medium.woff2") format("woff2");
+}
+
+/* ── ABBBLE Portal dark-navy theme (from images/minerva/*.png) ──
+   Deliberately NOT the emerald DESIGN.md system: deep navy canvas,
+   hairline borders, bright-blue primary, serif display headings. */
+:root {
+  --nous-bg: #0a0a2b;
+  --nous-bg-soft: #101038;
+  --nous-card: #141444;
+  --nous-card-2: #181850;
+  --nous-stroke: rgba(255, 255, 255, 0.09);
+  --nous-text: #f4f4ff;
+  --nous-muted: rgba(244, 244, 255, 0.6);
+  --nous-faint: rgba(244, 244, 255, 0.38);
+  --nous-primary: #1f22ff;
+  --nous-primary-hover: #3437ff;
+  --nous-gold: #f5b942;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--nous-bg);
+  color: var(--nous-text);
+  font-family:
+    var(--font-inter),
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(31, 34, 255, 0.55);
+  color: #fff;
+}
+
+/* Vertical label for the collapsed desktop rail (overview.png right edge). */
+.nous-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.nous-canvas {
+  background:
+    radial-gradient(900px 380px at 70% -120px, rgba(31, 34, 255, 0.14), transparent 70%),
+    radial-gradient(600px 420px at 0% 110%, rgba(31, 34, 255, 0.07), transparent 70%),
+    var(--nous-bg);
+}
+
+.nous-display {
+  font-family: var(--font-display), "Arial Narrow", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 0.95;
+}
+
+.nous-card {
+  background: linear-gradient(180deg, var(--nous-card) 0%, #12123c 100%);
+  border: 1px solid var(--nous-stroke);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.nous-card-flat {
+  background: var(--nous-bg-soft);
+  border: 1px solid var(--nous-stroke);
+  border-radius: 4px;
+}
+
+.nous-eyebrow {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--nous-faint);
+}
+
+.nous-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--nous-primary);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  padding: 12px 22px;
+  border: 1px solid transparent;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.nous-btn:hover {
+  background: var(--nous-primary-hover);
+}
+.nous-btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.nous-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--nous-text);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  border-radius: 3px;
+  padding: 12px 10px;
+}
+.nous-btn-ghost:hover {
+  color: #fff;
+}
+
+.nous-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--nous-text);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  padding: 10px 18px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.nous-btn-outline:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nous-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 2px;
+  padding: 12px 14px;
+  color: var(--nous-text);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.nous-input::placeholder {
+  color: var(--nous-faint);
+}
+.nous-input:focus {
+  border-bottom-color: var(--nous-primary);
+}
+
+.nous-navlink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--nous-muted);
+  padding: 7px 10px;
+  border-radius: 3px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.nous-navlink:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+.nous-navlink.active {
+  color: #fff;
+  background: rgba(31, 34, 255, 0.22);
+}
+
+.nous-duo {
+  image-rendering: pixelated;
+  filter: grayscale(1) contrast(1.25) brightness(1.05);
+  mix-blend-mode: lighten;
+}
+
+.nous-table {
+  width: 100%;
+  font-size: 12px;
+  border-collapse: collapse;
+}
+.nous-table th {
+  text-align: left;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--nous-faint);
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--nous-stroke);
+}
+.nous-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: rgba(244, 244, 255, 0.82);
+}
+
+.nous-chip {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  padding: 4px 8px;
+  color: var(--nous-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nous-btn,
+  .nous-btn-outline,
+  .nous-navlink {
+    transition: none;
+  }
+}

@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 import tempfile
 
+from scripts.releases.channels import R2ChannelStore
 from hermes_cli.release_channels import ChannelReader, build_prefix, canonical_json, decode_json, require_sha256, validate_request
 from scripts.releases import commit_build, handoff, r2
 
@@ -53,6 +54,26 @@ def receiver_request(request: dict) -> bool:
         raise ValueError("Receiver candidate escaped disposable official identity admission")
     validate_request(request, policy="stable-release")
     return True
+
+
+def channel_store(public_base: str):
+    """The write target for a channel publication.
+
+    ``MINERVA_ASSETS_PUBLISH_TOKEN`` selects the self-hosted Minerva Assets
+    origin, which speaks the same get/compare-and-swap/keys contract over
+    ``POST /api/publish`` and re-validates every document against the protocol
+    before storing it. Without the token the R2 store is used, so an existing
+    R2-configured release pipeline keeps working unchanged.
+
+    The token is read from the environment, never from argv, so it never
+    reaches the process table or a CI log.
+    """
+    token = os.environ.get("MINERVA_ASSETS_PUBLISH_TOKEN", "").strip()
+    if token:
+        from scripts.releases.channels import HttpChannelStore
+
+        return HttpChannelStore(public_base, token)
+    return R2ChannelStore(*r2.credentials())
 
 
 def admit(request: dict, env: dict[str, str]) -> dict[str, str]:
@@ -225,7 +246,7 @@ def main(argv: list[str] | None = None) -> None:
             expected, _feeds = assemble(pinned, root, needs=needs)
             return pinned == request and manifest == expected
 
-        publisher = ChannelPublisher(R2ChannelStore(*r2.credentials()), args.repository, args.public_base,
+        publisher = ChannelPublisher(channel_store(args.public_base), args.repository, args.public_base,
                                      authorize=authorize, verify_build=qualified)
         if args.command.startswith("receiver-"):
             if args.root is None:

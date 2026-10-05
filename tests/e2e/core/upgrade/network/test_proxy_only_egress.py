@@ -34,7 +34,7 @@ pytestmark = [
     pytest.mark.skipif(I.real_uv() is None, reason="uv required"),
 ]
 
-GIT_PATH = "/NousResearch/hermes-agent.git/"
+GIT_PATH = "/abbbleco/minerva.git/"
 
 
 @pytest.fixture(scope="module")

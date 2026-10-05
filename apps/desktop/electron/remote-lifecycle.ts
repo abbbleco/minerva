@@ -203,7 +203,7 @@ async function locateHermes(ssh, remoteHermesPath) {
     //   - version checking: `<python> --version` printed "Python x.y.z" instead of
     //     the Minerva version, and
     //   - capability probing: `<python> serve --help` failed entirely.
-    // See https://github.com/NousResearch/hermes-agent/issues/74411
+    // See https://github.com/abbbleco/minerva/issues/74411
     return candidate
   }
 
