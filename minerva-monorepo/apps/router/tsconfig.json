@@ -1,7 +1,13 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2022"],
+    // DOM fetch globals (fetch/Response/ReadableStream/TextDecoder): the service
+    // calls upstream over fetch, so these are load-bearing. Declared here rather
+    // than inherited from @types/node's undici wiring, which resolved
+    // differently between installs and produced CI-only "Property does not
+    // exist on type Response" failures. Interface merging + skipLibCheck keep
+    // this conflict-free with Node's own globals.
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "moduleResolution": "bundler",
     "strict": true,
