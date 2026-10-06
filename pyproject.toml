@@ -336,7 +336,7 @@ stt-whisper = [
 ]
 audio-io = ["sounddevice==0.5.5", "numpy==2.4.3"]
 # WeChat voice decode (tools/transcription_tools.py self-heal path).
-silk = ["pilk==0.2.4"]
+# silk = ["pilk==0.2.4"]
 # Wake-engine sub-extras — lazy per-engine installs so a user who only wants
 # sherpa-onnx doesn't pull the whole [wake] bundle. Pins match [wake].
 wake-openwakeword = [
