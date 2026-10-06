@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 
+import AccountButton from "./account-button";
+
 const EXPLORE = [
   { href: "/", label: "Overview", icon: "▦" },
   { href: "/models", label: "Models", icon: "♣" },
@@ -42,22 +44,7 @@ export default function Sidebar() {
             draggable={false}
           />
         </Link>
-        <Link
-          href="/signup"
-          aria-label="Create ABBBLE Account"
-          title="Create ABBBLE Account"
-          className="mt-4 flex h-10 w-10 items-center justify-center rounded-[3px] bg-white text-[#0a0a2b]"
-        >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <circle cx="8" cy="5" r="2.6" stroke="currentColor" strokeWidth="1.5" />
-            <path
-              d="M2.5 13.5c.8-2.8 2.9-4.2 5.5-4.2s4.7 1.4 5.5 4.2"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-          </svg>
-        </Link>
+        <AccountButton variant="folded-signup" />
         <span className="my-4 h-px w-8 bg-white/10" aria-hidden="true" />
         <nav className="flex flex-1 flex-col items-center gap-1" aria-label="Primary">
           {[...EXPLORE, ...RESOURCES].map((n) => (
@@ -72,14 +59,7 @@ export default function Sidebar() {
             </Link>
           ))}
         </nav>
-        <Link
-          href="/login"
-          aria-label="Member Sign In"
-          title="Member Sign In"
-          className="flex h-9 w-9 items-center justify-center rounded border border-white/20 text-[12px] text-white transition hover:border-white"
-        >
-          <span aria-hidden="true">◉</span>
-        </Link>
+        <AccountButton variant="folded-login" />
       </aside>
     );
   }
@@ -112,21 +92,7 @@ export default function Sidebar() {
         </span>
       </Link>
 
-      <Link
-        href="/signup"
-        className="mt-6 flex items-center justify-between rounded-[3px] bg-white px-4 py-3 text-[12px] font-bold tracking-wide text-[#0a0a2b] uppercase"
-      >
-        Create ABBBLE Account
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <circle cx="8" cy="5" r="2.6" stroke="currentColor" strokeWidth="1.5" />
-          <path
-            d="M2.5 13.5c.8-2.8 2.9-4.2 5.5-4.2s4.7 1.4 5.5 4.2"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-          />
-        </svg>
-      </Link>
+      <AccountButton variant="sidebar" />
 
       <p className="nous-eyebrow mt-8 mb-2 px-1">Explore</p>
       <nav className="space-y-0.5" aria-label="Explore">
@@ -152,15 +118,7 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      <Link
-        href="/login"
-        className="nous-navlink mt-6 border-t border-white/10 pt-5 !text-white"
-      >
-        <span className="flex h-6 w-6 items-center justify-center rounded border border-white/20 text-[12px]" aria-hidden="true">
-          ◉
-        </span>
-        Member Sign In
-      </Link>
+      <AccountButton variant="loginlink" />
     </aside>
   );
 }

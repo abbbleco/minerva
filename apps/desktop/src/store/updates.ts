@@ -15,7 +15,7 @@ import type {
   DesktopVersionInfo,
   HermesConnection
 } from '@/global'
-import { checkHermesUpdate, getActionStatus, updateHermes } from '@/minerva'
+import { checkHermesUpdate, getActionStatus, updateMinerva } from '@/minerva'
 import { translateNow } from '@/i18n'
 import { persistString, storedString } from '@/lib/storage'
 import { $connectionsRegistry, refreshConnectionsRegistry } from '@/store/connections'

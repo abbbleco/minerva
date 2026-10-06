@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import AccountButton from "./components/account-button";
 import Sidebar from "./components/sidebar";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
@@ -28,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <a href="/plans" className="text-white/60">Plans</a>
               <a href="/minerva" className="text-white/60">Minerva</a>
               <a href="/download" className="text-white/60">Download</a>
-              <a href="/login" className="ml-auto text-white">Sign in</a>
+              <AccountButton variant="nav" />
             </nav>
             {children}
           </div>

@@ -83,7 +83,7 @@ export interface DesktopOnboardingState {
   localEndpoint: boolean
   /** True when the backend still owes this user the one-time free-tier
    *  introduction AND the free tier is what carries inference. It makes the
-   *  overlay show its "Hermes is ready" screen once even though the app is
+   *  overlay show its "Minerva is ready" screen once even though the app is
    *  configured. The backend's `notice_pending` flag is the only source of
    *  truth — there is no renderer latch — so an ack clears it everywhere. */
   freeTierReady: boolean

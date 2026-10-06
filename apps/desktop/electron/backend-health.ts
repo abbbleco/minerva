@@ -225,7 +225,7 @@ export function makeReauthRequiredError(detail?: string): Error {
 
 /**
  * No native token and no live cookie: boot cannot self-heal. Must carry
- * `isReauthRequired` so startHermes latches; a bare `needsOauthLogin` (the
+ * `isReauthRequired` so startMinerva latches; a bare `needsOauthLogin` (the
  * IPC-shaped hint) only drives Sign in copy and would retry after #88070,
  * hiding the overlay. A confirmed ticket-mint 401/403 carries the same tag
  * (see gatewayTicketFailure, #95701).
@@ -305,7 +305,7 @@ export async function waitForHermesReady(baseUrl: string, options: HermesReadyOp
       }
 
       if (options.alreadyBound && isConnectionRefusedError(error)) {
-        throw new Error(`Hermes backend did not become ready: ${(error as Error).message}`)
+        throw new Error(`Minerva backend did not become ready: ${(error as Error).message}`)
       }
 
       // An explicitly missing route means the backend predates /api/health.
@@ -338,5 +338,5 @@ export async function waitForHermesReady(baseUrl: string, options: HermesReadyOp
     throw cloudError
   }
 
-  throw new Error(`Hermes backend did not become ready: ${detail}`)
+  throw new Error(`Minerva backend did not become ready: ${detail}`)
 }

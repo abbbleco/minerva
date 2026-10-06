@@ -1,5 +1,5 @@
 /**
- * A `display.*` method-not-found from a Portal-managed (Hermes Cloud) backend must not be
+ * A `display.*` method-not-found from a Portal-managed (Minerva Cloud) backend must not be
  * rendered as "Update the bot's Hermes": the user cannot update a managed release, and the
  * managed Cloud tab already reports it is on the latest release (#120852). A self-upgradable
  * (git/remote) backend keeps the update instruction.

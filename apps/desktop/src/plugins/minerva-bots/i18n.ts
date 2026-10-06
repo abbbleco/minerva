@@ -386,7 +386,7 @@ type BotsMessages = {
     portalNotInstalled: string
     portalUnsupported: string
     portalUnavailable: string
-    /** Managed runtimes (Hermes Cloud): updates are the platform's job, not the user's. */
+    /** Managed runtimes (Minerva Cloud): updates are the platform's job, not the user's. */
     portalUnavailableManaged: string
     unavailableTitle: string
     autoOpenMenu: string

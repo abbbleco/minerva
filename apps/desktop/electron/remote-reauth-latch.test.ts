@@ -9,7 +9,7 @@
  *   fetchJson (native bearer)  →  bare Error("401: ...") — no statusCode
  *   withTransientRetries       →  not an auth rejection → hammered 3x
  *   gatewayTicketFailure       →  transport copy, no needsOauthLogin
- *   startHermes                →  isReauth=false → NOT latched, retryable:true
+ *   startMinerva                →  isReauth=false → NOT latched, retryable:true
  *   renderer boot-retry loop   →  running:true hides the overlay, repeat
  *
  * Composes the REAL modules exactly the way main.ts does, so the contract is

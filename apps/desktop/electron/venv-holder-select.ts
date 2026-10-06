@@ -47,7 +47,7 @@ export function isHermesOwnedVenvDaemon(
  * Deliberately NARROWER than a bare path/cmdline substring against the install
  * root (the approach that sank #62445): an unrelated process that merely
  * mentions the install root or borrows the venv interpreter for its own script
- * must NOT be tree-killed. Non-Hermes venv users still abort the hand-off via
+ * must NOT be tree-killed. Non-Minerva venv users still abort the hand-off via
  * the shim-lock probe instead.
  */
 export function isExternalVenvHolder(

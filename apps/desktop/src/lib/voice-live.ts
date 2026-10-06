@@ -447,7 +447,7 @@ export class VoiceLiveSession {
     }
   }
 
-  /** Quiet progress for the live model ("Hermes is running the tests…"). */
+  /** Quiet progress for the live model ("Minerva is running the tests…"). */
   think(delegationId: null | string, content: string): void {
     const text = content.replace(/\s+/g, ' ').trim().slice(0, APPEND_CHAR_LIMIT)
 

@@ -64,7 +64,7 @@ export function isDisplayUnavailable(error: unknown): boolean {
   return message.includes('method not found') || message.includes('method-not-found')
 }
 
-/** The bot's backend is a Portal-managed runtime (Hermes Cloud): its Minerva is updated by the
+/** The bot's backend is a Portal-managed runtime (Minerva Cloud): its Minerva is updated by the
  *  platform, never by the user, so "update the bot's Hermes" is not an instruction the user
  *  can follow. A `display.*` method-not-found from a managed release simply means Screen has
  *  not reached that release yet (#120852). */

@@ -1383,3 +1383,21 @@ keep the refusal (no laundering); viewer-only keeps editor-required. Downstream
 key/device writes use the resolved agency id. Runtime callers (transcription,
 qqbot adapter) already degrade without pilk/keys, untouched. tsc/eslint clean.
 Needs portal redeploy to take effect; verify via device-code sign-in E2E.
+---
+
+# Session 28 — portal signed-in UI state (2026-10-06)
+
+Site now reflects auth state. New `app/components/account-button.tsx`
+(variants sidebar/folded-signup/folded-login/nav/loginlink; session from
+`/api/portal/session`; welcome shows email local-part as unclickable text;
+sign-out reloads): sidebar signup button and both folded icons swap to
+identity, Member Sign In hides when signed in, mobile nav swaps Sign in for
+welcome + sign-out. Plans page grid extracted to client `plans-grid.tsx`:
+signed-out renders exactly as before; signed-in locks the current tier to a
+disabled `Current plan` card, routes others to /manage-subscription, and a
+banner names the active package + credits. Pure rules in
+`app/lib/account-display.ts`.
+
+Verified: tsc 0; eslint clean on touched files (one pre-existing
+no-html-link error in layout.tsx mobile nav left alone); 3/3 new tsx tests.
+Needs portal redeploy to take effect.
