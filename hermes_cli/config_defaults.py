@@ -1,4 +1,4 @@
-"""Default configuration data for Hermes Agent: DEFAULT_CONFIG and OPTIONAL_ENV_VARS.
+"""Default configuration data for Minerva Agent: DEFAULT_CONFIG and OPTIONAL_ENV_VARS.
 
 Pure-data leaf module — must not import from hermes_cli.config. Comments are the user-facing
 docs of config.yaml.
@@ -40,7 +40,7 @@ DEFAULT_CONFIG = {
     "fallback": {"min_switch_reset_seconds": 0},
     "credential_pool_strategies": {},
     "toolsets": ["hermes-cli"],
-    # journal_mode: SQLite journal mode for every Hermes DB. "wal" default; use "delete" on
+    # journal_mode: SQLite journal mode for every Minerva DB. "wal" default; use "delete" on
     # weak-fsync/shared filesystems where WAL is not crash-safe (macOS virtiofs, NFS, SMB).
     "database": {
         "journal_mode": "wal",
@@ -195,7 +195,7 @@ DEFAULT_CONFIG = {
         # Bot Mode teammate-messaging protocol section (silent unless desktop Bot Mode manages it).
         "bot_mode_protocol": True,
         # Embedder-supplied text appended to the system prompt's environment-hints block, so a host
-        # wrapping Hermes (sandbox runner, managed platform) can describe proxy/credential/ mount
+        # wrapping Minerva (sandbox runner, managed platform) can describe proxy/credential/ mount
         # layout without editing SOUL.md. Env HERMES_ENVIRONMENT_HINT overrides it.
         "environment_hint": "",
         # Coding posture: on interactive coding surfaces (CLI, TUI, desktop, ACP) in a code
@@ -379,7 +379,7 @@ DEFAULT_CONFIG = {
         "docker_shm_size": "1g",
         # Run the container as the host uid:gid (`--user`) so files written to bind mounts
         # (docker_volumes, persistent workspace, mounted cwd) are owned by you, not root. Off by
-        # default for images whose entrypoints must start as root (e.g. the bundled Hermes image,
+        # default for images whose entrypoints must start as root (e.g. the bundled Minerva image,
         # which drops to `hermes` via s6-setuidgid). When on, SETUID/SETGID caps are omitted.
         "docker_run_as_host_user": False,
         # Snap-packaged Docker under AppArmor (Ubuntu cloud images; LP#1908448) refuses to exec
@@ -797,6 +797,9 @@ DEFAULT_CONFIG = {
         "kanban_decomposer": _aux(180),
         "profile_describer": _aux(60),   # 1-2 sentence profile blurb; short, cheap
         "goal_judge": _aux(60),          # /goal satisfaction + contract drafting; JSON calls
+        # PRDs: prd_triage classifies whole conversations (short JSON, rides the
+        # goal_judge transport); prd_drafter writes the full document (long-form).
+        "prd_drafter": _aux(300),
         # Curator skill-usage review can take minutes on reasoning models (umbrellas over hundreds
         # of skills); route cheaper via `minerva model` → auxiliary → Curator.
         "curator": _aux(600),
@@ -1226,9 +1229,9 @@ DEFAULT_CONFIG = {
 
     "voice": {
         # How the Desktop voice conversation is wired:
-        #   chained  — STT → Hermes turn → TTS (the stt.* / tts.* providers below)
+        #   chained  — STT → Minerva turn → TTS (the stt.* / tts.* providers below)
         #   gpt-live — one full-duplex voice model (OpenAI GPT-Live) owns the mic and speaker and
-        #              DELEGATES every real request to Hermes (any model / provider you have
+        #              DELEGATES every real request to Minerva (any model / provider you have
         #              selected); needs an OpenAI API key. $0.05/min voice layer billing.
         "voice_chat_mode": "chained",
         "gpt_live": {
@@ -1423,6 +1426,18 @@ DEFAULT_CONFIG = {
         "tracking_enabled": True,
         "tracking_auto_complete": False,
         "tracking_auto_threshold": 0.9,
+    },
+    # PRDs — smart intake → triage → drafting → review → kanban. Triage judges
+    # whole conversations (never single messages); thresholds are settings so
+    # tuning never rewrites prompts. Defaults conservative: few drafts, wide
+    # watch band, dismiss only the clearly-PR D-unworthy.
+    "prds": {
+        "triage_enabled": True,
+        "draft_threshold": 0.85,
+        "watch_threshold": 0.5,
+        "dedupe_max_prds": 30,
+        "triage_min_events": 1,
+        "drafter_max_tokens": 4000,
     },
     # Loops — /loop re-runs a prompt or slash command on a cadence in-session. Fixed interval fires
     # on the user's clock; self-paced (no interval) starts at the floor and backs off exponentially
@@ -1640,7 +1655,7 @@ DEFAULT_CONFIG = {
     },
 
     "whatsapp": {
-        # reply_prefix: None = built-in "☤ *Hermes Agent*" header; "" disables; \n allowed.
+        # reply_prefix: None = built-in "☤ *Minerva Agent*" header; "" disables; \n allowed.
     },
 
     "telegram": {
@@ -1763,8 +1778,8 @@ DEFAULT_CONFIG = {
     "personalities": {},
     "auth": {  # Login policy (credentials themselves live in auth.json / .env).
         # Borrow and refresh the Codex CLI (~/.codex/auth.json) and Claude Code (~/.claude/.credentials.json)
-        # logins automatically when Hermes has no usable login of its own. Their refresh tokens are single-use
-        # and rotate, so two programs on one login can log each other out; set false to make Hermes use only
+        # logins automatically when Minerva has no usable login of its own. Their refresh tokens are single-use
+        # and rotate, so two programs on one login can log each other out; set false to make Minerva use only
         # its own logins (`minerva auth add <provider>`). `minerva auth add openai-codex` still offers the import
         # interactively.
         "adopt_external_logins": True,
@@ -1944,7 +1959,7 @@ DEFAULT_CONFIG = {
         # fan-out workflows that would otherwise saturate one profile's local model / API quota / browser
         # pool while leaving other profiles idle. See #21582.
         "max_in_progress_per_profile": None,
-        # Per-home claim allowlist for boards shared across Hermes homes (#110995): profile names
+        # Per-home claim allowlist for boards shared across Minerva homes (#110995): profile names
         # this home's dispatcher may claim (list or comma-separated string). None = any existing
         # profile is claimable. Set = fail-closed (an empty list claims nothing). Every home has a
         # root profile named "default", so on a shared kanban.db every home can otherwise claim
@@ -2226,12 +2241,12 @@ DEFAULT_CONFIG = {
         "trust_env": True,
         # Media delivery. False: any emitted file path is delivered natively unless under the
         # credential/system denylist (/etc, /proc, ~/.ssh, ~/.aws, ~/.hermes/.env, auth.json). True:
-        # files must be under the Hermes cache, media_delivery_allow_dirs, or fresher than
+        # files must be under the Minerva cache, media_delivery_allow_dirs, or fresher than
         # trust_recent_files_seconds — recommended for public-facing gateways so prompt injection
         # can't exfiltrate host secrets. Bridged to HERMES_MEDIA_DELIVERY_STRICT.
         "strict": False,
         # Extra roots (project/scratch dirs, mounted shares) from which bare file paths may be
-        # uploaded; the Hermes cache is always trusted. List of absolute paths or one
+        # uploaded; the Minerva cache is always trusted. List of absolute paths or one
         # os.pathsep-separated string; tildes expanded. Bridged to HERMES_MEDIA_ALLOW_DIRS. Honored
         # in both modes.
         "media_delivery_allow_dirs": [],
@@ -2533,7 +2548,7 @@ DEFAULT_CONFIG = {
         "geometry": "1440x900",
         # Opt-in: start the screen automatically the first time computer_use needs a display on a headless
         # host. Off by default so installing TigerVNC for other reasons never yields a screen nobody asked
-        # for; Hermes Desktop's Screen pane offers Start and this toggle.
+        # for; Minerva Desktop's Screen pane offers Start and this toggle.
         "auto_start": False,
         # Refuse to start below this much free memory (MB), measured on the host or its container cgroup,
         # whichever is tighter. Xvnc + Xfce idle at ~220 MB and a takeover's browser adds 0.5-1 GB, so a
@@ -2557,7 +2572,7 @@ DEFAULT_CONFIG = {
         "placement": "auto",
     },
     "computer_use": {
-        # cua-driver's upstream PostHog telemetry defaults ON; Hermes sets
+        # cua-driver's upstream PostHog telemetry defaults ON; Minerva sets
         # CUA_DRIVER_RS_TELEMETRY_ENABLED=0 in every child env unless this is true.
         "cua_telemetry": False,
         # Windows only: opt IN to the per-boot cua-driver-serve logon task. False (default)
@@ -2588,7 +2603,7 @@ DEFAULT_CONFIG = {
         # Linux/WSL2 idle spin). None = auto (off on macOS + headless/ WSL2 Linux, on elsewhere);
         # True = always disable; False = always enable.
         # The overlay shows where agent actions land but can peg a core when idle (macOS vImage redraw loop
-        # #47032; Linux/WSL2 idle spin #28152). cua-driver ≥ 0.6.x supports --no-overlay; Hermes also calls
+        # #47032; Linux/WSL2 idle spin #28152). cua-driver ≥ 0.6.x supports --no-overlay; Minerva also calls
         # set_agent_cursor_enabled(false) after start_session when this is on.
         "no_overlay": None,
         # standard = cua-driver's own approval boundary; bounded = no runtime prompts, anything
@@ -2630,7 +2645,7 @@ DEFAULT_CONFIG = {
         # (`*.foo.com`) supported.
         "extra_allowed_hosts": [],
     },
-    "desktop": {  # Hermes Desktop (Electron) launch options; only affect `minerva desktop`.
+    "desktop": {  # Minerva Desktop (Electron) launch options; only affect `minerva desktop`.
         # CSS font-family for the app's chat and UI text (e.g. "OpenDyslexic"). Layered in front
         # of the active theme's own sans stack so missing glyphs still fall through. Empty = the
         # theme's face. The terminal pane is terminal.font_family.
@@ -2703,7 +2718,7 @@ DEFAULT_CONFIG = {
         # 14-20% of consecutive calls in concurrent tool loops (measured 2026-09-06;
         # NousResearch/api#227), so chat is the default until that is fixed.
         "anthropic_wire": "chat",
-        # Nous free tier: with no other provider configured, Hermes sets up a free Nous identity on
+        # Nous free tier: with no other provider configured, Minerva sets up a free Nous identity on
         # first use (inference on nous/welcome + connectors) and offers `/login` (terminal:
         # `minerva auth upgrade`) to sign in. false turns the free tier off entirely: nothing is set
         # up and nothing is used.
@@ -2802,7 +2817,7 @@ OPTIONAL_ENV_VARS = {
     "GEMINI_BASE_URL": _base_url("Google AI Studio", "Gemini"),
     "VERTEX_CREDENTIALS_PATH": _prov(
         "Path to a Google Cloud service account JSON for Vertex AI (Gemini). Vertex uses "
-        "OAuth2, not a static API key — this points at the credentials Hermes mints short-lived "
+        "OAuth2, not a static API key — this points at the credentials Minerva mints short-lived "
         "tokens from. Falls back to GOOGLE_APPLICATION_CREDENTIALS, then to ADC (gcloud auth "
         "application-default login). Set project/region under vertex: in config.yaml.",
         "Vertex service account JSON path (leave empty to use ADC / "
@@ -2926,7 +2941,7 @@ OPTIONAL_ENV_VARS = {
         None, password=False, advanced=True),
     "TOOL_GATEWAY_USER_TOKEN": _tool(
         "Explicit Nous Subscriber access token for tool-gateway requests (optional; otherwise "
-        "read from the Hermes auth store)", "Tool-gateway user token", None, advanced=True),
+        "read from the Minerva auth store)", "Tool-gateway user token", None, advanced=True),
     "TAVILY_API_KEY": _tool(
         "Tavily API key for AI-native web search and extract (optional — keyless works when "
         "Tavily is selected)", "Tavily API key", "https://app.tavily.com/home",
@@ -2979,6 +2994,10 @@ OPTIONAL_ENV_VARS = {
         tools=["image_generate", "video_generate"]),
     "KREA_API_KEY": _tool("Krea API key for Krea 2 image generation (Medium + Large)",
         "Krea API key", "https://www.krea.ai/settings/api-tokens", tools=["image_generate"]),
+    "MINERVA_INTAKE_API_KEY": _tool(
+        "Site API key (qkt_sec_*) for draining website-form intake submissions from the portal "
+        "into the PRD pipeline (mint per site via POST /api/portal/keys, purpose server)",
+        "Website intake API key", "https://portal.abbble.co.za", advanced=True),
     "VOICE_TOOLS_OPENAI_KEY": _tool(
         "OpenAI API key for voice transcription (Whisper) and OpenAI TTS",
         "OpenAI API Key (for Whisper STT + TTS)", "https://platform.openai.com/api-keys",
@@ -3176,13 +3195,13 @@ OPTIONAL_ENV_VARS = {
         "for the default profile). Useful for multi-user setups with OpenWebUI.",
         "API server model name", None, advanced=True),
     "GATEWAY_PROXY_URL": _msg(
-        "URL of a remote Hermes API server to forward messages to (proxy mode). When set, the "
+        "URL of a remote Minerva API server to forward messages to (proxy mode). When set, the "
         "gateway handles platform I/O only — all agent work is delegated to the remote server. "
         "Use for Docker E2EE containers that relay to a host agent. Also configurable via "
         "gateway.proxy_url in config.yaml.",
-        "Remote Hermes API server URL (e.g. http://192.168.1.100:8642)", None, advanced=True),
+        "Remote Minerva API server URL (e.g. http://192.168.1.100:8642)", None, advanced=True),
     "GATEWAY_PROXY_KEY": _msg(
-        "Bearer token for authenticating with the remote Hermes API server (proxy mode). Must "
+        "Bearer token for authenticating with the remote Minerva API server (proxy mode). Must "
         "match the API_SERVER_KEY on the remote host.", "Remote API server auth key", None,
         password=True, advanced=True),
     "WEBHOOK_ENABLED": _msg(

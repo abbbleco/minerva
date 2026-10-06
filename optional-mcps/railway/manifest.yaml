@@ -7,7 +7,7 @@ connector_slug: railway
 description: 'Railway: projects, services, deployments, and environments.'
 source: https://docs.railway.com/guides/mcp-server
 
-# Official vendor-hosted remote MCP (URL-only — Hermes never spawns a local
+# Official vendor-hosted remote MCP (URL-only — Minerva never spawns a local
 # process for this entry). Native OAuth 2.1 + Dynamic Client Registration
 # (verified live: RFC 9728 protected-resource metadata -> AS metadata with
 # registration_endpoint); Hermes's MCP client + mcp_oauth_manager handle
@@ -37,6 +37,6 @@ suggest:
     - railway.app
 
 post_install: |
-  On first connection Hermes opens a browser to authorize with
+  On first connection Minerva opens a browser to authorize with
   Railway (or run `minerva mcp login railway`). Approve access,
   then restart the session so tools load.

@@ -723,7 +723,7 @@ def test_install_keeps_the_legacy_entry_as_a_hidden_alias(tmp_path, xdg_home, mo
     assert entry is not None and entry.is_file()
     assert legacy.is_file(), "an existing pin resolves through this file — it must survive"
     alias = _parse(legacy.read_text(encoding="utf-8"))
-    assert alias["NoDisplay"] == "true"  # no second Hermes in the app grid
+    assert alias["NoDisplay"] == "true"  # no second Minerva in the app grid
     assert alias["StartupWMClass"] == lde.APP_ID  # still groups with the window
     entry_values = _parse(entry.read_text(encoding="utf-8"))
     assert alias["Exec"] == entry_values["Exec"]  # launches the same command
@@ -836,7 +836,7 @@ def test_install_without_source_icon_uses_themed_name(tmp_path, xdg_home, monkey
     entry = lde.install_desktop_entry(root)
 
     # A broken absolute path renders as no icon. The themed name resolves
-    # when Hermes is installed some other way.
+    # when Minerva is installed some other way.
     assert _parse(entry.read_text(encoding="utf-8"))["Icon"] == "hermes"
 
 

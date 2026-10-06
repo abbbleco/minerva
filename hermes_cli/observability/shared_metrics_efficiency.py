@@ -43,7 +43,7 @@ _SPENT_TURNS_KEPT = 64
 _PENDING_OUTPUTS_ATTR = "_shared_metrics_tool_outputs"
 _PENDING_OUTPUTS_MAX = 256
 # The one notice tools/tool_output_truncate.py writes when terminal, execute_code or MCP output was
-# cut down inside the tool, before Hermes ever saw the full text.
+# cut down inside the tool, before Minerva ever saw the full text.
 _TOOL_TRUNCATION_NOTICE = re.compile(r"\[[A-Z_ ]{1,32} TRUNCATED - [\d,]{1,20} chars omitted out of ([\d,]{1,20}) total\]")
 _NOTICE_MIN_CHARS = 1_000
 
@@ -211,8 +211,8 @@ class SessionEfficiency:
     def observe_cache(
         self, route: dict[str, str], usage: Any, started_ns: int, ended_ns: int, *, expected: bool,
     ) -> str | None:
-        """A cold primary read after a warm one on the same route is a break Hermes did not announce
-        (``expected``: Hermes already counted the cause); a gap past the cache TTL is plain expiry."""
+        """A cold primary read after a warm one on the same route is a break Minerva did not announce
+        (``expected``: Minerva already counted the cause); a gap past the cache TTL is plain expiry."""
         read = _int(usage.get("cache_read_tokens")) if isinstance(usage, dict) else None
         if read is None:
             return None

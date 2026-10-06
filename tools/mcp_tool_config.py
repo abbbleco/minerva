@@ -206,7 +206,7 @@ def _which_with_config_pathext(command: str, path_arg, env: dict):
     return None
 
 
-# Bare MCP launchers Hermes ships through PM, keyed to the package that provides them.
+# Bare MCP launchers Minerva ships through PM, keyed to the package that provides them.
 _MANAGED_LAUNCHERS = {"npx": "npm", "npm": "npm", "node": "npm", "uv": "uv", "uvx": "uv"}
 
 
@@ -284,7 +284,7 @@ def _npx_cached_bin(args: list) -> Optional[tuple]:
     """Resolve ``npx -y <pkg>`` to the already-installed binary, or None.
 
     ``npx`` resolves the package and then FORKS, staying resident as the real server's parent
-    for nothing (~48 MB private memory per MCP server, measured); Hermes already supervises the
+    for nothing (~48 MB private memory per MCP server, measured); Minerva already supervises the
     child (shared death supervisor). When the package is in npx's cache we spawn its binary
     directly. Deliberately conservative — None (caller keeps plain ``npx``, so a cold machine
     still installs) for a cache miss, a version pin (``pkg@1.2.3``), extra npx flags, a manifest

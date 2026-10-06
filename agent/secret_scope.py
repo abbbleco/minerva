@@ -172,7 +172,7 @@ def current_secret_scope_home() -> Optional[str]:
 # fail-closed path would wrongly crash). Keep this tight — when in doubt a
 # value is a profile secret. Membership is exact name OR prefix.
 _GLOBAL_ENV_EXACT = frozenset({
-    # Hermes runtime / deployment
+    # Minerva runtime / deployment
     "HERMES_HOME", "HERMES_PROFILE", "HERMES_GATEWAY_LOCK_DIR",
     "HERMES_MAX_ITERATIONS", "HERMES_API_TIMEOUT",
     "HERMES_REDACT_SECRETS", "HERMES_NOUS_TIMEOUT_SECONDS",
@@ -278,7 +278,7 @@ def _strip_inline_comment(value: str) -> str:
 
 
 def _parse_env_value(raw_value: str) -> str:
-    """Parse the small .env value subset Hermes writes itself (bare, 'single', or "double" with
+    """Parse the small .env value subset Minerva writes itself (bare, 'single', or "double" with
     ``\\"`` / ``\\\\`` escapes)."""
     value = raw_value.strip()
     if len(value) >= 2 and value[0] == value[-1] == '"':

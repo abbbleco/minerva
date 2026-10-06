@@ -1,10 +1,10 @@
-# Hermes Agent - Development Guide
+# Minerva Agent - Development Guide
 
-> **Fork notice.** This tree is a clone/fork of Hermes Agent, rebranded as
+> **Fork notice.** This tree is a clone/fork of Minerva Agent, rebranded as
 > **Minerva** (`github.com/abbbleco/minerva`, branch `main`). Product identity
 > is Minerva / ABBBLE CO: user-visible names, default origins (portal, assets,
 > router, welcome hosts) and provider defaults point at ABBBLE infrastructure,
-> not Nous Research. The engineering rules below are inherited unchanged; where
+> not ABBBLE CO. The engineering rules below are inherited unchanged; where
 > a rule names an upstream path, account or host, read it as the fork's
 > equivalent unless the text says otherwise.
 
@@ -15,7 +15,7 @@ past that); see the **routing table** at the end and read the area file before e
 
 **Never give up on the right solution.**
 
-## What Hermes Is
+## What Minerva Is
 
 Hermes is a personal AI agent that runs the same agent core across a CLI, a messaging
 gateway (Telegram, Discord, Slack, ~20 platforms), a TUI, and an Electron desktop app. It
@@ -43,7 +43,7 @@ sweeper, which may only close on `implemented_on_main`, `cannot_reproduce`, or `
 Taste-based "out of scope" closes are a human maintainer's call; the sweeper's job is to
 recognize design intent and *avoid wrongly closing a legitimate contribution*.
 
-Read the balance right: Hermes ships a **lot**. Most merges are bug fixes to reported
+Read the balance right: Minerva ships a **lot**. Most merges are bug fixes to reported
 behavior, and the product surface (platforms, providers, models, desktop/TUI features)
 expands aggressively on purpose. The restraint below targets the **core agent + model tool
 schema**, the one place where every addition is paid for on every API call. "Smallest
@@ -106,7 +106,7 @@ grow: expansive at the edges, conservative at the waist.
   SaaS connectors, analytics dashboards, and other "someone else's product" plugins do NOT
   land under `plugins/` — every one becomes our burden against a fast-moving core for a
   backend we don't own. Ship as a **standalone plugin repo** (`~/.hermes/plugins/` or pip
-  entry point), promoted in the Nous Research Discord `#plugins-skills-and-skins`. This is a
+  entry point), promoted in the ABBBLE CO Discord `#plugins-skills-and-skins`. This is a
   coupling decision, not a quality bar; such PRs are closed with a pointer to publish.
 
 ### Before you call it a bug — verify the premise (and when NOT to close)
@@ -185,10 +185,10 @@ Choose the highest (least-footprint) rung that correctly solves the problem:
 A tool that works only because of *who is on the other end* (desktop panes, in-app browser,
 message reactions, Projects) must resolve availability from the **session's own source**, not
 from an env var on the backend. Client and backend are separate machines: the desktop app may
-drive a locally spawned backend, one over SSH, one behind URL + token, or Hermes Cloud, and
+drive a locally spawned backend, one over SSH, one behind URL + token, or Minerva Cloud, and
 only the first two carry `HERMES_DESKTOP=1`. An env-keyed gate is a silent no-op on the other
 topologies — the tool is stripped from the schema while the platform hint tells the model it
-is "inside the Hermes desktop app". The pattern:
+is "inside the Minerva desktop app". The pattern:
 
 - **The toolset is the surface gate.** Keep such tools off `_HERMES_CORE_TOOLS` and in a named
   toolset (`desktop_ui`, `project`); the GUI gateway's `_load_enabled_toolsets(platform)`
@@ -355,9 +355,9 @@ Python requirements: `==exact`. A bare `>=X.Y.Z` is rejected by CI and reviewers
 After changing `pyproject.toml`, run `minerva pm lock`, re-source `./activate`, and commit
 `pyproject.toml` with `uv.lock`. Reference: #2810 (bounds), #9801 (SHA pinning + audit CI).
 
-PM owns Hermes Python dependency changes. Use `pm.sync_venv(['extra'], explicit=True)`
+PM owns Minerva Python dependency changes. Use `pm.sync_venv(['extra'], explicit=True)`
 for declared runtime extras, `minerva pm install` for setup/sync, and `minerva pm repair`
-for damaged dependencies. Do not mutate Hermes environments with raw pip or uv.
+for damaged dependencies. Do not mutate Minerva environments with raw pip or uv.
 Use `pm.build_environment` for fresh build outputs and `pm.ensure_environment` for
 isolated tool environments. Callers receive an interpreter or tool path, not uv.
 Nix's declarative uv2nix builds and unrelated user projects remain independently owned.

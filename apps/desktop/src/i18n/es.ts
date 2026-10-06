@@ -397,6 +397,8 @@ export const esOverrides = {
     ideas: 'Ideas',
     feeds: 'Feeds',
     goals: 'Objetivos',
+    prds: 'PRDs',
+    leads: 'Leads',
     copied: 'Copiado',
     copy: 'Copiar',
     copyFailed: 'No se pudo copiar',

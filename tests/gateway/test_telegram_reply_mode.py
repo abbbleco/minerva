@@ -216,8 +216,8 @@ class TestDMTopicSyntheticSendRouting:
     are injected as synthetic events with no reply anchor. The DM-topic
     fallback's no-anchor branch routed them via Telegram's native
     ``direct_messages_topic_id`` (or dropped the thread entirely), landing the
-    response in a different chat lane than the Hermes topic the session runs
-    in. The no-anchor branch must prefer the Hermes topic's
+    response in a different chat lane than the Minerva topic the session runs
+    in. The no-anchor branch must prefer the Minerva topic's
     ``message_thread_id`` whenever it resolves.
     """
 

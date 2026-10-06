@@ -17,7 +17,7 @@ Turn an unanswerable decision into a questionnaire doc.
 | Source | Optional — install with `minerva skills install official/productivity/decision-questionnaire` |
 | Path | `optional-skills/productivity/decision-questionnaire` |
 | Version | `1.0.0` |
-| Author | Matt Pocock (mattpocock/skills, to-questionnaire) + Hermes Agent |
+| Author | Matt Pocock (mattpocock/skills, to-questionnaire) + Minerva Agent |
 | License | MIT |
 | Platforms | linux, macos, windows |
 | Tags | `questionnaire`, `decision`, `async`, `stakeholder`, `discovery`, `communication` |

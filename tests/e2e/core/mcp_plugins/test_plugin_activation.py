@@ -1,6 +1,6 @@
 """Plugin activation with REAL MCP servers (Agent Plugins v1 portable packages).
 
-Every test drives a real Hermes process against the recording fake LLM and the real ``mcp``
+Every test drives a real Minerva process against the recording fake LLM and the real ``mcp``
 fixture server, launched from a portable package under ``<HERMES_HOME>/plugins/<dir>/``:
 
 * live activation: a plugin enabled over the Plugins Hub RPC (``plugins.manage toggle``) while a

@@ -1,7 +1,7 @@
 # Minerva Router
 
 OpenAI-compatible credits gateway. The **only** component that holds upstream inference
-credentials (`OPENROUTER_API_KEY`). Hermes Desktop and the portal authenticate with a
+credentials (`OPENROUTER_API_KEY`). Minerva Desktop and the portal authenticate with a
 per-agency `qkt_sec_*` key; the router resolves the tenant, gates on subscription +
 credits, relays to OpenRouter, meters usage, and debits the ledger.
 
@@ -24,11 +24,11 @@ Responses carry `x-minerva-model` (resolved wire ID) and `x-minerva-request-id`.
 Send `x-minerva-request-id` to make retries idempotent — without it, an unkeyed retry
 debits twice.
 
-## Hermes Desktop setup
+## Minerva Desktop setup
 
 1. Portal → Console → **Hermes**: mint a desktop key (server purpose, e.g. `hermes-desktop`).
    Shown once — store it in the OS keychain, never in a repo.
-2. Hermes provider config:
+2. Minerva provider config:
    ```yaml
    base_url: https://minrouter.abbble.co.za/v1
    api_key: <qkt_sec_-key-from-portal>
@@ -49,7 +49,7 @@ change); free tier is the `:free` entries plus the `openrouter/free` meta-router
 
 | Status | `code` | Meaning | Send the user to |
 |---|---|---|---|
-| `401` | `unauthorized` / `invalid_key` / `key_inactive` / `key_expired` | cannot attribute spend → not served | Console → Hermes (mint fresh key) |
+| `401` | `unauthorized` / `invalid_key` / `key_inactive` / `key_expired` | cannot attribute spend → not served | Console → Minerva (mint fresh key) |
 | `403` | `suspended` | agency suspended | support |
 | `402` | `billing_required` | subscription `past_due`/`expired` | Console → Billing |
 | `402` | `upgrade_required` | free key hit a paid model (`allowed_models` in body) | omit `model`, or Console → Billing to upgrade |

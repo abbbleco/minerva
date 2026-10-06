@@ -607,7 +607,7 @@ class TestExtractMessagePayload:
         """Format 3: flat fields from a custom Cloud Run relay.
 
         Some self-hosted setups put a relay in front of Pub/Sub to keep
-        GCP credentials off the Hermes host. The relay flattens Chat
+        GCP credentials off the Minerva host. The relay flattens Chat
         events into top-level ``sender_email`` / ``text`` / ``space_name``
         / etc. The helper synthesizes a Chat-API-shaped ``message`` dict
         so downstream code (``_dispatch_message`` →

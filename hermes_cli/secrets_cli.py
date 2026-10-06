@@ -219,7 +219,7 @@ def cmd_setup(args: argparse.Namespace) -> int:
     save_config(cfg)
     console.print()
     console.print("[green]✓ Bitwarden Secrets Manager is enabled.[/green]  "
-                  "Secrets will be pulled at the start of every Hermes process.")
+                  "Secrets will be pulled at the start of every Minerva process.")
     console.print("  Status:  [cyan]hermes secrets bitwarden status[/cyan]\n"
                   "  Refresh: [cyan]hermes secrets bitwarden sync[/cyan]\n"
                   "  Disable: [cyan]hermes secrets bitwarden disable[/cyan]")
@@ -268,7 +268,7 @@ def cmd_status(args: argparse.Namespace) -> int:
         console.print("\n  Run [cyan]hermes secrets bitwarden setup[/cyan] to enable.")
         return 0
     if not token:
-        console.print(f"\n  [yellow]Enabled but {token_env} is not set — Hermes will skip BSM "
+        console.print(f"\n  [yellow]Enabled but {token_env} is not set — Minerva will skip BSM "
                       "and warn on next startup.[/yellow]")
     if not project_id:
         console.print("\n  [yellow]Enabled but no project_id — nothing to fetch.[/yellow]")

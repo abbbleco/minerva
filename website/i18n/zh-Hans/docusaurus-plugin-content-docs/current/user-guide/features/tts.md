@@ -9,7 +9,7 @@ description: "跨所有平台的文字转语音与语音消息转录"
 本页的 Python 依赖命令使用 [PM 准备的源码环境](../../reference/package-management.md#developer-workflow)。
 依赖变更后，请重新激活该 checkout 并重启 Hermes。
 
-Hermes Agent 支持跨所有消息平台的文字转语音（TTS）输出和语音消息转录（STT）。
+Minerva Agent 支持跨所有消息平台的文字转语音（TTS）输出和语音消息转录（STT）。
 
 :::tip Nous 订阅用户
 如果你拥有付费的 [ABBBLE Portal](https://portal.nousresearch.com) 订阅，OpenAI TTS 可通过 **[Tool Gateway](tool-gateway.md)** 使用，无需单独的 OpenAI API 密钥。新安装可运行 `minerva setup --portal` 登录并一次性开启所有 gateway 工具；已有安装可通过 `minerva model` 或 `minerva tools` 选择 **Nous Subscription** 仅启用 TTS。

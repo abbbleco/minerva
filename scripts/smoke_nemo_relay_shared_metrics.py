@@ -1,4 +1,4 @@
-"""Run a real Hermes CLI turn and validate the Relay shared-metrics output."""
+"""Run a real Minerva CLI turn and validate the Relay shared-metrics output."""
 
 from __future__ import annotations
 
@@ -516,7 +516,7 @@ def _validate_packages(
         import jsonschema
     except ImportError as exc:
         raise RuntimeError(
-            "The Hermes development environment requires jsonschema"
+            "The Minerva development environment requires jsonschema"
         ) from exc
     schema = json.loads(schema_path.read_text(encoding="utf-8-sig"))
     packages = [

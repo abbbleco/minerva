@@ -360,7 +360,7 @@ def _resolve_direct_command(hermes_path: str) -> list[str]:
     out = subprocess.run([hermes_path, "--print-runtime-command"], capture_output=True,
                          text=True, encoding="utf-8", errors="replace", timeout=30)
     if out.returncode != 0:
-        raise ValueError("could not resolve Hermes runtime; refresh this installation's launcher")
+        raise ValueError("could not resolve Minerva runtime; refresh this installation's launcher")
     try:
         command = json.loads(out.stdout)
     except ValueError as exc:

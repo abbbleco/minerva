@@ -77,7 +77,7 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
-      - name: No leftover Python / Hermes processes
+      - name: No leftover Python / Minerva processes
         # Backstop for each journey's teardown: nothing a machine started may outlive it.
         if: always()
         shell: pwsh

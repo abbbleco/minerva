@@ -194,7 +194,7 @@ class OpenAIImageGenProvider(StaticImageGenProvider):
             logger.debug("OpenAI image %s failed", verb, exc_info=True)
             return fail(f"OpenAI image {'editing' if is_edit else 'generation'} failed: {exc}", "api_error")
 
-        # gpt-image bills per text/image token; the tier id is a Hermes label, the API model prices.
+        # gpt-image bills per text/image token; the tier id is a Minerva label, the API model prices.
         # Recorded before extraction/save: the tokens are billed whether or not an image came back.
         record_token_usage(getattr(response, "usage", None), model=meta["api_model"], provider="openai")
         data = getattr(response, "data", None) or []

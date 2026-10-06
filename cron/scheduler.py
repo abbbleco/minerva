@@ -4044,7 +4044,7 @@ def _worktree_maintenance_repos() -> List[str]:
     filtered to those that actually have a ``.worktrees/`` dir."""
     repos: set = set()
 
-    # Hermes source checkout (git installs only; wheel installs have no .git).
+    # Minerva source checkout (git installs only; wheel installs have no .git).
     with contextlib.suppress(Exception):
         install_root = Path(__file__).resolve().parent.parent
         if (install_root / ".git").exists():

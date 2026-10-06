@@ -263,7 +263,7 @@ def _latest_ts(messages) -> float:
 
 class EventBridge:
     """Background poller watching SessionDB for new messages, feeding an in-memory
-    event queue with waiter support (the Hermes analogue of OpenClaw's WebSocket
+    event queue with waiter support (the Minerva analogue of OpenClaw's WebSocket
     gateway bridge, polling SQLite instead)."""
 
     def __init__(self):
@@ -690,11 +690,11 @@ _TOOL_NAMES = (
 
 
 def create_mcp_server(event_bridge: Optional[EventBridge] = None) -> "MCPServer":
-    """Create and return the Hermes MCP server with all tools registered."""
+    """Create and return the Minerva MCP server with all tools registered."""
     if not _MCP_SERVER_AVAILABLE:
         raise ImportError(f"MCP server requires the 'mcp' package. Install with: {sys.executable} -m pip install 'mcp'")
     mcp = MCPServer("hermes", instructions=(
-        "Hermes Agent messaging bridge. Use these tools to interact with "
+        "Minerva Agent messaging bridge. Use these tools to interact with "
         "conversations across Telegram, Discord, Slack, WhatsApp, Signal, "
         "Matrix, and other connected platforms."
     ))
@@ -705,7 +705,7 @@ def create_mcp_server(event_bridge: Optional[EventBridge] = None) -> "MCPServer"
 
 
 def run_mcp_server(verbose: bool = False) -> None:
-    """Start the Hermes MCP server on stdio."""
+    """Start the Minerva MCP server on stdio."""
     if not _MCP_SERVER_AVAILABLE:
         print("Error: MCP server requires the 'mcp' package.\n"
               f"Install with: {sys.executable} -m pip install 'mcp'", file=sys.stderr)

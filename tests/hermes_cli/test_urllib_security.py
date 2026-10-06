@@ -429,7 +429,7 @@ def test_resolved_https_context_defers_to_the_platform_store(monkeypatch, tmp_pa
 
 
 def test_resolved_https_context_installs_the_platform_verifier():
-    """Resolving trust for a Hermes opener must put truststore in force.
+    """Resolving trust for a Minerva opener must put truststore in force.
 
     A stdlib urllib request is the call path certifi never covered (the
     llama.cpp engine download among them), so the install has to happen here

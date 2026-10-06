@@ -2,7 +2,7 @@
 name: google-workspace
 description: "Gmail, Calendar, Drive, Docs, Sheets via gws CLI or Python."
 version: 1.2.0
-author: Nous Research
+author: ABBBLE CO
 license: MIT
 platforms: [linux, macos, windows]
 required_credential_files:
@@ -36,9 +36,9 @@ Gmail, Calendar, Drive, Contacts, Sheets, and Docs — through Hermes-managed OA
 The setup is fully non-interactive — you drive it step by step so it works
 on CLI, Telegram, Discord, or any platform.
 
-Run the setup script with Python from the Hermes environment, not an unrelated
+Run the setup script with Python from the Minerva environment, not an unrelated
 system Python. `--install-deps` syncs Hermes' declared Google extra through PM;
-after syncing, restart Hermes and rerun the OAuth command. If Hermes is not
+after syncing, restart Minerva and rerun the OAuth command. If Minerva is not
 importable, use `minerva setup` first rather than installing packages with pip.
 
 Define a shorthand first:
@@ -106,7 +106,7 @@ Tell the user:
 >    Audience → Test users → Add users
 > 6. Download the JSON file and tell me the file path
 >
-> Important Hermes CLI note: if the file path starts with `/`, do NOT send only the bare path as its own message in the CLI, because it can be mistaken for a slash command. Send it in a sentence instead, like:
+> Important Minerva CLI note: if the file path starts with `/`, do NOT send only the bare path as its own message in the CLI, because it can be mistaken for a slash command. Send it in a sentence instead, like:
 > `The JSON file path is: ~/Downloads/client_secret_....json`
 
 Once they provide the path:

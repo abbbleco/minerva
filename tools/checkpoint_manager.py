@@ -320,7 +320,7 @@ def _git_env(
 ) -> dict:
     """Build env dict that redirects git to the shared store.
 
-    The shared store is internal Hermes infrastructure — it must NOT inherit
+    The shared store is internal Minerva infrastructure — it must NOT inherit
     the user's global or system git config.  User-level settings like
     ``commit.gpgsign = true``, signing hooks, or credential helpers would
     either break background snapshots or, worse, spawn interactive prompts
@@ -823,11 +823,11 @@ class CheckpointManager:
     # ------------------------------------------------------------------
 
     def record_agent_write(self, file_path: str) -> None:
-        """Record the content hash of a file Hermes just successfully wrote.
+        """Record the content hash of a file Minerva just successfully wrote.
 
         Feeds the agent-write ledger used by :meth:`restore` in safe mode:
         at restore time, a file whose current content no longer matches the
-        recorded hash was hand-edited by the user after Hermes last touched
+        recorded hash was hand-edited by the user after Minerva last touched
         it, and is skipped instead of clobbered.
 
         Never raises — the ledger is best-effort bookkeeping.
@@ -855,9 +855,9 @@ class CheckpointManager:
 
         Returns ``{"success", "restore": [rel...], "skipped": [rel...],
         "error"?}`` where ``restore`` lists files whose current content
-        still matches what Hermes last wrote (per the agent-write ledger)
+        still matches what Minerva last wrote (per the agent-write ledger)
         and ``skipped`` lists files the user hand-edited after Hermes'
-        last write or that Hermes never wrote at all.
+        last write or that Minerva never wrote at all.
         """
         hash_err = _validate_commit_hash(commit_hash)
         if hash_err:
@@ -887,7 +887,7 @@ class CheckpointManager:
         # Read the same marker-walked project key as record_agent_write.
         ledger = _load_ledger(store, self._ledger_key(abs_dir))
         if not ledger:
-            # No agent-write ledger yet (pre-existing store, or Hermes has
+            # No agent-write ledger yet (pre-existing store, or Minerva has
             # not written any files here since the ledger was introduced).
             # Signal callers to fall back to a full restore rather than
             # skipping every file.
@@ -900,13 +900,13 @@ class CheckpointManager:
             entry = ledger.get(str(abs_path))
             recorded = entry.get("sha256") if isinstance(entry, dict) else None
             if recorded is None:
-                # Hermes never wrote this file (or the ledger predates it) —
+                # Minerva never wrote this file (or the ledger predates it) —
                 # do not touch it in safe mode.
                 skipped.append(rel)
                 continue
             current = _hash_file(abs_path)
             if current is None:
-                # File deleted since Hermes wrote it: restoring it back is
+                # File deleted since Minerva wrote it: restoring it back is
                 # safe — its last content was Hermes-authored.
                 restore.append(rel)
             elif current == recorded:
@@ -1084,7 +1084,7 @@ class CheckpointManager:
     def session_diff(self, working_dir: str) -> Dict:
         """Show the cumulative diff of everything changed in this directory.
 
-        This powers ``/diff session``.  It answers "what has Hermes changed
+        This powers ``/diff session``.  It answers "what has Minerva changed
         here?" by diffing the *earliest retained checkpoint* — the snapshot
         taken before the first recorded edit — against the current working
         tree.  Because checkpoints are captured just before each file-mutating
@@ -1094,7 +1094,7 @@ class CheckpointManager:
         Note: checkpoints are a persistent per-project ref, so the earliest
         *retained* checkpoint may predate the current session (or, after
         pruning, postdate its true start).  It is an approximation of "what
-        Hermes changed", not an exact per-session ledger.
+        Minerva changed", not an exact per-session ledger.
 
         Returns the same shape as :meth:`diff` (``{"success", "stat",
         "diff"}``).  When no checkpoints exist yet — nothing has been edited —
@@ -1293,7 +1293,7 @@ class CheckpointManager:
                 elif self._exceeds_size_cap(Path(abs_dir) / rel):
                     # Absent from the checkpoint because ``max_file_size_mb``
                     # kept it out (_drop_oversize_from_index), not because
-                    # Hermes created it. Deleting it would not restore a prior
+                    # Minerva created it. Deleting it would not restore a prior
                     # state — no checkpoint holds one — it would destroy the
                     # only copy. The ledger records a content hash, not whether
                     # a write created or modified the file, so an oversize path

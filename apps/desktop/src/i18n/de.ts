@@ -393,6 +393,8 @@ export const deOverrides = {
     ideas: 'Ideen',
     feeds: 'Feeds',
     goals: 'Ziele',
+    prds: 'PRDs',
+    leads: 'Leads',
     copied: 'Kopiert',
     copy: 'Kopieren',
     copyFailed: 'Kopieren fehlgeschlagen',

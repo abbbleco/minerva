@@ -338,6 +338,7 @@ class GatewayGoalsMixin:
         if final_text.strip():
             hooks.append(("goal continuation", self._post_turn_goal_continuation))
             hooks.append(("goal tracking", self._post_turn_goal_tracking))
+            hooks.append(("prd triage", self._post_turn_prd_triage))
         hooks.append(("loop completion", self._post_turn_loop_completion))
         for label, hook in hooks:
             try:
@@ -382,6 +383,48 @@ class GatewayGoalsMixin:
             return
         notice = "\n\n".join(goal_registry.render_proposal_notice(p) for p in proposals)
         await self._defer_goal_status_notice_after_delivery(source, notice)
+
+    async def _post_turn_prd_triage(
+        self, *, session_entry: Any, source: Any, final_response: str,
+        agent_result: Any = None, is_internal: bool = False,
+    ) -> None:
+        """Phase-4 intake triage (advisory): store the turn as intake and run
+        the conversation classifier when it grew since the last verdict. Only
+        a newly minted draft notifies (once, via the goal-notice channel —
+        drafts are rare and messaging users never open the pane); watch and
+        dismiss stay quiet. Internal turns and slash commands skip inside
+        ``track_turn``. Every failure is swallowed; the turn already delivered."""
+        if is_internal:
+            return
+        try:
+            from hermes_cli import prd_pipeline
+            from hermes_cli.goals import last_user_message_content
+
+            sid = getattr(session_entry, "session_id", None) or ""
+            if not sid:
+                return
+            messages = agent_result.get("messages") if isinstance(agent_result, dict) else None
+            user_text = last_user_message_content(messages)
+            if isinstance(user_text, list):
+                user_text = " ".join(
+                    str(block.get("text", "")) for block in user_text if isinstance(block, dict))
+            # The judge is a sync aux-LLM HTTP call — keep it off the event
+            # loop, carrying the profile contextvars so credential resolution
+            # works under multiplexing (same shape as goal tracking above).
+            case = await self._run_in_executor_with_context(
+                lambda: prd_pipeline.track_turn(sid, source, str(user_text or ""),
+                                                final_response or ""),
+            )
+        except Exception as exc:
+            logger.debug("prd triage hook failed: %s", exc)
+            return
+        if case is None or source is None:
+            return
+        title = case.get("title") or "untitled"
+        await self._defer_goal_status_notice_after_delivery(
+            source,
+            f"📋 New PRD draft ready for review: {title} "
+            f"(open the PRDs pane or run /prd show {case.get('prd_id', '')})")
 
     @staticmethod
     def _final_text_for_post_turn_hooks(agent_result, event=None) -> str:

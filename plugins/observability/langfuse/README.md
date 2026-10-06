@@ -1,6 +1,6 @@
 # Langfuse Observability Plugin
 
-This plugin ships bundled with Hermes but is **opt-in** — it only loads when
+This plugin ships bundled with Minerva but is **opt-in** — it only loads when
 you explicitly enable it.
 
 ## Enable
@@ -10,7 +10,7 @@ you explicitly enable it.
 hermes tools  # → Langfuse Observability
 ```
 
-Restart Hermes after setup. If dependency preparation fails, retry through
+Restart Minerva after setup. If dependency preparation fails, retry through
 `minerva tools`; do not inject the SDK into the selected environment with pip.
 For manual source-checkout setup, see the
 [plugin guide](../../../website/docs/user-guide/features/built-in-plugins.md#observabilitylangfuse).
@@ -35,7 +35,7 @@ hermes plugins list                 # observability/langfuse should show "enable
 hermes chat -q "hello"              # then check Langfuse for a "Hermes turn" trace
 ```
 
-Generation observations include the Hermes system prompt when the provider
+Generation observations include the Minerva system prompt when the provider
 uses a separate `system` param (Anthropic Messages API). Open an **LLM call**
 child span to inspect `role: system` (truncated via `HERMES_LANGFUSE_MAX_CHARS`).
 

@@ -88,7 +88,7 @@ def crash(exit_code: int = 1, stderr: str = "fatal: agent crashed") -> dict[str,
 
 
 def hermes_tool_call(call_id: str, name: str, args: dict[str, Any]) -> str:
-    """Text a model behind ACP emits to call a Hermes tool (ACP has no OpenAI tools channel)."""
+    """Text a model behind ACP emits to call a Minerva tool (ACP has no OpenAI tools channel)."""
     body = {"id": call_id, "type": "function", "function": {"name": name, "arguments": json.dumps(args)}}
     return f"<tool_call>{json.dumps(body)}</tool_call>"
 
@@ -150,7 +150,7 @@ def prompt_text(record: dict[str, Any]) -> str:
 
 
 class Agent:
-    """One spawned agent process (one Hermes model call)."""
+    """One spawned agent process (one Minerva model call)."""
 
     def __init__(self, state_dir: Path):
         import acp.schema as schema  # validation/building uses the published ACP models

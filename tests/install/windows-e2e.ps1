@@ -1,7 +1,7 @@
 # ============================================================================
 # Windows Desktop GUI install + update E2E driver (the REAL user flow)
 # ============================================================================
-# Proves, on a real Windows machine, that a user who installs Hermes the way
+# Proves, on a real Windows machine, that a user who installs Minerva the way
 # the website tells them to can then update to the commit under test through
 # a real update surface -- with every leg driven through the GUI a user
 # actually touches:
@@ -1225,7 +1225,7 @@ function Invoke-GuiUpdateDesktopRoute([string]$TargetSha) {
         }
         Assert-True ($null -ne $relaunched) "updater relaunched the desktop app"
         Start-Sleep -Seconds 12   # let the window paint for the screenshot
-        # Foreground the relaunched Hermes window so the proof screenshot
+        # Foreground the relaunched Minerva window so the proof screenshot
         # captures IT, not whatever else is on top (the full-desktop grab is
         # otherwise at the mercy of z-order -- an earlier run caught VS Code).
         $mainProc = $null

@@ -1,6 +1,6 @@
 # Photon iMessage platform plugin
 
-This plugin connects Hermes Agent to iMessage (and other Spectrum
+This plugin connects Minerva Agent to iMessage (and other Spectrum
 interfaces) through [Photon][photon] — a managed service that handles
 iMessage line allocation, delivery, and abuse-prevention so users don't
 have to run their own Mac relay.
@@ -13,7 +13,7 @@ recommend for everyone who doesn't already pay for a dedicated number.
 Like Discord and Slack, Photon is a **persistent-connection** channel — no
 public URL, no webhook, no signing secret. The `spectrum-ts` SDK holds a
 long-lived **gRPC stream** to Photon for both directions. Because the SDK is
-TypeScript-only, Hermes runs it inside a small supervised Node sidecar and
+TypeScript-only, Minerva runs it inside a small supervised Node sidecar and
 talks to it over loopback.
 
 ```
@@ -55,7 +55,7 @@ hermes gateway start
 
 1. **Device login** (RFC 8628, `client_id=photon-cli`) — opens
    `https://app.photon.codes/` for approval and stores the bearer token.
-2. **Find or create** the `Hermes Agent` project on the Photon dashboard.
+2. **Find or create** the `Minerva Agent` project on the Photon dashboard.
 3. **Provision the project secret** — mint a fresh project secret (the
    dashboard reveals it only once) and persist it to `~/.hermes/.env` so the
    sidecar can authenticate `spectrum-ts`. Spectrum is always on, so there's no
@@ -68,7 +68,7 @@ hermes gateway start
    verbatim, so every setup runs the exact `spectrum-ts` version this plugin
    was written against).
 
-There is no separate `login` command; like every other Hermes channel,
+There is no separate `login` command; like every other Minerva channel,
 onboarding goes through one setup surface. Re-running `setup` reuses an
 existing token/project, so it's safe to run again to finish a partial setup.
 Run `minerva photon status` to see what's configured.
@@ -96,7 +96,7 @@ Management metadata lives in `~/.hermes/auth.json` under `credential_pool`:
         "dashboard_project_id": "<project id>",
         "spectrum_project_id": "<project id>",
         "project_secret": "<projectSecret>",
-        "name": "Hermes Agent"
+        "name": "Minerva Agent"
       }
     ]
   }
@@ -143,7 +143,7 @@ All env vars are documented in `plugin.yaml`. The most important:
   preserves its URL plus any title/summary metadata Spectrum already exposed;
   current Spectrum versions may still deliver ordinary inbound links as plain
   `text`. iMessage may also emit rich-link preview artwork as
-  `.pluginPayloadAttachment` images immediately after the URL; Hermes coalesces
+  `.pluginPayloadAttachment` images immediately after the URL; Minerva coalesces
   those artifacts so the agent receives one link message instead of a follow-up
   `(attachment)` prompt.
 - **Outbound attachments are supported.** Images, voice notes, video, and
@@ -168,7 +168,7 @@ All env vars are documented in `plugin.yaml`. The most important:
   a model/tool turn. Inbound receipts for Hermes-sent messages are consumed as
   presence telemetry and never create an agent turn. Set
   `PHOTON_READ_RECEIPTS=false` to keep messages at `Delivered`.
-- **Native polls are supported.** Hermes posts poll content through
+- **Native polls are supported.** Minerva posts poll content through
   `spectrum-ts`' `poll(...)` builder via the sidecar's `/send-poll` endpoint.
 - **Message effects are supported.** Text can be sent with native iMessage
   bubble/screen effects through `spectrum-ts`' iMessage `effect(...)` builder
@@ -180,7 +180,7 @@ All env vars are documented in `plugin.yaml`. The most important:
   `/healthz` readiness check, `0600`, removed on stop/failed start). Also
   note that shared/free-tier Photon lines cannot INITIATE conversations
   with numbers that never texted the line — that's Photon-side policy, not
-  a Hermes limitation.
+  a Minerva limitation.
 
 ## Upgrading spectrum-ts
 

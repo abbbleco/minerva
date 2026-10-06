@@ -1,7 +1,7 @@
 ---
 sidebar_position: 14
 title: "AWS Bedrock"
-description: "Use Hermes Agent with Amazon Bedrock — native Converse API, Anthropic SDK routing, OpenAI models via Bedrock Mantle, IAM authentication, Guardrails, and cross-region inference"
+description: "Use Minerva Agent with Amazon Bedrock — native Converse API, Anthropic SDK routing, OpenAI models via Bedrock Mantle, IAM authentication, Guardrails, and cross-region inference"
 ---
 
 # AWS Bedrock
@@ -10,7 +10,7 @@ Python dependency commands on this page use a
 [PM-prepared source checkout](../reference/package-management.md#developer-workflow).
 After a dependency change, reactivate the checkout and restart Hermes.
 
-Hermes Agent supports Amazon Bedrock as a native provider. This gives you full access to the Bedrock ecosystem: IAM authentication, Guardrails, cross-region inference profiles, and all foundation models.
+Minerva Agent supports Amazon Bedrock as a native provider. This gives you full access to the Bedrock ecosystem: IAM authentication, Guardrails, cross-region inference profiles, and all foundation models.
 
 Hermes routes each model family through the API that serves it best:
 

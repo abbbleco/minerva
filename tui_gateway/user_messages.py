@@ -40,7 +40,7 @@ _TURN_ERROR_LAYER_COPY: dict[str, tuple[str, str]] = {
     "billing": ("The model provider reports no credit left", "Top up the account or switch with /model."),
     "endpoint": ("Your custom model endpoint did not answer", "Check the endpoint is running, then /retry."),
     "streaming": ("The connection to the model provider dropped mid-reply", "Send /retry."),
-    "disk": ("The disk is full, so Hermes could not save the turn", "Free some space, then /retry."),
+    "disk": ("The disk is full, so Minerva could not save the turn", "Free some space, then /retry."),
     "gateway": ("Hermes hit an internal error while running this turn", "Send /retry; type /logs for the trace."),
     "provider": ("The model provider returned an error", "Send /retry, or switch with /model."),
 }
@@ -87,7 +87,7 @@ def busy_message(command: str) -> str:
     """4009 refusal for a history-mutating command while a reply is streaming. There is no
     ``/interrupt`` slash command on any client: Desktop has a Stop button, the terminal TUI uses
     Ctrl+C — name both without assuming which one the reader has."""
-    return (f"session busy — Hermes is still replying. Stop the current reply first (Stop button, "
+    return (f"session busy — Minerva is still replying. Stop the current reply first (Stop button, "
             f"or Ctrl+C in a terminal), then run /{command.lstrip('/')}.")
 
 

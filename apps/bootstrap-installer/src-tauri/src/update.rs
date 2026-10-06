@@ -128,7 +128,7 @@ struct MarkerOwner {
 /// REMOVED here, mirroring `read_live_update` in `hermes_cli/update_lock.py`.
 /// The Rust side previously only *ignored* stale bytes: a crashed updater
 /// whose `Drop` never ran left the marker on disk, and every later acquire
-/// kept refusing "Another Hermes update is already running" until the
+/// kept refusing "Another Minerva update is already running" until the
 /// 20-minute ceiling expired — the wedge reported in #77259.
 ///
 /// Self-PID is returned so `acquire` can adopt the desktop's pre-written claim
@@ -364,7 +364,7 @@ async fn run_update(app: AppHandle) -> Result<()> {
                 format!("{secs}s")
             };
             let msg = format!(
-                "Another Hermes update is already running (PID {}, started {} ago). \
+                "Another Minerva update is already running (PID {}, started {} ago). \
                  Wait for it to finish, or close the window or dashboard tab that \
                  started it, then try again.",
                 owner.pid, elapsed
@@ -392,7 +392,7 @@ async fn run_update(app: AppHandle) -> Result<()> {
     let legacy_install = !install_root.join("pm").is_dir();
     let hermes = resolve_hermes(&install_root).await.ok_or_else(|| {
         let msg = format!(
-            "Could not find the hermes CLI under {}. Is Hermes installed? \
+            "Could not find the hermes CLI under {}. Is Minerva installed? \
              Re-run the installer to repair the install.",
             install_root.display()
         );
@@ -703,7 +703,7 @@ async fn run_update(app: AppHandle) -> Result<()> {
                 &app,
                 None,
                 LogStream::Stderr,
-                &format!("[update] could not auto-launch desktop: {err}. Launch Hermes manually."),
+                &format!("[update] could not auto-launch desktop: {err}. Launch Minerva manually."),
             );
         }
     } else if let Err(err) =
@@ -716,7 +716,7 @@ async fn run_update(app: AppHandle) -> Result<()> {
             &app,
             None,
             LogStream::Stdout,
-            &format!("[update] could not auto-launch desktop: {err}. Launch Hermes manually."),
+            &format!("[update] could not auto-launch desktop: {err}. Launch Minerva manually."),
         );
     }
 
@@ -744,14 +744,14 @@ fn exit_after_success(app: &AppHandle) {
 pub(crate) async fn wait_for_install_locks_free(install_root: &Path, app: &AppHandle, stage: &str) -> Result<()> {
     let lock_targets = install_lock_probe_paths(install_root);
     let deadline = Instant::now() + DESKTOP_EXIT_WAIT;
-    emit_log(app, Some(stage), LogStream::Stdout, "[handoff] waiting for Hermes to exit…");
+    emit_log(app, Some(stage), LogStream::Stdout, "[handoff] waiting for Minerva to exit…");
     loop {
         let locked = locked_paths(&lock_targets);
         if locked.is_empty() {
             return Ok(());
         }
         if Instant::now() >= deadline {
-            return Err(anyhow!("Desktop application files are still locked: {}. Close the other Hermes window and retry.", format_locked_paths(&locked)));
+            return Err(anyhow!("Desktop application files are still locked: {}. Close the other Minerva window and retry.", format_locked_paths(&locked)));
         }
         tokio::time::sleep(DESKTOP_EXIT_POLL).await;
     }
@@ -828,7 +828,7 @@ const STDOUT_TAIL_LINES: usize = 40;
 fn concurrent_update_message(stdout_tail: &[String]) -> String {
     match stdout_tail.iter().rposition(|l| l.trim_start().starts_with('✗')) {
         Some(start) => stdout_tail[start..].join("\n").trim().to_string(),
-        None => "Hermes is still running. Close all Hermes windows and try \
+        None => "Hermes is still running. Close all Minerva windows and try \
                  the update again."
             .to_string(),
     }
@@ -1373,19 +1373,19 @@ mod tests {
         let tail = lines(
             "→ Fetching updates...\n\
              ✓ Updated to 6b2c23ae42\n\
-             ✗ Another Hermes update is already running (started 3m 42s ago, process 65285).\n\
+             ✗ Another Minerva update is already running (started 3m 42s ago, process 65285).\n\
              \n  Wait for it to finish, then run `minerva update` again.\n",
         );
         assert_eq!(
             concurrent_update_message(&tail),
-            "✗ Another Hermes update is already running (started 3m 42s ago, process 65285).\n\
+            "✗ Another Minerva update is already running (started 3m 42s ago, process 65285).\n\
              \n  Wait for it to finish, then run `minerva update` again."
         );
     }
 
     #[test]
     fn concurrent_update_message_falls_back_without_a_refusal_block() {
-        let generic = "Hermes is still running. Close all Hermes windows and try the update again.";
+        let generic = "Hermes is still running. Close all Minerva windows and try the update again.";
         assert_eq!(concurrent_update_message(&[]), generic);
         assert_eq!(concurrent_update_message(&lines("→ Fetching updates...\n")), generic);
     }

@@ -1,4 +1,4 @@
-"""Generate canonical install-stamp.json for packaged Hermes builds.
+"""Generate canonical install-stamp.json for packaged Minerva builds.
 
 All packagers (Docker, Nix, desktop) call this script to produce the same
 ``install-stamp.json`` file. Runtime surfaces (CLI, TUI, desktop) read the

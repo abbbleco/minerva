@@ -2,7 +2,7 @@
 
 electron-builder names the unpacked dir ``linux-unpacked`` on x86_64 but
 ``linux-<arch>-unpacked`` on every other arch (``linux-arm64-unpacked`` is
-what Hermes ships for ARM). The gate hardcoded the x86_64 name, so a healthy
+what Minerva ships for ARM). The gate hardcoded the x86_64 name, so a healthy
 ARM install false-gated as "skew" on EVERY update, telling the user to
 reinstall an app that was already correct.
 

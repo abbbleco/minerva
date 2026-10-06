@@ -74,7 +74,7 @@ profile's `.env`:
 | `OPENVIKING_USER` | `default` | Tenant user for local/trusted mode |
 | `OPENVIKING_AGENT` | (none) | Optional peer ID for separate assistant context |
 
-When `OPENVIKING_API_KEY` is set, Hermes lets OpenViking derive account/user
+When `OPENVIKING_API_KEY` is set, Minerva lets OpenViking derive account/user
 identity from the key. In local or trusted deployments without an API key,
 Hermes sends `OPENVIKING_ACCOUNT` and `OPENVIKING_USER` as identity headers.
 Hermes also sends `User-Agent: openviking-memory-hermes/<version>` on
@@ -84,7 +84,7 @@ version, but no per-user identifier, and does not add a separate request.
 ### Optional peer identity
 
 New connections use the OpenViking user's memory directory by default. Setup
-does not ask for a peer ID. Without a configured peer, Hermes sends neither
+does not ask for a peer ID. Without a configured peer, Minerva sends neither
 `X-OpenViking-Actor-Peer` nor assistant-message `peer_id`.
 
 For separate assistant context, set the existing `agent` field in the active
@@ -98,7 +98,7 @@ memory:
 
 Existing non-empty `OPENVIKING_AGENT`, YAML `agent`, and linked OpenViking
 `actor_peer_id` or legacy `agent_id` values retain their behavior. Resolution
-order remains environment, linked OpenViking config, then Hermes YAML. To use
+order remains environment, linked OpenViking config, then Minerva YAML. To use
 no peer, remove the peer value from each configured source and start a new
 Hermes session.
 
@@ -149,7 +149,7 @@ commit <session-id>` recovery command. Inspect the session first. An archive
 means the commit completed. A non-empty live `messages.jsonl` with no archive
 means the message was accepted but still needs a commit. An empty live file
 without an archive is ambiguous and must not trigger an automatic resubmission.
-Use the same OpenViking profile and credentials as Hermes for manual recovery.
+Use the same OpenViking profile and credentials as Minerva for manual recovery.
 OpenViking server auto-commit is disabled by default, so an accepted message
 whose explicit commit fails normally remains live and unextracted until it is
 manually committed.
@@ -157,7 +157,7 @@ manually committed.
 Hermes built-in `memory` tool additions are mirrored to OpenViking after the
 local memory operation succeeds:
 
-| Hermes action | OpenViking operation |
+| Minerva action | OpenViking operation |
 |---------------|----------------------|
 | `add` | `content/write` with `mode=create` under user memory, or the configured peer memory directory |
 

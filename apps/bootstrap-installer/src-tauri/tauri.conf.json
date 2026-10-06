@@ -35,9 +35,9 @@
     "active": true,
     "category": "DeveloperTool",
     "shortDescription": "Hermes",
-    "longDescription": "Installs Hermes Agent on your machine. Drives scripts/install.ps1 (Windows) and scripts/install.sh (macOS/Linux).",
-    "publisher": "Nous Research",
-    "copyright": "Copyright © 2026 Nous Research",
+    "longDescription": "Installs Minerva Agent on your machine. Drives scripts/install.ps1 (Windows) and scripts/install.sh (macOS/Linux).",
+    "publisher": "ABBBLE CO",
+    "copyright": "Copyright © 2026 ABBBLE CO",
     "targets": [
       "app",
       "dmg",

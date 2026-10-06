@@ -387,7 +387,7 @@ linux_gate() {
     [ "$arg" = "--no-sandbox" ] && { GATE=relaunch; return; }
   done
 
-  GATE=manual GATE_MSG="Update complete, but the rebuilt app can't relaunch itself (its sandbox helper needs root ownership). Reopen Hermes to finish."
+  GATE=manual GATE_MSG="Update complete, but the rebuilt app can't relaunch itself (its sandbox helper needs root ownership). Reopen Minerva to finish."
 }
 
 mac_swap() {
@@ -417,7 +417,7 @@ mac_swap() {
         DONE_NOTE="Update complete, but the new app could not be installed; the previous version was restored. Run the update again."
         log "WARNING: bundle install failed; rolled back to the previous app"
       else
-        FINAL_CODE=7 FINAL_MSG="The update finished but installing the new app failed and the previous app could not be restored. Reinstall Hermes (the rebuilt app is at $rebuilt)."
+        FINAL_CODE=7 FINAL_MSG="The update finished but installing the new app failed and the previous app could not be restored. Reinstall Minerva (the rebuilt app is at $rebuilt)."
         log "ERROR: bundle install failed AND rollback failed"
       fi
     else
@@ -512,7 +512,7 @@ finish() {
       if ! launch_app; then
         # Even the kept bundle didn't come back: the durable message must
         # carry BOTH facts (update ok, previous app not reopened).
-        FINAL_MSG="$DONE_NOTE Hermes also could not reopen itself - open it manually."
+        FINAL_MSG="$DONE_NOTE Minerva also could not reopen itself - open it manually."
         write_result
       fi
     fi
@@ -522,7 +522,7 @@ finish() {
   else
     # Launch was due and did not land. Downgrade: truthful result for the
     # next boot, manual state held on screen now.
-    FINAL_MSG="Update complete. Reopen Hermes to finish (it could not restart itself)."
+    FINAL_MSG="Update complete. Reopen Minerva to finish (it could not restart itself)."
     MANUAL=1
     write_result
     publish "manual" "$FINAL_MSG"; stop_ui leave-window
@@ -705,7 +705,7 @@ fi
 # teardown, while retaining the same marker/result protocol.
 if [ "$HANDOFF_DAEMONIZED" -ne 1 ]; then
   # This launcher is disposable. In particular it must not run finish() on
-  # EXIT: that would publish a false failure and relaunch Hermes while the
+  # EXIT: that would publish a false failure and relaunch Minerva while the
   # re-parented orchestrator is only just starting.
   trap - EXIT HUP INT QUIT TERM
   # --daemonized must precede ORIGINAL_ARGS, not follow it: ORIGINAL_ARGS may
@@ -757,7 +757,7 @@ fi
 if [ "$DESKTOP_PID" -gt 0 ] 2>/dev/null; then
   for _ in $(seq 1 100); do kill -0 "$DESKTOP_PID" 2>/dev/null || break; sleep 0.3; done
   if kill -0 "$DESKTOP_PID" 2>/dev/null; then
-    FINAL_CODE=4 FINAL_MSG="Update aborted: the Hermes window (pid $DESKTOP_PID) did not exit within 30s. Nothing was changed. Close Hermes fully and try again."
+    FINAL_CODE=4 FINAL_MSG="Update aborted: the Minerva window (pid $DESKTOP_PID) did not exit within 30s. Nothing was changed. Close Minerva fully and try again."
     log "$FINAL_MSG"; exit "$FINAL_CODE"
   fi
 fi
@@ -825,7 +825,7 @@ export HERMES_UPDATE_STATUS_FILE="$STATUS"
 # --keep-stash: never re-apply local source edits after the update (they stay
 # parked in git stash). Probe --help first: older installed backends don't
 # know the flag and argparse would abort with exit 2, which collides with the
-# "close all Hermes windows" sentinel.
+# "close all Minerva windows" sentinel.
 KEEP_STASH=""
 if "${UPDATE_INVOKE[@]}" update --help 2>/dev/null | grep -q -- '--keep-stash'; then
   KEEP_STASH="--keep-stash"
@@ -850,7 +850,7 @@ log "hermes update exit code: $CODE"
 
 if [ "$LEGACY_INSTALL" -eq 1 ] && [ "$CODE" -ne 0 ] && [ "$CODE" -ne 2 ]; then
   # Retry once: update-boundary class (fresh code on disk, stale in memory).
-  # Exit 2 ("close all Hermes windows") is not retryable.
+  # Exit 2 ("close all Minerva windows") is not retryable.
   #
   # A parked-branch SKIP (checkout on a feature branch with unmerged
   # commits) is also deterministic — the retry would hit the exact same
@@ -892,7 +892,7 @@ else
   # succeed — tell the user what is actually wrong (#95759).
   if [ "$LEGACY_INSTALL" -eq 1 ] && ! tcc_probe_python "$INSTALL_ROOT/venv/bin/python3" \
       && ! tcc_probe_python "$INSTALL_ROOT/venv/bin/python"; then
-    FINAL_MSG="Update failed: the Python interpreter inside $INSTALL_ROOT/venv cannot start (heal state: $TCC_HEAL_STATE). Reinstall the runtime with the Hermes installer, or run hermes doctor --fix from a terminal if any hermes command still works."
+    FINAL_MSG="Update failed: the Python interpreter inside $INSTALL_ROOT/venv cannot start (heal state: $TCC_HEAL_STATE). Reinstall the runtime with the Minerva installer, or run hermes doctor --fix from a terminal if any hermes command still works."
   fi
 fi
 exit "$FINAL_CODE"

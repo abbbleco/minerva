@@ -2192,7 +2192,7 @@ def test_keyless_endpoint_with_saved_catalog_still_reads_cache(monkeypatch):
 def test_keyless_endpoint_with_saved_catalog_is_still_not_probed(monkeypatch):
     """...but the network-cost gate it rides on must survive intact.
 
-    The no-key + declared-catalog combination exists to keep Hermes from
+    The no-key + declared-catalog combination exists to keep Minerva from
     probing an endpoint it cannot authenticate to. Serving that endpoint from
     a warm cache is free; hitting the network is not. With a cold cache and
     live probing fully enabled, this row must still make zero fetches.
@@ -2357,7 +2357,7 @@ def test_auto_saved_catalog_round_trips_without_pinning(tmp_path, monkeypatch):
 def test_legacy_sentinel_catalog_still_resolves_and_migrates(tmp_path, monkeypatch):
     """Old-shape configs (sentinels inside ``models``) keep working.
 
-    Pre-fix Hermes wrote ``__discovered_model_catalog__: true`` (and
+    Pre-fix Minerva wrote ``__discovered_model_catalog__: true`` (and
     ``__explicit_model_allowlist__``) inside the user-facing ``models``
     mapping. Reading such a config must (a) recognize the catalog as
     discovered — not a user pin, (b) never list the sentinels as model IDs,

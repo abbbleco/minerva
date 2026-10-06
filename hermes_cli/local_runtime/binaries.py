@@ -127,7 +127,7 @@ def installed_engine(backend: str = "auto", *, allow_outdated: bool = True) -> E
     return engine
 
 
-# Before PM owned binaries, Hermes installed each engine to runtimes/llamacpp/b<tag>/<backend>/
+# Before PM owned binaries, Minerva installed each engine to runtimes/llamacpp/b<tag>/<backend>/
 # and wrote a manifest.json with the archive digests and the llama-server --version it saw.
 _SHA256 = re.compile(r"[0-9a-f]{64}")
 _ADOPTION_LOCK = threading.Lock()

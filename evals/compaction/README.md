@@ -126,7 +126,7 @@ one 200K run was stuck after 0.42M tokens of work, one transcript never fit.
 - `--also-uncompacted` adds a control arm that answers from the full
   original transcript — the recall ceiling.
 - **Default arm is `current+recovery`: the production path.** Compaction in
-  Hermes is the summary *plus* the session_search pointer it carries, so the
+  Minerva is the summary *plus* the session_search pointer it carries, so the
   answerer gets one search round-trip over the archived region (same FTS5+BM25
   engine as production). A bare policy name (`current`) is closed-book — the
   summary with its recovery pointer unused — and scores 30+ pts lower on

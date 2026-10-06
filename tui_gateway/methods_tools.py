@@ -917,6 +917,15 @@ def _cmd_goal(rid, params, session, name, arg):
         return _ok(rid, payload)
 
 
+def _cmd_prd(rid, params, session, name, arg):
+    with _session_profile_runtime_scope(session or {}):
+        from hermes_cli.prd_command import dispatch_prd_command
+        result = dispatch_prd_command(arg, actor="reviewer:tui")
+        if result.error:
+            return _err(rid, 4004, result.output)
+        return _exec_out(rid, result.output)
+
+
 def _cmd_loop(rid, params, session, name, arg):
     sid_key, loops, err = _session_key_or_err(rid, session, "hermes_cli.loops", "loops")
     if err:
@@ -1091,6 +1100,7 @@ def _cmd_skills(rid, params, session, name, arg):
 _SLASH_BUILTINS = {
     "queue": _cmd_queue, "q": _cmd_queue, "learn": _cmd_learn, "plan": _cmd_plan, "init": _cmd_init,
     "moa": _cmd_moa, "focus": _cmd_focus, "retry": _cmd_retry, "steer": _cmd_steer, "goal": _cmd_goal,
+    "prd": _cmd_prd,
     "loop": _cmd_loop, "undo": _cmd_undo, "snapshot": _cmd_snapshot, "snap": _cmd_snapshot,
     "compress": _cmd_compress, "compact": _cmd_compress,
     "memory": _cmd_memory, "skills": _cmd_skills}

@@ -8,7 +8,7 @@ Failure class: PATH shapes. Two things users report once the install "works":
   installer must not edit the startup files again;
 * a node/npm the user already has, earlier on PATH, must never stand in for the managed toolchain:
   not for the TUI/web builds and not for an MCP server configured with a bare ``command: node``.
-  Hermes only ever runs its own packaged node/npm; when such a server's native addon was built by
+  Minerva only ever runs its own packaged node/npm; when such a server's native addon was built by
   the user's Node it fails under Hermes's, and that failure must reach the user with the remedy
   (rebuild it under Hermes's Node) instead of a silent park (#124264).
 

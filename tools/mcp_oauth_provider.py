@@ -1,4 +1,4 @@
-"""Shared ``OAuthClientProvider`` customizations for Hermes MCP OAuth.
+"""Shared ``OAuthClientProvider`` customizations for Minerva MCP OAuth.
 
 Two code paths build an SDK provider — ``tools.mcp_oauth.build_oauth_auth`` (legacy public
 API) and ``tools.mcp_oauth_manager.MCPOAuthManager`` — and both need the same real-world
@@ -450,7 +450,7 @@ class HermesProviderMixin:
         if not (200 <= response.status_code < 300):
             self._hermes_logger.warning("Token refresh failed: %s", response.status_code)
             # A writer outside the fence (interactive `minerva mcp login`, or a
-            # pre-fence Hermes sharing this HERMES_HOME) may have rotated the
+            # pre-fence Minerva sharing this HERMES_HOME) may have rotated the
             # grant and persisted the replacement. Providers issuing single-use
             # refresh tokens reject our stale copy with a 400. Re-read disk
             # before destroying the session.

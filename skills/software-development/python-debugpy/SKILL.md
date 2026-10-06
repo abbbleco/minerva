@@ -2,7 +2,7 @@
 name: python-debugpy
 description: "Debug Python: pdb REPL + debugpy remote (DAP)."
 version: 1.0.0
-author: Hermes Agent
+author: Minerva Agent
 license: MIT
 platforms: [linux, macos]
 metadata:
@@ -140,7 +140,7 @@ sys.excepthook = excepthook
 
 ## Recipe 5: Remote debug with debugpy (attach to running process)
 
-For long-lived processes: Hermes gateway, tui_gateway, a daemon, a process that's already misbehaving and can't be restarted clean.
+For long-lived processes: Minerva gateway, tui_gateway, a daemon, a process that's already misbehaving and can't be restarted clean.
 
 ### Setup
 
@@ -208,7 +208,7 @@ echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
 
 ### Connecting a client from the terminal
 
-The easiest terminal-side DAP client is VS Code CLI or a small script. From inside Hermes you have two practical options:
+The easiest terminal-side DAP client is VS Code CLI or a small script. From inside Minerva you have two practical options:
 
 **Option 1: `debugpy`'s own CLI REPL** — not an official feature, but a tiny DAP client script:
 
@@ -268,7 +268,7 @@ This is fine for one-off automation but painful as an interactive UX.
 
 For an independently owned Python project, declare `remote-pdb` in that
 project's development dependencies and prepare its debug environment through
-the project's package manager. This is not a Hermes SDK install recipe. For
+the project's package manager. This is not a Minerva SDK install recipe. For
 Hermes, prefer the declared debugpy dependency; the remote-pdb examples below
 require a separately declared, freshly built debug environment, never an
 in-place pip install into the selected application generation.
@@ -342,7 +342,7 @@ Long-lived. Use `remote-pdb` at a handler, or `debugpy` with `--wait-for-client`
 
 8. **`scripts/run_tests.sh` strips credentials and sets `HOME=<tmpdir>`.** If your bug depends on user config or real API keys, it won't reproduce under the wrapper. Debug with raw `pytest` first to repro, then re-confirm under the wrapper.
 
-9. **Forking / multiprocessing.** pdb does not follow forks. Each child needs its own `breakpoint()` or `set_trace()`. For Hermes subagents, debug one process at a time.
+9. **Forking / multiprocessing.** pdb does not follow forks. Each child needs its own `breakpoint()` or `set_trace()`. For Minerva subagents, debug one process at a time.
 
 ## Verification Checklist
 

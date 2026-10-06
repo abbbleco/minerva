@@ -1935,7 +1935,7 @@ class TestAuxiliaryFallbackLayering:
 
 
     def test_fallback_entry_openai_codex_uses_oauth_pool_without_inline_key(self):
-        """Configured Codex fallback resolves through Hermes auth / credential pool."""
+        """Configured Codex fallback resolves through Minerva auth / credential pool."""
         from agent.auxiliary_client import _resolve_fallback_entry
 
         pool_entry = MagicMock()
@@ -2335,7 +2335,7 @@ class TestTransientTransportRetry:
 
 class TestAuxClientNoSdkRetries:
     """Auxiliary OpenAI clients are constructed with SDK-internal retries
-    disabled so Hermes owns the retry/timeout budget (issue #54465). The SDK
+    disabled so Minerva owns the retry/timeout budget (issue #54465). The SDK
     default (max_retries=2 → 3 attempts) silently triples the effective wall
     time of every aux call against a slow/hung endpoint.
     """
@@ -2994,7 +2994,7 @@ class TestAuxiliaryPoolRotationRetry:
 
 
 class TestAnthropicAuxiliaryReasoningTranslation:
-    """Native Anthropic aux adapters must receive normalized Hermes reasoning.
+    """Native Anthropic aux adapters must receive normalized Minerva reasoning.
 
     MoA slot reasoning is carried through call_llm as a Hermes
     ``reasoning_config``. The native Anthropic Messages path cannot consume the
@@ -3952,7 +3952,7 @@ class TestCodexAuxiliaryAdapterCompletedResponse:
 class TestCodexAuxiliaryAdapterReservedToolAliases:
     """The aux adapter emits the same tool schemas as the main Responses transport: shared
     converter (``strict: False``) plus provider-reserved-name aliasing (OpenCode, Perplexity),
-    reversed on the parsed tool_calls before Hermes dispatch (#114260)."""
+    reversed on the parsed tool_calls before Minerva dispatch (#114260)."""
 
     _TOOLS = [
         {"type": "function", "function": {"name": name, "description": name,

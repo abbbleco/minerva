@@ -1,7 +1,7 @@
 """Shared plumbing for local stand-in messaging platform servers.
 
 A stand-in is a real HTTP (and, where the platform needs it, WebSocket) server on 127.0.0.1 that
-implements only the endpoints a Hermes adapter actually calls, shaped per the platform's published
+implements only the endpoints a Minerva adapter actually calls, shaped per the platform's published
 API reference. It runs on a private asyncio loop in a daemon thread so a synchronous pytest body can
 drive it, records every call it serves (method + decoded params + the response it returned), and
 lets a test queue faults per method (an API error body, an HTTP status) that are consumed in order.

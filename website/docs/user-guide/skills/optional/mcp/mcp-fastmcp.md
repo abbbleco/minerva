@@ -17,7 +17,7 @@ Build, test, and deploy Python MCP servers.
 | Source | Optional — install with `minerva skills install official/mcp/fastmcp` |
 | Path | `optional-skills/mcp/fastmcp` |
 | Version | `1.0.0` |
-| Author | Hermes Agent |
+| Author | Minerva Agent |
 | License | MIT |
 | Platforms | linux, macos, windows |
 | Tags | `MCP`, `FastMCP`, `Python`, `Tools`, `Resources`, `Prompts`, `Deployment` |

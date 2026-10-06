@@ -8,7 +8,13 @@ Status: Phase 0 done (verified), Phase 1 done (verified), Phase 2 done (verified
 poller + ingest summarizer + pane + providers rss/facebook/instagram + cron
 background polling), Phase 3 done (verified: goal registry + migration +
 turn-end detection hook on gateway/TUI/CLI + `/goal` subcommand parity + REST
-router + `minerva-goals` pane + explicit kanban bridge); Phase 4 next. Update
+router + `minerva-goals` pane + explicit kanban bridge); Phase 4 done (verified:
+intake log + triage gate with LLM dedupe + cited drafting writer + review
+queue with approve/edit/reject + explicit kanban bridge + gateway turn hook +
+`/prd` on CLI/gateway/TUI + `minerva-prds` pane); Phase 5 done (verified:
+website form + proxy passthrough + portal upstream with site-key auth,
+per-key throttle and honeypot + async drain into the Phase-4 pipeline +
+migration 041). All five phases shipped. Update
 the status line per phase as work lands.
 
 ## Ground truths (what we're building on, not around)

@@ -19,7 +19,7 @@ from hermes_cli.local_runtime.gguf import SPLIT_PART_RE, model_id_from_stem
 
 logger = logging.getLogger(__name__)
 
-_SUPERVISOR = None  # process-wide singleton; one router per Hermes process
+_SUPERVISOR = None  # process-wide singleton; one router per Minerva process
 
 
 def _detect_gpu_vendor() -> str | None:
@@ -338,7 +338,7 @@ def _unlock_boot_fd(fd: int) -> None:
 
 @contextmanager
 def _cross_process_boot_lock(timeout_s: float = 130.0):
-    """Serialize the state-check-then-spawn sequence across every Hermes process on this
+    """Serialize the state-check-then-spawn sequence across every Minerva process on this
     machine — the ``_SUPERVISOR`` singleton above only rules out a race within ONE process.
     Two profiles booting in the same second each see no ``server.json`` yet and each spawn a
     router on the stable port (#116682); an OS-held lock makes the second caller wait for the
@@ -391,7 +391,7 @@ def ensure_local_runtime(config: dict, force: bool = False) -> "object | None":
         logger.info("local runtime enabled but no models staged; not booting")
         return None
 
-    # Another Hermes process may already be supervising — reuse via state, but ONLY while its
+    # Another Minerva process may already be supervising — reuse via state, but ONLY while its
     # launch policy still covers every staged model. A server whose preset file predates a
     # download serves the new model with no policy at all (--models-autoload + stock fit). A stale
     # incumbent gets stopped and replaced by a fresh boot with regenerated presets; sessions ride

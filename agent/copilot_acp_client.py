@@ -1,4 +1,4 @@
-"""OpenAI-compatible shim that forwards Hermes requests to `copilot --acp`.
+"""OpenAI-compatible shim that forwards Minerva requests to `copilot --acp`.
 
 Each request starts a short-lived ACP session, sends the formatted conversation
 as one prompt, collects text chunks, and returns the minimal OpenAI-client shape.
@@ -53,13 +53,13 @@ _PROMPT_PREAMBLE = (
 _INITIALIZE_PARAMS = {
     "protocolVersion": 1,
     "clientCapabilities": {"fs": {"readTextFile": True, "writeTextFile": True}},
-    "clientInfo": {"name": "hermes-agent", "title": "Hermes Agent", "version": "0.0.0"},
+    "clientInfo": {"name": "hermes-agent", "title": "Minerva Agent", "version": "0.0.0"},
 }
 _DEPRECATED_CLI_ERROR = (
     "Hermes ACP mode requires the NEW GitHub Copilot CLI (github.com/github/copilot-cli), but the binary it just "
     "spawned is the deprecated `gh copilot` extension.\n\n"
     "Install the new CLI:\n  npm install -g @github/copilot\n  # then verify with: copilot --help\n\n"
-    "If `copilot` already resolves to the new CLI but you still see this,\npoint Hermes at it explicitly:\n"
+    "If `copilot` already resolves to the new CLI but you still see this,\npoint Minerva at it explicitly:\n"
     "  export HERMES_COPILOT_ACP_COMMAND=/path/to/new/copilot\n\n"
     "Alternative: use the `copilot` provider (no ACP, hits the Copilot API\ndirectly with a Copilot subscription "
     "token) via `minerva setup`.\n\nOriginal error:\n"
@@ -500,7 +500,7 @@ class CopilotACPClient:
                 except Exception as exc:
                     response = _jsonrpc_error(message_id, -32602, str(exc))
         else:
-            response = _jsonrpc_error(message_id, -32601, f"ACP client method '{method}' is not supported by Hermes yet.")
+            response = _jsonrpc_error(message_id, -32601, f"ACP client method '{method}' is not supported by Minerva yet.")
         process.stdin.write(json.dumps(response) + "\n")
         process.stdin.flush()
         return True

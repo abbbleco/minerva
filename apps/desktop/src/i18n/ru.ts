@@ -113,6 +113,8 @@ export const ru = defineLocale({
     ideas: 'Идеи',
     feeds: 'Ленты',
     goals: 'Цели',
+    prds: 'PRD',
+    leads: '????',
     copied: 'Скопировано',
     copy: 'Копировать',
     copyFailed: 'Не удалось скопировать',

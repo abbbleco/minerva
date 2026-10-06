@@ -248,7 +248,7 @@ _SET_ASIDE_PREFIX = ".reclaim-"
 def _discard_entry(store: Store, entry_name: str) -> None:
     """Drop a tree a finished publish or restore left behind as garbage.
 
-    A running Hermes process can keep the replaced interpreter's DLLs mapped
+    A running Minerva process can keep the replaced interpreter's DLLs mapped
     far past the retry window, and failing here reports a completed install
     as broken (#124807). Windows still allows renaming a tree with mapped
     images, so it moves to a `.reclaim-*` name: its slot is free for the next
@@ -704,7 +704,7 @@ def _venv_install_lock(*, patient: bool):
         if not held:
             error = InstallError(
                 "venv",
-                f"another Hermes process is installing dependencies (waited {INSTALL_LOCK_TIMEOUT_SECONDS:.0f}s)",
+                f"another Minerva process is installing dependencies (waited {INSTALL_LOCK_TIMEOUT_SECONDS:.0f}s)",
                 "retry in a moment, or run `minerva pm install` to install explicitly",
             )
             receipt.record_refusal("install-busy", str(error))

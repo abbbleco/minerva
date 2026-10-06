@@ -10,7 +10,7 @@ from hermes_cli import profiles as profiles_mod
 logger = logging.getLogger(__name__)
 
 SETUP_PROFILE_NAME = "hermes-setup"
-SETUP_PROFILE_DESCRIPTION = "Where Hermes met you — walks your first run, then checks in as you find your feet."
+SETUP_PROFILE_DESCRIPTION = "Where Minerva met you — walks your first run, then checks in as you find your feet."
 
 SETUP_SOUL = "\n".join([
     "# Hermes",

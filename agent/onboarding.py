@@ -86,7 +86,7 @@ def tool_progress_hint_cli() -> str:
 
 
 def openclaw_residue_hint_cli() -> str:
-    """Banner shown the first time Hermes finds ``~/.openclaw/``: migrate first, cleanup (which breaks OpenClaw) after."""
+    """Banner shown the first time Minerva finds ``~/.openclaw/``: migrate first, cleanup (which breaks OpenClaw) after."""
     return (
         "A legacy OpenClaw directory was detected at ~/.openclaw/.\n"
         "To port your config, memory, and skills over to Hermes, run `minerva claw migrate`.\n"

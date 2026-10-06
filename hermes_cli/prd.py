@@ -79,6 +79,31 @@ class PrdDocument:
             actor=actor, reason=reason))
         self.status = to_status
 
+    REVISABLE_SECTIONS = ("title", "problem", "users", "requirements",
+                          "acceptance_criteria", "open_questions")
+
+    def revise_section(self, section: str, value: Any, *, actor: str) -> None:
+        """Reviewer edit of one section, recorded in history. Terminal states
+        (approved/rejected) are frozen — corrections mint a follow-up PRD."""
+        if section not in self.REVISABLE_SECTIONS:
+            raise PrdError(f"cannot revise PRD section {section!r}")
+        if self.status not in ("draft", "in_review"):
+            raise PrdError(f"cannot revise a {self.status} PRD")
+        if section in ("requirements", "acceptance_criteria", "open_questions"):
+            items = [str(v).strip() for v in (value or []) if str(v).strip()]
+            if section in ("requirements", "acceptance_criteria") and not items:
+                raise PrdError(f"PRD {section} cannot be emptied")
+            setattr(self, section, items)
+        else:
+            text = str(value or "").strip()
+            if not text:
+                raise PrdError(f"PRD {section} cannot be emptied")
+            setattr(self, section, text)
+        self.history.append(PrdTransition(
+            at=time.time(), from_status=self.status, to_status=self.status,
+            actor=actor, reason=f"revised {section}"))
+        self.validate()
+
     def to_dict(self) -> Dict[str, Any]:
         data = asdict(self)
         data["history"] = [asdict(t) for t in self.history]

@@ -1,14 +1,14 @@
 ---
-title: "Hermes Agent — 使用、配置与扩展 Hermes Agent"
-sidebar_label: "Hermes Agent"
-description: "Use, configure, theme, extend, and orchestrate Hermes Agent"
+title: "Minerva Agent — 使用、配置与扩展 Minerva Agent"
+sidebar_label: "Minerva Agent"
+description: "Use, configure, theme, extend, and orchestrate Minerva Agent"
 ---
 
 {/* This page is auto-generated from the skill's SKILL.md by website/scripts/generate-skill-docs.py. Edit the source SKILL.md, not this page. */}
 
-# Hermes Agent
+# Minerva Agent
 
-Use, configure, theme, extend, and orchestrate Hermes Agent.
+Use, configure, theme, extend, and orchestrate Minerva Agent.
 
 ## Skill metadata
 
@@ -17,7 +17,7 @@ Use, configure, theme, extend, and orchestrate Hermes Agent.
 | Source | Bundled (installed by default) |
 | Path | `skills/autonomous-ai-agents/hermes-agent` |
 | Version | `3.2.0` |
-| Author | Hermes Agent + Teknium |
+| Author | Minerva Agent + Teknium |
 | License | MIT |
 | Platforms | linux, macos, windows |
 | Tags | `hermes`, `setup`, `configuration`, `multi-agent`, `spawning`, `cli`, `gateway`, `bots`, `bot-mode`, `features`, `themes`, `skins`, `desktop-plugins`, `tui-widgets`, `petdex`, `development` |
@@ -29,9 +29,9 @@ Use, configure, theme, extend, and orchestrate Hermes Agent.
 以下定义由当前 SKILL.md 生成，保留英文原文以与 agent 实际加载的指令一致。旧版译文中的 pip 安装和 Windows 测试绕过方案已移除；开发与测试请按原文链接读取当前 contributor-guide 和 windows-quirks 参考。
 :::
 
-# Hermes Agent
+# Minerva Agent
 
-Hermes Agent is an open-source AI agent framework by Nous Research that runs in your terminal, a native desktop app, messaging platforms, and IDEs. It's in the same category as Claude Code (Anthropic), Codex (OpenAI), and OpenClaw — autonomous coding and task-execution agents that use tool calling to interact with your system. Hermes works with any LLM provider (OpenRouter, Anthropic, OpenAI, Google, DeepSeek, xAI, local models, and 20+ others) and runs on Linux, macOS, Windows, and WSL.
+Minerva Agent is an open-source AI agent framework by ABBBLE CO that runs in your terminal, a native desktop app, messaging platforms, and IDEs. It's in the same category as Claude Code (Anthropic), Codex (OpenAI), and OpenClaw — autonomous coding and task-execution agents that use tool calling to interact with your system. Hermes works with any LLM provider (OpenRouter, Anthropic, OpenAI, Google, DeepSeek, xAI, local models, and 20+ others) and runs on Linux, macOS, Windows, and WSL.
 
 What makes Hermes different:
 

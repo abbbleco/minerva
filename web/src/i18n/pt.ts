@@ -50,12 +50,12 @@ export const pt: Translations = {
   },
 
   app: {
-    brand: "Hermes Agent",
+    brand: "Minerva Agent",
     brandShort: "HA",
     closeNavigation: "Fechar navegação",
     closeModelTools: "Fechar modelo e ferramentas",
     footer: {
-      org: "Nous Research",
+      org: "ABBBLE CO",
     },
     activeSessionsLabel: "Sessões ativas:",
     gatewayStatusLabel: "Estado do gateway:",
@@ -334,7 +334,7 @@ export const pt: Translations = {
       "Salvo — reinicie o gateway para aplicar a alteração.",
     forceReinstall: "Forçar reinstalação (eliminar pasta existente primeiro)",
     headline:
-      "Descobrir, instalar, ativar e atualizar plugins Hermes (paridade com `minerva plugins`).",
+      "Descobrir, instalar, ativar e atualizar plugins Minerva (paridade com `minerva plugins`).",
     identifierLabel: "URL Git ou owner/repo",
     inactive: "inativo",
     installBtn: "Instalar",
@@ -448,7 +448,7 @@ export const pt: Translations = {
     showValue: "Mostrar valor real",
     hideValue: "Ocultar valor",
     customTitle: "Chaves personalizadas",
-    customHint: "Variáveis de ambiente arbitrárias armazenadas no seu .env que o Hermes não reconhece. Use-as para injetar variáveis de ambiente para skills, servidores MCP ou suas próprias ferramentas.",
+    customHint: "Variáveis de ambiente arbitrárias armazenadas no seu .env que o Minerva não reconhece. Use-as para injetar variáveis de ambiente para skills, servidores MCP ou suas próprias ferramentas.",
     customConfigured: "{count} chave(s) personalizada(s) definida(s)",
     addCustomKey: "Adicionar uma chave personalizada",
     customKeyName: "Nome da variável",
@@ -515,7 +515,7 @@ export const pt: Translations = {
       kicker: "Agentic Gamerscore",
       title: "Hermes Achievements",
       subtitle:
-        "Distintivos colecionáveis do Hermes obtidos a partir do histórico real de sessões. Conquistas conhecidas mas ainda não obtidas aparecem como Descobertas; conquistas Secretas permanecem ocultas até surgir o primeiro comportamento correspondente.",
+        "Distintivos colecionáveis do Minerva obtidos a partir do histórico real de sessões. Conquistas conhecidas mas ainda não obtidas aparecem como Descobertas; conquistas Secretas permanecem ocultas até surgir o primeiro comportamento correspondente.",
       scan_subtitle:
         "A analisar o histórico de sessões do Hermes. A primeira análise pode demorar 5–10 segundos em históricos extensos.",
     },
@@ -563,10 +563,10 @@ export const pt: Translations = {
       tiers_header: "Níveis",
       secret_header: "Conquistas secretas",
       secret_body:
-        "As secretas escondem o seu acionador exato. Assim que o Hermes detetar um sinal relacionado, o cartão passa a Descoberta e mostra o requisito.",
+        "As secretas escondem o seu acionador exato. Assim que o Minerva detetar um sinal relacionado, o cartão passa a Descoberta e mostra o requisito.",
       scan_status_header: "Estado da análise",
       scan_status_body:
-        "O Hermes analisa o histórico local uma vez e depois os cartões aparecem automaticamente. Nada está bloqueado se isto demorar alguns segundos.",
+        "O Minerva analisa o histórico local uma vez e depois os cartões aparecem automaticamente. Nada está bloqueado se isto demorar alguns segundos.",
       what_scanned_header: "O que é analisado",
       what_scanned_body:
         "Sessões, chamadas de ferramentas, metadados de modelos, erros, conquistas e estado de desbloqueio local.",
@@ -613,7 +613,7 @@ export const pt: Translations = {
         "Partilhar no X abre uma publicação pré-preenchida num novo separador. Clique primeiro em Copiar imagem se quiser anexar o distintivo 1200×630 — o X permite colá-lo diretamente no compositor da publicação. Transferir PNG guarda o ficheiro para utilização em qualquer lado.",
       clipboard_unsupported:
         "A cópia de imagens para a área de transferência não é suportada neste navegador — utilize Transferir.",
-      tweet_text: "Just unlocked {tier_part}\"{name}\" in Hermes Agent ☤",
+      tweet_text: "Just unlocked {tier_part}\"{name}\" in Minerva Agent ☤",
     },
   },
   kanban: {

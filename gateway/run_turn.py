@@ -1956,7 +1956,7 @@ class GatewayTurnMixin:
 
         return response
 
-    # Chat-side next steps keyed by HTTP status; Hermes commands only (/login is the gateway's own
+    # Chat-side next steps keyed by HTTP status; Minerva commands only (/login is the gateway's own
     # sign-in, `{relogin}` the profile-aware host equivalent, filled from the turn's agent provider).
     # Values are catalog keys (``gateway.errors.hint_*``); 401 carries a ``{relogin}`` placeholder.
     _STATUS_HINTS = {
@@ -2754,7 +2754,7 @@ class GatewayTurnMixin:
         run_generation: Optional[int] = None, event_message_id: Optional[str] = None,
         scheduled_heartbeat: bool = False,
     ) -> Dict[str, Any]:
-        """Forward the message to a remote Hermes API server instead of running a local AIAgent.
+        """Forward the message to a remote Minerva API server instead of running a local AIAgent.
 
         Lets a Docker container handle Matrix E2EE while the agent runs on the host with full
         access to local files, memory, skills, and a unified session store."""

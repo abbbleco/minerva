@@ -137,7 +137,7 @@ def _consent_python_deps(
             "Run `minerva plugins enable` when ready to prepare them.[/dim]\n"
         )
         return False, "dependency install skipped (non-interactive)"
-    if not _ask_yes_no(("python", plugin_name, deps), "  Prepare these with Hermes through PM now? [y/N]: ", console):
+    if not _ask_yes_no(("python", plugin_name, deps), "  Prepare these with Minerva through PM now? [y/N]: ", console):
         console.print(
             "[dim]Skipped — run `minerva plugins enable` when ready "
             "to prepare them.[/dim]\n"
@@ -252,7 +252,7 @@ def _probe_readable(path: Path) -> None:
 
 
 def _ensure_tree_readable(root: Path, plugins_dir: Path) -> None:
-    """Refuse to ship a tree Hermes cannot read back. A clone can land unreadable (Windows ACL
+    """Refuse to ship a tree Minerva cannot read back. A clone can land unreadable (Windows ACL
     inheritance -> WinError 5, a mode-000 file) and discovery would then skip the plugin forever
     (#111804); repair ``u+rX`` where the OS supports it, otherwise fail before anything moves."""
     paths = [root]
@@ -485,7 +485,7 @@ def cmd_install(
         console.print(f"[bold]{entry.name}[/bold] [cyan]\\[{entry.tier}][/cyan] [dim]pinned @ {entry.sha[:8]}[/dim]")
         console.print(catalog.entry_capability_summary(entry))
     else:
-        console.print("[yellow]Warning:[/yellow] custom (unreviewed) source — not from the Hermes catalog.")
+        console.print("[yellow]Warning:[/yellow] custom (unreviewed) source — not from the Minerva catalog.")
     if allow_removed:
         console.print(
             "[bold red]WARNING:[/bold red] [red]--allow-removed set — skipping the catalog kill-list check. "
@@ -529,7 +529,7 @@ def cmd_install(
     if not _pc()._looks_like_plugin_dir(target):
         console.print(
             f"[yellow]Warning:[/yellow] {installed_name} doesn't contain plugin.yaml, "
-            f"plugin.json, or __init__.py. It may not be a valid Hermes plugin.")
+            f"plugin.json, or __init__.py. It may not be a valid Minerva plugin.")
     _prompt_plugin_env_vars(installed_manifest, console)
 
     from pm.workspace import enabled_plugin_dirs
@@ -613,11 +613,11 @@ def dashboard_install_plugin(
     if catalog_name:
         entry = catalog.get_live_catalog_entry(catalog_name)
         if entry is None:
-            return {"ok": False, "error": f"'{catalog_name}' is not in the Hermes plugin catalog."}
+            return {"ok": False, "error": f"'{catalog_name}' is not in the Minerva plugin catalog."}
         warnings.extend(_known_issue_warnings(entry))
         identifier = entry.install_identifier
     else:
-        warnings.append("Custom (unreviewed) source — not from the Hermes catalog.")
+        warnings.append("Custom (unreviewed) source — not from the Minerva catalog.")
     try:
         git_url = _pc()._resolve_git_url(identifier)[0]
         if git_url.startswith(("http://", "file://")):

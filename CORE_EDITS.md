@@ -145,7 +145,7 @@ now carry the new brand (`Square150x150Logo.png` went 56 √¢‚Ä†‚Äô 6274 colours).
 
 ## 8. Desktop rebrand (user-visible UI only)
 
-**Rule applied, in order:** `Nous Research` √¢‚Ä†‚Äô `ABBBLE CO`, then `Hermes` √¢‚Ä†‚Äô
+**Rule applied, in order:** `ABBBLE CO` √¢‚Ä†‚Äô `ABBBLE CO`, then `Hermes` √¢‚Ä†‚Äô
 `Minerva`, then `Nous` √¢‚Ä†‚Äô `Minerva`.
 
 Applied with a **TypeScript AST walk**, not a regex √¢‚Ç¨‚Äù an apostrophe inside a
@@ -170,7 +170,7 @@ no boundary between `Nous` and `Research` in that host).
 | Excluded | Reason |
 |---|---|
 | `i18n/*` **key names** (`restartHermes`, `titleNous`, `sshHermesPathTitle`) | Internal identifiers every `t()` call site uses. `types.ts` declares them. |
-| `lib/provider-setup-errors.ts` | Its regex matches **backend-emitted** text (`No Hermes provider configured`). Renaming would silently stop detecting it. |
+| `lib/provider-setup-errors.ts` | Its regex matches **backend-emitted** text (`No Minerva provider configured`). Renaming would silently stop detecting it. |
 | `desktop-remote-auth.test.ts`, `boot-failure-reauth.test.ts` | Provider `displayName`s arriving from Python, not UI copy. |
 | `find-in-page-scope.test.ts` fixtures | Deliberately mixed-case DOM text; renaming broke the case-insensitivity premise. |
 | `data.identity.test.ts` fixture | `'hermes'` is a reserved token tied to the `@hermes` profile alias (`data.ts:1169`). |
@@ -412,8 +412,8 @@ Each of these would break or falsify something if changed blindly.
 |---|---|
 | `pm/artifact-mirror.json` origin + `scripts/install.sh` / `install.ps1` `UV_PIN_MIRROR` (10 URLs) | These are **content-addressed** `upstream/sha256/<digest>` blobs. Repointing to the new host before mirroring those objects **breaks the installer**. Mirror first, then flip. |
 | `.github/workflows/install-e2e-{macos,windows}-run.yml` defaults | The **bootstrap installer** (`Hermes-Setup.dmg/.exe`) is a different artifact class, served from the archive root. The new origin serves `/releases/**` only, so these would 404. |
-| `hermes_cli/default_soul.py`, `banner.py`, `cli_render.py`, `skills_hub.py`, `model_switch.py` | The **Python backend** still says *"You are Hermes Agent, built by Nous Research"*, so the agent introduces itself as Hermes in chat. Outside the frontend-UI scope, but user-visible. |
-| `electron/main.ts` dialog copy (`'Hermes update'`, `'Sign in to Hermes gateway'`, crash dialog), `notification-ipc.ts:46` | Electron-side, outside the frontend-UI scope. |
+| `hermes_cli/default_soul.py`, `banner.py`, `cli_render.py`, `skills_hub.py`, `model_switch.py` | The **Python backend** still says *"You are Minerva Agent, built by ABBBLE CO"*, so the agent introduces itself as Minerva in chat. Outside the frontend-UI scope, but user-visible. |
+| `electron/main.ts` dialog copy (`'Hermes update'`, `'Sign in to Minerva gateway'`, crash dialog), `notification-ipc.ts:46` | Electron-side, outside the frontend-UI scope. |
 | `*.agents.nousresearch.com`, `hermes-agent.nousresearch.com` | Different Nous services (Cloud fleet; docs/skills/plugin catalog). |
 
 ---
@@ -599,7 +599,8 @@ done
 \\\
 
 (Full digests in scripts/install.sh:179-204 and install.ps1:83-102; the
-minerva-assets app serves any key under eleases/ and, with
+minerva-assets app serves any key under 
+eleases/ and, with
 MINERVA_ASSETS_ROOT pointed at the same tree, these paths resolve without a
 code change.) Only after all ten verify: flip the three origins, then the two
 install-e2e workflow defaults (bootstrap installer ‚Äî a separate artifact class
@@ -833,7 +834,7 @@ Welcome fallback:
 
 Two additions to the root `AGENTS.md`, no code touched:
 
-- Fork notice under the title: this tree is a Hermes Agent clone/fork
+- Fork notice under the title: this tree is a Minerva Agent clone/fork
   rebranded as Minerva (`github.com/abbbleco/minerva`, branch `main`), with
   product identity (names, default origins, provider defaults) pointing at
   ABBBLE infrastructure. Inherited engineering rules apply unchanged; upstream
@@ -980,7 +981,8 @@ access; the gate takes already-fetched state and never performs I/O.
 
 Schemas: \hermes_cli/intake.py\ (IntakeEvent/IntakeAttachment, validation,
 \rom_message_event()\ mapping only public MessageEvent fields ‚Äî
-\aw_message\ never survives) + \	ests/hermes_cli/test_intake.py\;
+\
+aw_message\ never survives) + \	ests/hermes_cli/test_intake.py\;
 \hermes_cli/prd.py\ (PrdDocument, draft‚Üíin_review‚Üíapproved/rejected with
 history audit, \	o_markdown\) + \	ests/hermes_cli/test_prd.py\; TS mirrors
 \src/lib/intake.ts\ + \src/lib/prd.ts\ (validators) + tests.
@@ -1144,3 +1146,227 @@ Verified: Python 31/31 via the shim runner; vitest minerva-goals 13/13,
 i18n 76/76 (catalog completeness), contrib 50/50; web server mounts all 10
 `/api/goals` routes (OpenAPI-confirmed); legacy goal loop + /goal verbs
 re-checked against the new bindings. Plan status advanced to Phase 4.
+
+---
+
+# Session 18 ‚Äî startup crash fix: dangling `methods_feeds` import (2026-10-05)
+
+`minerva`/desktop backend failed to start with a deeply nested
+`fastapi.routing.merged_lifespan` traceback whose root was
+`ImportError: cannot import name 'methods_feeds' from 'tui_gateway'`.
+
+Root cause: the Phase-2 (feeds) work added `methods_feeds as _methods_feeds`
+to BOTH the `from . import (...)` block and the `for _m in (...): _m.register(...)`
+tuple in `tui_gateway/server.py`, but `tui_gateway/methods_feeds.py` was never
+created. The module body therefore raised at import; because the failure hit
+line ~3647 (before the tail of the module), the `atexit` `_shutdown_sessions`
+callback then raised `NameError: _flush_sessions_before_exit` on the way out ‚Äî
+pure fallout, not a second bug.
+
+Why remove rather than create the module: feeds is an HTTP REST surface
+(`hermes_cli/web_routers/feeds.py` + `apps/desktop/src/api/feeds.ts` via
+`hermesApi`, which is a path-based REST proxy). No surface calls any
+`feeds.*` JSON-RPC method ‚Äî verified by repo-wide grep ‚Äî so a `methods_feeds`
+module would be speculative infrastructure, which the footprint ladder
+rejects. Reverted the two added lines to match the pre-feeds server.py.
+
+Verification: `ws.app.router.lifespan_context` enters cleanly; a real
+`uvicorn.Server` boot on a free port reports `started: True`, serves
+`/openapi.json` 200 with all 10 `/api/goals` paths, and shuts down clean;
+AST scan confirms every one of the 46 relative modules referenced by
+`tui_gateway/server.py` exists; 11-module import smoke (tui_gateway.server,
+hermes_cli.web_server, goal_registry/goal_command/feeds/feeds_cron,
+web_routers.goals/feeds, gateway.run_goals, tui_gateway.prompt_turn,
+cli_loops_mixin) all OK.
+
+Note: the existing `tests/tui_gateway/test_tui_gateway_server.py` does
+`from tui_gateway import server`, so the suite already catches this class of
+break at import ‚Äî it simply wasn't run before the commit. No new test added
+(a source-scanning guard would be a change-detector).
+
+Also noted: the editable install at
+`%LOCALAPPDATA%\hermes\installs\‚Ä¶\workspace` is a stale 2026-10-03 snapshot
+(no feeds/goals). A dev run resolves repo code with that venv's packages, so
+the repo fix is what the running app picks up; a packaged/installed launcher
+would need a re-provision to gain both this fix and the feeds/goals features.
+---
+
+# Session 19 ó Phase 3 verify + goals-pane tsc fix (2026-10-05)
+
+User completed Phase 3 on the Session-16 registry foundation (committed as
+`f95e5269 feeds, ideas, goals`: detection, dispatch parity, REST router,
+minerva-goals pane, kanban bridge, Sessions 17-18 logged, plan already at
+Phase 3 done). Verification found renderer `tsc` red: 4x TS2554 in
+`goals-pane.test.tsx` ó the same untyped-`vi.fn` mock shape as the feeds
+pane (zero-arg implementations invoked with args). Fixed by typing the mock
+params (`_body: unknown` / `_id: string`); no production code touched.
+
+Verified: renderer tsc 0; vitest minerva-goals 13/13; Python 34/34
+(test_goal_registry + test_goals_router via shim). Fixture-based goal suites
+(test_goals.py, gateway goal tests) remain CI-only ó no pytest in .venv or
+system python. Plan status already correct; no plan change.
+---
+
+# Session 20 ó Phase 4 PRDs (2026-10-05)
+
+The flagship: intake ? triage gate ? drafting ? review queue ? kanban, with
+intelligence concentrated in triage (never a PRD per conversation) and the
+Phase-5 form seam designed in, not on.
+
+Backend ó new `hermes_cli/prd_store.py` (intake log with cited-first prune
+cap + PRDs + triage cases under `<home>/prds/`), `prd_triage.py`
+(scalar-strength judge, thresholds in config not prompts, LLM dedupe against
+capped PRD titles ó no embedding client exists in-tree; unparseable fails to
+watch), `prd_drafting.py` (writer with strict schema + citation validation;
+section_sources ride the triage case, schema frozen), `prd_pipeline.py` (ONE
+`ingest_intake` every surface shares ó gateway hook, dashboard REST, future
+portal; sync-store/async-triage split for the Phase-5 latency budget;
+`review_prd` with auto-hop approve/reject; `dispatch_approved`
+approved-only, idempotent via case link + history note + kanban
+idempotency_key). Additive `PrdDocument.revise_section` (terminal frozen).
+New `hermes_cli/prd_command.py` (list/show/approve/reject) wired as `/prd`
+on CLI + gateway mixin + TUI method + `_IDLE_COMMANDS` + help subgroup +
+regenerated desktop slash dump. Gateway turn hook in `run_goals.py`
+post-turn table (skips internal + slash-command turns, announces only fresh
+drafts once). Config: `prds` section (thresholds, debounce, writer tokens)
++ `auxiliary.prd_drafter`; triage rides the goal_judge transport (same
+short-JSON shape). Privacy: no intake content in logs, enforced by construction.
+
+Frontend ó new `minerva-prds` plugin (auto-discovered): review section,
+watching section, history, inline reject-reason + revise forms, paste-intake
+form, dispatch button; `src/api/prds.ts`; `common.prds` in core catalog
+(en + 6). File upload stays API-level (tested at REST); pane injects text.
+
+Verified: Python 84/84 (pipeline incl. triage fixtures per outcome, drafting
+citation rejects, review paths, dispatch idempotency x2, ingest seam, observe
+gate, router E2E incl. file upload, registry suites unregressed); renderer
+tsc 0; vitest minerva-prds + i18n 88/88; desktop-slash 24/24. Gateway/TUI
+handler bodies compile-checked (no pytest in .venv ó live suites are CI-only).
+Follow-ups noted, not done: TUI turn-hook coverage (gateway only + manual),
+pane file-picker, CLI turn-hook coverage.
+---
+
+# Session 21 ó Phase 5 website form intake (2026-10-05)
+
+The external funnel: agency-web form ? proxy ? portal upstream ? async drain
+into the Phase-4 pipeline. Found the proxy + form already posting to a
+nonexistent upstream ó Phase 5 built the missing end, not a parallel one.
+
+Portal (new `app/api/v1/intake/`): `_lib.ts` holds every decision
+(validation matrix with per-field errors, site-key auth, per-key throttle,
+store, queued list, ack) behind an injected store seam; three thin routes
+(POST intake, GET queued, POST [id]/ack) only resolve the service client.
+Keys REUSE `agency_api_keys` (purpose server, status/expiry enforced) ó no
+new key table, no mint UI; mint via existing POST /api/portal/keys. Throttle
+5/hour/key + honeypot accept-and-discard mirror contact-sales. Migration 041
+(`portal_intake_submissions`, RLS-locked, drain + throttle indexes) applied;
+RLS gate green (41 migrations). Test runner: tsx + node:test per router
+precedent (`test` scripts added to portal + agency-web package.json).
+
+Agency-web: honeypot input (off-screen, unfocusable) + payload line; proxy
+itself unchanged (forwards whole body ó verified by test, plus a doc line on
+the key requirement).
+
+Python drain (new `hermes_cli/prd_forms.py`): queued ? ingest as
+`website-form` (submission id = conversation = tracking id; contact in
+thread context; media_url ? attachment ref) ? triage now ? ack done/failed,
+per-submission isolation, silent skips (no key, lapsed premium, portal down).
+Background job mirrors feeds_cron (own shim/script/schedule/reason); REST
+status/enable/run on the prds router (literals registered before `/{prd_id}`
+ó FastAPI matches in order; that clash cost one debug round).
+`MINERVA_INTAKE_API_KEY` registered in OPTIONAL_ENV_VARS (secret); base URL
+is const + `MINERVA_INTAKE_BASE_URL` bridge.
+
+Verified: portal tsc/eslint/build clean (routes registered), 10/10 upstream
+tests (auth matrix incl. revoked/expired/publishable, validation, honeypot,
+throttle + cross-key isolation, queue scoping/ordering, ack 404/400);
+agency-web 4/4 proxy passthrough + eslint + build; Python 130/130 (all
+premium suites incl. drain, e2e cited-source approval, forms-sync REST).
+Deliberately deferred: portal console key-management page (API exists), pane
+forms-sync toggle + file picker (REST exists).
+---
+
+# Session 22 ó optional phone on form intake (2026-10-05)
+
+Contact form gained an optional phone field, threaded through the whole
+funnel: `ContactHero.tsx` input (`Phone (optional)`, `data-optional` so
+the shared validator skips empties but checks format when filled) + payload
+line; proxy forwards untouched (interface documents the field); portal
+validates leniently (digits/spaces/+-.() only, empty omits) and stores it
+(migration 042 applied); drain appends `tel <phone>` to the intake contact
+line (no IntakeEvent schema change ó rides thread_context like the email).
+
+Verified: portal 11/11 + tsc/eslint clean; agency-web 5/5 + eslint clean;
+Python forms 10/10.
+---
+
+# Session 23 ó LEADS Phase 1 directory backend (2026-10-05)
+
+New `hermes_cli/leads.py`: contacts DERIVED (sessions + pairing names +
+website-form intake), never captured. Channel keys per plan (WhatsApp digit
+JIDs with group-per-chat, Slack team+user, Discord/Telegram ids, form email);
+bot and identity-less rows never become contacts; DM names track latest, group
+names stick to chat title; snippets bounded with peer prefix; unread counts
+inbound traffic after last_read (unknown reads zero); muted sinks in sort,
+filtering stays read-time; overrides (mute/pin/note) in state_meta. Form
+phones parse only the drain's own `tel` contact-line format. Three defects
+caught by tests before merge (missing peer prefix, group naming, muted sort)
+plus two test bugs.
+
+Verified: 15/15 (pure derivation matrix + real-DB overrides round-trip and
+empty-directory read). Plan doc advanced to Phase 1 done. Next: read REST +
+reply endpoint (Phase 2/3).
+---
+
+# Session 24 ó LEADS Phases 2+3 read REST + reply (2026-10-05)
+
+`hermes_cli/web_routers/leads.py` mounted in web_server: GET /api/leads
+(+ platform filter), GET /api/leads/{id} (contact + bounded recent messages
+across DM channels), PATCH override (mute/pin/note, real meta writes), POST
+/api/leads/reply. Reply resolves contact ? newest DM channel ?
+`_resolve_platform_config` + `_authorize_relay_target` +
+`_send_to_platform` (the sanctioned standalone path: chunking + senders
+reused, target from OUR rows never the client); groups 400 read-only, form
+leads 400 (reply by email), unknown platform 409, delivery failure 502 with
+sanitized detail; success touches last_read_at. Literals registered with
+param routes in safe order (no /{id} swallow ó reply/list are method+shape
+distinct, verified by route inspection).
+
+Verified: 22/22 (15 derivation + 7 router: gate, filter, 404s, override
+persist, newest-DM send + mark-read, validation matrix, relay/config/send
+failure mapping); web_server imports clean. Pane (Phase 4) next.
+---
+
+# Session 25 ó LEADS Phase 4 pane + cross-channel hints (2026-10-05)
+
+`minerva-prds`-pattern `minerva-leads` plugin (auto-discovered): list with
+search + channel chips + unread dots, muted section, master-detail with
+bounded messages, two-step confirmed reply box (group/form read-only notes),
+contact info with mute/pin/note editing; `src/api/leads.ts`;
+`common.leads` in core catalog (en + 6); pane hardened with `?? []` reads
+against older backends. Plus cross-channel `also_on` hints: backend matches
+shared emails/phones (WhatsApp key digits populate phones, making WA?form
+links real), REST + pane display, i18n ◊ 4.
+
+Verified: Python 24/24, tsc 0, vitest 87/87 (incl. i18n completeness).
+Repairs along the way: three test-query bugs, one eaten test-def line, one
+removal-instead-of-harden edit (all caught before green). Remaining plan
+Phase 5: manual merge, intake deep links.
+---
+
+# Session 26 ó LEADS Phase 5 merge + intake links (2026-10-05)
+
+Manual merge (explicit, lossless, reversible): `merge_contacts`/
+`unmerge_contact` validate (self/empty/target-merged rejected; cycles
+structurally impossible), fold at read (channels/emails/phones union, newest
+snippet, summed unread, widest span; sources vanish, targets gain
+`merged_from`). REST PATCH takes `merged_into` (merge returns target,
+unmerge restores source; merged-away ids 404 with the target named; re-link
+idempotent). Form deep link: GET intake events per contact (bounded, capped).
+Pane: merge picker (excludes self), unmerge rows, intake viewer for form
+contacts; hardened `?? []` reads; 8 i18n keys ◊ 4.
+
+Verified: Python 30/30, tsc 0, vitest 90/90. LEADS plan closed (all 5
+phases). Repairs: merged-away 404 vs unmerge action (restructured PATCH),
+re-link idempotency expectation, two eaten test-def lines, one
+removal-instead-of-harden, TS/backend contact_id shape alignment.

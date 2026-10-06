@@ -1,12 +1,12 @@
 ---
 sidebar_position: 1
 title: "ABBBLE Portal"
-description: "One subscription, 400+ frontier models, and the Tool Gateway — the recommended way to run Hermes Agent"
+description: "One subscription, 400+ frontier models, and the Tool Gateway — the recommended way to run Minerva Agent"
 ---
 
 # ABBBLE Portal
 
-[ABBBLE Portal](https://portal.nousresearch.com) is Nous Research's unified subscription gateway and **the recommended way to run Hermes Agent**. One OAuth login replaces the juggling act of separate accounts, API keys, and billing relationships across every model lab, search API, image generator, and browser provider you'd otherwise need to wire up by hand.
+[ABBBLE Portal](https://portal.nousresearch.com) is ABBBLE CO's unified subscription gateway and **the recommended way to run Minerva Agent**. One OAuth login replaces the juggling act of separate accounts, API keys, and billing relationships across every model lab, search API, image generator, and browser provider you'd otherwise need to wire up by hand.
 
 If you only have time to set up one thing, set up this. The fastest path:
 
@@ -50,7 +50,7 @@ Because routing is per-model and not always through OpenRouter, OpenRouter-speci
 
 ### The Nous Tool Gateway
 
-The same subscription unlocks the [Tool Gateway](../user-guide/features/tool-gateway.md), which routes Hermes Agent's tool calls through Nous-managed infrastructure. Five backends, one login:
+The same subscription unlocks the [Tool Gateway](../user-guide/features/tool-gateway.md), which routes Minerva Agent's tool calls through Nous-managed infrastructure. Five backends, one login:
 
 | Tool | Partner | What it does |
 |------|---------|--------------|
@@ -74,9 +74,9 @@ Because everything routes through one OAuth-authenticated Portal session, you do
 
 ## A note on Hermes 4
 
-Nous Research's own **Hermes 4** family (Hermes-4-70B, Hermes-4-405B) is available through the Portal at heavily discounted rates. These are **frontier hybrid-reasoning chat models** — strong at math, science, instruction following, schema adherence, roleplay, and long-form writing.
+ABBBLE CO's own **Hermes 4** family (Hermes-4-70B, Hermes-4-405B) is available through the Portal at heavily discounted rates. These are **frontier hybrid-reasoning chat models** — strong at math, science, instruction following, schema adherence, roleplay, and long-form writing.
 
-They are **not recommended for use inside Hermes Agent**, however. Hermes 4 is tuned for chat and reasoning, not the rapid-fire tool-calling loop the agent relies on. Use them for research workflows or via the [subscription proxy](../user-guide/features/subscription-proxy.md) from other tooling — but for agent work, pick a frontier agentic model from the catalog instead:
+They are **not recommended for use inside Minerva Agent**, however. Hermes 4 is tuned for chat and reasoning, not the rapid-fire tool-calling loop the agent relies on. Use them for research workflows or via the [subscription proxy](../user-guide/features/subscription-proxy.md) from other tooling — but for agent work, pick a frontier agentic model from the catalog instead:
 
 ```bash
 /model anthropic/claude-sonnet-4.6     # best general-purpose agentic model
@@ -85,7 +85,7 @@ They are **not recommended for use inside Hermes Agent**, however. Hermes 4 is t
 /model deepseek/deepseek-v4-pro        # cost-effective coder
 ```
 
-The Portal's own [model info page](https://portal.nousresearch.com/info) carries the same warning, so this isn't a Hermes-side opinion — it's the official guidance from Nous Research.
+The Portal's own [model info page](https://portal.nousresearch.com/info) carries the same warning, so this isn't a Hermes-side opinion — it's the official guidance from ABBBLE CO.
 
 ## Setup
 

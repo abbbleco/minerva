@@ -17,7 +17,7 @@ Read Reddit: subreddits, search, threads, users. No browser.
 | Source | Optional — install with `minerva skills install official/social-media/reddit-reading` |
 | Path | `optional-skills/social-media/reddit-reading` |
 | Version | `1.0.0` |
-| Author | Teknium (teknium1), Hermes Agent |
+| Author | Teknium (teknium1), Minerva Agent |
 | License | MIT |
 | Platforms | linux, macos, windows |
 | Tags | `Reddit`, `Social Media`, `Research`, `Discussions`, `Community` |

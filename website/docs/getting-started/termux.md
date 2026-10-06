@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 title: "Android / Termux"
-description: "Install Hermes Agent on Android from its signed Termux APT repository"
+description: "Install Minerva Agent on Android from its signed Termux APT repository"
 ---
 
 # Hermes on Android with Termux

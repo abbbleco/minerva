@@ -10,7 +10,7 @@ Every file here drives the REAL user entry points on a real Windows runner:
 
 Only external edges are replaced (tests/install/README.md, "The isolation trick"):
 
-* git: a bare clone of this checkout (``serve.git``) answers every canonical Hermes URL via
+* git: a bare clone of this checkout (``serve.git``) answers every canonical Minerva URL via
   ``url.<file>.insteadOf`` in a machine-owned ``GIT_CONFIG_GLOBAL``. ``serve.git`` allows
   filtered fetches, so the installer's ``--filter=tree:0`` clone is a real partial clone,
   as it is against GitHub. Every ``git.exe`` directory is removed from PATH, so the

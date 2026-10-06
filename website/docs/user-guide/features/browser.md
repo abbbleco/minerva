@@ -7,7 +7,7 @@ sidebar_position: 5
 
 # Browser Automation
 
-Hermes Agent includes a full browser automation toolset with multiple backend options:
+Minerva Agent includes a full browser automation toolset with multiple backend options:
 
 - **Browser Use cloud mode** via [Browser Use](https://browser-use.com) for managed Chromium with stealth, residential proxies, CAPTCHA solving, and reusable browser profiles
 - **Browserbase cloud mode** via [Browserbase](https://browserbase.com) as an alternative cloud browser provider with anti-bot tooling

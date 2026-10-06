@@ -6,7 +6,7 @@ name: aws-knowledge
 description: Authoritative AWS docs, API references, and best practices.
 source: https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server/
 
-# Official vendor-hosted remote MCP (URL-only — Hermes never spawns a local
+# Official vendor-hosted remote MCP (URL-only — Minerva never spawns a local
 # process for this entry). No authentication required (verified live:
 # initialize succeeds anonymously).
 

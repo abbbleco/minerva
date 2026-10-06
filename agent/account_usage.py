@@ -45,7 +45,7 @@ class AccountUsageSnapshot:
     details: tuple[str, ...] = ()
     unavailable_reason: Optional[str] = None
     # Exact decoded provider response body (no headers/credentials) for integrations that need
-    # fields Hermes does not normalize yet. Only populated by providers that fetch a JSON body.
+    # fields Minerva does not normalize yet. Only populated by providers that fetch a JSON body.
     raw: Optional[dict] = None
 
     @property

@@ -1,12 +1,12 @@
 ---
 sidebar_position: 2
 title: "Installation"
-description: "Install Hermes Agent with desktop bundles, source installers, Docker, Nix, or the Termux APT package"
+description: "Install Minerva Agent with desktop bundles, source installers, Docker, Nix, or the Termux APT package"
 ---
 
 # Installation
 
-Get Hermes Agent up and running in under two minutes!
+Get Minerva Agent up and running in under two minutes!
 
 :::tip Platform Support
 For the full platform support matrix (which OSes, distribution methods, and

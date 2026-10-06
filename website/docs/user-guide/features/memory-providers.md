@@ -6,7 +6,7 @@ description: "External memory provider plugins — Honcho, OpenViking, Mem0, Hin
 
 # Memory Providers
 
-Hermes Agent ships with 5 external memory provider plugins that give the agent persistent, cross-session knowledge beyond the built-in MEMORY.md and USER.md, and more (such as Honcho, Hindsight and Supermemory) are available from the [plugin catalog](./plugins.md). Only **one** external provider can be active at a time — the built-in memory is always active alongside it.
+Minerva Agent ships with 5 external memory provider plugins that give the agent persistent, cross-session knowledge beyond the built-in MEMORY.md and USER.md, and more (such as Honcho, Hindsight and Supermemory) are available from the [plugin catalog](./plugins.md). Only **one** external provider can be active at a time — the built-in memory is always active alongside it.
 
 ## Quick Start
 
@@ -490,7 +490,7 @@ The plugin lands in `~/.hermes/plugins/hindsight/` (per profile home) and is ena
 | `auto_retain` | `true` | Automatically retain conversation turns |
 | `auto_recall` | `true` | Automatically recall memories before each turn |
 | `retain_async` | `true` | Process retain asynchronously on the server |
-| `retain_context` | `conversation between Hermes Agent and the User` | Context label for retained memories |
+| `retain_context` | `conversation between Minerva Agent and the User` | Context label for retained memories |
 | `retain_tags` | — | Default tags applied to retained memories; merged with per-call tool tags |
 | `retain_source` | — | Optional `metadata.source` attached to retained memories |
 | `retain_user_prefix` | `User` | Label used before user turns in auto-retained transcripts |

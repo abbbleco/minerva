@@ -33,7 +33,7 @@ def cmd_resume(args: argparse.Namespace) -> int:
     from agent.estop import disengage, sentinel_path
 
     if disengage():
-        print("▶️  Hermes resumed — dispatch picks up on the next tick.")
+        print("▶️  Minerva resumed — dispatch picks up on the next tick.")
     else:
         print(f"Hermes is not paused (no sentinel at {sentinel_path()}).")
     return 0

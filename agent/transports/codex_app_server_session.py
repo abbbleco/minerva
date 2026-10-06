@@ -1,6 +1,6 @@
 """Session adapter for codex app-server runtime.
 
-Owns one Codex thread per Hermes session: drives ``turn/start``, consumes
+Owns one Codex thread per Minerva session: drives ``turn/start``, consumes
 streaming notifications via CodexEventProjector, bridges server-initiated
 approval requests, translates cancellation, and returns a TurnResult that
 AIAgent.run_conversation() splices into ``messages``. Synchronous: the client's
@@ -107,7 +107,7 @@ _IMAGE_URL_SCHEMES = ("data:", "http://", "https://")
 
 
 def _image_part_to_turn_input(item: dict) -> Optional[dict]:
-    """Map one Hermes image part onto the app-server ``UserInput`` shape.
+    """Map one Minerva image part onto the app-server ``UserInput`` shape.
 
     ``turn/start`` accepts ``{type: image, url}`` (data:/http URLs) and ``{type: localImage, path}``
     natively (protocol schema ``v2/UserInput``), so nothing here is flattened into a text marker.
@@ -206,7 +206,7 @@ def _extract_thread_id(result: dict) -> Optional[str]:
 
 
 class CodexAppServerSession:
-    """One Codex thread per Hermes session, lifetime owned by AIAgent. Not thread-safe: one caller at a time."""
+    """One Codex thread per Minerva session, lifetime owned by AIAgent. Not thread-safe: one caller at a time."""
 
     def __init__(
         self, *, cwd: Optional[str] = None, codex_bin: str = "codex",
@@ -222,7 +222,7 @@ class CodexAppServerSession:
         self._cwd = cwd or os.getcwd()
         self._codex_bin = codex_bin
         self._codex_home = codex_home
-        # A codex thread id persisted by an earlier process for this Hermes session: the first
+        # A codex thread id persisted by an earlier process for this Minerva session: the first
         # ``ensure_started`` issues ``thread/resume`` for it instead of ``thread/start``.
         self._resume_thread_id = resume_thread_id
         # ``thread/start.model``: the Hermes-selected slug, for every provider. ``.modelProvider``: a named
@@ -264,10 +264,10 @@ class CodexAppServerSession:
             return self._thread_id
         if self._client is None:
             self._client = self._client_factory(codex_bin=self._codex_bin, codex_home=self._codex_home)
-            self._client.initialize(client_name="hermes", client_title="Hermes Agent", client_version=_get_hermes_version())
+            self._client.initialize(client_name="hermes", client_title="Minerva Agent", client_version=_get_hermes_version())
         # Permissions are NOT sent on thread/start: codex gates ``thread/start.permissions``
         # behind experimentalApi + a matching ``[permissions]`` table in ~/.codex/config.toml.
-        # Hermes supplies the agent identity through its own system prompt; ``personality: "none"`` strips
+        # Minerva supplies the agent identity through its own system prompt; ``personality: "none"`` strips
         # codex's built-in "# Personality" section from the base instructions so it cannot compete (#72104).
         params: dict[str, Any] = {"cwd": self._cwd, "personality": "none"}
         if self._developer_instructions and self._developer_instructions.strip():
@@ -810,13 +810,13 @@ def _apply_accounting_notification(result: TurnResult, note: dict) -> None:
         result.turn_id = params.get("turnId") or result.turn_id
 
 
-# Hermes approval choice -> codex decision (app-server-protocol v2). "deny" and
+# Minerva approval choice -> codex decision (app-server-protocol v2). "deny" and
 # "timeout" both decline — codex has no "prompt expired" wire value.
 _APPROVAL_CHOICE_TO_DECISION = {"once": "accept", "session": "acceptForSession", "always": "acceptForSession"}
 
 
 def _approval_choice_to_codex_decision(choice: str) -> str:
-    """Map a Hermes approval choice onto codex's approval decision wire value."""
+    """Map a Minerva approval choice onto codex's approval decision wire value."""
     return _APPROVAL_CHOICE_TO_DECISION.get(choice, "decline")
 
 
@@ -826,7 +826,7 @@ def _has_turn_aborted_marker(text: str) -> bool:
 
 
 def _get_hermes_version() -> str:
-    """Best-effort Hermes version string for codex's userAgent line."""
+    """Best-effort Minerva version string for codex's userAgent line."""
     try:
         from importlib.metadata import version
 

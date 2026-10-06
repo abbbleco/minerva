@@ -58,8 +58,8 @@ def _has_path_separator(value: str) -> bool:
     return os.sep in value or (os.altsep is not None and os.altsep in value)
 
 def _wsl_windows_path_to_posix(path: str) -> str:
-    """Translate a Windows absolute manifest command to its DrvFS ``/mnt/<drive>/...`` form when Hermes runs in WSL
-    (a Windows cua-driver manifest can report ``C:\\...`` while Hermes spawns via POSIX). Non-Windows paths and
+    """Translate a Windows absolute manifest command to its DrvFS ``/mnt/<drive>/...`` form when Minerva runs in WSL
+    (a Windows cua-driver manifest can report ``C:\\...`` while Minerva spawns via POSIX). Non-Windows paths and
     non-WSL hosts are returned unchanged."""
     if not re.match(r"^[A-Za-z]:[\\/]", path):
         return path
@@ -116,7 +116,7 @@ def _resolve_mcp_invocation(driver_cmd: str, *, timeout: float = 6.0) -> Tuple[s
     Surface 8 of abbbleco/minerva#47072: instead of hardcoding ``["mcp"]`` we ask the driver itself
     via ``cua-driver manifest`` (trycua/cua#1961). The manifest carries a stable ``mcp_invocation`` pointer
     with both ``command`` and ``args``, so a future cua-driver that renames or relocates the subcommand
-    keeps working without a Hermes patch.
+    keeps working without a Minerva patch.
     When ``computer_use.no_overlay`` is enabled (or auto-detected — macOS, headless/WSL2/X11 Linux),
     ``--no-overlay`` is appended to suppress the cursor overlay rendering loop that can consume CPU
     indefinitely when idle (#28152, #47032). Older drivers that don't recognise the flag will reject it;

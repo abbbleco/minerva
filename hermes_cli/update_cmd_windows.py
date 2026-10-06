@@ -228,7 +228,7 @@ def _holder_value_flags() -> frozenset:
 
 
 def _hermes_holder_subcommand(cmdline: str) -> str | None:
-    """The actual Hermes SUBCOMMAND a venv-holder argv runs, or None (callers must NOT guess a label).
+    """The actual Minerva SUBCOMMAND a venv-holder argv runs, or None (callers must NOT guess a label).
 
     Token-based, never substring (``kanban --preserve-cache`` contains "serve"): find the ``hermes_cli.main`` /
     ``hermes(.exe)``/``minerva(.exe)`` entry token, return the first following token that isn't a flag or a flag's value.
@@ -242,7 +242,7 @@ def _hermes_holder_subcommand(cmdline: str) -> str | None:
         tokens = cmdline.split()
     # ``python -c <src> … -m hermes_cli.main <subcommand>``: the entry token belongs to the argv the
     # inline source carries for a LATER spawn, not to this holder (#107002) -- unless the source is a
-    # Hermes bootstrap running the entry point in this process (#124318).
+    # Minerva bootstrap running the entry point in this process (#124318).
     from gateway.status import command_line_runs_inline_source, inline_bootstrap_argv
     normalized = [t.strip("\"'").replace("\\", "/") for t in tokens]
     if command_line_runs_inline_source(normalized):
@@ -302,7 +302,7 @@ def _venv_holder_kind(cmdline: str) -> str:
     """Machine-readable class of one venv holder for ``--list-venv-holders``.
 
     ``gateway`` (the pausable gateway matcher), ``backend`` (``serve``/``dashboard`` -- the Desktop
-    app's backend shape), ``hermes:<subcommand>`` for any other Hermes entry, else ``python``.
+    app's backend shape), ``hermes:<subcommand>`` for any other Minerva entry, else ``python``.
     Derived from the same classifiers the refusal path uses so automation stops exactly what the
     guard would refuse on."""
     from hermes_cli._scan_venv_blockers import _is_pausable_gateway
@@ -477,7 +477,7 @@ def _orphaned_desktop_backend_pids(matches: list[tuple[int, str, str]]) -> list[
 
     Killing a Desktop-owned ``serve`` is futile (the app respawns it), but a straggler whose Desktop is gone
     would dead-end the update with "Hermes is still running" and zero open windows. Qualifies only if cmdline
-    is a Hermes backend AND the parent is demonstrably gone (PID missing or reused). Tree-aware: holders inside
+    is a Minerva backend AND the parent is demonstrably gone (PID missing or reused). Tree-aware: holders inside
     an accepted root's tree fold into it; only roots are returned (``taskkill /T`` reaps descendants). Any
     live-parent backend, unjustified non-backend, unprovable case, or no psutil -> ``None``. Never raises.
 
@@ -841,7 +841,7 @@ def _pause_windows_gateway_services(service_gateways, token: dict, profiles: dic
 def _owned_gateway_pids(pids, *, keep=(), quiet: bool = True) -> list[int]:
     """*pids* whose live home this update owns, plus *keep* (PIDs mapped to this install's profile
     PID files / services). The same home scope the POSIX fleet restart uses (#93349): a gateway of
-    another Hermes install, or one whose home cannot be read, is named (unless *quiet*) and left
+    another Minerva install, or one whose home cannot be read, is named (unless *quiet*) and left
     running, never paused, force-killed or replayed (#124659)."""
     from hermes_cli.update_cmd_fleet import _scoped_manual_gateway_pids
     return _scoped_manual_gateway_pids(list(pids), keep=keep, quiet=quiet)

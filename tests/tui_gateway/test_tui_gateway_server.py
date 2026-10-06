@@ -19360,7 +19360,7 @@ def test_notification_poller_requeues_when_busy(monkeypatch):
 
 
 def test_session_save_writes_under_hermes_home_with_system_prompt(monkeypatch, tmp_path):
-    """TUI /save (session.save RPC) must snapshot under the Hermes profile
+    """TUI /save (session.save RPC) must snapshot under the Minerva profile
     home — not the project/workspace CWD — and include the system prompt,
     mirroring the classic CLI /save and the dashboard save export.
 

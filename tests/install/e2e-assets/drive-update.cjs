@@ -116,7 +116,7 @@ async function main() {
   await updateNow.click()
   log('clicked: Update now')
 
-  // The "Updating Hermes — this window will close" overlay should appear,
+  // The "Updating Minerva — this window will close" overlay should appear,
   // then the app quits (hand-off dwell). Screenshot the overlay while the
   // window is still alive.
   // The app can close during the dwell. This wait must outlive its page.

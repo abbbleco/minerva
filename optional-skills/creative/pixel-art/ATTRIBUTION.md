@@ -37,7 +37,7 @@ with minor refactors:
 - Sobel edge-aware downsampling (requires scipy; not worth the dep)
 - Bayer / Atkinson dither (would need numpy reimplementation; kept scope tight)
 - Pollinations text-to-image generation (`pixelart_image.py`,
-  `generate_base()` in `pixelart_video.py`) — Hermes has `image_generate`
+  `generate_base()` in `pixelart_video.py`) — Minerva has `image_generate`
 
 ### License compatibility
 
@@ -51,4 +51,4 @@ and in the SKILL.md credits block. No code was relicensed.
 
 - License: MIT (inherits from hermes-agent repo)
 - Original author of the skill shell: dodo-reach
-- Expansion with palettes + video: Hermes Agent contributors
+- Expansion with palettes + video: Minerva Agent contributors

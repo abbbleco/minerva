@@ -271,7 +271,7 @@ class TestParseSchedule:
 
 class TestNaiveScheduleTimezoneDivergence:
     """End-to-end: a one-shot created with a naive recent-past timestamp must
-    become due even when the configured Hermes timezone differs from the
+    become due even when the configured Minerva timezone differs from the
     server's local timezone. Before #51021 the naive value was anchored to
     server-local, so the job never fired."""
 

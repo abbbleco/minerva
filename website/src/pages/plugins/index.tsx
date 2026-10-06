@@ -549,7 +549,7 @@ export default function PluginCatalogPage() {
         <header className={styles.hero}>
           <div className={styles.heroGlow} />
           <div className={styles.heroContent}>
-            <p className={styles.heroEyebrow}>Hermes Agent</p>
+            <p className={styles.heroEyebrow}>Minerva Agent</p>
             <h1 className={styles.heroTitle}>Plugin Catalog</h1>
             <nav className={styles.crossNav} aria-label="Catalog pages">
               <Link className={styles.crossNavLink} to="/skills">

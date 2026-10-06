@@ -1,4 +1,4 @@
-"""Guided tour (highlight + narrate UI elements) in the Hermes desktop GUI: the agent discovers
+"""Guided tour (highlight + narrate UI elements) in the Minerva desktop GUI: the agent discovers
 targets (``action="targets"``), then highlights one step at a time (``show``) or hands over a
 step list the user pages (``start``). Round-trips through the gateway blocking-prompt bridge
 (``tour.request``/``tour.respond``) so the agent learns whether the selector matched. Registered in
@@ -22,7 +22,7 @@ def tour_tool(action: str = "", surface: Optional[str] = None, selector: Optiona
               callback: Optional[Callable] = None) -> str:
     """Dispatch one tour action to the desktop renderer and return its outcome."""
     if callback is None:
-        return tool_error("tour is only available in the Hermes desktop app.")
+        return tool_error("tour is only available in the Minerva desktop app.")
     verb = (action or "").strip().lower()
     if verb not in ACTIONS:
         return tool_error(f"action must be one of: {', '.join(ACTIONS)}.")

@@ -26,6 +26,7 @@ from gateway.platforms.event import MessageEvent
 from gateway.session import AsyncSessionStore
 from gateway.session_transcript import TranscriptReadError
 from gateway.slash_commands_goals import GatewayGoalCommandsMixin
+from gateway.slash_commands_prds import GatewayPrdCommandsMixin
 from gateway.slash_commands_model import GatewayModelCommandsMixin
 from gateway.slash_commands_session import GatewaySessionCommandsMixin
 from gateway.slash_commands_login import GatewayLoginCommandsMixin
@@ -171,7 +172,8 @@ class GatewaySlashCommandsMixin(
     GatewayModelCommandsMixin,
     GatewaySessionCommandsMixin,
     GatewayStatusCommandsMixin,
-    GatewayGoalCommandsMixin):
+    GatewayGoalCommandsMixin,
+    GatewayPrdCommandsMixin):
     """In-session slash-command handlers for GatewayRunner (plus the helpers the sibling mixins share)."""
 
     async_session_store: AsyncSessionStore
@@ -280,7 +282,7 @@ class GatewaySlashCommandsMixin(
         return None
 
     def _typed_command_prefix_for(self, platform) -> str:
-        """The prefix users can always type to reach Hermes commands (adapter ``typed_command_prefix``,
+        """The prefix users can always type to reach Minerva commands (adapter ``typed_command_prefix``,
         default "/"). Slack and Matrix use "!" because typed "/" is blocked/reserved there; their
         adapters rewrite "!command" to "/command"."""
         adapter = self.adapters.get(platform) if getattr(self, "adapters", None) else None
@@ -587,7 +589,7 @@ class GatewaySlashCommandsMixin(
         return EphemeralReply(t("gateway.restart.restarting"))
 
     async def _handle_version_command(self, event: MessageEvent) -> str:
-        """Handle /version — show the running Hermes Agent version."""
+        """Handle /version — show the running Minerva Agent version."""
         return _execute("version").text
 
     def _catalog_options(self, event: MessageEvent) -> dict:
@@ -972,7 +974,7 @@ class GatewaySlashCommandsMixin(
             return f"{description}\n" + t("gateway.verbose.save_failed", error=e)
 
     async def _handle_busy_command(self, event: MessageEvent) -> Union[str, EphemeralReply]:
-        """Handle /busy — control what happens when messaging while Hermes is working."""
+        """Handle /busy — control what happens when messaging while Minerva is working."""
         arg = event.get_command_args().strip().lower()
         if not arg or arg == "status":
             mode = self._effective_busy_input_mode(event.source)

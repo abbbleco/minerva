@@ -47,7 +47,7 @@ class RelayChatAccumulator:
         if chunk.get("usage"):
             self._usage = chunk["usage"]
         choices = chunk.get("choices") or []
-        choice = choices[0] if choices else None  # Hermes never requests n>1
+        choice = choices[0] if choices else None  # Minerva never requests n>1
         if not isinstance(choice, dict):
             return
         self._finish_reason = choice.get("finish_reason") or self._finish_reason

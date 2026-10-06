@@ -2,8 +2,8 @@
 
 When a user reports `delegate_task` ran fewer subagents than they asked for
 (e.g. "I set max_concurrent_children: 15 but only 9 ran"), there are exactly
-**three** code paths in Hermes that cap a batch. If none of them fired, the
-cap came from the **model itself** — not from Hermes — and the user's
+**three** code paths in Minerva that cap a batch. If none of them fired, the
+cap came from the **model itself** — not from Minerva — and the user's
 narration of "the runtime caps at N" is the model rationalising its own
 choice.
 

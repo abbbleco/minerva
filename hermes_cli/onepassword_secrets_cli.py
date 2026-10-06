@@ -1,7 +1,7 @@
 """CLI handlers for ``minerva secrets onepassword ...``.
 
 Unlike Bitwarden, the ``op`` binary is NOT auto-installed: 1Password publishes the CLI through OS
-package managers and signed installers, so Hermes expects an already-installed, already-
+package managers and signed installers, so Minerva expects an already-installed, already-
 authenticated ``op`` and never downloads one.
 """
 
@@ -367,7 +367,7 @@ def cmd_disable(args: argparse.Namespace) -> int:
     return disable_secret_source(
         "onepassword",
         "[green]Disabled.[/green]  1Password references will NOT be resolved on the "
-        "next Hermes invocation.\n"
+        "next Minerva invocation.\n"
         "  Your reference mappings are left in config.yaml — remove them with "
         "[cyan]hermes secrets onepassword remove ENV_VAR[/cyan] if you no longer "
         "need them.",

@@ -44,7 +44,7 @@ PARTIAL_FAILED_TURN_NOTICE = (
     "before resending."
 )
 # ``messages.display_kind`` of that row: display-only (stripped before every provider request),
-# so renderers show a Hermes notice and room pollers never read it as the model's reply.
+# so renderers show a Minerva notice and room pollers never read it as the model's reply.
 FAILED_TURN_DISPLAY_KIND = "failed_turn"
 
 
@@ -266,7 +266,7 @@ def failure_cause_gloss(reason: Any, *, subject: str = "it", possessive: str = "
 # (``empty_response`` is worded by agent/turn_explainers.py, ``session_busy`` by the lease).
 _FAILURE_CODE_COPY: Dict[str, str] = {
     "context_overflow": (
-        "This conversation has grown too long for {model} to read, and Hermes couldn't shrink "
+        "This conversation has grown too long for {model} to read, and Minerva couldn't shrink "
         "it enough automatically. Start a new session with /new (your history is kept), or try "
         "/compress once more. Switching to a model with a bigger context window also works."
     ),
@@ -307,16 +307,16 @@ _ONE_OFF_COPY: Dict[str, str] = {
     # message must stay in the transcript and the session must not be auto-reset.
     "server_context_rejection": (
         "The model server rejected this request as too large, but this conversation is only "
-        "about {tokens:,} tokens — well under the {window:,}-token window Hermes knows for "
+        "about {tokens:,} tokens — well under the {window:,}-token window Minerva knows for "
         "{model} — so shrinking it would not help. Another request on the same server (for "
         "example a background memory review from an earlier session) was probably holding its "
-        "capacity, or the server runs {model} with a smaller window than Hermes assumes. Wait a "
+        "capacity, or the server runs {model} with a smaller window than Minerva assumes. Wait a "
         "moment and send /retry; if it keeps happening, check the server's context setting."
     ),
     # Rides failure_reason="truncated": args were cut mid-JSON but the model never reported
     # an output-length stop, so don't claim it hit one (#91717).
     "truncated_unreported": (
-        "The model's action arrived cut off partway through, so Hermes didn't run it. Nothing was changed. The model didn't report hitting its output "
+        "The model's action arrived cut off partway through, so Minerva didn't run it. Nothing was changed. The model didn't report hitting its output "
         "limit, so this was most likely a dropped connection or a provider/router cutting the "
         "reply short. Send /retry; if it keeps happening, ask for the work in smaller steps."
     ),

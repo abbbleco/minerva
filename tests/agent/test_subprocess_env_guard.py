@@ -50,7 +50,7 @@ ALLOWED_RAW_SPAWN_ENV_FILES = {
     # only raw copy is the except-fallback for when the tools package itself
     # cannot be imported, so the user's typed command still runs.
     "hermes_cli/bang_shell.py",
-    # These children are Hermes itself and need its full environment: the gateway respawn
+    # These children are Minerva itself and need its full environment: the gateway respawn
     # watcher (generated script source), the launchd stderr-timestamp wrapper around the
     # gateway command, and the skills sync that seeds a new profile.
     "hermes_cli/gateway.py",

@@ -57,7 +57,7 @@ def fold_lazy_fetch_packs(root: Path) -> None:
         f"  Folding {count} lazy-fetch packs into one (one-time; can take several minutes)...", flush=True))
     if folded is None:
         print(f"  ⚠ Folding lazy-fetch packs did not finish within {LAZY_FETCH_GC_TIMEOUT_SECONDS // 60} min."
-              " With Hermes closed, run:")
+              " With Minerva closed, run:")
         print(f'      git -C "{root}" -c gc.writeCommitGraph=false gc --auto')
     elif folded:
         print(f"  (folded {folded} lazy-fetch pack(s) into one)")

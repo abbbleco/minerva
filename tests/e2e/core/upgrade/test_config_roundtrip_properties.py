@@ -342,7 +342,7 @@ def _reset_config_caches(*, keep_lkg: bool = False) -> None:
 
 
 def _write_file(path: Path, text: str) -> None:
-    """Atomic replace (new inode), like every Hermes writer, so no cache can serve stale bytes."""
+    """Atomic replace (new inode), like every Minerva writer, so no cache can serve stale bytes."""
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_name(f".{path.name}.c18tmp")
     tmp.write_text(text, encoding="utf-8")

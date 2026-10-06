@@ -539,7 +539,7 @@ def preflight_db_writability(db_path: Path, *, db_label: str = "state.db") -> No
 
     A stray read-only ``state.db`` / ``-wal`` / ``-shm`` (sudo run, restored backup, copied dotfiles) otherwise
     surfaces as an opaque "attempt to write a readonly database" inside ``_init_schema``, and the obvious wrong
-    "fix" (deleting the ``-wal``) loses committed transactions. ``chmod u+rw`` repair only inside the Hermes home
+    "fix" (deleting the ``-wal``) loses committed transactions. ``chmod u+rw`` repair only inside the Minerva home
     tree (Hermes owns those files; ``chmod`` fails on files the user doesn't own, bounding the repair exactly);
     otherwise fail fast naming the file and command. Never deletes/truncates a WAL sidecar — once writable, the
     normal open checkpoints it. ``:memory:``/``file:`` skipped. Shared with ``kanban_db``.
@@ -568,7 +568,7 @@ def preflight_db_writability(db_path: Path, *, db_label: str = "state.db") -> No
         wal_note = (" Do NOT delete the -wal file — it contains committed data that "
                     "will be merged into the database once it is writable." if p.name.endswith("-wal") else "")
         raise sqlite3.OperationalError(
-            f"{db_label} is not writable: {'directory' if is_dir else 'file'} {p} is read-only for this user. Hermes "
+            f"{db_label} is not writable: {'directory' if is_dir else 'file'} {p} is read-only for this user. Minerva "
             f"needs read-write access to open the database. Fix with: chmod u+rw{x} '{p}' (files owned by another "
             f"user may need sudo/chown).{wal_note}")
 

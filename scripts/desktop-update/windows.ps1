@@ -560,7 +560,7 @@ function Show-ManualFinale([string]$Message) {
     # shape as the error finale, success glyph semantics: the shim renders
     # `manual` itself; the WinForms card swaps its copy. Held so the user
     # actually sees the instruction — this window is the only surface until
-    # they reopen Hermes themselves.
+    # they reopen Minerva themselves.
     if ($script:UiServer) {
         Publish-UiEvent "manual" $Message
         Stop-UiServer -LeaveWindow
@@ -732,7 +732,7 @@ function Start-DesktopRelaunch {
         # window can't close while the app lives. Explorer re-parents the
         # target exactly like a normal shell launch, giving the same
         # no-console detachment WMI would have. Explorer returns no pid, so
-        # verify by watching for a fresh Hermes process.
+        # verify by watching for a fresh Minerva process.
         try {
             $exeName = [System.IO.Path]::GetFileNameWithoutExtension($RelaunchExe)
             $before = @(Get-Process -Name $exeName -ErrorAction SilentlyContinue | ForEach-Object { $_.Id })
@@ -1313,7 +1313,7 @@ if ($SelfTestUi) {
 }
 
 # -SelfTestPipeDrain: prove Invoke-HermesStep survives a leaked pipe ------
-# The #90455 deadlock needs no update, no checkout and no Hermes install to
+# The #90455 deadlock needs no update, no checkout and no Minerva install to
 # reproduce -- only a step whose grandchild outlives it holding the inherited
 # write end of the redirected pipe. That is exactly what this builds, so the
 # fix has an executable proof on Windows instead of a source-grep. Exits
@@ -1602,7 +1602,7 @@ try {
     }
 
     # -- 1. Wait for the Desktop to exit (FAIL CLOSED) ----------------------
-    Publish-UiProgress "Waiting for Hermes to close"
+    Publish-UiProgress "Waiting for Minerva to close"
     if ($DesktopPid -gt 0) {
         $deadline = (Get-Date).AddSeconds(30)
         while ((Get-Date) -lt $deadline) {
@@ -1614,7 +1614,7 @@ try {
         if (Get-Process -Id $DesktopPid -ErrorAction SilentlyContinue) {
             # The running Desktop still owns application outputs being replaced.
             $finalCode = 4
-            $finalMsg = "Update aborted: the Hermes window (pid $DesktopPid) did not exit within 30s. Nothing was changed. Close Hermes fully and try again."
+            $finalMsg = "Update aborted: the Minerva window (pid $DesktopPid) did not exit within 30s. Nothing was changed. Close Minerva fully and try again."
             Write-HandoffLog $finalMsg
             exit $finalCode
         }
@@ -1643,7 +1643,7 @@ try {
     # --keep-stash: never re-apply local source edits after the update (they
     # stay parked in git stash). Probe --help first: the flag ships with newer
     # backends and an unknown flag would abort argparse with exit 2, which
-    # collides with the "close all Hermes windows" sentinel.
+    # collides with the "close all Minerva windows" sentinel.
     try {
         $updateHelp = & $pythonExe @runtimeArgs update --help 2>$null | Out-String
         if ($updateHelp -match "--keep-stash") {
@@ -1695,7 +1695,7 @@ try {
         $verify = Invoke-HermesStep $verifyCommand[0] $verifyArgs 'verify'
         if ($verify.Code -ne 0) {
             $finalCode = 8
-            $finalMsg = "Hermes was updated, but the new Desktop build could not be verified. Nothing was removed. If Hermes does not start normally, run 'hermes desktop --force-build' in a terminal to rebuild it."
+            $finalMsg = "Hermes was updated, but the new Desktop build could not be verified. Nothing was removed. If Minerva does not start normally, run 'hermes desktop --force-build' in a terminal to rebuild it."
             Write-HandoffLog $finalMsg
             exit $finalCode
         }
@@ -1726,7 +1726,7 @@ try {
             # update: a non-zero exit here would run the error finale and hide
             # the fact that the new runtime is installed and verified.
             $manualAction = $true
-            $manualMsg = "Update complete, but Hermes could not restart every messaging gateway. Run `minerva gateway start --all` in a terminal."
+            $manualMsg = "Update complete, but Minerva could not restart every messaging gateway. Run `minerva gateway start --all` in a terminal."
             Write-HandoffLog $manualMsg
         }
     }
@@ -1756,7 +1756,7 @@ try {
         # that unknown state. This is intentionally fail-closed; the marker's
         # dead-owner recovery remains the next-start escape hatch.
         $finalCode = 7
-        $finalMsg = "Update recovery could not stop every updater process. Hermes was not restarted to avoid overlapping the active install. Wait for it to finish or restart Windows, then reopen Hermes."
+        $finalMsg = "Update recovery could not stop every updater process. Minerva was not restarted to avoid overlapping the active install. Wait for it to finish or restart Windows, then reopen Hermes."
         Write-Result $false $finalCode $finalMsg
         Write-HandoffLog $finalMsg
         Show-ErrorFinale $finalMsg
@@ -1775,7 +1775,7 @@ try {
             if (-not $cameBack -and $RelaunchExe) {
                 # Launch was due and did not verifiably land: truthful result
                 # for the next boot, manual state held on screen now.
-                $finalMsg = "Update complete. Reopen Hermes to finish (it could not restart itself)."
+                $finalMsg = "Update complete. Reopen Minerva to finish (it could not restart itself)."
                 Write-Result $true 0 $finalMsg $true
                 Show-ManualFinale $finalMsg
             }

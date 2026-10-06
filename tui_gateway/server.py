@@ -261,7 +261,7 @@ class _SlashWorker:
             + (["--provider", provider] if provider else [])
         self._closed = False
         from hermes_cli._subprocess_compat import windows_hide_flags
-        # slash_worker runs the Hermes agent → needs provider credentials. Tier-1 secrets
+        # slash_worker runs the Minerva agent → needs provider credentials. Tier-1 secrets
         # (gateway/GitHub/infra) are still stripped (#29157). Global-remote / multi-profile sessions: the
         # worker must resolve config/skills/state against the session's profile home, not the gateway's
         # launch HERMES_HOME (#40677).
@@ -285,7 +285,7 @@ class _SlashWorker:
         # start_new_session: otherwise the worker inherits the gateway's pgid and mcp_tool's orphan
         # sweep, racing the spawn, killpg()s the TUI parent itself. errors="replace": bytes invalid
         # in the system locale (GBK Windows) must not raise UnicodeDecodeError in the drain threads.
-        # Prepend the Hermes venv bin dir and the user-local bin dir to PATH so slash_worker child processes
+        # Prepend the Minerva venv bin dir and the user-local bin dir to PATH so slash_worker child processes
         # can resolve Hermes-managed CLIs (browser-use, uvx) even when the parent gateway was launched with
         # a minimal PATH (e.g. by the Desktop/Dashboard app). See #83845.
         self.proc = subprocess.Popen(
@@ -830,7 +830,7 @@ def _emit_approval_request(sid: str, data: dict | None) -> None:
             if request_id:
                 _approval.withdraw_gateway_approval(session_key, request_id,
                                                     "the attached client cannot answer approval requests "
-                                                    "(update the Hermes app)")
+                                                    "(update the Minerva app)")
             return
         choice = str(result.get("choice") or "deny")
         _approval.resolve_gateway_approval(session_key, choice, resolve_all=bool(result.get("all")),
@@ -1426,9 +1426,9 @@ _TOUR_PROBE_TIMEOUT_S = 10
 
 _TOUR_BRIDGE_UNAVAILABLE = json.dumps({
     "success": False,
-    "error": ("No Hermes Desktop window answered the tour request. The tour is driven by the desktop app's "
+    "error": ("No Minerva Desktop window answered the tour request. The tour is driven by the desktop app's "
               "renderer, which updates separately from this backend, so an app build older than the tour tool "
-              "has nothing listening. Update the Hermes Desktop app and start a new session. Do not retry tour "
+              "has nothing listening. Update the Minerva Desktop app and start a new session. Do not retry tour "
               "in this session.")})
 
 
@@ -1469,10 +1469,10 @@ _PREVIEW_ACTION_REPROBE_COOLDOWN_S = 30
 
 _PREVIEW_ACTION_BRIDGE_UNAVAILABLE = json.dumps({
     "success": False,
-    "error": ("No Hermes Desktop window answered the preview action request. The drive_preview / "
+    "error": ("No Minerva Desktop window answered the preview action request. The drive_preview / "
               "annotate_preview bridge is served by the desktop app's renderer, which updates "
               "separately from this backend, so an app build older than the tool has nothing "
-              "listening. Update the Hermes Desktop app, open a page with open_preview, and try "
+              "listening. Update the Minerva Desktop app, open a page with open_preview, and try "
               "again in this session after a short cooldown.")})
 
 # One in-flight cooldown-expiry reprobe per session: concurrent callers fail fast.
@@ -3644,8 +3644,7 @@ from . import (  # noqa: E402
     session_transports as _session_transports,
     methods_browser_control as _methods_browser_control, methods_bot_relay as _methods_bot_relay,
     methods_complete as _methods_complete, methods_config as _methods_config,
-    methods_config_set as _methods_config_set, methods_feeds as _methods_feeds,
-    methods_images as _methods_images,
+    methods_config_set as _methods_config_set, methods_images as _methods_images,
     methods_profiles as _methods_profiles, methods_prompt as _methods_prompt, methods_session as _methods_session,
     methods_tools as _methods_tools, prompt_turn as _prompt_turn, billing_view as _billing_view,
     methods_projects as _methods_projects, methods_session_foreign as _methods_session_foreign,
@@ -3663,7 +3662,6 @@ for _m in (
     _methods_complete_helpers, _methods_slash, _methods_voice, _methods_browser,
     _methods_browser_control, _methods_session, _methods_prompt, _methods_config,
     _methods_config_set, _methods_complete, _methods_tools, _methods_profiles, _methods_images,
-    _methods_feeds,
     _methods_bot_relay, _prompt_turn, _billing_view, _methods_projects, _methods_session_foreign,
     _methods_session_control, _methods_subagents, _methods_vault, _methods_free_tier, _methods_connectors,
     _methods_connectors_account, _methods_display, _methods_display_watch, _methods_onboarding,

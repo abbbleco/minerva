@@ -7,7 +7,7 @@ connector_slug: neon_mcp
 description: 'Neon serverless Postgres: projects, branches, and SQL.'
 source: https://neon.com/docs/ai/neon-mcp-server
 
-# Official vendor-hosted remote MCP (URL-only — Hermes never spawns a local
+# Official vendor-hosted remote MCP (URL-only — Minerva never spawns a local
 # process for this entry). Native OAuth 2.1 + Dynamic Client Registration
 # (verified live: RFC 9728 protected-resource metadata -> AS metadata with
 # registration_endpoint); Hermes's MCP client + mcp_oauth_manager handle
@@ -46,6 +46,6 @@ suggest:
     - neon.com
 
 post_install: |
-  On first connection Hermes opens a browser to authorize with
+  On first connection Minerva opens a browser to authorize with
   Neon (or run `minerva mcp login neon`). Approve access,
   then restart the session so tools load.

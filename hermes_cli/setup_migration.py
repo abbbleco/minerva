@@ -160,12 +160,12 @@ def _load_openclaw_migration_module():
 # Item kinds that warrant explicit warnings: gateway tokens/channels hijack the old agent's
 # platforms; config values and instruction/context .md files may not map 1:1 to Hermes.
 _HIGH_IMPACT_KIND_KEYWORDS = {
-    "gateway": "⚠ Gateway/messaging — this will configure Hermes to use your OpenClaw messaging channels",
-    "telegram": "⚠ Telegram — this will point Hermes at your OpenClaw Telegram bot",
-    "slack": "⚠ Slack — this will point Hermes at your OpenClaw Slack workspace",
-    "discord": "⚠ Discord — this will point Hermes at your OpenClaw Discord bot",
-    "whatsapp": "⚠ WhatsApp — this will point Hermes at your OpenClaw WhatsApp connection",
-    "config": "⚠ Config values — OpenClaw settings may not map 1:1 to Hermes equivalents",
+    "gateway": "⚠ Gateway/messaging — this will configure Minerva to use your OpenClaw messaging channels",
+    "telegram": "⚠ Telegram — this will point Minerva at your OpenClaw Telegram bot",
+    "slack": "⚠ Slack — this will point Minerva at your OpenClaw Slack workspace",
+    "discord": "⚠ Discord — this will point Minerva at your OpenClaw Discord bot",
+    "whatsapp": "⚠ WhatsApp — this will point Minerva at your OpenClaw WhatsApp connection",
+    "config": "⚠ Config values — OpenClaw settings may not map 1:1 to Minerva equivalents",
     "soul": "⚠ Instruction file — may contain OpenClaw-specific setup/restart procedures",
     "memory": "⚠ Memory/context file — may reference OpenClaw-specific infrastructure",
     "context": "⚠ Context file — may contain OpenClaw-specific instructions",
@@ -199,7 +199,7 @@ def _print_migration_preview(report: dict):
         return
     groups = (
         ("migrated", "  Would import:", Colors.GREEN, _migrated_row),
-        ("conflict", "  Would overwrite (conflicts with existing Hermes config):", Colors.YELLOW,
+        ("conflict", "  Would overwrite (conflicts with existing Minerva config):", Colors.YELLOW,
          partial(_reason_row, "already exists")),
         ("skipped", "  Would skip:", Colors.DIM, partial(_reason_row, "")),
     )
@@ -301,7 +301,7 @@ def _offer_openclaw_migration(hermes_home: Path) -> bool:
               "Use --dry-run to preview again, or --preset minimal for a lighter import.")
         return False
 
-    # overwrite=False so existing Hermes configs are preserved. The user saw the preview;
+    # overwrite=False so existing Minerva configs are preserved. The user saw the preview;
     # conflicts are skipped by default.
     report = _migration_step("Migration failed", "OpenClaw migration error", lambda: _run_migrator(
         mod, openclaw_dir, hermes_home, selected, execute=True, overwrite=False))
@@ -312,7 +312,7 @@ def _offer_openclaw_migration(hermes_home: Path) -> bool:
     for key, printer, text in (
         ("migrated", print_success, "Imported {n} item(s) from OpenClaw."),
         ("conflict", print_info,
-         "Skipped {n} item(s) that already exist in Hermes (use hermes claw migrate --overwrite to force)."),
+         "Skipped {n} item(s) that already exist in Minerva (use hermes claw migrate --overwrite to force)."),
         ("skipped", print_info, "Skipped {n} item(s) (not found or unchanged)."),
         ("error", print_warning, "{n} item(s) had errors — check the migration report."),
     ):

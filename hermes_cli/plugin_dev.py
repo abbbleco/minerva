@@ -280,7 +280,7 @@ def _check_manifest_v2(report: "DoctorReport", manifest: Any) -> None:
     mv = getattr(manifest, "manifest_version", 1)
     if mv > SUPPORTED_MANIFEST_VERSION:
         report.warning(
-            f"manifest_version {mv} is newer than this Hermes supports "
+            f"manifest_version {mv} is newer than this Minerva supports "
             f"({SUPPORTED_MANIFEST_VERSION}); unknown fields are ignored")
 
     api_version = getattr(manifest, "api_version", None)

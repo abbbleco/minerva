@@ -316,7 +316,7 @@ def execution_backend_fields(*, kind: Any, backend: Any, result: Any, error_clas
     }
 
 
-# Set while Hermes itself drives a backend (TUI/Desktop path completion listings): that is not the
+# Set while Minerva itself drives a backend (TUI/Desktop path completion listings): that is not the
 # user's workload, so it must not show up as backend usage.
 _UNMETERED = contextvars.ContextVar("shared_metrics_unmetered_backend", default=False)
 

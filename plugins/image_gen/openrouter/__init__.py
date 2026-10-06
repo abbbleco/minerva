@@ -173,7 +173,7 @@ _ATTRIBUTION_HEADERS = {
     "Content-Type": "application/json",
     # OpenRouter attribution headers (harmless against ABBBLE Portal).
     "HTTP-Referer": "https://github.com/abbbleco/minerva",
-    "X-Title": "Hermes Agent",
+    "X-Title": "Minerva Agent",
 }
 
 

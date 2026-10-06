@@ -365,7 +365,7 @@ _is_connected = _env_is_connected("HASS_TOKEN")
 
 
 def register(ctx) -> None:
-    """Plugin entry point — called by the Hermes plugin system."""
+    """Plugin entry point — called by the Minerva plugin system."""
     ctx.register_platform(
         name="homeassistant", label="Home Assistant", adapter_factory=HomeAssistantAdapter,
         check_fn=check_ha_requirements, validate_config=validate_ha_config, is_connected=_is_connected,

@@ -32,7 +32,7 @@ def _declared_model_ids(value: Any) -> list[str]:
     if isinstance(value, str):
         candidates: Any = [value]
     elif isinstance(value, dict):
-        # Pre-fix Hermes wrote sentinel keys inside the user-facing ``models`` mapping.
+        # Pre-fix Minerva wrote sentinel keys inside the user-facing ``models`` mapping.
         candidates = (k for k in value if k not in ("__explicit_model_allowlist__", "__discovered_model_catalog__"))
     elif isinstance(value, (list, tuple)):
         candidates = (_declared_item_id(item) if isinstance(item, dict) else item for item in value)
@@ -75,7 +75,7 @@ def _models_config_is_allowlist(value: Any, discovered: bool = False) -> bool:
     ``_save_custom_provider`` / the wizard, not a catalog narrow (treating it as one made GUI
     pickers show only the saved default for keyless Ollama while the CLI live-probed). List and
     string shapes remain allowlists for no-key endpoints; pin a dict catalog with
-    ``discover_models: false``. A catalog Hermes itself persisted (``discovered``) is never a pin."""
+    ``discover_models: false``. A catalog Minerva itself persisted (``discovered``) is never a pin."""
     if discovered:
         return False
     if isinstance(value, str):
@@ -98,12 +98,12 @@ def _bare_custom_provider_def(current_base_url: str) -> Optional[ProviderDef]:
 # --- Non-agentic model warning
 
 _HERMES_MODEL_WARNING = (
-    "Nous Research Hermes 3 & 4 models are NOT agentic and are not designed "
-    "for use with Hermes Agent. They lack the tool-calling capabilities "
+    "ABBBLE CO Minerva 3 & 4 models are NOT agentic and are not designed "
+    "for use with Minerva Agent. They lack the tool-calling capabilities "
     "required for agent workflows. Consider using an agentic model instead "
     "(Claude, GPT, Gemini, DeepSeek, etc.).")
 
-# Match only the real Nous Research Hermes 3 / 4 chat families; a bare substring check
+# Match only the real ABBBLE CO Minerva 3 / 4 chat families; a bare substring check
 # false-positived on tool-capable local Modelfiles like ``hermes-brain:qwen3-14b-ctx16k``.
 #   match:    NousResearch/Hermes-3-Llama-3.1-70B, hermes-4-405b, openrouter/hermes3:70b
 #   no match: hermes-brain:qwen3-14b-ctx16k, qwen3:14b, claude-opus-4-6
@@ -125,12 +125,12 @@ def format_model_for_display(model_name: str) -> str:
 
 
 def is_nous_hermes_non_agentic(model_name: str) -> bool:
-    """True if *model_name* is a real Nous Hermes 3/4 chat model (single owner; cli.py uses it too)."""
+    """True if *model_name* is a real Nous Minerva 3/4 chat model (single owner; cli.py uses it too)."""
     return bool(model_name and _NOUS_HERMES_NON_AGENTIC_RE.search(model_name))
 
 
 def _check_hermes_model_warning(model_name: str) -> str:
-    """Warning string if *model_name* is a Nous Hermes 3/4 chat model, else ""."""
+    """Warning string if *model_name* is a Nous Minerva 3/4 chat model, else ""."""
     return _HERMES_MODEL_WARNING if is_nous_hermes_non_agentic(model_name) else ""
 
 
@@ -1282,7 +1282,7 @@ def _convert_vendor_colon_slug(st: _Switch) -> None:
     a variant tag (:free, :extended, :fast) that must be preserved.
 
     On an aggregator every ``left:right`` is a slug. Elsewhere the colon is converted only when
-    ``left`` names a provider Hermes knows, so ``/model alibaba:qwen3.6-plus`` routes like
+    ``left`` names a provider Minerva knows, so ``/model alibaba:qwen3.6-plus`` routes like
     ``alibaba/qwen3.6-plus`` (#9748) while Ollama-style tags (``qwen3.5:4b``) stay intact."""
     raw_input = st.raw_input
     colon_pos = raw_input.find(":")

@@ -1,6 +1,6 @@
 """Tests for hermes_bootstrap — Windows UTF-8 stdio shim.
 
-The bootstrap module is imported at the top of every Hermes entry point
+The bootstrap module is imported at the top of every Minerva entry point
 (hermes, hermes-agent, hermes-acp, gateway, batch_runner, cli.py).  It
 fixes Python's Windows UTF-8 defaults so print("café") doesn't crash and
 subprocess children inherit UTF-8 mode.
@@ -12,7 +12,7 @@ Key invariants covered by these tests:
   3. Idempotent: safe to call multiple times
   4. Respects user opt-out: if the user explicitly sets PYTHONUTF8=0 or
      PYTHONIOENCODING=something-else, we leave those alone
-  5. Load order: every Hermes entry point imports hermes_bootstrap as its
+  5. Load order: every Minerva entry point imports hermes_bootstrap as its
      first non-docstring import (before anything that might do file I/O
      or print to stdout)
 """
@@ -61,7 +61,7 @@ class TestWindowsBehavior:
 
     @pytest.mark.platforms("windows")
     def test_stdout_reconfigured_to_utf8_on_windows(self):
-        # The live process's stdout should now be UTF-8 (the Hermes CLI
+        # The live process's stdout should now be UTF-8 (the Minerva CLI
         # runs on Windows with a pytest console that's cp1252 by default).
         # If reconfigure succeeded, sys.stdout.encoding is 'utf-8'.
         _fresh_import()
@@ -372,12 +372,12 @@ class TestHardenImportPath:
     def test_absolute_cwd_path_loses_to_src_root(self):
         # The real #51286 bug: the launch dir is present as its own absolute
         # path (venv activation / a project on PYTHONPATH), ahead of the
-        # Hermes root.  The guard must relocate Hermes to the front.
+        # Minerva root.  The guard must relocate Minerva to the front.
         hb = _fresh_import()
         result = self._run(hb, ["/home/user/tg-ws-proxy", "/opt/hermes"])
         assert result[0] == "/opt/hermes"
         # The cwd absolute path may still appear (it can hold legit deps),
-        # but only AFTER the Hermes root.
+        # but only AFTER the Minerva root.
         assert result.index("/opt/hermes") < result.index("/home/user/tg-ws-proxy")
 
 
@@ -433,7 +433,7 @@ class TestEnableWindowsVt:
 
     @pytest.mark.platforms("windows")
     def test_leaves_non_console_handles_and_colour_alone(self, tmp_path, monkeypatch):
-        # Redirected output must neither fail nor flip Hermes to NO_COLOR.
+        # Redirected output must neither fail nor flip Minerva to NO_COLOR.
         monkeypatch.delenv("NO_COLOR", raising=False)
         import hermes_bootstrap
 

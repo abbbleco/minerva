@@ -70,7 +70,7 @@ def bypass_chat_sdk_request_transform(request_kwargs: dict, client: Any) -> dict
     """Chat-completions bypass, gated on the real OpenAI SDK.
 
     Only the SDK performs the transform and only the SDK merges ``extra_body``
-    afterwards. Hermes also drives chat-shaped facades that are NOT the SDK (the
+    afterwards. Minerva also drives chat-shaped facades that are NOT the SDK (the
     in-process MoA aggregator, test stand-ins); handing those an ``extra_body`` they
     never merge would silently send an empty conversation.
     """

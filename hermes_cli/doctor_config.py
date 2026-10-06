@@ -55,7 +55,7 @@ def collect_deprecated_env_vars(env_map: dict | None) -> list[tuple[str, str]]:
 
 
 def collect_relay_plugin_cutover_findings(raw_config: dict | None, env_map: dict | None) -> list[tuple[str, str]]:
-    """Return actionable findings for the removed Hermes Relay plugin."""
+    """Return actionable findings for the removed Minerva Relay plugin."""
     from hermes_cli.relay_plugin_cutover import (LEGACY_RELAY_EXPORT_ENV_VARS, RELAY_PLUGINS_CONFIG_ENV,
                                                  configured_legacy_relay_env_vars, legacy_relay_plugin_keys)
     findings: list[tuple[str, str]] = []
@@ -98,7 +98,7 @@ def report_deprecated_config_and_env(raw_config: dict | None = None, env_map: di
 
 @doctor_check("Relay plugin check failed: {e}")
 def _check_relay_plugins(should_fix: bool, f: Finding) -> None:
-    """Name the plugins.toml files Relay applies to Hermes, including ones outside the Hermes home."""
+    """Name the plugins.toml files Relay applies to Hermes, including ones outside the Minerva home."""
     from agent.relay_runtime import resolve_plugin_sources
     try:
         sources = resolve_plugin_sources()
@@ -122,7 +122,7 @@ def _check_relay_plugins(should_fix: bool, f: Finding) -> None:
         # Validation cannot load dynamic plugins, so Relay reports what it cannot confirm as a warning.
         report = check_warn if sources.warnings else check_ok
         if sources.enabled:
-            report("Relay plugins enabled", "(applies to every profile a Hermes process hosts)")
+            report("Relay plugins enabled", "(applies to every profile a Minerva process hosts)")
         else:
             report("Relay plugin files found, nothing enabled")
     _relay_info_lines((*sources.config_paths, *sources.errors, *sources.warnings))

@@ -1,6 +1,6 @@
 """Regression test: `minerva dashboard --tui` must not hard-crash.
 
-Older Hermes desktop app shells (<= 0.15.x) spawn the backend as::
+Older Minerva desktop app shells (<= 0.15.x) spawn the backend as::
 
     hermes dashboard --no-open --tui --host 127.0.0.1 --port <PORT>
 

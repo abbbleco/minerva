@@ -559,7 +559,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             {sessions_html}
             
             <footer>
-                Built with ☤ Hermes Agent • Generated on {generated_at}
+                Built with ☤ Minerva Agent • Generated on {generated_at}
             </footer>
         </div>
     </div>
@@ -748,7 +748,7 @@ def _sidebar_html(sessions: List[Dict[str, Any]]) -> str:
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-brand">
-                    {ICON_HERMES} Hermes History
+                    {ICON_HERMES} Minerva History
                 </div>
                 <div class="search-container">
                     {ICON_SEARCH}

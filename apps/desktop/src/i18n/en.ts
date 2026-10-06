@@ -379,6 +379,8 @@ export const en: Translations = {
     ideas: 'Ideas',
     feeds: 'Feeds',
     goals: 'Goals',
+    prds: 'PRDs',
+    leads: 'Leads',
     copied: 'Copied',
     copy: 'Copy',
     copyFailed: 'Copy failed',

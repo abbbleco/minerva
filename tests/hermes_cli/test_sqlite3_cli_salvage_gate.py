@@ -1,5 +1,5 @@
 """#100368 regression: the corruption guidance must not direct a WAL-reset-
-vulnerable sqlite3 CLI at a live Hermes database.
+vulnerable sqlite3 CLI at a live Minerva database.
 
 Field forensics (issue #100368, maintainer round 2 + the isolated reproducer
 in its comments): when a shell with SQLite's WAL-reset opener bug (fixed

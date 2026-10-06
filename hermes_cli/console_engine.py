@@ -1,4 +1,4 @@
-"""Safe Hermes Console command engine."""
+"""Safe Minerva Console command engine."""
 
 from __future__ import annotations
 
@@ -355,28 +355,28 @@ _BLOCKED_TOP = frozenset(
     "oneshot proxy serve setup uninstall update whatsapp whatsapp-cloud".split())
 
 _BLOCKED_PAIRS = {
-    ("config", "edit"): "`config edit` opens an editor and is not available in Hermes Console.",
-    ("mcp", "serve"): "`mcp serve` starts a server and is not available in Hermes Console.",
-    ("profile", "alias"): "`profile alias` creates shell wrappers and is not available in Hermes Console.",
-    ("skills", "config"): "`skills config` is interactive and is not available in Hermes Console.",
-    ("skills", "publish"): "`skills publish` is not available in Hermes Console.",
-    ("portal", "login"): "`portal login` is interactive and is not available in Hermes Console.",
-    ("portal", "open"): "`portal open` opens a browser and is not available in Hermes Console.",
-    ("kanban", "tail"): "`kanban tail` streams output and is not available in Hermes Console.",
-    ("kanban", "watch"): "`kanban watch` streams output and is not available in Hermes Console.",
-    ("kanban", "daemon"): "`kanban daemon` starts a service and is not available in Hermes Console.",
-    ("kanban", "dispatcher"): "`kanban dispatcher` starts a worker and is not available in Hermes Console.",
-    ("kanban", "swarm"): "`kanban swarm` starts agent work and is not available in Hermes Console.",
-    ("kanban", "decompose"): "`kanban decompose` starts agent work and is not available in Hermes Console.",
-    ("kanban", "specify"): "`kanban specify` starts agent work and is not available in Hermes Console.",
-    ("kanban", "gc"): "`kanban gc` is not available in Hermes Console.",
-    ("sessions", "delete"): "`sessions delete` and `sessions prune` are not available in Hermes Console.",
-    ("sessions", "prune"): "`sessions delete` and `sessions prune` are not available in Hermes Console.",
+    ("config", "edit"): "`config edit` opens an editor and is not available in Minerva Console.",
+    ("mcp", "serve"): "`mcp serve` starts a server and is not available in Minerva Console.",
+    ("profile", "alias"): "`profile alias` creates shell wrappers and is not available in Minerva Console.",
+    ("skills", "config"): "`skills config` is interactive and is not available in Minerva Console.",
+    ("skills", "publish"): "`skills publish` is not available in Minerva Console.",
+    ("portal", "login"): "`portal login` is interactive and is not available in Minerva Console.",
+    ("portal", "open"): "`portal open` opens a browser and is not available in Minerva Console.",
+    ("kanban", "tail"): "`kanban tail` streams output and is not available in Minerva Console.",
+    ("kanban", "watch"): "`kanban watch` streams output and is not available in Minerva Console.",
+    ("kanban", "daemon"): "`kanban daemon` starts a service and is not available in Minerva Console.",
+    ("kanban", "dispatcher"): "`kanban dispatcher` starts a worker and is not available in Minerva Console.",
+    ("kanban", "swarm"): "`kanban swarm` starts agent work and is not available in Minerva Console.",
+    ("kanban", "decompose"): "`kanban decompose` starts agent work and is not available in Minerva Console.",
+    ("kanban", "specify"): "`kanban specify` starts agent work and is not available in Minerva Console.",
+    ("kanban", "gc"): "`kanban gc` is not available in Minerva Console.",
+    ("sessions", "delete"): "`sessions delete` and `sessions prune` are not available in Minerva Console.",
+    ("sessions", "prune"): "`sessions delete` and `sessions prune` are not available in Minerva Console.",
 }
 
 
 class HermesConsoleEngine:
-    """Curated line-command executor for Hermes Console."""
+    """Curated line-command executor for Minerva Console."""
 
     def __init__(self, *, output_limit: int = 20000):
         self.output_limit = output_limit
@@ -473,14 +473,14 @@ class HermesConsoleEngine:
         probe = " ".join(tokens[:2]) if len(tokens) > 1 else tokens[0]
         suggestions = difflib.get_close_matches(probe, available, n=3, cutoff=0.45)
         suffix = f" Did you mean: {', '.join(suggestions)}?" if suggestions else ""
-        raise ConsoleCommandError(f"Unsupported Hermes Console command: {probe}.{suffix}")
+        raise ConsoleCommandError(f"Unsupported Minerva Console command: {probe}.{suffix}")
 
     def _rejection_for(self, tokens: Sequence[str]) -> str:
         first = tokens[0]
         if first.startswith("-"):
-            return f"{first} is not available in Hermes Console."
+            return f"{first} is not available in Minerva Console."
         if first in _BLOCKED_TOP:
-            return f"`minerva {first}` is not available in Hermes Console."
+            return f"`minerva {first}` is not available in Minerva Console."
         return _BLOCKED_PAIRS.get(tuple(tokens[:2]), "")
 
     def _cap_output(self, output: str) -> str:
@@ -540,7 +540,7 @@ def _apply_confirmed_defaults(args: argparse.Namespace) -> None:
         auth_type = getattr(args, "auth_type", None)
         if auth_type in {"api-key", "api_key"} and not getattr(args, "api_key", None):
             raise ConsoleCommandError(
-                "auth add --type api-key requires --api-key in Hermes Console.")
+                "auth add --type api-key requires --api-key in Minerva Console.")
     if getattr(args, "import_name", None) is not None:
         return  # profile import has no prompt flag; leave it alone.
     if getattr(args, "skills_action", None) in {"install", "reset", "opt-out", "repair-official"}:
@@ -568,7 +568,7 @@ _cron_status = _simple_command("cron status", "hermes_cli.cron", "cron_status")
 
 def _logs(_engine: HermesConsoleEngine, args: list[str]) -> str:
     if "-f" in args or "--follow" in args:
-        raise ConsoleCommandError("`logs -f` is not available in Hermes Console.")
+        raise ConsoleCommandError("`logs -f` is not available in Minerva Console.")
     ns = _parse(
         "logs", args, (("log_name",), dict(nargs="?", default="agent")),
         (("-n", "--lines"), dict(type=int, default=50)),
@@ -802,10 +802,10 @@ def _cron_run(_engine: HermesConsoleEngine, args: list[str]) -> str:
 
 # (path, usage, summary, handler, confirmation prompt) — a non-empty prompt marks it mutating.
 _BUILTIN_COMMANDS = (
-    (("status",), "status", "Show Hermes component status.", _status, ""),
-    (("version",), "version", "Show Hermes version information.", _version, ""),
+    (("status",), "status", "Show Minerva component status.", _status, ""),
+    (("version",), "version", "Show Minerva version information.", _version, ""),
     (("doctor",), "doctor", "Run diagnostics without auto-fix.", _doctor, ""),
-    (("logs",), "logs [name] [-n N]", "Show recent Hermes logs.", _logs, ""),
+    (("logs",), "logs [name] [-n N]", "Show recent Minerva logs.", _logs, ""),
     (("sessions", "list"), "sessions list [--limit N]", "List recent sessions.", _sessions_list,
      ""),
     (("sessions", "stats"), "sessions stats", "Show session store statistics.", _sessions_stats,
@@ -816,7 +816,7 @@ _BUILTIN_COMMANDS = (
     (("cron", "status"), "cron status", "Show cron scheduler status.", _cron_status, ""),
     (("profile",), "profile", "Show active profile status.", _profile_status, ""),
     (("config", "set"), "config set <key> <value>", "Set a configuration value.", _config_set,
-     "Update Hermes configuration?"),
+     "Update Minerva configuration?"),
     (("cron", "pause"), "cron pause <job>", "Pause a scheduled job.", _cron_pause,
      "Pause this cron job?"),
     (("cron", "resume"), "cron resume <job>", "Resume a paused cron job.", _cron_resume,
@@ -824,7 +824,7 @@ _BUILTIN_COMMANDS = (
     (("cron", "run"), "cron run <job>", "Run a job on the next scheduler tick.", _cron_run,
      "Trigger this cron job?"),
     (("config", "migrate"), "config migrate", "Update config with new options.", _config_migrate,
-     "Update Hermes configuration with missing defaults?"),
+     "Update Minerva configuration with missing defaults?"),
     (("sessions", "export"), "sessions export <output> [--source SOURCE] [--session-id ID]",
      "Export sessions to JSONL.", _sessions_export, "Export session data?"),
     (("sessions", "rename"), "sessions rename <session> <title>", "Rename a session.",

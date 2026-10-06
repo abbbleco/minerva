@@ -6,7 +6,7 @@ HERMES_HOME=/home/ubuntu/.hermes) and a demo gateway (user ``demo``,
 HERMES_HOME=/home/demo/.hermes).  The demo gateway runs as another user, so
 its ``/proc/<pid>/fd`` table is unreadable from the main instance and the
 holder scan falls back to ``/proc/<pid>/cmdline`` + ``_looks_like_hermes``.
-The demo process's argv matches the Hermes patterns exactly, so the fallback
+The demo process's argv matches the Minerva patterns exactly, so the fallback
 flagged it as an uninspectable holder of the MAIN instance's state.db even
 though ``lsof`` proved zero open handles on it.  Consequence: the stale-FTS
 rebuild in ``hermes_state_schema._recover_stale_fts`` was deferred 42 times
@@ -111,7 +111,7 @@ def _install_fake_argv(monkeypatch, argv_by_pid):
 class TestUninspectableHolderInstanceScope:
     def test_other_instance_argv_is_not_a_holder_of_our_db(self, tmp_path, monkeypatch):
         """RED: fd dir unreadable + argv proves the process belongs to a
-        DIFFERENT Hermes home → not a holder of our state.db."""
+        DIFFERENT Minerva home → not a holder of our state.db."""
         # A real ``.hermes`` home, as on the field host this test is drawn from: the install
         # location can only identify a home that is itself part of an install layout.
         db_path = tmp_path / ".hermes" / "state.db"
@@ -209,9 +209,9 @@ class TestUninspectableHolderInstanceScope:
         """``<X>/profiles/<n>/state.db`` does not make all of ``<X>`` ours.
 
         A raw ``basename == "profiles"`` test promoted any such parent to the install root, so an
-        unrelated Hermes install living under it was counted as a holder — the literal two-instance
+        unrelated Minerva install living under it was counted as a holder — the literal two-instance
         shape #92401 was filed about. The canonical ``named_profile_home`` predicate requires the
-        parent to be a real Hermes home.
+        parent to be a real Minerva home.
         """
         work = tmp_path / "work"
         db_path = work / "profiles" / "b" / "state.db"

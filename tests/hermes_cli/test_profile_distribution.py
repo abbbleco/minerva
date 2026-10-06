@@ -404,7 +404,7 @@ class TestInstall:
 
 
     def test_install_enforces_hermes_requires(self, profile_env, monkeypatch):
-        # Pin current Hermes version to something well below the requirement
+        # Pin current Minerva version to something well below the requirement
         monkeypatch.setattr(
             "hermes_cli.version_info.get_version_info",
             lambda: SimpleNamespace(base_version="0.1.0"),

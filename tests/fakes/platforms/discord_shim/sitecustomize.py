@@ -7,7 +7,7 @@ discord.py has no base-URL knob: REST URLs are built from the class attribute
 also points at itself). This module is put on a child process's ``PYTHONPATH`` by the Discord driver
 and does nothing unless ``HERMES_STANDIN_DISCORD_API`` is set. It patches the SDK only; no Hermes
 code is touched. Side effect: when set, discord.py (and yarl/aiohttp) are imported eagerly at
-interpreter startup, before Hermes runs, rather than lazily by the adapter.
+interpreter startup, before Minerva runs, rather than lazily by the adapter.
 """
 
 import os

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """unbroker - deterministic CLI helper.
 
-The Hermes agent orchestrates scanning and opt-out submission with native tools
+The Minerva agent orchestrates scanning and opt-out submission with native tools
 (`web_extract`, `browser_navigate`, email mechanisms). THIS CLI owns the
 deterministic state: config, dossiers + consent, the broker DB, tier planning,
 the ledger + audit log, draft/template rendering, and reports.
@@ -187,7 +187,7 @@ def cmd_doctor(args) -> None:
                  "verify links via your logged-in webmail); or set EMAIL_* for SMTP/IMAP.")
     elif cfg["email_mode"] == "browser":
         L.append("  Email mode: browser (no password) - the agent sends opt-outs and opens verify "
-                 "links via the operator's logged-in webmail. This needs Hermes pointed at the "
+                 "links via the operator's logged-in webmail. This needs Minerva pointed at the "
                  "operator's OWN Chrome over CDP (launch with --remote-debugging-port=9222 "
                  "--user-data-dir=~/.hermes/chrome-debug, signed into the webmail once); else it falls "
                  "back to drafts. Run `pdd.py cdp` to launch it (or `pdd.py cdp --print` for the command). "
@@ -247,7 +247,7 @@ def cmd_cdp(args) -> None:
     """Launch (or detect) the operator's Chrome over CDP for Phase-2 browser + webmail work.
 
     A cloud browser cannot send the operator's webmail or clear session-bound gates; this points
-    Hermes at the operator's real Chrome on a dedicated debug profile (see methods.md).
+    Minerva at the operator's real Chrome on a dedicated debug profile (see methods.md).
     """
     import shlex
     import time

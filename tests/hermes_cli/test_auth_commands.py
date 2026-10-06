@@ -876,7 +876,7 @@ def test_unsuppress_credential_source_preserves_other_markers(tmp_path, monkeypa
 
 
 # =============================================================================
-# Unified credential-source stickiness — every source Hermes reads from has a
+# Unified credential-source stickiness — every source Minerva reads from has a
 # registered RemovalStep in agent.credential_sources, and every seeding path
 # gates on is_source_suppressed.  Below: one test per source proving remove
 # sticks across a fresh load_pool() call.

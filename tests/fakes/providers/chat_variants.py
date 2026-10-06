@@ -18,7 +18,7 @@ tool call, and an in-stream error object. Every request body is recorded and val
 against the installed ``openai`` SDK's ``CompletionCreateParams`` (pydantic
 ``TypeAdapter``); every chunk is built from ``openai.types.chat.ChatCompletionChunk``.
 
-Vendor-host impersonation: routes Hermes gates by hostname (``openrouter.ai``,
+Vendor-host impersonation: routes Minerva gates by hostname (``openrouter.ai``,
 ``nousresearch.com``) are reached by configuring ``base_url: http://<vendor host>/...``
 and pointing the child's ``HTTP_PROXY`` at this server — the client sends absolute-form
 requests here, no DNS or real network involved (``https://`` URLs get a refused

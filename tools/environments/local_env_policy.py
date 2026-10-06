@@ -1,4 +1,4 @@
-"""Secret-scrub policy for Hermes child processes: pure data + predicates for which env
+"""Secret-scrub policy for Minerva child processes: pure data + predicates for which env
 names are Hermes-managed credentials. The env *builders* applying it (``_make_run_env``,
 ``_sanitize_subprocess_env``, ``hermes_subprocess_env``) live in ``tools.environments.local``."""
 
@@ -82,7 +82,7 @@ def _build_provider_env_blocklist() -> frozenset:
     # non-terminal children; the Buzz carve-out is terminal-only and context-gated
     # (``_is_terminal_first_party_env``).
     # It is set and owned by the user's Claude Code install (subscription OAuth), not a Hermes-managed
-    # inference credential — Claude subscription auth is not a working Hermes provider path. It arrives via
+    # inference credential — Claude subscription auth is not a working Minerva provider path. It arrives via
     # the registry loop above (anthropic api_key_env_vars), so remove it explicitly. See #55878.
     blocked.discard("CLAUDE_CODE_OAUTH_TOKEN")
     # BUZZ_* is deliberately NOT discarded here, even for Buzz-managed agents (BUZZ_MANAGED_AGENT set by the
@@ -206,7 +206,7 @@ def _is_provider_env_blocklisted(name: str, _registered: "frozenset | None" = No
 # treats these names like profile-scoped passthrough names (see
 # ``LocalEnvironment._additional_profile_scoped_passthrough_names``) so they never persist in the shared
 # terminal snapshot across profiles. Contrast with CLAUDE_CODE_OAUTH_TOKEN above, which is discarded from
-# the blocklist entirely because it is NOT a Hermes credential; these ARE Hermes-managed first-party
+# the blocklist entirely because it is NOT a Minerva credential; these ARE Hermes-managed first-party
 # platform credentials, so they stay IN the blocklist for every non-terminal surface. See issue #78026 (Buzz
 # agents could not use ``buzz`` from the terminal tool) and #76243 (Buzz Desktop managed agent wakes but
 # cannot reply).
@@ -247,17 +247,17 @@ def _is_terminal_first_party_env(name: str) -> bool:
 
 
 # Active-venv markers that must NOT leak: VIRTUAL_ENV/CONDA_PREFIX make uv/poetry sync
-# ANOTHER project's deps into the Hermes venv (still reachable via PATH, so stripping
-# is safe); PYTHONHOME redirects a child interpreter's stdlib to the Hermes venv
+# ANOTHER project's deps into the Minerva venv (still reachable via PATH, so stripping
+# is safe); PYTHONHOME redirects a child interpreter's stdlib to the Minerva venv
 # (version-mismatch crashes). PYTHONPATH is handled separately (Hermes-owned entries only).
 # The gateway runs inside its own venv, so its process environment carries VIRTUAL_ENV (and possibly
 # CONDA_PREFIX). If those leak into commands the agent runs against OTHER Python projects, tools like
 # ``uv``/``poetry`` treat the inherited value as the active environment and build/sync that other project's
-# dependencies into the Hermes venv path instead of the project's own ``.venv`` — silently clobbering the
-# Hermes environment (e.g. a project pinned to a different Python version overwrites it and breaks the
+# dependencies into the Minerva venv path instead of the project's own ``.venv`` — silently clobbering the
+# Minerva environment (e.g. a project pinned to a different Python version overwrites it and breaks the
 # gateway). PYTHONHOME is included because a gateway-inherited value redirects the standard-library search
-# of ANY child interpreter — including unrelated system/venv Pythons — to the Hermes venv's stdlib, which
-# crashes with version-mismatch errors before a child script even imports a package (#75018). Hermes itself
+# of ANY child interpreter — including unrelated system/venv Pythons — to the Minerva venv's stdlib, which
+# crashes with version-mismatch errors before a child script even imports a package (#75018). Minerva itself
 # treats PYTHONHOME as contamination in its own child processes (managed_uv.py, sqlite_runtime.py), so
 # stripping it from subprocess envs is consistent. Users who need PYTHONHOME for a specific child can set it
 # explicitly in the command. PYTHONPATH is NOT included here — it's handled by
@@ -285,7 +285,7 @@ def _is_hermes_internal_secret(key: str) -> bool:
 # A's channel/user/role list as its own (#113270). The suffix is matched by shape so a gate
 # added to any adapter is covered without a second edit, but ONLY under a platform prefix
 # (``DISCORD_``, ``GATEWAY_``, a plugin adapter's name): an operator's own ``DEMO_ALLOWED_SENDER``
-# is script data, not a Hermes gate, and deleting it by name shape broke routed ``no_agent``
+# is script data, not a Minerva gate, and deleting it by name shape broke routed ``no_agent``
 # cron scripts (#119539). ``HERMES_*`` never counts (``HERMES_MEDIA_ALLOW_DIRS``,
 # ``HERMES_ALLOW_PRIVATE_URLS`` are process settings, not adapter gates).
 _PROFILE_GATE_ENV_MARKERS = (

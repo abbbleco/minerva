@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 title: "MCP (Model Context Protocol)"
-description: "Connect Hermes Agent to external tool servers via MCP — and control exactly which MCP tools Hermes loads"
+description: "Connect Minerva Agent to external tool servers via MCP — and control exactly which MCP tools Hermes loads"
 ---
 
 # MCP (Model Context Protocol)
@@ -10,7 +10,7 @@ Python dependency commands on this page use a
 [PM-prepared source checkout](../../reference/package-management.md#developer-workflow).
 After a dependency change, reactivate the checkout and restart Hermes.
 
-MCP lets Hermes Agent connect to external tool servers so the agent can use tools that live outside Hermes itself — GitHub, databases, file systems, browser stacks, internal APIs, and more.
+MCP lets Minerva Agent connect to external tool servers so the agent can use tools that live outside Hermes itself — GitHub, databases, file systems, browser stacks, internal APIs, and more.
 
 If you have ever wanted Hermes to use a tool that already exists somewhere else, MCP is usually the cleanest way to do it.
 
@@ -351,7 +351,7 @@ Most hosted MCP servers (Cloudflare, Linear, Sentry, Atlassian, Asana, Figma, St
 Hermes identifies itself with a [Client ID Metadata Document](../../reference/mcp-config-reference.md#client-identification-cimd-and-dcr) on servers that support one, and falls back to Dynamic Client Registration on those that don't. Both are automatic; there is nothing to configure.
 
 :::tip Figma remote MCP
-Figma's hosted endpoint (`https://mcp.figma.com/mcp`) allowlists Dynamic Client Registration by **exact `client_name`** — bare `"Hermes Agent"` 403s, while `"Claude Code"` and `"Codex"` succeed. Hermes auto-sets `oauth.client_name: "Claude Code"` for `mcp.figma.com` so install/login works without a special trick:
+Figma's hosted endpoint (`https://mcp.figma.com/mcp`) allowlists Dynamic Client Registration by **exact `client_name`** — bare `"Minerva Agent"` 403s, while `"Claude Code"` and `"Codex"` succeed. Hermes auto-sets `oauth.client_name: "Claude Code"` for `mcp.figma.com` so install/login works without a special trick:
 
 ```yaml
 mcp_servers:

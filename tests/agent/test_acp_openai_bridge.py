@@ -46,7 +46,7 @@ def test_specs_are_flattened_and_malformed_entries_skipped():
 
 def test_allowlist_forwards_only_the_named_tools():
     """An agent-as-provider runs its own read/edit tools; re-offering them would
-    make Hermes re-run finished work, so those clients forward an allowlist."""
+    make Minerva re-run finished work, so those clients forward an allowlist."""
     specs = tool_specs_from_openai_tools(_TOOLS, allowlist=["memory"])
     assert [s["name"] for s in specs] == ["memory"]
     # No allowlist at all means "forward everything" — not "forward nothing".

@@ -1,4 +1,4 @@
-"""Two Hermes installs on one Windows host: one install's ``minerva update`` leaves the other's
+"""Two Minerva installs on one Windows host: one install's ``minerva update`` leaves the other's
 gateway alone (#124659).
 
 Failure class: update blast radius. The updater's gateway discovery scans the whole process

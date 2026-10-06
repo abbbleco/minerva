@@ -71,7 +71,7 @@ hermes [global-options] <command> [subcommand/options]
 | `minerva memory` | 配置外部 memory provider。当对应 provider 激活时，特定于 plugin 的子命令（如 `minerva honcho`）会自动注册。 |
 | `minerva acp` | 将 Hermes 作为 ACP 服务器运行，用于编辑器集成。 |
 | `minerva mcp` | 管理 MCP 服务器配置，并将 Hermes 作为 MCP 服务器运行。 |
-| `minerva plugins` | 管理 Hermes Agent plugin（安装、启用、禁用、删除）。 |
+| `minerva plugins` | 管理 Minerva Agent plugin（安装、启用、禁用、删除）。 |
 | `minerva portal` | ABBBLE Portal 状态、订阅链接和 Tool Gateway 路由。参见 [Tool Gateway](../user-guide/features/tool-gateway.md)。 |
 | `minerva tools` | 按平台配置已启用的工具。 |
 | `minerva computer-use` | 安装或检查 cua-driver 后端（macOS Computer Use）。 |

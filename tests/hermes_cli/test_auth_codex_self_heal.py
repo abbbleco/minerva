@@ -2,7 +2,7 @@
 
 Hermes keeps its OWN copy of the Codex OAuth token (per profile + top-level),
 separate from the Codex CLI's ``~/.codex/auth.json``. OAuth refresh_tokens are
-single-use, so when the Codex CLI (or another Hermes process) rotates the shared
+single-use, so when the Codex CLI (or another Minerva process) rotates the shared
 token, the frozen copy's refresh_token goes stale and ``refresh_codex_oauth_pure``
 fails with a relogin-required error. ``_refresh_codex_auth_tokens`` must then
 recover by re-importing the canonical token from ``~/.codex/auth.json`` instead of
@@ -51,7 +51,7 @@ def test_self_heals_on_stale_refresh_token(monkeypatch):
 
     assert out["access_token"] == "fresh-access"
     assert out["refresh_token"] == "fresh-refresh"
-    # the recovered token was persisted to the Hermes auth store
+    # the recovered token was persisted to the Minerva auth store
     assert saved["access_token"] == "fresh-access"
 
 
@@ -64,7 +64,7 @@ def test_self_heals_on_stale_refresh_token(monkeypatch):
 
 
 def test_self_heals_missing_singleton_access_token_from_codex_cli(tmp_path, monkeypatch):
-    """Exact cron failure path: Hermes auth has refresh_token but missing access_token."""
+    """Exact cron failure path: Minerva auth has refresh_token but missing access_token."""
     hermes_home = tmp_path / "hermes"
     codex_home = tmp_path / "codex"
     hermes_home.mkdir()
@@ -153,7 +153,7 @@ def _seed_homes(tmp_path, monkeypatch, hermes_tokens, cli_tokens):
 
 def test_recovery_refuses_codex_cli_login_from_another_workspace(tmp_path, monkeypatch, caplog):
     """#73667: a Codex Desktop/CLI login into ANOTHER ChatGPT workspace must not silently replace the
-    Hermes credential it is supposed to repair — the store stays byte-identical and the log says why."""
+    Minerva credential it is supposed to repair — the store stays byte-identical and the log says why."""
     personal, team = _codex_jwt("acct-personal"), _codex_jwt("acct-team")
     auth_file = _seed_homes(tmp_path, monkeypatch, {"access_token": personal},
                             {"access_token": team, "refresh_token": "rt-team"})

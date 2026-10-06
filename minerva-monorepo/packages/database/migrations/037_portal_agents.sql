@@ -5,7 +5,7 @@
 -- into the `org` shape the desktop persists. A multi-agency user gets a 409
 -- carrying the agency list so the desktop can show its org picker.
 --
--- An agent is a per-agency Hermes gateway the user can point the desktop at:
+-- An agent is a per-agency Minerva gateway the user can point the desktop at:
 -- `dashboard_url` is the base URL the desktop connects to and is the only
 -- field here that carries a routable address, so it is what an agent row
 -- exists to hold.

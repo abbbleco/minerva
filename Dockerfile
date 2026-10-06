@@ -255,9 +255,9 @@ FROM runtime_base AS python_deps
 # so Docker users can use these providers without requiring runtime
 # lazy-install access to PyPI (often blocked in containerized envs).
 #
-# The [otlp] extra contains the SDK/exporter imported by Hermes when Gateway
+# The [otlp] extra contains the SDK/exporter imported by Minerva when Gateway
 # Health export is enabled. Collector and observability-backend dependencies
-# remain external and are not part of the Hermes production image.
+# remain external and are not part of the Minerva production image.
 #
 # The Matrix gateway's deps ([matrix] extra) are baked in because
 # python-olm (transitive via mautrix[encryption]) builds from source on

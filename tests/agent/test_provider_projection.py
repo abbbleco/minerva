@@ -5,7 +5,7 @@ calls never come back as pending ``tool_calls`` (Hermes would re-run finished
 work), so two subsystems would otherwise be blind to them:
 
   * the self-improvement loop, which distils skills/memories from ``messages``;
-  * the skill-review nudge, whose counter only moves on Hermes tool iterations.
+  * the skill-review nudge, whose counter only moves on Minerva tool iterations.
 
 ``splice_provider_projection`` closes both gaps. The helper is unit tested here,
 and the wiring is exercised for real: the last tests drive a whole

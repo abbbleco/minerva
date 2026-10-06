@@ -314,7 +314,7 @@ def main():
             "skin": resolve_skin(), "change_events": True, "replay_epoch": replay_epoch()}}},
         "startup write failed (broken stdout pipe before first event)")
 
-    # Live-apply skins Hermes activates mid-conversation.
+    # Live-apply skins Minerva activates mid-conversation.
     server._ensure_skin_watcher()
 
     # Warm the /model picker's provider-models cache in this idle window (fire-and-forget).

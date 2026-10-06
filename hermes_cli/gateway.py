@@ -769,7 +769,7 @@ def find_gateway_pids(exclude_pids: set | None = None, all_profiles: bool = Fals
 
 
 def find_profile_gateway_processes(exclude_pids: set | None = None, *, strict: bool = False) -> list[ProfileGatewayProcess]:
-    """Return running gateway PIDs mapped to Hermes profiles via PID files."""
+    """Return running gateway PIDs mapped to Minerva profiles via PID files."""
     _exclude = set(exclude_pids or set())
     processes: list[ProfileGatewayProcess] = []
     try:
@@ -2192,7 +2192,7 @@ def _windows_gateway_breakaway_state() -> bool | None:
 # =============================================================================
 
 _SERVICE_BASE = "hermes-gateway"
-SERVICE_DESCRIPTION = "Hermes Agent Gateway - Messaging Platform Integration"
+SERVICE_DESCRIPTION = "Minerva Agent Gateway - Messaging Platform Integration"
 
 _SYSTEM_UNIT_DIR = Path("/etc/systemd/system")
 
@@ -2581,7 +2581,7 @@ def _find_legacy_hermes_units() -> list[tuple[str, Path, bool]]:
     fight the current unit for the bot token (SIGTERM flap loop). Explicit name allowlist + ExecStart
     marker check so profile/third-party units never match; no mutation.
 
-    Detects unit files installed by older Hermes versions that used a different service name (e.g. When both
+    Detects unit files installed by older Minerva versions that used a different service name (e.g. When both
     a legacy unit and the current ``hermes-gateway.service`` are active, they fight over the same bot token
     — the PR #5646 signal-recovery change turns this into a 30-second SIGTERM flap loop.
     """
@@ -2601,7 +2601,7 @@ def _find_legacy_hermes_units() -> list[tuple[str, Path, bool]]:
 
 
 def has_legacy_hermes_units() -> bool:
-    """Return True when any legacy Hermes gateway unit files exist."""
+    """Return True when any legacy Minerva gateway unit files exist."""
     return bool(_find_legacy_hermes_units())
 
 
@@ -2610,7 +2610,7 @@ def print_legacy_unit_warning() -> None:
     legacy = _find_legacy_hermes_units()
     if not legacy:
         return
-    print_warning("Legacy Hermes gateway unit(s) detected from an older install:")
+    print_warning("Legacy Minerva gateway unit(s) detected from an older install:")
     for name, path, is_system in legacy:
         print_info(f"    {path}  ({_service_scope_label(is_system)} scope)")
     print_info("  These run alongside the current hermes-gateway service and")
@@ -2624,11 +2624,11 @@ def remove_legacy_hermes_units(interactive: bool = True, dry_run: bool = False) 
     only lists. Returns ``(removed_count, remaining_paths)`` (remaining: e.g. system-scope when not root)."""
     legacy = _find_legacy_hermes_units()
     if not legacy:
-        print("No legacy Hermes gateway units found.")
+        print("No legacy Minerva gateway units found.")
         return 0, []
 
     print()
-    print("Legacy Hermes gateway unit(s) found:")
+    print("Legacy Minerva gateway unit(s) found:")
     for name, path, is_system in legacy:
         print(f"  {path}  ({_service_scope_label(is_system)} scope)")
     print()
@@ -3446,7 +3446,7 @@ def refresh_systemd_unit_if_needed(system: bool = False) -> bool:
     current = systemd_unit_is_current(system=system)
     if _retire_hermes_replace_dropin(system=system):
         _run_systemctl(["daemon-reload"], system=system, check=True, timeout=30)
-        print(f"↻ Removed the stale Hermes --replace drop-in from the gateway {_service_scope_label(system)} service")
+        print(f"↻ Removed the stale Minerva --replace drop-in from the gateway {_service_scope_label(system)} service")
         if current:
             return True
     elif current:
@@ -3467,7 +3467,7 @@ def refresh_systemd_unit_if_needed(system: bool = False) -> bool:
     _prepare_service_launcher(system=system, run_as_user=expected_user)
     unit_path.write_text(new_unit, encoding="utf-8")
     _run_systemctl(["daemon-reload"], system=system, check=True, timeout=30)
-    print(f"↻ Updated gateway {_service_scope_label(system)} service definition to match the current Hermes install")
+    print(f"↻ Updated gateway {_service_scope_label(system)} service definition to match the current Minerva install")
     return True
 
 
@@ -4148,7 +4148,7 @@ def host_multiplexer_serving(profile_name: str | None = None):
         # "serving default" is a name collision, and the CLI guards refused on it with exit 78 (#121352).
         from gateway.host_attach import launched_by_other_tenant
         if launched_by_other_tenant(gateway.home, get_hermes_home()):
-            logger.debug("Host gateway %s belongs to another Hermes home; not ours", gateway.describe())
+            logger.debug("Host gateway %s belongs to another Minerva home; not ours", gateway.describe())
             return None
         return gateway
     except Exception:
@@ -4476,11 +4476,11 @@ def _guard_official_docker_root_gateway() -> None:
     if not _is_official_docker_checkout():
         return
 
-    print_error("Refusing to run the Hermes gateway as root inside the official Docker image.")
+    print_error("Refusing to run the Minerva gateway as root inside the official Docker image.")
     print(
         "  The image entrypoint normally drops privileges to the 'hermes' user. "
         "If you override entrypoint in Docker Compose, include "
-        "/opt/hermes/docker/entrypoint.sh before the Hermes command."
+        "/opt/hermes/docker/entrypoint.sh before the Minerva command."
     )
     print(
         "  Running the gateway as root can leave root-owned files in "
@@ -4644,7 +4644,7 @@ def run_gateway(verbose: int = 0, quiet: bool = False, replace: bool = False, fo
 
     from gateway.run import start_gateway
     print("┌─────────────────────────────────────────────────────────┐")
-    print("│           ☤ Hermes Gateway Starting...                 │")
+    print("│           ☤ Minerva Gateway Starting...                 │")
     print("├─────────────────────────────────────────────────────────┤")
     print("│  Messaging platforms + cron scheduler                    │")
     print("│  Press Ctrl+C to stop                                   │")
@@ -5702,7 +5702,7 @@ def _cmd_list(args):
 
 
 def _cmd_migrate_legacy(args):
-    """Stop, disable, and remove legacy Hermes gateway unit files (e.g. hermes.service)."""
+    """Stop, disable, and remove legacy Minerva gateway unit files (e.g. hermes.service)."""
     dry_run = getattr(args, "dry_run", False)
     yes = getattr(args, "yes", False)
     if not supports_systemd_services() and not is_macos():

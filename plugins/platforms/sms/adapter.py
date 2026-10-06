@@ -328,7 +328,7 @@ _is_connected = _env_is_connected("TWILIO_ACCOUNT_SID")
 
 
 def register(ctx) -> None:
-    """Plugin entry point — called by the Hermes plugin system."""
+    """Plugin entry point — called by the Minerva plugin system."""
     ctx.register_platform(
         name="sms", label="SMS (Twilio)", adapter_factory=SmsAdapter,
         check_fn=check_sms_requirements, is_connected=_is_connected,

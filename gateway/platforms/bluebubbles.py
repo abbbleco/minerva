@@ -50,7 +50,7 @@ DEFAULT_WEBHOOK_PATH = "/bluebubbles-webhook"
 MAX_TEXT_LENGTH = 4000
 
 # iMessage has no stable bot mention identity (unlike <@U...>/@botname/MXID), so
-# `require_mention: true` without custom aliases uses Hermes wake words.
+# `require_mention: true` without custom aliases uses Minerva wake words.
 DEFAULT_MENTION_PATTERNS = [r"(?<![\w@])@?hermes\s+agent\b[,:\-]?", r"(?<![\w@])@?hermes\b[,:\-]?"]
 
 # Tapback associatedMessageType codes: 2000-2005 added, 3000-3005 removed (love, like, dislike, ...).

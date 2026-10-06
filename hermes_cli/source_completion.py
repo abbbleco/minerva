@@ -141,7 +141,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args([argument for argument in argv if argument != _PREPARED])
     root = args.source.resolve()
     if not (root / "hermes_cli/source_completion.py").is_file():
-        print(f"✗ {root} is not a Hermes source checkout", file=sys.stderr)
+        print(f"✗ {root} is not a Minerva source checkout", file=sys.stderr)
         return 1
 
     if prepared:

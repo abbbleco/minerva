@@ -1,4 +1,4 @@
-"""Direct NeMo Relay integration for Hermes shared client metrics."""
+"""Direct NeMo Relay integration for Minerva shared client metrics."""
 
 from __future__ import annotations
 
@@ -202,7 +202,7 @@ def _absorb_peak(into: model_.ModelSessionState, segment: model_.ModelSessionSta
 
 
 class _Runtime:
-    """Own shared-metrics state layered on the Hermes core Relay host."""
+    """Own shared-metrics state layered on the Minerva core Relay host."""
 
     def __init__(self, host: relay_runtime.RelayRuntime | None = None) -> None:
         resolved_host = host or relay_runtime.get_runtime()
@@ -220,7 +220,7 @@ class _Runtime:
         self._lineages: dict[str, _PeakLineage] = {}
         self._lineage_of: dict[str, str] = {}
         self._lineage_lock = threading.Lock()
-        # Leaf lock: conversations whose next cold cache read Hermes already announced.
+        # Leaf lock: conversations whose next cold cache read Minerva already announced.
         self._cold_expected: OrderedDict[str, None] = OrderedDict()
         self._cold_lock = threading.Lock()
         self._task_creation_lock = threading.RLock()
@@ -295,7 +295,7 @@ class _Runtime:
         )
 
     def start_task(self, event: dict[str, Any]) -> _TaskRun | None:
-        """Open one Relay function scope for a Hermes task run."""
+        """Open one Relay function scope for a Minerva task run."""
         task_key = _session_pair(event, "task_id")
         if task_key is None:
             return None
@@ -392,7 +392,7 @@ class _Runtime:
                 task.selected_route = task.selected_route or fields
                 task.model_call_ids.add(request_id)
                 if _retry_ordinal(event) > 0:
-                    # A real Hermes retry can advance api_request_id while carrying the
+                    # A real Minerva retry can advance api_request_id while carrying the
                     # retry ordinal. Count that physical attempt.
                     task.retry_count += 1
             handle = self._run_scoped(
@@ -1282,12 +1282,12 @@ def _reconcile_store_consent(store: SharedMetricsStore, send_enabled: bool) -> N
 
 
 def enabled() -> bool:
-    """Return the shared-metrics policy for the active Hermes profile."""
+    """Return the shared-metrics policy for the active Minerva profile."""
     profile_key = relay_runtime.current_profile_key()
     try:
         config: Any = _raw_config()
     except Exception:
-        logger.debug("Unable to read Hermes shared-metrics policy", exc_info=True)
+        logger.debug("Unable to read Minerva shared-metrics policy", exc_info=True)
         config = None
     for key in ("telemetry", "shared_metrics"):
         config = config.get(key) if isinstance(config, dict) else None
@@ -1338,7 +1338,7 @@ def _reconcile_send_consent_once() -> None:
 
 
 def observe_lifecycle(hook_name: str, **kwargs: Any) -> None:
-    """Project one Hermes lifecycle event into the core Relay integration."""
+    """Project one Minerva lifecycle event into the core Relay integration."""
     _reconcile_send_consent_once()
     if not handles_hook(hook_name) or not relay_runtime.relay_instrumentation_enabled():
         return
@@ -1400,7 +1400,7 @@ def _prepare_core_session(host: relay_runtime.RelayRuntime, context: dict[str, A
 def start_task_run(
     *, session_id: str, task_id: str, platform: str, parent_session_id: str = ""
 ) -> None:
-    """Start task metrics at the outer Hermes execution boundary."""
+    """Start task metrics at the outer Minerva execution boundary."""
     _run_task_hook(
         "start_task", retry_failed=True, session_id=session_id, task_id=task_id,
         platform=platform, parent_session_id=parent_session_id,
@@ -1474,7 +1474,7 @@ def record_session_tools(session_id: str, agent: Any, tools_for_api: list) -> No
 
 
 def record_known_cache_break(cause: str, route: dict[str, str], session_id: str) -> None:
-    """A prompt-cache break Hermes caused (caller checked enabled())."""
+    """A prompt-cache break Minerva caused (caller checked enabled())."""
     if not relay_runtime.relay_instrumentation_enabled():
         return
     runtime = _get_runtime(retry_failed=True)

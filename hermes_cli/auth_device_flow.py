@@ -430,7 +430,7 @@ def _offer_existing_oauth_credentials(
         existing = resolve()
         api_key = existing.get("api_key", "")
         if isinstance(api_key, str) and api_key and not is_expiring(api_key, 60):
-            print(f"Existing {display_name} credentials found in Hermes auth store.")
+            print(f"Existing {display_name} credentials found in Minerva auth store.")
             if _prompt_yes_no("Use existing credentials? [Y/n]: ", default="y"):
                 config_path = _update_config_for_provider(
                     provider_id, existing.get("base_url", default_base_url))

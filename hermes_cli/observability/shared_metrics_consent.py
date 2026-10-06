@@ -105,7 +105,7 @@ def offer_consent(config: dict | None = None) -> bool:
         description=_OFFER_DESCRIPTION,
     )
     if idx < 0:
-        print_info("Not answered; Hermes will ask again. Decide any time with `minerva setup telemetry`.")
+        print_info("Not answered; Minerva will ask again. Decide any time with `minerva setup telemetry`.")
         return False
     _, enabled, send = OFFER_CHOICES[idx]
     save_consent(enabled, send, config)

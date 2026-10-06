@@ -1,9 +1,9 @@
 """Copilot ACP wire conformance, part 1: the multi-call tool flow, resume, and the process lifecycle.
 
-``provider: copilot-acp`` makes Hermes spawn an external ACP agent (``copilot --acp --stdio``) per model
+``provider: copilot-acp`` makes Minerva spawn an external ACP agent (``copilot --acp --stdio``) per model
 call and speak the Agent Client Protocol to it over stdio. Here the agent is
 ``tests/fakes/providers/copilot_acp.py``, a fake that validates every request against the published
-ACP schema and replays scripted turns. Everything on the Hermes side is real: the ``minerva chat -q``
+ACP schema and replays scripted turns. Everything on the Minerva side is real: the ``minerva chat -q``
 process, runtime resolution from ``config.yaml`` + the profile ``.env`` (``HERMES_COPILOT_ACP_COMMAND``
 / ``HERMES_COPILOT_ACP_ARGS``), the ACP client, the agent loop, the ``read_file`` tool and ``state.db``.
 
@@ -13,7 +13,7 @@ Contract under test (documented in ``agent/copilot_acp_client.py`` and the ACP s
   model selection via the advertised ``model`` config option -> ``session/prompt``; every request is
   schema-valid;
 * ACP has no tools channel: Hermes' tools travel in the prompt text, a ``<tool_call>`` block in the
-  agent's message runs a REAL Hermes tool, and the result is in the next call's prompt;
+  agent's message runs a REAL Minerva tool, and the result is in the next call's prompt;
 * ``--resume`` in a new process runs in a new agent process whose prompt carries the persisted history
   (turn 1 in order, then the new question), with nothing duplicated;
 * agent-side ``session/request_permission`` is never granted (Hermes has no human channel there) and
@@ -69,7 +69,7 @@ LATE_TEXT = "LATE-ANSWER-65788"
 # Compaction: the turn pins ``--toolsets file`` so the prompt size does not depend on which optional tools
 # the host can advertise (browser tools appear only where agent-browser and Chromium exist). With that pin
 # the system prompt + tool bridge is ~3.5K estimated tokens and each file read adds ~0.6K, so eight reads
-# cross this absolute threshold mid-turn (ACP reports no usage, so Hermes estimates).
+# cross this absolute threshold mid-turn (ACP reports no usage, so Minerva estimates).
 COMPACT_THRESHOLD = 5_500
 COMPACT_TOOLSETS = ("--toolsets", "file")
 COMPACT_FILES = 8
@@ -120,7 +120,7 @@ def _reap(fake: acp.AcpFake) -> None:
 
 
 def _flow(root: Path) -> Scenario:
-    """Turn 1 (two model calls): agent-side permission + a Hermes read_file call, then fs reads + the
+    """Turn 1 (two model calls): agent-side permission + a Minerva read_file call, then fs reads + the
     answer. Turn 2: ``--resume`` in a new process. The agent ignores SIGTERM and stdin EOF."""
     project = NativeHome(root).project
     turns = [

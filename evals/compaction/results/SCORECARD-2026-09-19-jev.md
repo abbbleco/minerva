@@ -1,4 +1,4 @@
-# fast-jev-compaction vs Hermes compaction — 3-transcript scorecard (2026-09-19)
+# fast-jev-compaction vs Minerva compaction — 3-transcript scorecard (2026-09-19)
 
 ## Verdict
 
@@ -86,7 +86,7 @@ Per-question paired comparison, jev vs current across 45 questions: 17 wins, 1 l
    noise floor. Lowering the threshold to 0.15 (jev_t15) reaches 90% but retains 396K of
    500K — that is not compaction.
 
-4. **The state ceiling does not fit Hermes scale.** Jev's 32K window forces the whole
+4. **The state ceiling does not fit Minerva scale.** Jev's 32K window forces the whole
    history into 25K tokens; at 500K every transcript needed the harshest fitting stages
    ("old calls compacted/merged", "old messages collapsed") and one of four could not fit at
    all. The plugin is designed for Claude Code's ~200K compaction point; a 1M-window Hermes

@@ -460,7 +460,7 @@ class TestValidateBackupZip:
                 zf.writestr(name, "dummy")
 
     def test_state_db_passes(self, tmp_path):
-        """A zip containing state.db is accepted as a valid Hermes backup."""
+        """A zip containing state.db is accepted as a valid Minerva backup."""
         from hermes_cli.backup import _validate_backup_zip
         zip_path = tmp_path / "backup.zip"
         self._make_zip(zip_path, ["state.db", "sessions/abc.json"])
@@ -728,7 +728,7 @@ class TestImport:
         assert cmd_import(args) is None
         out = capsys.readouterr().out
         assert "Preserved 1 runtime state file(s)" in out
-        assert "Done. Your Hermes configuration has been restored." in out
+        assert "Done. Your Minerva configuration has been restored." in out
 
 
 
@@ -2697,7 +2697,7 @@ def _write_session_db(path: Path, sessions: int, messages_per_session: int) -> N
 
 
 class TestImportLiveSessionDatabase:
-    """`minerva import` must not swap the inode of a database Hermes holds open.
+    """`minerva import` must not swap the inode of a database Minerva holds open.
 
     Publishing state.db with a rename leaves any live gateway/dashboard/WebUI
     connection reading and writing the unlinked inode, so its sessions vanish

@@ -909,7 +909,7 @@ class TestReviewRound3:
     def test_snapshot_blocks_when_locked_even_with_autoclose(self, tmp_path, monkeypatch):
         """Even with autoclose armed, snapshot_real_profile does NOT kill — it
         blocks and defers the close to the explicit, user-approved step. The
-        message offers the close (mentions Hermes can close it)."""
+        message offers the close (mentions Minerva can close it)."""
         import hermes_cli.browser_connect as bc
         src = self._multi(tmp_path / "real")
         home = tmp_path / "hh"

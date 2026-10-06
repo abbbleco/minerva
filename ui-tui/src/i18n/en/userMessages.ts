@@ -14,7 +14,7 @@ export const userMessagesEn = {
     backend: {
       restarting: 'Hermes stopped unexpectedly — restarting and reopening your chat (the reply in progress was lost).',
       restartingActivity: 'Hermes stopped unexpectedly · restarting…',
-      connectionLost: 'Connection to Hermes lost — reconnecting and reopening your chat…',
+      connectionLost: 'Connection to Minerva lost — reconnecting and reopening your chat…',
       connectionLostActivity: 'connection lost · reconnecting…',
       gaveUpTitle: 'Hermes stopped and could not be restarted. Your chat is saved.',
       /** `{0}` = process exit code. */
@@ -31,14 +31,14 @@ export const userMessagesEn = {
       slowStart:
         'Hermes is taking longer than usual to start. Still waiting… If it never connects: /logs shows the last backend output; /quit and run `minerva doctor`.',
       slowStartStatus: 'still starting…',
-      stderrProblem: 'Something went wrong inside Hermes · /logs for details',
+      stderrProblem: 'Something went wrong inside Minerva · /logs for details',
       /** `{0}` = the Python exception class name (e.g. `ValueError`). */
-      stderrProblemNamed: (what: string) => `Something went wrong inside Hermes (${what}) · /logs for details`
+      stderrProblemNamed: (what: string) => `Something went wrong inside Minerva (${what}) · /logs for details`
     },
 
     rpc: {
       versionSkew:
-        'The terminal UI and the Hermes backend are out of sync (different versions). Run /update, or exit and run `minerva update`, then start the TUI again.',
+        'The terminal UI and the Minerva backend are out of sync (different versions). Run /update, or exit and run `minerva update`, then start the TUI again.',
       sessionNotFound:
         'This chat is no longer attached to the backend (it was idle or the backend restarted). Your history is saved: type /resume to reopen it.',
       notConnected:
@@ -121,7 +121,7 @@ export const userMessagesEn = {
           title: 'The model provider reports no credit left',
           hint: 'Top up the account or switch with /model.'
         },
-        disk: { title: 'The disk is full, so Hermes could not save the turn', hint: 'Free some space, then /retry.' },
+        disk: { title: 'The disk is full, so Minerva could not save the turn', hint: 'Free some space, then /retry.' },
         endpoint: {
           title: 'Your custom model endpoint did not answer',
           hint: 'Check the endpoint is running, then /retry.'

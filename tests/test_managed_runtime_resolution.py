@@ -7,7 +7,7 @@ code has two failure modes:
 
 * the managed runtime is invisible, so the caller reports "not installed" or
   degrades to a slower tier on a machine that has exactly what it needed; and
-* when a system copy also exists, the one Hermes does not own wins — which is
+* when a system copy also exists, the one Minerva does not own wins — which is
   how a generated systemd unit or launchd plist can bake a system Node in and
   keep resolving it across reboots.
 
@@ -45,7 +45,7 @@ _KNOWN_PATH_FRAGMENTS = (
     "WinGet",
 )
 
-# Runtimes Hermes provisions into HERMES_HOME and must therefore resolve
+# Runtimes Minerva provisions into HERMES_HOME and must therefore resolve
 # through a managed-aware helper rather than PATH.
 _MANAGED_COMMANDS = frozenset({"uv", "node", "npm", "npx"})
 

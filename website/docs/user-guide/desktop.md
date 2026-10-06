@@ -6,7 +6,7 @@ description: "The native Hermes desktop app — a polished experience for chatti
 
 # Hermes Desktop
 
-The Hermes desktop app is a native app built around the **same** agent you get from the CLI and the gateway — same config, same API keys, same sessions, same skills, same memory. It is not a separate product or a lightweight clone; it uses the same Hermes Agent core and settings, and drives it through a modern & thoughtfully designed UI. If you have used `hermes` in a terminal, everything you set up there is already here, and anything you do here shows up there.
+The Hermes desktop app is a native app built around the **same** agent you get from the CLI and the gateway — same config, same API keys, same sessions, same skills, same memory. It is not a separate product or a lightweight clone; it uses the same Minerva Agent core and settings, and drives it through a modern & thoughtfully designed UI. If you have used `hermes` in a terminal, everything you set up there is already here, and anything you do here shows up there.
 
 It runs on **macOS (Apple Silicon), Windows, and Linux** — see [Platform Support](../getting-started/platform-support.md) for the full matrix.
 
@@ -421,7 +421,7 @@ When you start Hermes from the application grid or menu (the launcher sets `DESK
 
 ## How it works
 
-The packaged app ships the Electron shell and a native React chat surface. On first launch it can install the Hermes Agent runtime into `HERMES_HOME` (`~/.hermes`, or `%LOCALAPPDATA%\hermes` on Windows) — **the same layout a CLI install uses**, which is why the two are interchangeable. Bundled apps use their included backend. Without a bundled backend, resolution honours `HERMES_DESKTOP_HERMES_ROOT`, then the development checkout, then an explicit `HERMES_DESKTOP_HERMES` command override for packagers such as Nix, and finally a usable managed install. The command override takes precedence over the managed install so a Nix desktop cannot silently launch an older mutable runtime. The React renderer talks to a headless backend the app launches for you — a `minerva serve` process that serves the `tui_gateway` JSON-RPC/WebSocket API — and reuses the agent runtime rather than embedding `minerva --tui`. The desktop app is **self-contained**: it runs its own `minerva serve` backend and never opens or requires the [web dashboard](./features/web-dashboard.md). (Runtimes older than the `serve` command fall back to a headless `dashboard --no-open` automatically, so an app update never outruns its backend.) Install, backend-resolution, and self-update logic live in the Electron main process.
+The packaged app ships the Electron shell and a native React chat surface. On first launch it can install the Minerva Agent runtime into `HERMES_HOME` (`~/.hermes`, or `%LOCALAPPDATA%\hermes` on Windows) — **the same layout a CLI install uses**, which is why the two are interchangeable. Bundled apps use their included backend. Without a bundled backend, resolution honours `HERMES_DESKTOP_HERMES_ROOT`, then the development checkout, then an explicit `HERMES_DESKTOP_HERMES` command override for packagers such as Nix, and finally a usable managed install. The command override takes precedence over the managed install so a Nix desktop cannot silently launch an older mutable runtime. The React renderer talks to a headless backend the app launches for you — a `minerva serve` process that serves the `tui_gateway` JSON-RPC/WebSocket API — and reuses the agent runtime rather than embedding `minerva --tui`. The desktop app is **self-contained**: it runs its own `minerva serve` backend and never opens or requires the [web dashboard](./features/web-dashboard.md). (Runtimes older than the `serve` command fall back to a headless `dashboard --no-open` automatically, so an app update never outruns its backend.) Install, backend-resolution, and self-update logic live in the Electron main process.
 
 ## Connecting to a remote backend
 
@@ -461,10 +461,10 @@ The connection has two halves: on the backend you protect it with an **auth prov
 
 **Pick a provider based on where the backend lives:**
 
-- **OAuth (ABBBLE Portal) — preferred for anything reachable beyond your own machine.** Logins are verified against your Nous account, so this is the option suitable for a VPS, a public host, or any remote backend. Register the dashboard with `minerva dashboard register` (or the Portal [`/local-dashboards`](https://portal.nousresearch.com/local-dashboards) page) to provision its OAuth client, then sign in from the app with **Sign in with Nous Research**. A self-hosted OIDC provider works the same way if you run your own identity provider.
+- **OAuth (ABBBLE Portal) — preferred for anything reachable beyond your own machine.** Logins are verified against your Nous account, so this is the option suitable for a VPS, a public host, or any remote backend. Register the dashboard with `minerva dashboard register` (or the Portal [`/local-dashboards`](https://portal.nousresearch.com/local-dashboards) page) to provision its OAuth client, then sign in from the app with **Sign in with ABBBLE CO**. A self-hosted OIDC provider works the same way if you run your own identity provider.
 - **Username/password — local / trusted-network use only.** The simplest option when the backend is on the same trusted LAN or reachable only over a VPN (e.g. Tailscale). It protects a single shared credential with no external identity provider, so **do not use it for a dashboard exposed to the public internet** — reach for OAuth there instead.
 
-The rest of this section shows the username/password path because it's the quickest to stand up on a trusted network; for the OAuth path see [Web Dashboard → Default provider: Nous Research](./features/web-dashboard.md#default-provider-nous-research).
+The rest of this section shows the username/password path because it's the quickest to stand up on a trusted network; for the OAuth path see [Web Dashboard → Default provider: ABBBLE CO](./features/web-dashboard.md#default-provider-nous-research).
 
 ### On the backend (the remote machine)
 
@@ -504,7 +504,7 @@ The backend reads and writes your `.env` (API keys, secrets) and can run agent c
 **Settings → Gateways → Remote gateway:**
 
 1. **Remote URL** — `http://<backend-host>:9119` (path prefixes like `/hermes` work if you front it with a reverse proxy)
-2. **Sign in** — the app detects which provider the backend advertises and adapts the button. For a username/password backend it shows a **Sign in** button that opens a credential form (enter the credentials from step 1). For an OAuth backend it shows **Sign in with `<provider>`** (e.g. *Sign in with Nous Research*), which runs the provider's browser sign-in. Either way the app ends up with an authenticated session against the backend.
+2. **Sign in** — the app detects which provider the backend advertises and adapts the button. For a username/password backend it shows a **Sign in** button that opens a credential form (enter the credentials from step 1). For an OAuth backend it shows **Sign in with `<provider>`** (e.g. *Sign in with ABBBLE CO*), which runs the provider's browser sign-in. Either way the app ends up with an authenticated session against the backend.
 3. **Save and reconnect** — switches the desktop shell onto the remote backend. The session refreshes automatically; you stay signed in across restarts when `HERMES_DASHBOARD_BASIC_AUTH_SECRET` is set.
 
 You can also set the backend URL without the UI via the `HERMES_DESKTOP_REMOTE_URL` environment variable before launching the app (it overrides the in-app setting); you still sign in from the Gateways settings panel.

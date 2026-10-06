@@ -458,7 +458,7 @@ def _validate_static_catalog(req: _Request) -> Optional[dict[str, Any]]:
         from agent.model_metadata import CODEX_CONTEXT_VARIANT_SUFFIX, is_codex_context_variant
 
         # Ineligible ``-900k`` aliases must be rejected BEFORE the hidden-slug soft-accept:
-        # the suffix is a Hermes picker convention, so an unknown `*-900k` can never be a real
+        # the suffix is a Minerva picker convention, so an unknown `*-900k` can never be a real
         # hidden provider slug — soft-accepting one silently runs at 272K on a different model.
         if req.lookup.strip().lower().endswith(CODEX_CONTEXT_VARIANT_SUFFIX) and req.lookup not in set(catalog):
             if is_codex_context_variant(req.lookup):
@@ -506,7 +506,7 @@ def _validate_minimax(req: _Request) -> Optional[dict[str, Any]]:
     return match.verdict(req) or _soft_accept(
         f"Note: `{req.requested}` was not found in the MiniMax catalog."
         f"{match.suggestion_text}"
-        "\n  MiniMax does not expose a /models endpoint, so Hermes cannot verify the model name."
+        "\n  MiniMax does not expose a /models endpoint, so Minerva cannot verify the model name."
         "\n  The model may still work if it exists on the server."
     )
 

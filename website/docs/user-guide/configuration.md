@@ -1,10 +1,10 @@
 ---
 sidebar_position: 2
-title: "Hermes Agent Configuration"
-description: "Configure Hermes Agent — config.yaml, providers, models, API keys, and more"
+title: "Minerva Agent Configuration"
+description: "Configure Minerva Agent — config.yaml, providers, models, API keys, and more"
 ---
 
-# Hermes Agent Configuration
+# Minerva Agent Configuration
 
 Python dependency commands on this page use a
 [PM-prepared source checkout](../reference/package-management.md#developer-workflow).
@@ -1465,7 +1465,7 @@ Matching auxiliary calls are sent with `stream=True` and the chunks (including t
 <div style={{position: 'relative', width: '100%', aspectRatio: '16 / 9', marginBottom: '1.5rem'}}>
   <iframe
     src="https://www.youtube.com/embed/NoF-YajElIM"
-    title="Hermes Agent — Auxiliary Models Tutorial"
+    title="Minerva Agent — Auxiliary Models Tutorial"
     style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0}}
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowFullScreen
@@ -2436,7 +2436,7 @@ stt:
   cloud_trim_silence: true     # trim long pauses with ffmpeg before uploading to a cloud provider (default: true)
   cloud_trim_threshold_db: -40 # audio quieter than this counts as silence
   cloud_trim_keep_ms: 300      # how much of each pause survives the trim (keeps natural pacing)
-  # prompt: "Hermes, Teknium, Nous Research, kanban"   # Static vocabulary hint (see below)
+  # prompt: "Hermes, Teknium, ABBBLE CO, kanban"   # Static vocabulary hint (see below)
   local:
     model: "base"              # tiny, base, small, medium, large-v3
     language: ""               # per-provider override of stt.language
@@ -2488,7 +2488,7 @@ STT_OPENAI_BASE_URL=https://api.openai.com/v1
 ```yaml
 stt:
   provider: "local"
-  prompt: "Hermes, Teknium, Nous Research, kanban, Ollama"
+  prompt: "Hermes, Teknium, ABBBLE CO, kanban, Ollama"
 ```
 
 **Composition.** The config value is the base. Plugins that register the [`pre_transcription`](./features/hooks.md#pre_transcription) hook mutate on top of it, last-writer-wins per field. Multiple plugins' hints compose deterministically: plugin discovery loads plugins in sorted order by plugin id, and each plugin's callbacks run in its own registration order, so the same set of plugins always produces the same final prompt. A hook returning an empty string for `prompt` clears the config prompt for that request. Hooks may also override `language` and `model`; `file_path` is read-only and any attempt to change it is logged and dropped. With no hook registered and no `stt.prompt` set, the outgoing request is identical to previous releases.

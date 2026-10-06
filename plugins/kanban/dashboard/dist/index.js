@@ -1,5 +1,5 @@
 /**
- * Hermes Kanban — Dashboard Plugin
+ * Minerva Kanban — Dashboard Plugin
  *
  * Board view for the multi-agent collaboration board backed by
  * ~/.hermes/kanban.db. Calls the plugin's backend at /api/plugins/kanban/
@@ -1805,7 +1805,7 @@
       target: "_blank",
       rel: "noopener noreferrer",
       className: "hermes-kanban-docs-link",
-      title: "Open Hermes Kanban docs in a new tab",
+      title: "Open Minerva Kanban docs in a new tab",
       "aria-label": "Hermes Kanban documentation",
     }, "?");
   }
@@ -2221,7 +2221,7 @@
     );
   }
 
-  // Live (non-archived) Hermes projects available for board scoping,
+  // Live (non-archived) Minerva projects available for board scoping,
   // fetched from GET /projects on mount. On failure the list stays empty
   // and both dialogs omit the project_id field from their payloads, so a
   // projects-store hiccup can never clear an existing binding.
@@ -2569,7 +2569,7 @@
         ),
       ),
       h("div", { className: "flex flex-col gap-1",
-                 title: "Filter by assigned Hermes profile. Profiles are the named agent identities that claim and work on tasks." },
+                 title: "Filter by assigned Minerva profile. Profiles are the named agent identities that claim and work on tasks." },
         h(Label, { className: "text-xs text-muted-foreground" }, tx(t, "assignee", "Assignee")),
         h(Select, Object.assign({
           value: props.assigneeFilter,
@@ -2699,7 +2699,7 @@
         }, tx(t, "setPriority", "Set priority")),
       ),
       h("div", { className: "hermes-kanban-bulk-reassign",
-                 title: "Reassign selected tasks to a different Hermes profile. Pick a profile (or unassign) and click Apply." },
+                 title: "Reassign selected tasks to a different Minerva profile. Pick a profile (or unassign) and click Apply." },
         h(Select, Object.assign({
           value: assignee,
           className: "h-7 text-xs",
@@ -3254,7 +3254,7 @@
           h("div", { className: "hermes-kanban-card-row hermes-kanban-card-meta" },
             t.assignee
               ? h("span", { className: "hermes-kanban-assignee",
-                            title: `Assigned to Hermes profile @${t.assignee}` }, "@", t.assignee)
+                            title: `Assigned to Minerva profile @${t.assignee}` }, "@", t.assignee)
               : h("span", { className: "hermes-kanban-unassigned",
                             title: needsAssignee
                               ? tx(i18n, "needsAssigneeHint", "Dependencies are satisfied, but the dispatcher skips this task until you assign a profile.")

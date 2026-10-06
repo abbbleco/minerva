@@ -20,7 +20,7 @@ auth:
 post_install: |
   In n8n Settings > Instance-level MCP, enable MCP access (owner or admin).
   Open Connect and copy the full Server URL ending in /mcp-server/http.
-  Use that URL, not your editor URL. The Hermes backend must be able to reach it.
+  Use that URL, not your editor URL. The Minerva backend must be able to reach it.
   On older n8n versions, the same endpoint is shown in the MCP settings page.
 
   Run `minerva mcp login n8n-official`, or use Authorize in the desktop app

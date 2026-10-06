@@ -51,7 +51,7 @@ Discipline:
   them; they usually name the offending parameter or missing asset.
 
 Eager mode (`Enable Tool Search` off) advertises every tool individually.
-Under Hermes that means each tool becomes `mcp_unreal_engine_<tool_name>` at
+Under Minerva that means each tool becomes `mcp_unreal_engine_<tool_name>` at
 session start, and `minerva mcp configure unreal-engine` can prune the list.
 Schema payload grows with every registered toolset, and tool authors are told
 NOT to rely on eager advertising — stay in tool-search mode unless a very
@@ -236,7 +236,7 @@ Editor Preferences > General > Model Context Protocol:
 | Property | Default | Notes |
 |---|---|---|
 | Auto Start Server | `false` | Turn on for frictionless sessions |
-| Server Port Number | `8000` | Change on conflict; mirror in Hermes config url |
+| Server Port Number | `8000` | Change on conflict; mirror in Minerva config url |
 | Server URL Path | `/mcp` | Same |
 | Enable Tool Search | `true` | Keep on (see above) |
 
@@ -247,7 +247,7 @@ Console commands (editor console, backtick):
 | `ModelContextProtocol.StartServer [port]` | Start server (optional port override) |
 | `ModelContextProtocol.StopServer` | Stop server, close all sessions |
 | `ModelContextProtocol.RefreshTools` | Re-poll toolset providers — run after authoring/hot-reload/Game-Feature activation |
-| `ModelContextProtocol.GenerateClientConfig <Client\|All>` | Write client config files (ClaudeCode/Cursor/VSCode/Gemini/Codex) — NOT used for Hermes |
+| `ModelContextProtocol.GenerateClientConfig <Client\|All>` | Write client config files (ClaudeCode/Cursor/VSCode/Gemini/Codex) — NOT used for Minerva |
 
 Command-line flags for launching the editor pre-configured:
 `-ModelContextProtocolStartServer` (force start regardless of preference),

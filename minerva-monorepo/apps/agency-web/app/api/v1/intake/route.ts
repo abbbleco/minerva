@@ -3,12 +3,16 @@ import { NextResponse } from "next/server";
 interface IntakePayload {
   brief?: string;
   client_email?: string;
+  client_phone?: string;
   organization_name?: string;
   source?: string;
   media_url?: string;
 }
 
 export async function POST(request: Request) {
+  // MINERVA_API_KEY must be a server key for this site (mint via the portal
+  // POST /api/portal/keys, purpose server); the upstream scopes throttle and
+  // drain reads to it. The proxy adds auth, never logic.
   const upstream = process.env.MINERVA_INTAKE_URL;
   if (!upstream) {
     return NextResponse.json(

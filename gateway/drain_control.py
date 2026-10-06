@@ -133,7 +133,7 @@ def drain_requested(*, home: Optional[Path] = None) -> bool:
     """True iff an active (present, same-epoch, unexpired) begin-drain marker exists.
 
     A marker whose ``epoch`` does not match the current instantiation epoch is treated as absent: it
-    survived a container/VM restart (HERMES_HOME is a durable Fly volume on Hermes Cloud) and the lifecycle
+    survived a container/VM restart (HERMES_HOME is a durable Fly volume on Minerva Cloud) and the lifecycle
     action that triggered the drain has already completed — honouring it would wedge the freshly-restarted
     gateway in ``draining`` (NS-570). A marker whose ``requested_at`` is older than
     :data:`DRAIN_REQUEST_MAX_AGE_SECONDS` is likewise treated as absent: it is a same-epoch orphan whose

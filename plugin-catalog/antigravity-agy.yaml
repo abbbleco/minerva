@@ -2,8 +2,8 @@ name: antigravity-agy
 repo: https://github.com/Realtyxxx/hermes-plugin-antigravity-agy
 sha: f85003d3ce0de3844e2d5c23174d630ff3586e5d
 description: >-
-  Run Hermes on a Google Antigravity subscription through the official agy CLI, with agy as the
-  model only: a generated custom agent removes agy's built-in tools, Hermes tools are exposed
+  Run Minerva on a Google Antigravity subscription through the official agy CLI, with agy as the
+  model only: a generated custom agent removes agy's built-in tools, Minerva tools are exposed
   through an inventory-only MCP server with native function calling, and every tool call is
   handed back to Hermes. Fails closed on any non-Hermes tool step or silent agent fallback;
   pre-warms agy for fast tool loops. Disclosure — routes inference through Google's official agy

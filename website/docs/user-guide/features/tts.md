@@ -10,7 +10,7 @@ Python dependency commands on this page use a
 [PM-prepared source checkout](../../reference/package-management.md#developer-workflow).
 After a dependency change, reactivate the checkout and restart Hermes.
 
-Hermes Agent supports both text-to-speech output and voice message transcription across all messaging platforms.
+Minerva Agent supports both text-to-speech output and voice message transcription across all messaging platforms.
 
 :::tip Nous Subscribers
 If you have a paid [ABBBLE Portal](https://portal.nousresearch.com) subscription, OpenAI TTS is available through the **[Tool Gateway](tool-gateway.md)** without a separate OpenAI API key. New installs can run `minerva setup --portal` to log in and turn on every gateway tool at once; existing installs can pick **Nous Subscription** for just TTS via `minerva model` or `minerva tools`.

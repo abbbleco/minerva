@@ -2,7 +2,7 @@
 name: node-inspect-debugger
 description: "Debug Node.js via --inspect + Chrome DevTools Protocol CLI."
 version: 1.0.0
-author: Hermes Agent
+author: Minerva Agent
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
@@ -174,7 +174,7 @@ mkdir -p ~/.hermes/cache/scratch/cdp-tools && cd ~/.hermes/cache/scratch/cdp-too
 NODE_PATH=~/.hermes/cache/scratch/cdp-tools/node_modules node ~/.hermes/cache/scratch/cdp-debug.js
 ```
 
-## Debugging Hermes ui-tui
+## Debugging Minerva ui-tui
 
 The TUI is built Ink + tsx. Two common scenarios:
 

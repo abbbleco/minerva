@@ -143,7 +143,7 @@ def _posix_cron_script_argv(script: Path) -> tuple[list[str], dict[str, str]]:
     interpreter: the store Python has the repo and managed site-packages only on its in-process
     ``sys.path``, so its children import neither (#123044). No ``PYTHONPATH``: everything the
     script spawns would inherit it and a foreign interpreter would load the store's compiled
-    extensions (#123440). The venv resolves Hermes from its generation's workspace snapshot,
+    extensions (#123440). The venv resolves Minerva from its generation's workspace snapshot,
     rebuilt only on a dependency change, so the bootstrap puts the live checkout first.
     Lazy installs are off for the script's process tree: a script importing ``hermes_bootstrap``
     could otherwise complete a source update and ``execv`` itself onto the bare store Python."""

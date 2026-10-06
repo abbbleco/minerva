@@ -2,7 +2,7 @@
 
 ``voice.voice_chat_mode: gpt-live`` replaces the chained STT → turn → TTS loop with ONE
 full-duplex voice model (OpenAI ``gpt-live-1``) that owns the microphone and the speaker and
-delegates every real request to Hermes as its *client-delegation* backend. Hermes stays the
+delegates every real request to Minerva as its *client-delegation* backend. Minerva stays the
 agent: whatever model/provider the session has selected answers, with the full toolset.
 
 Division of labour (the Live API has no tools of its own in client mode):
@@ -54,7 +54,7 @@ LIVE_PERSONA = (
     "Interruption policy: Stop speaking when the user interrupts. Listen to what they say.\n\n"
     "Delegation policy:\n"
     "Backend tools:\n"
-    "- Hermes agent: a full AI agent with tools — it can run commands, read and edit files, "
+    "- Minerva agent: a full AI agent with tools — it can run commands, read and edit files, "
     "browse the web, search, remember things across sessions, schedule tasks, and reason "
     "carefully about anything. It is the one who actually does work and knows facts.\n\n"
     "Delegate to the backend when:\n"

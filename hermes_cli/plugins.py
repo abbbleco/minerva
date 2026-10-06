@@ -578,7 +578,7 @@ class PluginContext:
         choice, not privilege escalation); others need ``tools.override`` via
         :func:`plugin_capability_granted` (granted_capabilities OR legacy ``allow_tool_override: true``).
 
-        Bundled plugins (shipped with Hermes core) are trusted by default — an override there is a
+        Bundled plugins (shipped with Minerva core) are trusted by default — an override there is a
         deliberate maintainer choice, not a third-party plugin trying to elevate privilege. For every other
         source, the canonical check is :func:`plugin_capability_granted` with the ``tools.override``
         capability — satisfied by EITHER the consent-flow grant
@@ -1481,7 +1481,7 @@ class PluginManager(PluginLoaderMixin, PluginDispatchMixin, PluginLedgerMixin):
         enabled = _get_enabled_plugins()  # None = opt-in default (nothing enabled)
         stale_relay_keys = legacy_relay_plugin_keys(enabled)
         if stale_relay_keys:
-            logger.warning("Removed Hermes plugin %s is still listed in plugins.enabled; "
+            logger.warning("Removed Minerva plugin %s is still listed in plugins.enabled; "
                            "remove it and configure a standard user or system Relay plugins.toml, or use %s "
                            "for an explicit user-file override",
                            ", ".join(stale_relay_keys), RELAY_PLUGINS_CONFIG_ENV)
@@ -1653,7 +1653,7 @@ class PluginManager(PluginLoaderMixin, PluginDispatchMixin, PluginLedgerMixin):
 # working — ``get_plugin_manager()`` still reads/writes this name.
 _plugin_manager: Optional[PluginManager] = None
 
-# Resolved Hermes home -> PluginManager. A process can switch profiles via
+# Resolved Minerva home -> PluginManager. A process can switch profiles via
 # ``set_hermes_home_override()``; a single slot would leak one profile's plugin/context-engine state
 # into another, and keying by resolved home lets a re-entered profile reuse its imported modules.
 _plugin_managers_by_home: Dict[Path, PluginManager] = {}
@@ -1672,7 +1672,7 @@ _published_tui_host_lock = threading.Lock()
 
 
 def _plugin_home_key() -> Path:
-    """Resolved active Hermes home — the key for per-profile plugin managers (plugins capture the
+    """Resolved active Minerva home — the key for per-profile plugin managers (plugins capture the
     home at registration, so a process serving several profiles cannot share one manager)."""
     try:
         return get_hermes_home().expanduser().resolve()
@@ -1766,7 +1766,7 @@ def _attach_published_tui_host(manager: PluginManager) -> None:
 
 
 def get_plugin_manager() -> PluginManager:
-    """Return the plugin manager for the active Hermes profile/home (cached per resolved home; a
+    """Return the plugin manager for the active Minerva profile/home (cached per resolved home; a
     profile switch gets its own manager and plugin submodules)."""
     global _plugin_manager
     current_home = _plugin_home_key()

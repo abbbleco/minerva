@@ -38,8 +38,12 @@ var _init = function () {
     var payload = {
       brief: valueOf("About-project"),
       client_email: valueOf("Corporate-email"),
+      client_phone: valueOf("Phone-number"),
       organization_name: valueOf("Full-name"),
       source: "web_form",
+      // Honeypot (empty for humans): forwarded untouched; the upstream
+      // accept-and-discards a filled trapdoor as success.
+      companyWebsite: valueOf("companyWebsite"),
     };
     if (!payload.brief) {
       showError();
@@ -82,10 +86,17 @@ var _init = function () {
     var label = input.nextElementSibling;
     var errorMsg = label.nextElementSibling;
     var type = input.getAttribute("type");
+    var optional = input.getAttribute("data-optional") === "true";
+
+    // Optional fields (phone): empty is fine; a filled value must look valid.
+    if (optional && input.value.length === 0) {
+      return;
+    }
 
     if (
       input.value.length === 0 ||
-      (type === "email" && !validateEmail(input.value))
+      (type === "email" && !validateEmail(input.value)) ||
+      (type === "tel" && !validatePhone(input.value))
     ) {
       input.classList.add("invalid");
       errorMsg.style.display = "block";
@@ -124,6 +135,14 @@ var _init = function () {
   function validateEmail(email) {
     var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
+  }
+
+  // Same shape as the upstream check (portal _lib PHONE_RE): digits, spaces
+  // and + - . ( ) only, 7..32 chars. Lenient on purpose — strictness lives
+  // in the E.164 world, not in a lead form.
+  function validatePhone(phone) {
+    var re = /^[+\d][\d\s\-.()]{5,30}$/;
+    return re.test(String(phone).trim());
   }
 
   function resetInputErrors() {

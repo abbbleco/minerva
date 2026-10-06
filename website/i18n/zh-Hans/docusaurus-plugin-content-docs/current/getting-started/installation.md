@@ -1,12 +1,12 @@
 ---
 sidebar_position: 2
 title: "安装"
-description: "在 Linux、macOS、WSL2 或原生 Windows 上安装 Hermes Agent"
+description: "在 Linux、macOS、WSL2 或原生 Windows 上安装 Minerva Agent"
 ---
 
 # 安装
 
-使用一行安装命令，两分钟内即可启动并运行 Hermes Agent。
+使用一行安装命令，两分钟内即可启动并运行 Minerva Agent。
 
 ## 快速安装
 

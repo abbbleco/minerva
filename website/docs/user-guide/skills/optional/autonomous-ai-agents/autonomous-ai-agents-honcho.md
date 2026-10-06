@@ -17,7 +17,7 @@ Configure and troubleshoot Honcho memory for Hermes.
 | Source | Optional — install with `minerva skills install official/autonomous-ai-agents/honcho` |
 | Path | `optional-skills/autonomous-ai-agents/honcho` |
 | Version | `2.0.0` |
-| Author | Hermes Agent |
+| Author | Minerva Agent |
 | License | MIT |
 | Platforms | linux, macos, windows |
 | Tags | `Honcho`, `Memory`, `Profiles`, `Observation`, `Dialectic`, `User-Modeling`, `Session-Summary` |

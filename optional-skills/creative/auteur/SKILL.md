@@ -2,7 +2,7 @@
 name: auteur
 description: Design and build cinematic, award-level web pages.
 version: 1.3.1
-author: agiwhitelist (https://github.com/agiwhitelist, upstream agiwhitelist/auteur), ported by Hermes Agent
+author: agiwhitelist (https://github.com/agiwhitelist, upstream agiwhitelist/auteur), ported by Minerva Agent
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
@@ -18,7 +18,7 @@ metadata:
 > Ported from [agiwhitelist/auteur](https://github.com/agiwhitelist/auteur) (MIT), snapshot
 > commit [`9bca227d`](https://github.com/agiwhitelist/auteur/commit/9bca227df9877e60dc45d49783c8cbd885eccd9b)
 > — see `LICENSE`. Scripts, templates and references are the upstream files (CRLF→LF), with
-> Hermes adaptation notes and `references/` path fixes as the only edits.
+> Minerva adaptation notes and `references/` path fixes as the only edits.
 
 Auteur designs and builds web experiences the way a film director makes a film: script first, then assets, then the shoot, then the cut. It has three registers — **build** (an excellent conventional site), **direct** (a cinematic scroll-directed site) and **system** (a multi-screen product as one design system) — on one shared core of taste. Nothing ships until the page passes an executable anti-slop gate and the skill has looked at its own output.
 

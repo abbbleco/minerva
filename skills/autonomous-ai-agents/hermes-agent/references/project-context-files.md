@@ -15,7 +15,7 @@ Hermes injects project-level instructions into the system prompt by reading cont
 
 - **Use `.hermes.md`** when you want Hermes-specific behavior that lives above the cwd (root + subtree), or when you want rules to inherit from a parent directory. The parent walk stops at the git root, so a home-level `.hermes.md` won't leak into every project (a git repo's root is the boundary).
 - **Use `AGENTS.md`** when the same project will also be worked on by other agents (Codex, Claude Code, OpenCode). Those tools all have their own conventions for `AGENTS.md`, and the "cwd only" contract keeps the file portable.
-- **Don't put project rules in `~/.hermes/AGENTS.md`** (or any other home-level location). When Hermes runs with that directory as cwd, the file loads — but only for that one directory. For cross-project context, use `SOUL.md` (in `$HERMES_HOME`, identity-only) or install a skill via `minerva skills install`.
+- **Don't put project rules in `~/.hermes/AGENTS.md`** (or any other home-level location). When Minerva runs with that directory as cwd, the file loads — but only for that one directory. For cross-project context, use `SOUL.md` (in `$HERMES_HOME`, identity-only) or install a skill via `minerva skills install`.
 
 ### Size and truncation
 
@@ -27,7 +27,7 @@ All context files pass through the threat-pattern scanner before reaching the sy
 
 ### Disable for one session
 
-`minerva --ignore-rules` skips auto-injection of all project context files (`.hermes.md`, `AGENTS.md`, `CLAUDE.md`, `.cursorrules`) **and** `SOUL.md` identity, plus user config, plugins, and MCP servers. Use it to isolate whether a problem is your setup or Hermes itself.
+`minerva --ignore-rules` skips auto-injection of all project context files (`.hermes.md`, `AGENTS.md`, `CLAUDE.md`, `.cursorrules`) **and** `SOUL.md` identity, plus user config, plugins, and MCP servers. Use it to isolate whether a problem is your setup or Minerva itself.
 
 ### Example: a small `.hermes.md`
 
@@ -45,4 +45,4 @@ Hermes: when working in this repo, follow these rules.
 - No `print()` in production code — use the `logger`.
 ```
 
-That file at `/home/me/projects/myrepo/.hermes.md` is auto-loaded when Hermes runs in any subdirectory of `/home/me/projects/myrepo`, but not when it runs in `/home/me/other-project`.
+That file at `/home/me/projects/myrepo/.hermes.md` is auto-loaded when Minerva runs in any subdirectory of `/home/me/projects/myrepo`, but not when it runs in `/home/me/other-project`.

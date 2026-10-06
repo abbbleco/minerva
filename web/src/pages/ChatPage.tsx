@@ -591,7 +591,7 @@ export default function ChatPage({ isActive = true }: { isActive?: boolean }) {
       fontWeightBold: "700",
       macOptionIsMeta: true,
       // Hold Option (Alt on Linux/Windows) to force native text selection
-      // even when the inner Hermes TUI has enabled xterm mouse-events
+      // even when the inner Minerva TUI has enabled xterm mouse-events
       // mode (CSI ?1000h family). Without this, click-and-drag in the
       // chat canvas selects nothing and Cmd+C falls back to copying the
       // entire visible buffer, which is rarely what the user wants.

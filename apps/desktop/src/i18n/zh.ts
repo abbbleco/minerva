@@ -128,6 +128,8 @@ export const zh = defineLocale({
     ideas: '想法',
     feeds: '动态',
     goals: '目标',
+    prds: 'PRD',
+    leads: '????',
     copied: '已复制',
     copy: '复制',
     copyFailed: '复制失败',

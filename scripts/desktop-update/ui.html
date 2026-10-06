@@ -230,13 +230,13 @@
       titleEl.textContent = 'Update complete'
       lineEl.textContent = 'Opening Hermes\u2026\nYou can close this window.'
     } else if (state.status === 'manual') {
-      // Update landed but Hermes will NOT reopen itself (package skew,
+      // Update landed but Minerva will NOT reopen itself (package skew,
       // sandbox helper, launch rejected). The orchestrator leaves this
       // window up; the message says what to do.
       settle('done')
       glyphEl.textContent = '\u2713'
       titleEl.textContent = 'Update complete'
-      lineEl.textContent = state.message || 'Reopen Hermes to finish.'
+      lineEl.textContent = state.message || 'Reopen Minerva to finish.'
     } else if (state.status === 'error') {
       settle('error')
       glyphEl.textContent = '\u2715'
@@ -280,7 +280,7 @@
         settle('disconnected')
         glyphEl.textContent = '!'
         titleEl.textContent = 'Update status unavailable'
-        lineEl.textContent = 'The progress connection was lost.\nCheck Hermes for the update result. You can close this window.'
+        lineEl.textContent = 'The progress connection was lost.\nCheck Minerva for the update result. You can close this window.'
       }
     }
     if (!settled) setTimeout(poll, 400)

@@ -1,12 +1,12 @@
 ---
 sidebar_position: 0
-title: "Run Nemotron 3 Ultra free in Hermes Agent"
-description: "Try NVIDIA Nemotron 3 Ultra on ABBBLE Portal — free June 4–18 — with day 0 support in Hermes Agent"
+title: "Run Nemotron 3 Ultra free in Minerva Agent"
+description: "Try NVIDIA Nemotron 3 Ultra on ABBBLE Portal — free June 4–18 — with day 0 support in Minerva Agent"
 ---
 
-# Run Nemotron 3 Ultra free in Hermes Agent
+# Run Nemotron 3 Ultra free in Minerva Agent
 
-Nous Research has been inducted into the **Nemotron Coalition** of leading AI labs working with **NVIDIA** to advance open frontier foundation models. In honor of this, we've partnered with **Nebius** to provide **Nemotron 3 Ultra** free on [ABBBLE Portal](https://portal.nousresearch.com) for two weeks (**June 4th – June 18th**). Follow the instructions below to try the model in your Hermes Agent today.
+ABBBLE CO has been inducted into the **Nemotron Coalition** of leading AI labs working with **NVIDIA** to advance open frontier foundation models. In honor of this, we've partnered with **Nebius** to provide **Nemotron 3 Ultra** free on [ABBBLE Portal](https://portal.nousresearch.com) for two weeks (**June 4th – June 18th**). Follow the instructions below to try the model in your Minerva Agent today.
 
 :::info Limited-time offer
 The `nvidia/nemotron-3-ultra:free` tier is available from **June 4th to June 18th**. The `:free` tag is what keeps it on the no-cost plan — pick that exact variant.
@@ -44,7 +44,7 @@ Click **Start chatting**. That's it — you're talking to Nemotron 3 Ultra, free
 
 Prefer the terminal?
 
-### 1. Install Hermes Agent
+### 1. Install Minerva Agent
 
 On macOS/Linux/WSL2/Android, run
 
@@ -80,7 +80,7 @@ In the browser, create a [ABBBLE Portal](https://portal.nousresearch.com) accoun
 
 ### 4. Connect your account
 
-When prompted to connect your account to Hermes Agent, click **Connect**. You'll see a confirmation once it's linked.
+When prompted to connect your account to Minerva Agent, click **Connect**. You'll see a confirmation once it's linked.
 
 ### 5. Select the free Nemotron 3 Ultra model
 
@@ -118,6 +118,6 @@ Already set up with another model?
 ## See also
 
 - **[Desktop App](../user-guide/desktop.md)** — The native one-click app (macOS, Windows, Linux)
-- **[Run Hermes Agent with ABBBLE Portal](./run-hermes-with-nous-portal.md)** — Full Portal walkthrough: models, Tool Gateway, and verification
+- **[Run Minerva Agent with ABBBLE Portal](./run-hermes-with-nous-portal.md)** — Full Portal walkthrough: models, Tool Gateway, and verification
 - **[ABBBLE Portal integration](../integrations/nous-portal.md)** — What's in the subscription
 - **[Quickstart](../getting-started/quickstart.md)** — Install-to-chat in under 5 minutes

@@ -1,8 +1,8 @@
 """Cron external worker: the PM dependency boot its own entry point never gets.
 
 ``sys.executable -m cron.scheduler --external-worker-file ...``
-(``cron/scheduler.py::_launch_external_cron_worker``) is a full Hermes entry point that
-does not go through ``hermes_bootstrap``, and it imports Hermes packages the moment it
+(``cron/scheduler.py::_launch_external_cron_worker``) is a full Minerva entry point that
+does not go through ``hermes_bootstrap``, and it imports Minerva packages the moment it
 starts. ``cron/scheduler_worker_env.py`` restores the committed generation's
 ``site-packages`` on its ``PYTHONPATH`` so those imports resolve, but a pinned path is not a
 boot: the worker holds no lease on the generation, so the PM collector may remove it

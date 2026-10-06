@@ -42,7 +42,7 @@ The agent gets five tools:
 
 ## Inbound — be callable
 
-When the `a2a` platform is enabled, Hermes serves a v1.0 Agent Card at
+When the `a2a` platform is enabled, Minerva serves a v1.0 Agent Card at
 `http://<host>:<port>/.well-known/agent-card.json` (the legacy
 `/.well-known/agent.json` path is also answered for pre-1.0 clients) and
 accepts JSON-RPC

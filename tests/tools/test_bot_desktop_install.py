@@ -174,7 +174,7 @@ def test_timeout_returns_and_frees_the_slot_even_when_a_descendant_survives(monk
 
 
 def test_root_installs_without_sudo_and_without_asking(monkeypatch):
-    """The official Docker image runs Hermes as uid 0 with no sudo binary: the package manager must be
+    """The official Docker image runs Minerva as uid 0 with no sudo binary: the package manager must be
     run directly, and the password card must never be raised for a user who already is root."""
     import subprocess
 

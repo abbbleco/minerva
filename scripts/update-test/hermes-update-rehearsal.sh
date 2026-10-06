@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# hermes-update-rehearsal.sh — for an EXISTING Hermes install.
+# hermes-update-rehearsal.sh — for an EXISTING Minerva install.
 #
 # Two steps:
 #   pre   take a `minerva backup` of your data, clone HERMES_HOME and the desktop
@@ -47,7 +47,7 @@ step() { printf '\n=== %s ===\n' "$*"; }
 usage() {
   if [ -n "$SELF" ] && [ -r "$SELF" ]; then sed -n '2,28p' "$SELF"; exit 0; fi
   cat <<'EOF'
-hermes-update-rehearsal.sh -- run against an EXISTING Hermes install.
+hermes-update-rehearsal.sh -- run against an EXISTING Minerva install.
 
   pre     back up your data, clone both trees, point the update source at a fork
   post    swap the clones back in, exactly as they were
@@ -257,7 +257,7 @@ cmd_pre() {
       warn "before you run 'hermes update', or the dependency sync may fail:"
       printf '    %s\n' "$procs"
     else
-      ok "no Hermes processes running"
+      ok "no Minerva processes running"
     fi
   fi
   local n
@@ -428,7 +428,7 @@ cmd_post() {
 
   step "stopping this home's gateway"
   local hermes_exe
-  hermes_exe="$(resolve_hermes_exe)" || die "no Hermes launcher for $INSTALL_DIR; stop this home's gateway before restoring"
+  hermes_exe="$(resolve_hermes_exe)" || die "no Minerva launcher for $INSTALL_DIR; stop this home's gateway before restoring"
   HERMES_HOME="$HERMES_HOME" "$hermes_exe" gateway stop \
     || die "could not stop this home's gateway; restore has not started"
   ok "stopped this home's gateway (close the desktop app before restoring its data)"

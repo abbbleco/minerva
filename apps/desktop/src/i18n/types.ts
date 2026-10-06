@@ -415,6 +415,8 @@ export interface Translations {
     ideas: string
     feeds: string
     goals: string
+    prds: string
+    leads: string
     copied: string
     copy: string
     copyFailed: string

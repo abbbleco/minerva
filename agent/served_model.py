@@ -3,7 +3,7 @@
 A LiteLLM-style proxy answers with the configured alias in the body's ``model`` field and puts
 the deployment it really routed to in a response header (``x-litellm-model-id``, else the
 upstream ``x-litellm-model-api-base``). The OpenAI SDK's parsed objects drop headers, so the
-capture rides an ``httpx`` response hook on the client Hermes builds for the agent; it stores
+capture rides an ``httpx`` response hook on the client Minerva builds for the agent; it stores
 the header onto ``agent.last_served_model`` (``None`` when the response carried none, so a
 value never outlives the request that produced it). Consumers: ``agent/turn_finalizer.py``
 (result ``served_model`` / ``requested_model``) and the opt-in gateway footer field

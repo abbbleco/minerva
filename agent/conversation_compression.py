@@ -2118,7 +2118,7 @@ def check_compression_model_feasibility(agent: Any) -> None:
                 )
             else:
                 msg = (
-                    "⚠ No auxiliary LLM provider configured: Hermes has no helper model for summarising "
+                    "⚠ No auxiliary LLM provider configured: Minerva has no helper model for summarising "
                     "long chats, so older messages will be cut without a summary. Run `minerva setup` to add one."
                 )
             _emit_feasibility_notice(agent, msg)
@@ -2150,7 +2150,7 @@ def check_compression_model_feasibility(agent: Any) -> None:
             raise ValueError(
                 f"Auxiliary compression model {aux_model} has a context "
                 f"window of {aux_context:,} tokens, which is below the "
-                f"minimum {MINIMUM_CONTEXT_LENGTH:,} required by Hermes "
+                f"minimum {MINIMUM_CONTEXT_LENGTH:,} required by Minerva "
                 f"Agent.  Choose a compression model with at least "
                 f"{MINIMUM_CONTEXT_LENGTH // 1000}K context (set "
                 f"auxiliary.compression.model in config.yaml), or set "
@@ -3431,7 +3431,7 @@ def _warn_summary_or_aux_fallback(agent: Any) -> None:
                 _aux_fail_model, _aux_fail_err or "unknown error",
             )
             agent._emit_warning(
-                f"ℹ Configured compression model '{_aux_fail_model}' failed, so Hermes summarised "
+                f"ℹ Configured compression model '{_aux_fail_model}' failed, so Minerva summarised "
                 "with your main model instead. Check auxiliary.compression.model in your config."
             )
 

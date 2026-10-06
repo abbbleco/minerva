@@ -3,7 +3,7 @@
 Split out of ``tools/terminal_tool.py`` (PR #95286, Jackal991): a pure,
 deterministic string rewrite — no subprocess calls at transform time — that
 appends a verified raise-ladder to file-opening ``open`` invocations so the
-opened document lands in front of the Hermes window instead of behind it.
+opened document lands in front of the Minerva window instead of behind it.
 """
 
 import platform
@@ -15,7 +15,7 @@ import shlex
 # On macOS, when the agent opens a file via a tool call (e.g. `open -a Preview
 # file.pdf` or `open file.pdf`), the command returns exit 0 and genuinely
 # succeeds — the document loads and a window is created — but the window opens
-# BEHIND the Hermes desktop window (Hermes is typically maximised, so the file
+# BEHIND the Minerva desktop window (Hermes is typically maximised, so the file
 # is completely hidden). Because the exit code is 0, the agent reports success
 # while the user sees nothing happen.
 #

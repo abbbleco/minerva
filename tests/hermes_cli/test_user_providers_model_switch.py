@@ -71,7 +71,7 @@ def test_list_authenticated_providers_includes_full_models_list_from_user_provid
 
 def test_list_authenticated_providers_enumerates_dict_format_models(monkeypatch):
     """providers: dict entries with ``models:`` as a dict keyed by model id
-    (canonical Hermes write format) should surface every key in the picker.
+    (canonical Minerva write format) should surface every key in the picker.
 
     Regression: the ``providers:`` dict path previously only accepted
     list-format ``models:`` and silently dropped dict-format entries,
@@ -176,7 +176,7 @@ def test_list_authenticated_providers_uses_live_models_for_user_provider(monkeyp
 
 
 def test_list_authenticated_providers_accepts_base_url_and_singular_model(monkeypatch):
-    """providers: dict entries written in canonical Hermes shape
+    """providers: dict entries written in canonical Minerva shape
     (``base_url`` + singular ``model``) should resolve the same as the
     legacy ``api`` + ``default_model`` shape.
 

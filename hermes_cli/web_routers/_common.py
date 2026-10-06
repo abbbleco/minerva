@@ -166,13 +166,13 @@ CORRUPT_STORE_DETAIL = {
 # lives would repair the wrong generation in place, so it is deliberately NOT suggested here.
 DELETED_WAL_DETAIL = {
     "error": "state_db_deleted_wal",
-    "message": "another Hermes process still holds an old copy of the session database's write-ahead log — "
-               "quit every Hermes process on this profile, run `minerva doctor` (it names the holders), "
-               "then start Hermes again. Do not run `minerva doctor --fix` while they run.",
+    "message": "another Minerva process still holds an old copy of the session database's write-ahead log — "
+               "quit every Minerva process on this profile, run `minerva doctor` (it names the holders), "
+               "then start Minerva again. Do not run `minerva doctor --fix` while they run.",
 }
 STATE_DB_REPLACED_DETAIL = {
     "error": "state_db_replaced",
-    "message": "state.db was replaced while Hermes was running — stop Hermes, run `minerva doctor`, "
+    "message": "state.db was replaced while Minerva was running — stop Hermes, run `minerva doctor`, "
                "then start it again. Do not run `minerva doctor --fix`, which would repair the wrong file in place.",
 }
 # Every other bucket a malformed image can classify as ("corrupt", "fts_index") is the corrupt payload.

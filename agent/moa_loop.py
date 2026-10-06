@@ -966,7 +966,7 @@ def aggregate_moa_context(
 
     return (
         "[Mixture of Agents context — use this as private guidance for the "
-        "normal Hermes agent loop. You may call tools, continue reasoning, or "
+        "normal Minerva agent loop. You may call tools, continue reasoning, or "
         "finish normally.]\n"
         f"Aggregator: {agg_label}\n"
         f"References: {_slot_labels(reference_models)}\n\n"

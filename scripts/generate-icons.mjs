@@ -6,7 +6,7 @@
  * two master tiles in assets/ (icon-master.svg, icon-master-dark.svg). Run it
  * after changing a master; `--check` verifies the committed files still match.
  *
- * The renderer runs on the Hermes runtime interpreter (HERMES_PYTHON, else
+ * The renderer runs on the Minerva runtime interpreter (HERMES_PYTHON, else
  * `python` on PATH): Pillow and resvg-py are core dependencies, so every
  * runtime environment can draw its own icons.
  */
@@ -33,7 +33,7 @@ export function generateIcons(args = [], { root = repoRoot, run = spawnSync, env
   ], { cwd: source, stdio: 'inherit', windowsHide: true, env: childEnv })
   if (result.error) {
     console.error('[generate-icons] failed to launch icon generator:', result.error.message)
-    console.error('[generate-icons] a Hermes runtime Python (HERMES_PYTHON or PATH) is required')
+    console.error('[generate-icons] a Minerva runtime Python (HERMES_PYTHON or PATH) is required')
     return 1
   }
   return result.status ?? 1

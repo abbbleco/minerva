@@ -1,4 +1,4 @@
-"""Affinity contract on Hermes Studio's group-chat bridge shape (#96811).
+"""Affinity contract on Minerva Studio's group-chat bridge shape (#96811).
 
 Studio's group chat is the reproduction reported on #96811, and it reaches
 Hermes as a LIBRARY rather than through the gateway: its Python bridge

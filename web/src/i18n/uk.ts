@@ -50,12 +50,12 @@ export const uk: Translations = {
   },
 
   app: {
-    brand: "Hermes Agent",
+    brand: "Minerva Agent",
     brandShort: "HA",
     closeNavigation: "Закрити навігацію",
     closeModelTools: "Закрити модель та інструменти",
     footer: {
-      org: "Nous Research",
+      org: "ABBBLE CO",
     },
     activeSessionsLabel: "Активні сесії:",
     gatewayStatusLabel: "Стан шлюзу:",
@@ -334,7 +334,7 @@ export const uk: Translations = {
       "Збережено — перезапустіть шлюз, щоб застосувати зміну.",
     forceReinstall: "Примусово перевстановити (спершу видалити наявну теку)",
     headline:
-      "Знаходьте, встановлюйте, вмикайте та оновлюйте плагіни Hermes (паритет з `minerva plugins`).",
+      "Знаходьте, встановлюйте, вмикайте та оновлюйте плагіни Minerva (паритет з `minerva plugins`).",
     identifierLabel: "Git URL або owner/repo",
     inactive: "неактивний",
     installBtn: "Встановити",
@@ -448,7 +448,7 @@ export const uk: Translations = {
     showValue: "Показати справжнє значення",
     hideValue: "Сховати значення",
     customTitle: "Власні ключі",
-    customHint: "Довільні змінні середовища, збережені у вашому .env, які Hermes не розпізнає. Використовуйте їх для впровадження змінних середовища для навичок, серверів MCP або власних інструментів.",
+    customHint: "Довільні змінні середовища, збережені у вашому .env, які Minerva не розпізнає. Використовуйте їх для впровадження змінних середовища для навичок, серверів MCP або власних інструментів.",
     customConfigured: "Задано власних ключів: {count}",
     addCustomKey: "Додати власний ключ",
     customKeyName: "Назва змінної",
@@ -532,7 +532,7 @@ export const uk: Translations = {
       highest_tier: "Найвищий рівень",
       highest_tier_hint: "Copper → Silver → Gold → Diamond → Olympian",
       latest: "Останнє",
-      latest_hint_empty: "запускайте Hermes частіше",
+      latest_hint_empty: "запускайте Minerva частіше",
       none_yet: "Поки немає",
     },
     state: {
@@ -563,7 +563,7 @@ export const uk: Translations = {
       tiers_header: "Рівні",
       secret_header: "Секретні досягнення",
       secret_body:
-        "Секрети приховують свій точний тригер. Щойно Hermes побачить пов'язаний сигнал, картка стає Виявленою та показує свою умову.",
+        "Секрети приховують свій точний тригер. Щойно Minerva побачить пов'язаний сигнал, картка стає Виявленою та показує свою умову.",
       scan_status_header: "Стан сканування",
       scan_status_body:
         "Hermes одноразово сканує локальну історію, а потім картки з'являться автоматично. Якщо це триває кілька секунд — нічого не зависло.",
@@ -613,7 +613,7 @@ export const uk: Translations = {
         "«Поділитися в X» відкриває попередньо заповнений допис у новій вкладці. Якщо хочете прикріпити значок 1200×630 — спочатку натисніть «Копіювати зображення»: X дозволить вставити його прямо в редактор твіта. «Завантажити PNG» збереже файл для використання будь-де.",
       clipboard_unsupported:
         "Цей браузер не підтримує копіювання зображень у буфер обміну — використайте «Завантажити».",
-      tweet_text: "Just unlocked {tier_part}\"{name}\" in Hermes Agent ☤",
+      tweet_text: "Just unlocked {tier_part}\"{name}\" in Minerva Agent ☤",
     },
   },
   kanban: {

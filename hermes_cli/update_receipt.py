@@ -398,7 +398,7 @@ def _publish_shared_metrics(data: dict[str, Any]) -> None:
         if data.get("pid") == os.getpid() and not (pre.get("sha") and pre.get("sha") == post.get("sha")):
             # This interpreter began the run before the checkout swap: importing now would load
             # pulled code into it. Park the bounded fields (stdlib + loaded modules only); the next
-            # Hermes start records them.
+            # Minerva start records them.
             from hermes_constants import get_hermes_home
             from hermes_cli.runtime_state import _atomic_bytes
 
@@ -534,7 +534,7 @@ _CODE_ROOT_MAX_DEPTH = 8
 
 
 def _code_root_for_path(raw: Any) -> Optional[Path]:
-    """Return the Hermes checkout containing an absolute process path."""
+    """Return the Minerva checkout containing an absolute process path."""
     if not isinstance(raw, str) or not raw:
         return None
     with suppress(Exception):

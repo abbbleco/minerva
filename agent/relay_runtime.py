@@ -1,4 +1,4 @@
-"""Profile-scoped NeMo Relay runtimes owned by the Hermes agent core."""
+"""Profile-scoped NeMo Relay runtimes owned by the Minerva agent core."""
 
 from __future__ import annotations
 
@@ -118,7 +118,7 @@ def pop_relay_scope(relay: Any, handle: Any, *, output: Any = None, metadata: An
 def pop_relay_scope_if_top(relay: Any, handle: Any, *, output: Any = None, metadata: Any = None) -> bool:
     """Pop ``handle`` only while it is the top of the scope stack; return whether it was popped.
 
-    Two concurrent Hermes turns in one session share a physical stack, so the first turn to
+    Two concurrent Minerva turns in one session share a physical stack, so the first turn to
     finish may find the sibling's live scope above its own. Popping through it would close the
     sibling's scope and letting the binding raise ("scope handle is not at the top of the
     stack") logs a traceback per overlap (#115471). The skipped scope is reclaimed by the
@@ -183,7 +183,7 @@ def _report_requires_managed_execution(report: Any) -> bool:
     """Return whether a Relay plugin-host report enables any static or dynamic plugin.
 
     Relay owns the report contract. An unfamiliar report stays fail-safe by
-    retaining Hermes managed execution instead of silently bypassing plugins.
+    retaining Minerva managed execution instead of silently bypassing plugins.
     """
 
     def keep_enabled() -> bool:
@@ -223,7 +223,7 @@ def _report_requires_managed_execution(report: Any) -> bool:
 
 @dataclass
 class RelaySession:
-    """One isolated Relay scope stack owned by a Hermes session."""
+    """One isolated Relay scope stack owned by a Minerva session."""
 
     session_id: str
     parent_session_id: str = ""
@@ -321,7 +321,7 @@ class _ProcessRelayPluginConfiguration:
             self._activation = None
             if _is_relay_host_conflict(exc):
                 logger.warning(
-                    "A process-global Relay plugin configuration is already active outside Hermes native "
+                    "A process-global Relay plugin configuration is already active outside Minerva native "
                     "ownership; leaving it unchanged and disabling Hermes-managed Relay middleware for this process"
                 )
                 return _RelayPluginConfigurationState.FOREIGN
@@ -574,7 +574,7 @@ class RelayRuntime:
             return self._sessions.get(session_id)
 
     def get_session(self, session_id: str) -> RelaySession | None:
-        """Return an active Hermes Relay session without creating one."""
+        """Return an active Minerva Relay session without creating one."""
         with self._sessions_lock:
             session = None if self._closing else self._sessions.get(str(session_id or ""))
         if session is None:
@@ -683,7 +683,7 @@ class RelayRuntime:
         return RelayOperationLease(self)
 
     def apply_tool_request_intercepts(self, *, session_id: str, tool_name: str, args: dict[str, Any]) -> dict[str, Any]:
-        """Apply Relay request rewriting before Hermes authorizes a tool call."""
+        """Apply Relay request rewriting before Minerva authorizes a tool call."""
         request_intercepts = getattr(getattr(self.relay, "tools", None), "request_intercepts", None)
         managed = self.managed_execution_enabled() and callable(request_intercepts)
         session = self.ensure_session({"session_id": session_id}) if managed else None
@@ -840,7 +840,7 @@ RelayHost = RelayRuntime | NoopRelayRuntime
 
 
 class RelayHostRegistry:
-    """Own exactly one Relay host for each canonical Hermes profile."""
+    """Own exactly one Relay host for each canonical Minerva profile."""
 
     def __init__(self) -> None:
         self._lock = threading.RLock()
@@ -890,7 +890,7 @@ class ConversationLease:
 
 @dataclass
 class RelayTurnContext:
-    """Runtime-only context for one Hermes turn or top-level task."""
+    """Runtime-only context for one Minerva turn or top-level task."""
 
     lease: ConversationLease
     turn_id: str
@@ -909,7 +909,7 @@ _CURRENT_TURN: contextvars.ContextVar[RelayTurnContext | None] = contextvars.Con
     "hermes_relay_turn", default=None
 )
 
-# >0 while the native pipeline is mid-dispatch of a Hermes tool/LLM callback. Nested managed
+# >0 while the native pipeline is mid-dispatch of a Minerva tool/LLM callback. Nested managed
 # execution there is structurally broken (the pipeline binds its Futures to the OUTER call's
 # loop, blocked inside the synchronous callback), so resolve_execution_context() bypasses Relay.
 # A ContextVar so the marker follows copy_context() into worker threads / per-thread loops.
@@ -956,7 +956,7 @@ def _flag_open_session(session: RelaySession, flag: str) -> None:
 
 
 class RelaySessionCoordinator:
-    """Own semantic conversation and turn lifetimes for Hermes core."""
+    """Own semantic conversation and turn lifetimes for Minerva core."""
 
     def __init__(self, registry: RelayHostRegistry = HOST_REGISTRY) -> None:
         self.registry = registry
@@ -1039,7 +1039,7 @@ class RelaySessionCoordinator:
                 # One physical scope stack per session; concurrent turns' sibling scopes would not close LIFO.
                 turn.relay_enabled = False
                 logger.warning(
-                    "Skipping Relay instrumentation for concurrent Hermes turn %s in session %s",
+                    "Skipping Relay instrumentation for concurrent Minerva turn %s in session %s",
                     turn_id, lease.session_id,
                 )
             else:
@@ -1255,7 +1255,7 @@ def resolve_execution_context(session_id: str) -> tuple[RelayRuntime | None, Rel
     # still records the tool-level event.
     if _MANAGED_CALLBACK_DEPTH.get() > 0 or not relay_instrumentation_enabled():
         # A managed Relay callback is already executing on this logical call path (e.g. the native
-        # ``tools.execute`` pipeline is mid-dispatch of a Hermes tool). Nested managed execution here is
+        # ``tools.execute`` pipeline is mid-dispatch of a Minerva tool). Nested managed execution here is
         # structurally impossible: the native pipeline binds its Futures to the OUTER call's event loop,
         # which is blocked inside the synchronous tool callback until the tool returns. A nested managed LLM
         # call (the vision_analyze auxiliary path) therefore awaits a foreign-loop Future that can never
@@ -1296,7 +1296,7 @@ def _is_relay_wrapped_callback_error(relay_error: BaseException, callback_error:
 
 
 def get_runtime(*, create: bool = True, profile_key: str | None = None) -> RelayRuntime | None:
-    """Return the Relay host for the active Hermes profile."""
+    """Return the Relay host for the active Minerva profile."""
     host = HOST_REGISTRY.for_profile(profile_key, create=create)
     return host if isinstance(host, RelayRuntime) else None
 

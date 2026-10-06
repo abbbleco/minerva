@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Skills Hub CLI — Unified interface for the Hermes Skills Hub."""
+"""Skills Hub CLI — Unified interface for the Minerva Skills Hub."""
 
 import json
 import logging
@@ -387,7 +387,7 @@ def _render_browse_page(c: Console, deduped, page_items, page: int, total_pages:
     c.print(f"\n[bold]Skills Hub — Browse — {source if source != 'all' else 'all sources'}[/]"
             f"  [dim]({loaded_label}, page {page}/{total_pages})[/]")
     if official_count > 0 and page == 1:
-        c.print(f"[bright_cyan]★ {official_count} official optional skill(s) from Nous Research[/]")
+        c.print(f"[bright_cyan]★ {official_count} official optional skill(s) from ABBBLE CO[/]")
     c.print()
 
     table = _table(("#", {"style": "dim", "width": 4, "justify": "right"}),
@@ -648,7 +648,7 @@ def _scan_quarantined(c: Console, q_path: Path, bundle, meta, identifier: str):
 
 _INSTALL_PANELS = {
     "official": (
-        "[bold bright_cyan]This is an official optional skill maintained by Nous Research.[/]\n\n"
+        "[bold bright_cyan]This is an official optional skill maintained by ABBBLE CO.[/]\n\n"
         "It ships with hermes-agent but is not activated by default.\n"
         "Installing will copy it to your skills directory where the agent can use it.\n\n",
         "Official Skill", "bright_cyan"),
@@ -1282,8 +1282,8 @@ def _github_publish(skill_path: Path, skill_name: str, target_repo: str, auth) -
     try:
         resp = call("post", f"{target_repo}/pulls", json={
             "title": f"Add skill: {skill_name}",
-            "body": f"Submitting the `{skill_name}` skill via Hermes Skills Hub.\n\n"
-                    f"This skill was scanned by the Hermes Skills Guard before submission.",
+            "body": f"Submitting the `{skill_name}` skill via Minerva Skills Hub.\n\n"
+                    f"This skill was scanned by the Minerva Skills Guard before submission.",
             "head": f"{fork_repo.split('/')[0]}:{branch_name}", "base": default_branch})
         if resp.status_code == 201:
             return True, f"PR created: {resp.json().get('html_url', '')}"

@@ -20,7 +20,7 @@ so a build can be read straight from the download origin:
   releases/commit/<sha>/index.html  commit mode: every expected binary of
                                     one commit build, built or not
 
-Tables: Hermes Desktop (bundled) and Hermes Light, one row per (OS,
+Tables: Minerva Desktop (bundled) and Minerva Light, one row per (OS,
 arch). Feed manifests (latest*/light*/canary*.yml), blockmaps and mac .zip
 (an electron-updater delta target, not a user download) stay out of the
 tables on purpose; they still live in the bucket for the updater to

@@ -1,7 +1,7 @@
 """#124058: catalog ``known_issues`` is an informational field.
 
 The catalog (``plugin-catalog/hindsight.yaml``) documents in prose that
-``local_embedded`` mode is unsupported on PM-managed Hermes with the current
+``local_embedded`` mode is unsupported on PM-managed Minerva with the current
 pin (it calls the retired lazy-install path for ``hindsight-all`` and loops
 update takeovers). The field is machine-readable but informational: it must
 parse and round-trip, and the install summaries must surface the text — it

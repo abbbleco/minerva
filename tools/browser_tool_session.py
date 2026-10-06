@@ -801,7 +801,7 @@ def run_fenced_pair(session_info: Dict[str, Any], fn: Callable[[], "tuple[str, D
 
 def _shares_bot_desktop_browser(session_info: Dict[str, Any]) -> bool:
     """Decided by provenance, not transport: every LOCAL session (plain ``--session``, real-profile CDP
-    attach, Lightpanda) is a browser Hermes launched with this profile's Bot Desktop DISPLAY, so it is the
+    attach, Lightpanda) is a browser Minerva launched with this profile's Bot Desktop DISPLAY, so it is the
     screen a human who took over is typing into. Cloud / user-supplied CDP sessions are another browser.
     A human lease with the screen already gone (dead Xvnc) still fences — computer_use does the same."""
     if not (session_info.get("features") or {}).get("local"):

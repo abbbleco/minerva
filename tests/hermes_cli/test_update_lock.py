@@ -347,7 +347,7 @@ class TestAncestryHandoff:
         ``_update_takeover.py`` as ``python -I -S -B``, where psutil cannot import
         (-S skips site-packages). The psutil-only ancestry walk returned False for
         the two-hops-up shim, and the takeover child refused with exit 2 —
-        "Another Hermes update is already running (PID <the shim itself>)" —
+        "Another Minerva update is already running (PID <the shim itself>)" —
         observed live on a macOS rehearsal install, then again on Windows, where
         the stdlib walk had no /proc and no ps. Marked for every lane: the Windows
         lane only imports files carrying a platforms marker, which is how the

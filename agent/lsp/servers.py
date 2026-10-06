@@ -227,7 +227,7 @@ _VUE_REINSTALL = (
 )
 _VUE_TUNNEL_MSG = (
     "vue-language-server: the installed @vue/language-server is 3.x, which only works behind a client-hosted "
-    f"tsserver tunnel Hermes does not run — no diagnostics will arrive. Reinstall the self-hosting 2.x line: {_VUE_REINSTALL}"
+    f"tsserver tunnel Minerva does not run — no diagnostics will arrive. Reinstall the self-hosting 2.x line: {_VUE_REINSTALL}"
 )
 _VUE_TSDK_MSG = (
     "vue-language-server: no JavaScript TypeScript SDK (typescript/lib/typescript.js) next to the server or under "
@@ -237,7 +237,7 @@ _VUE_TSDK_MSG = (
 
 def _node_modules_trees(bin_path: str, root: Optional[str]) -> List[str]:
     """``node_modules`` trees that may hold a server and its TypeScript SDK: the launcher's own tree
-    (symlinks resolved), Hermes staging, then the project's (``root`` None: Hermes's trees only, for
+    (symlinks resolved), Minerva staging, then the project's (``root`` None: Hermes's trees only, for
     TypeScript's SDK pin in an untrusted workspace, whose own JavaScript must not load)."""
     from agent.lsp.install import hermes_lsp_bin_dir
     trees = [str(hermes_lsp_bin_dir().parent / "node_modules")] + ([os.path.join(root, "node_modules")] if root else [])
@@ -352,7 +352,7 @@ def _spawn_powershell_es(root: str, ctx: ServerContext) -> Optional[SpawnSpec]:
         f"-LogPath '{os.path.join(session_dir, 'pses.log')}' "
         f"-SessionDetailsPath '{os.path.join(session_dir, f'pses-session-{os.getpid()}.json')}' "
         f"-FeatureFlags @() -AdditionalModules @() "
-        f"-HostName Hermes -HostProfileId hermes -HostVersion 1.0.0 -Stdio -LogLevel Normal"
+        f"-HostName Minerva -HostProfileId hermes -HostVersion 1.0.0 -Stdio -LogLevel Normal"
     )
     return SpawnSpec(
         [pwsh, "-NoLogo", "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-Command", inner],
@@ -372,11 +372,11 @@ def hermes_lsp_session_dir() -> str:
 # ---- workspace trust ----
 
 # The only servers that start in an untrusted workspace (``workspace.is_trusted_workspace``): with the
-# settings Hermes passes they run nothing the checkout ships.  Everything else waits for trust, because
+# settings Minerva passes they run nothing the checkout ships.  Everything else waits for trust, because
 # it evaluates project build files on start or on save (cargo check / build.rs / proc-macros, Gradle,
 # mix.exs, build.zig, stack/cabal, Lua ``runtime.plugin``, terraform providers, prisma.config.ts, Vue's
 # tsconfig ``vueCompilerOptions.plugins``, which @vue/language-core require()s from the project, ...),
-# and so do user-declared ``lsp.servers`` entries, whose behaviour Hermes cannot vouch for.
+# and so do user-declared ``lsp.servers`` entries, whose behaviour Minerva cannot vouch for.
 UNTRUSTED_SAFE_SERVERS = frozenset({
     "pyright",                  # interpreter pinned to the operator's own (_spawn_pyright)
     "typescript",               # tsserver pinned to Hermes's SDK; plugins then resolve beside it (_spawn_typescript)

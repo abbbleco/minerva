@@ -7,7 +7,7 @@
   <a href="https://github.com/abbbleco/minerva/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License: MIT"></a>
 </p>
 
-**The native desktop app for [Hermes Agent](../../README.md) — the self-improving AI agent from [ABBBLE CO](https://nousresearch.com).** Same agent, same skills, same memory as the CLI and gateway, in a polished native window — chat with streaming tool output, side-by-side previews, a file browser, voice, and settings, no terminal required. Available for **macOS, Windows, and Linux**.
+**The native desktop app for [Minerva Agent](../../README.md) — the self-improving AI agent from [ABBBLE CO](https://nousresearch.com).** Same agent, same skills, same memory as the CLI and gateway, in a polished native window — chat with streaming tool output, side-by-side previews, a file browser, voice, and settings, no terminal required. Available for **macOS, Windows, and Linux**.
 
 > **Intel Macs:** the `Hermes-Setup.dmg` bootstrap installer is built for
 > Apple Silicon (arm64) only, so on an Intel Mac it reports "not supported on
@@ -127,7 +127,7 @@ The app has three boundaries:
   filesystem/git/window capabilities, and exposes a narrow preload bridge.
 - **React** owns the Desktop routes, panes, interaction state, and
   `@assistant-ui/react` transcript.
-- **Hermes Agent** runs as a headless `minerva serve` process and exposes the
+- **Minerva Agent** runs as a headless `minerva serve` process and exposes the
   `tui_gateway` JSON-RPC/WebSocket API. The renderer connects through
   [`apps/shared`](../shared/), which is also used by the browser dashboard.
 

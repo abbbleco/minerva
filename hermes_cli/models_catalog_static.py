@@ -518,7 +518,7 @@ _PROVIDER_ALIASES = dict((
 ))
 
 
-# Offline/fresh-install fallback for the model Hermes silently lands on when the user never picked
+# Offline/fresh-install fallback for the model Minerva silently lands on when the user never picked
 # one (GUI onboarding confirm card, empty ``model.default``, provider-set-but-model-missing). The
 # AUTHORITATIVE source is the remote catalog manifest, which labels exactly one entry per provider
 # ``"default": true`` (get_default_model_from_cache) so the default rotates without a release; this

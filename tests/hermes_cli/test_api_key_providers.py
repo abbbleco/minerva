@@ -314,7 +314,7 @@ class TestHasAnyProviderConfigured:
 
 
     def test_claude_code_creds_ignored_on_fresh_install(self, monkeypatch, tmp_path):
-        """Claude Code credentials should NOT skip the wizard when Hermes is unconfigured."""
+        """Claude Code credentials should NOT skip the wizard when Minerva is unconfigured."""
         from hermes_cli import config as config_module
         hermes_home = tmp_path / ".hermes"
         hermes_home.mkdir()

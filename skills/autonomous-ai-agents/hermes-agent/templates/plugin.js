@@ -1,5 +1,5 @@
 /**
- * Hermes desktop plugin template. Save as:
+ * Minerva desktop plugin template. Save as:
  *   <hermes home>/desktop-plugins/<id>/plugin.js   (folder name == id)
  * where <hermes home> is ~/.hermes by default, or ~/.hermes/profiles/<name>
  * when running a named profile (`minerva -p <name>`). Run `minerva doctor` (or

@@ -231,7 +231,7 @@ async def run_codex_hygiene_compaction(
 
     See #73503.
     * Evicting the cached live agent afterwards destroys the only real context: the next turn spawns an
-    EMPTY thread and the model starts blank while Hermes still mirrors a full history (abrupt amnesia — the
+    EMPTY thread and the model starts blank while Minerva still mirrors a full history (abrupt amnesia — the
     user-facing damage documented on #73503).
     """
     mode = str(auto_mode or "native").lower()
@@ -419,7 +419,7 @@ _GATEWAY_ENDPOINT_UNREACHABLE_RE = re.compile(
     "(" + "|".join(_ENDPOINT_UNREACHABLE_MARKERS) + ")", re.IGNORECASE)
 
 def _ensure_windows_gateway_venv_imports() -> None:
-    """Make detached Windows gateway runs see the Hermes venv packages.
+    """Make detached Windows gateway runs see the Minerva venv packages.
 
     Patched before MCP discovery so tool injection does not depend on launchers preserving PYTHONPATH."""
     if sys.platform != "win32":
@@ -919,7 +919,7 @@ def _coerce_gateway_timestamp(value: Any) -> Optional[float]:
     if isinstance(value, bool):  # bool is a subclass of int — skip it
         return None
     if isinstance(value, (int, float)):
-        # Some platform events use milliseconds; Hermes state rows use seconds.
+        # Some platform events use milliseconds; Minerva state rows use seconds.
         return float(value) / 1000.0 if float(value) > 10_000_000_000 else float(value)
     if isinstance(value, str):
         text = value.strip()
@@ -2882,7 +2882,7 @@ def _teams_pipeline_plugin_enabled() -> bool:
 
 
 def _gateway_config_home() -> Path:
-    """Return the Hermes home that gateway config reads should use."""
+    """Return the Minerva home that gateway config reads should use."""
     override = get_hermes_home_override()
     return Path(override) if override else _hermes_home
 
@@ -5450,7 +5450,7 @@ def _claim_host_gateway_role(force: bool = False) -> None:
         # The lock is per OS user, so a second tenant root can never win it against the first:
         # refusing 75 here would retry forever and its gateway would never start (#121352).
         logger.warning(
-            "Another Hermes home's gateway owns this host (%s); starting this home's gateway beside it.",
+            "Another Minerva home's gateway owns this host (%s); starting this home's gateway beside it.",
             hr.describe(owner))
         return
     if profile_is_standalone(get_hermes_home()):

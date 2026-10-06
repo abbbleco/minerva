@@ -62,7 +62,7 @@ _HERMES_BRANDING: Dict[str, str] = _branding(
 
 _BUILTIN_SKINS: Dict[str, Dict[str, Any]] = {
     "default": {
-        "name": "default", "description": "Classic Hermes — gold and kawaii",
+        "name": "default", "description": "Classic Minerva — gold and kawaii",
         # Dark-authored; values match the TUI's DARK_THEME so both render the same gold.
         "colors": {
             "banner_border": "#CD7F32", "banner_title": "#FFD700", "banner_accent": "#FFBF00",

@@ -1,4 +1,4 @@
-"""langfuse — Hermes plugin tracing conversations, LLM calls and tool usage to Langfuse.
+"""langfuse — Minerva plugin tracing conversations, LLM calls and tool usage to Langfuse.
 
 Activated via ``plugins.enabled``; hooks are inert without the ``langfuse`` SDK
 and credentials. Env: HERMES_LANGFUSE_PUBLIC_KEY / SECRET_KEY (required),
@@ -53,7 +53,7 @@ _TRACE_STATE: Dict[str, TraceState] = {}
 # Bounds the leak, not concurrency.
 _MAX_TRACE_STATE = 256
 _LANGFUSE_CLIENT = None
-# Under a multiplexed profile override, one settled client (or _INIT_FAILED) per Hermes home: the
+# Under a multiplexed profile override, one settled client (or _INIT_FAILED) per Minerva home: the
 # keys live in each profile's .env, so a single slot would trace profile B into profile A's project
 # (or pin B to A's failed init). The slot above stays for the unscoped single-profile path.
 _LANGFUSE_CLIENT_BY_HOME: Dict[str, Any] = {}
@@ -492,7 +492,7 @@ def _serialize_assistant_message(message: Any) -> dict[str, Any]:
 
 def _canonical_usage_and_cost(canonical: Any, *, provider: str, model: str,
                               base_url: str) -> tuple[dict[str, int], dict[str, float]]:
-    """Translate canonical Hermes usage into Langfuse usage and cost maps."""
+    """Translate canonical Minerva usage into Langfuse usage and cost maps."""
     usage_details: Dict[str, int] = {
         key: tokens for key, attr, _ in _USAGE_FIELDS
         if (tokens := getattr(canonical, attr)) or key in ("input", "output")
@@ -1030,7 +1030,7 @@ def on_subagent_stop(*, parent_turn_id: str = "", child_session_id: Any = None, 
 
 
 def register(ctx) -> None:
-    # Both hook-name variants so the plugin works across Hermes versions:
+    # Both hook-name variants so the plugin works across Minerva versions:
     # *_api_request fire per API call (preferred); *_llm_call once per turn.
     hooks = (
         ("pre_api_request", on_pre_llm_request), ("post_api_request", on_post_llm_call),

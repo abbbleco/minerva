@@ -17,7 +17,7 @@ Delegate coding tasks to the Blackbox AI multi-model CLI.
 | Source | Optional — install with `minerva skills install official/autonomous-ai-agents/blackbox` |
 | Path | `optional-skills/autonomous-ai-agents/blackbox` |
 | Version | `1.0.1` |
-| Author | Hermes Agent (Nous Research) |
+| Author | Minerva Agent (ABBBLE CO) |
 | License | MIT |
 | Platforms | linux, macos, windows |
 | Tags | `Coding-Agent`, `Blackbox`, `Multi-Agent`, `Judge`, `Multi-Model` |

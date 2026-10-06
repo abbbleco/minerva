@@ -118,7 +118,7 @@ def _exception_class(exc: BaseException | None) -> str:
     if isinstance(exc, (TimeoutError, ConnectionError)):
         return "network"
     names = "".join(cls.__name__.lower() for cls in type(exc).__mro__[:-1])
-    # Type names say auth / rate / network; "configuration" is only ever a Hermes fatal code.
+    # Type names say auth / rate / network; "configuration" is only ever a Minerva fatal code.
     return next((cls for needles, cls in _CODE_CLASSES[1:] if any(n in names for n in needles)), "other")
 
 
@@ -269,10 +269,10 @@ def stops_reply_clock(send_or_edit: Callable[..., Any]) -> Callable[..., Any]:
 _REPLY_THRESHOLDS = ((2.0, "lt_2s"), (5.0, "2s_to_5s"), (15.0, "5s_to_15s"), (60.0, "15s_to_60s"))
 _REPLY_CLOCK_MAX = 1024
 _REPLY_CLOCK_MAX_AGE = 3600.0
-# (platform value, chat id) -> (monotonic start, owning Hermes home). Keyed without the profile: the
+# (platform value, chat id) -> (monotonic start, owning Minerva home). Keyed without the profile: the
 # send side may run outside the turn's scope, so the start side records whose row it is.
 _reply_clocks: OrderedDict[tuple[str, str], tuple[float, str]] = OrderedDict()
-# (platform value, chat id) -> the Hermes home whose turn last started there; outlives the clock so
+# (platform value, chat id) -> the Minerva home whose turn last started there; outlives the clock so
 # later sends (busy acks, follow-ups) in the chat are attributed too.
 _chat_homes: OrderedDict[tuple[str, str], str] = OrderedDict()
 _reply_lock = threading.Lock()

@@ -49,7 +49,7 @@ def _post_setup_lightpanda() -> None:
         _print_warning("    lightpanda binary not found on PATH, ~/.lightpanda or ~/.local/bin")
         _print_info(f"    {LIGHTPANDA_INSTALL_HINT}")
         if os.name == "nt":
-            _print_info("    Lightpanda has no native Windows build; run Hermes under WSL2.")
+            _print_info("    Lightpanda has no native Windows build; run Minerva under WSL2.")
 
 
 def _post_setup_agent_browser(post_setup_key: str) -> None:
@@ -102,7 +102,7 @@ def _post_setup_agent_browser(post_setup_key: str) -> None:
 def _post_setup_camofox() -> None:
     from tools.browser_camofox import check_camofox_available
 
-    _info_lines("Camofox is an externally managed server; Hermes does not install or start it.")
+    _info_lines("Camofox is an externally managed server; Minerva does not install or start it.")
     if check_camofox_available():
         _print_success("    Configured Camofox server is reachable")
         return
@@ -149,7 +149,7 @@ def _post_setup_python(spec: dict) -> None:
         _print_warning(f"    {label} install failed: {exc}")
         _info_lines("Retry with: hermes tools")
         return
-    _print_success(f"    {label} dependencies ready. Restart Hermes to use them.")
+    _print_success(f"    {label} dependencies ready. Restart Minerva to use them.")
     _info_lines(*spec["on_install"], *spec["always"])
 
 
@@ -195,7 +195,7 @@ def _post_setup_langfuse() -> None:
         _print_warning(f"    Could not enable plugin automatically: {exc}")
         _info_lines("Run manually: hermes plugins enable observability/langfuse")
         return
-    _info_lines("Restart Hermes for tracing to take effect.", "Verify: hermes plugins list")
+    _info_lines("Restart Minerva for tracing to take effect.", "Verify: hermes plugins list")
 
 
 def _post_setup_xai_grok() -> None:

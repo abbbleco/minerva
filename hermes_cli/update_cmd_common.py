@@ -1,4 +1,4 @@
-"""Shared leaf helpers for the ``minerva update`` modules (no Hermes imports; no cycle)."""
+"""Shared leaf helpers for the ``minerva update`` modules (no Minerva imports; no cycle)."""
 
 import logging
 from contextlib import contextmanager

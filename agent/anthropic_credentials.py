@@ -43,7 +43,7 @@ _OAUTH_TOKEN_URLS = [
 _OAUTH_TOKEN_USER_AGENT = "axios/1.7.9"
 _OAUTH_REDIRECT_URI = "https://console.anthropic.com/oauth/code/callback"
 _OAUTH_SCOPES = "org:create_api_key user:profile user:inference"
-# Claude Code's macOS Keychain entry (generic password). Hermes reads it
+# Claude Code's macOS Keychain entry (generic password). Minerva reads it
 # (_read_claude_code_credentials_from_keychain) and, since #98334, mirrors the
 # refresh write into it so the two stores stop diverging on a single-use rotation.
 _CLAUDE_CODE_KEYCHAIN_SERVICE = "Claude Code-credentials"
@@ -136,7 +136,7 @@ _SPENT_ROTATION_FINGERPRINTS: "OrderedDict[str, None]" = OrderedDict()
 _SPENT_ROTATION_MAX_TRACKED = 64
 _SPENT_ROTATION_SIDECAR_COMMENT = (
     "Non-secret one-way fingerprints of Anthropic OAuth credentials whose rotation was "
-    "consumed server-side but never durably committed. Written by Hermes so sibling "
+    "consumed server-side but never durably committed. Written by Minerva so sibling "
     "processes sharing this credential source fail closed instead of replaying a spent "
     "single-use refresh token."
 )
@@ -500,8 +500,8 @@ def _refresh_oauth_token(creds: Dict[str, Any]) -> Optional[str]:
                 if is_terminal_anthropic_refresh_error(e):
                     _DEAD_REFRESH_TOKEN_FINGERPRINTS.add(fingerprint)
                     logger.warning(
-                        "Claude Code OAuth refresh token is terminally invalid (%s); Hermes cannot use this "
-                        "login. Run 'hermes auth add anthropic' to give Hermes its own login.", e)
+                        "Claude Code OAuth refresh token is terminally invalid (%s); Minerva cannot use this "
+                        "login. Run 'hermes auth add anthropic' to give Minerva its own login.", e)
                 else:
                     logger.debug("Failed to refresh Claude Code token: %s", e)
                 return None
@@ -516,7 +516,7 @@ def _refresh_oauth_token(creds: Dict[str, Any]) -> Optional[str]:
                 logger.error(
                     "Anthropic OAuth refresh rotated the single-use token but could not "
                     "commit it to %s (%s) — treating the refresh as failed; "
-                    "run 'hermes auth add anthropic' to give Hermes its own login",
+                    "run 'hermes auth add anthropic' to give Minerva its own login",
                     cred_path, e,
                 )
                 mark_rotation_consumed_uncommitted(
@@ -574,7 +574,7 @@ def _merge_keychain_credential_payload(
 def _mirror_claude_code_credentials_to_keychain(
     access_token: str, refresh_token: str, expires_at_ms: int, *, spent_refresh_token: str
 ) -> None:
-    """After a Hermes refresh, write the rotated pair into the Claude Code Keychain item too (#98334).
+    """After a Minerva refresh, write the rotated pair into the Claude Code Keychain item too (#98334).
 
     Claude Code on macOS reads the login Keychain first. Refresh tokens are single-use, so a refresh
     that only updates the file leaves the Keychain holding a spent token and Claude Code logs itself
@@ -623,12 +623,12 @@ def _resolve_claude_code_token_from_credentials(creds: Optional[Dict[str, Any]] 
     logger.debug("Claude Code credentials expired — attempting refresh")
     refreshed = _refresh_oauth_token(creds)
     if not refreshed:
-        logger.debug("Token refresh failed — run 'hermes auth add anthropic' to give Hermes its own login")
+        logger.debug("Token refresh failed — run 'hermes auth add anthropic' to give Minerva its own login")
     return refreshed or None
 
 
 def _prefer_refreshable_claude_code_token(env_token: str, creds: Optional[Dict[str, Any]]) -> Optional[str]:
-    """Prefer refreshable Claude Code creds over a static env OAuth token: Hermes historically persisted setup tokens
+    """Prefer refreshable Claude Code creds over a static env OAuth token: Minerva historically persisted setup tokens
     into ANTHROPIC_TOKEN, and that static token would otherwise win before the refreshable file is inspected."""
     if not (env_token and _is_oauth_token(env_token) and isinstance(creds, dict) and creds.get("refreshToken")):
         return None
@@ -763,7 +763,7 @@ def run_hermes_oauth_login_pure() -> Optional[Dict[str, Any]]:
     }
     auth_url = f"https://claude.ai/oauth/authorize?{urlencode(params)}"
     print("\n".join([
-        "", "Authorize Hermes with your Claude Pro/Max subscription.", "",
+        "", "Authorize Minerva with your Claude Pro/Max subscription.", "",
         "╭─ Claude Pro/Max Authorization ────────────────────╮",
         "│                                                   │",
         "│  Open this link in your browser:                  │",

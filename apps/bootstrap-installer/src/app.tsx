@@ -8,7 +8,7 @@ import Welcome from './routes/welcome'
 import { $bootstrap, $route, initialize } from './store'
 
 /*
- * App shell — Hermes Setup.
+ * App shell — Minerva Setup.
  *
  * No header chrome (the OS title bar already says "Hermes Setup"; an
  * in-window repeat of the H mark + words was redundant slop).

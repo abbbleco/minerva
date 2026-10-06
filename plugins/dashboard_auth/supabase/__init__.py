@@ -1,4 +1,4 @@
-"""Supabase dashboard-auth provider — Minerva portal accounts in the Hermes dashboard.
+"""Supabase dashboard-auth provider — Minerva portal accounts in the Minerva dashboard.
 
 Authenticates dashboard users against the Minerva Supabase project (the same
 users who subscribe at portal.abbble.co.za), so one account unlocks the portal

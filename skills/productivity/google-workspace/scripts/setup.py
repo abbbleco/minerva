@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Google Workspace OAuth2 setup for Hermes Agent.
+"""Google Workspace OAuth2 setup for Minerva Agent.
 
 Fully non-interactive — designed to be driven by the agent via terminal commands.
 The agent mediates between this script and the user (works on CLI, Telegram, Discord, etc.)
@@ -91,14 +91,14 @@ def _format_missing_scopes(missing_scopes: list[str]) -> str:
     return (
         "Token is valid but missing required Google Workspace scopes:\n"
         f"{bullets}\n"
-        "Run the Google Workspace setup again from this same Hermes profile to refresh consent."
+        "Run the Google Workspace setup again from this same Minerva profile to refresh consent."
     )
 
 
 def install_deps():
     """Sync Hermes' declared Google extra, ready for the next process."""
     if pm is None:
-        print("ERROR: Run this script in the Hermes environment; use hermes setup first.")
+        print("ERROR: Run this script in the Minerva environment; use hermes setup first.")
         return False
     try:
         pm.sync_venv(["google"], explicit=True)
@@ -112,7 +112,7 @@ def install_deps():
 def _ensure_deps():
     """Let PM check imports and stop if activation needs a new process."""
     if pm is None:
-        print("ERROR: Run this script in the Hermes environment; use hermes setup first.")
+        print("ERROR: Run this script in the Minerva environment; use hermes setup first.")
         sys.exit(1)
     try:
         pm.ensure_import("google")
@@ -218,7 +218,7 @@ def check_auth(quiet: bool = False):
 
 
 def store_client_secret(path: str):
-    """Copy and validate client_secret.json to Hermes home."""
+    """Copy and validate client_secret.json to Minerva home."""
     src = Path(path).expanduser().resolve()
     if not src.exists():
         print(f"ERROR: File not found: {src}")

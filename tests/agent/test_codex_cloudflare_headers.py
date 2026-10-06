@@ -11,8 +11,8 @@ header set so the primary chat client (``run_agent.AIAgent.__init__`` +
 all emit the same headers.
 
 These tests pin:
-- the required Hermes originator
-- the versioned Hermes User-Agent
+- the required Minerva originator
+- the versioned Minerva User-Agent
 - ``ChatGPT-Account-ID`` extraction from the OAuth JWT (canonical casing,
   from codex-rs ``auth.rs``)
 - graceful handling of malformed tokens (drop the account-ID header, don't

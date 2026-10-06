@@ -1,7 +1,7 @@
 """Regression tests for the /model picker's credential-discovery paths.
 
 Covers:
- - Normal path (tokens already in Hermes auth store)
+ - Normal path (tokens already in Minerva auth store)
  - Claude Code fallback (tokens only in ~/.claude/.credentials.json)
  - Negative case (no credentials anywhere)
 
@@ -30,7 +30,7 @@ def _make_fake_jwt(expiry_offset: int = 3600) -> str:
 
 @pytest.fixture()
 def hermes_auth_only_env(tmp_path, monkeypatch):
-    """Tokens already in Hermes auth store (no Codex CLI needed)."""
+    """Tokens already in Minerva auth store (no Codex CLI needed)."""
     hermes_home = tmp_path / ".hermes"
     hermes_home.mkdir()
 
@@ -61,7 +61,7 @@ def hermes_auth_only_env(tmp_path, monkeypatch):
 
 
 def test_normal_path_still_works(hermes_auth_only_env):
-    """openai-codex appears when tokens are already in Hermes auth store."""
+    """openai-codex appears when tokens are already in Minerva auth store."""
     from hermes_cli.model_switch import list_authenticated_providers
 
     providers = list_authenticated_providers(

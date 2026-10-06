@@ -20,7 +20,7 @@ For a known Hub URL or ID, run `box hubs:get <HUB_ID>` directly even if the list
 
 ## Ask questions across a Hub
 
-Use one Hub item and `single_item_qa`. Request citations so Hermes can report the source files behind an answer. Use `box request` (or the SDK) for Hub Q&A rather than relying on `box ai:ask`, whose installed CLI versions may not accept Hub item types. This uses the Box AI Ask endpoint; the `box-version: 2025.0` header is required for `/hubs` management endpoints, not this request.
+Use one Hub item and `single_item_qa`. Request citations so Minerva can report the source files behind an answer. Use `box request` (or the SDK) for Hub Q&A rather than relying on `box ai:ask`, whose installed CLI versions may not accept Hub item types. This uses the Box AI Ask endpoint; the `box-version: 2025.0` header is required for `/hubs` management endpoints, not this request.
 
 ```bash
 box request /ai/ask -X POST \

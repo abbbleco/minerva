@@ -2512,7 +2512,7 @@ class DiscordAdapter(DiscordMediaMixin, BasePlatformAdapter):
         self._with_discord_recovery_db(_op)
 
     async def _should_backfill_discord_message(self, message: Any) -> bool:
-        """Return True when a recent Discord message still needs Hermes work."""
+        """Return True when a recent Discord message still needs Minerva work."""
         if not self._client or not getattr(self._client, "user", None):
             return False
         if getattr(getattr(message, "author", None), "id", None) == getattr(self._client.user, "id", None):
@@ -2818,7 +2818,7 @@ class DiscordAdapter(DiscordMediaMixin, BasePlatformAdapter):
         return "safe"
 
     def _canonicalize_app_command_payload(self, payload: Dict[str, Any]) -> Dict[str, Any]:
-        """Reduce command payloads to the semantic fields Hermes manages."""
+        """Reduce command payloads to the semantic fields Minerva manages."""
         contexts = payload.get("contexts")
         integration_types = payload.get("integration_types")
         return {
@@ -3937,7 +3937,7 @@ class DiscordAdapter(DiscordMediaMixin, BasePlatformAdapter):
         return bool(channel_ids & allowed)
 
     def _is_pairing_approved_user(self, user_id: str) -> bool:
-        """True when the Discord user has an explicit Hermes pairing grant."""
+        """True when the Discord user has an explicit Minerva pairing grant."""
         user_id = str(user_id or "").strip()
         if not user_id:
             return False
@@ -5348,7 +5348,7 @@ class DiscordAdapter(DiscordMediaMixin, BasePlatformAdapter):
 
         Strip Discord mention syntax (users / roles / channels) so thread titles don't show raw <@id>,
         <@&id>, or <#id> markers — the ID isn't meaningful to humans glancing at the thread list (#6336).
-        Real semantic naming is done after the first agent turn, when Hermes has an LLM-generated session
+        Real semantic naming is done after the first agent turn, when Minerva has an LLM-generated session
         title and can safely rename only this newly-created thread.
         """
         content = (content or "").strip()
@@ -6313,7 +6313,7 @@ def _define_discord_view_classes() -> None:
     global ExecApprovalView, SlashConfirmView, UpdatePromptView, ModelPickerView, ClarifyChoiceView, ChoicePickerView
 
     class _HermesView(discord.ui.View):
-        """Shared plumbing for Hermes component views: allowlist auth, single-use
+        """Shared plumbing for Minerva component views: allowlist auth, single-use
         ``resolved`` flag, ``_message`` handle for timeout edits."""
 
         def __init__(self, allowed_user_ids: set, allowed_role_ids: Optional[set], *, timeout):
@@ -7317,7 +7317,7 @@ def interactive_setup() -> None:
         )
     print()
     _info_lines(
-        "📬 Home Channel: where Hermes delivers cron job results,",
+        "📬 Home Channel: where Minerva delivers cron job results,",
         "   cross-platform messages, and notifications.",
         "   To get a channel ID: right-click a channel → Copy Channel ID",
         "   (requires Developer Mode in Discord settings)",
@@ -7448,7 +7448,7 @@ _is_connected = _env_is_connected("DISCORD_BOT_TOKEN")
 
 
 def register(ctx) -> None:
-    """Plugin entry point — called by the Hermes plugin system."""
+    """Plugin entry point — called by the Minerva plugin system."""
     ctx.register_platform(
         name="discord",
         label="Discord",

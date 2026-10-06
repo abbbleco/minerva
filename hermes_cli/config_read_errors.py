@@ -1,4 +1,4 @@
-"""What Hermes does when an existing ``config.yaml`` cannot be read or parsed.
+"""What Minerva does when an existing ``config.yaml`` cannot be read or parsed.
 
 Readers fail open (``{}`` / defaults / last-known-good) so a broken file never takes the process
 down; this module makes that fallback loud (one warning per file signature, a ``corrupt`` backup),
@@ -55,7 +55,7 @@ def _yaml_error_details(exc: Exception) -> str:
 
 
 def format_config_parse_failure(config_path: Path, exc: Exception, *, fallback: str = "defaults") -> str:
-    """User copy for an unparseable config.yaml: what happened, what Hermes is doing, how to fix.
+    """User copy for an unparseable config.yaml: what happened, what Minerva is doing, how to fix.
     Only the problem line/column is printed; the raw PyYAML text goes to a ``Details:`` line."""
     where = _yaml_error_location(exc)
     at = f" at {where}" if where else ""

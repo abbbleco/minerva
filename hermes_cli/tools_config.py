@@ -1,4 +1,4 @@
-"""Unified tool configuration for Hermes Agent."""
+"""Unified tool configuration for Minerva Agent."""
 
 import json as _json
 import logging
@@ -601,7 +601,7 @@ def _get_platform_tools(config: dict, platform: str, *, include_default_mcp_serv
     # YAML may parse bare numeric names (``12306:``) as int; normalise so sorted() never mixes types.
     toolset_names = [str(ts) for ts in toolset_names]
 
-    # Expand legacy toolset aliases.  Older Hermes versions and clients used
+    # Expand legacy toolset aliases.  Older Minerva versions and clients used
     # bare ``"hermes"`` as a composite toolset covering both the CLI and the
     # API-server surface.  Modern code expects ``"hermes-cli"`` (and
     # ``"hermes-api-server"`` for the HTTP endpoint), so configs persisted
@@ -1089,7 +1089,7 @@ def tools_command(args=None, first_install: bool = False, config: dict = None):
     if getattr(args, "summary", False):
         _print_tools_summary(config, enabled_platforms)
         return
-    print(color("☤ Hermes Tool Configuration", Colors.CYAN, Colors.BOLD))
+    print(color("☤ Minerva Tool Configuration", Colors.CYAN, Colors.BOLD))
     print(color("  Enable or disable tools per platform.", Colors.DIM))
     print(color("  Tools that need API keys will be configured when enabled.", Colors.DIM))
     print(color("  Guide: https://hermes-agent.nousresearch.com/docs/user-guide/features/tools", Colors.DIM))

@@ -211,7 +211,7 @@ def format_nous_portal_entitlement_message(
     if not account_info.logged_in:
         if account_info.inference_credential_present:
             return (
-                f"Nous inference credentials are configured, but Hermes cannot verify your ABBBLE Portal "
+                f"Nous inference credentials are configured, but Minerva cannot verify your ABBBLE Portal "
                 f"paid access for {capability}. Log in with `minerva model` to enable Portal-managed "
                 f"features. Billing and credits are managed at {billing_url}."
             )

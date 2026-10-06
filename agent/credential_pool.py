@@ -154,10 +154,10 @@ FAILURE_REASON_BILLING_UNVERIFIED = "billing_unverified"
 # core, and stalled the event loop (Desktop backend readiness timeouts).
 # Credential selection runs on a hot path (every model call, plus auxiliary tasks like
 # compression/moa/titles), so when a pool is empty or fully exhausted the un-throttled log fires on *every*
-# selection. On Windows several Hermes processes share one rotating log guarded by concurrent-log-handler's
+# selection. On Windows several Minerva processes share one rotating log guarded by concurrent-log-handler's
 # cross-process lock; that per-selection volume storms the lock (``RuntimeError: Cannot acquire lock after
 # 20 attempts``), pegs a core, and stalls the asyncio event loop long enough to fail the Desktop backend
-# readiness handshake ("Timed out connecting to Hermes backend after 15000ms"). Logging the condition at
+# readiness handshake ("Timed out connecting to Minerva backend after 15000ms"). Logging the condition at
 # most once per window preserves the signal while removing the storm — same class of fix as the warn-once
 # dedup in #58265.
 NO_AVAILABLE_ENTRIES_LOG_THROTTLE_SECONDS = 60.0
@@ -1538,7 +1538,7 @@ class CredentialPool(CredentialPoolAdminMixin, CredentialPoolModelCooldownMixin)
             return self._refresh_entry_impl(entry, force=force)
 
         # Single-use refresh tokens: sync -> POST -> write-back must be atomic
-        # across Hermes processes, or two processes adopt the same on-disk
+        # across Minerva processes, or two processes adopt the same on-disk
         # token, both POST it, and the loser gets ``refresh_token_reused`` /
         # ``invalid_grant`` (for Anthropic sources other than claude_code
         # there was no recovery path at all). Serialize through the shared
@@ -1830,7 +1830,7 @@ class CredentialPool(CredentialPoolAdminMixin, CredentialPoolModelCooldownMixin)
             # entries from the pool (mirrors the Nous quarantine path).
             if getattr(auth_mod, terminal_fn_name)(exc):
                 # WARNING, not debug: this is the moment a login is lost. At the default log level a
-                # silent quarantine looked like "I logged in once and Hermes keeps failing" (#113023).
+                # silent quarantine looked like "I logged in once and Minerva keeps failing" (#113023).
                 logger.warning(
                     "%s OAuth refresh token is terminally invalid (%s); clearing local token state. "
                     "Re-run 'hermes auth add %s' to sign in again.", display, exc, self.provider)
@@ -2585,7 +2585,7 @@ class _Seeder:
 
 
 def _seed_anthropic_singletons(seed: _Seeder) -> None:
-    # Only auto-discover external credentials (Claude Code, Hermes PKCE) when
+    # Only auto-discover external credentials (Claude Code, Minerva PKCE) when
     # the user explicitly configured anthropic; otherwise auxiliary fallback
     # chains would read ~/.claude/.credentials.json without consent (PR #4210).
     try:
@@ -2625,7 +2625,7 @@ def _seed_anthropic_singletons(seed: _Seeder) -> None:
         sources.append(("claude_code", read_claude_code_credentials()))
     else:
         # Singleton-seeded rows are otherwise never pruned; the opt-out must also drop the row an
-        # earlier (adopting) process persisted, or it keeps rotating a login Hermes no longer reads.
+        # earlier (adopting) process persisted, or it keeps rotating a login Minerva no longer reads.
         seed.changed |= _retain_sources_not_in(seed.entries, {"claude_code"})
     for source_name, creds in sources:
         if creds and creds.get("accessToken"):
@@ -2804,7 +2804,7 @@ def _seed_minimax_singleton(seed: _Seeder) -> None:
 def _seed_tokens_singleton(seed: _Seeder, auth_store: Dict[str, Any]) -> None:
     """Codex / xAI: surface the auth.json ``providers.<id>.tokens`` singleton as ``device_code``.
 
-    Hermes owns its own Codex auth state and does NOT auto-import
+    Minerva owns its own Codex auth state and does NOT auto-import
     ~/.codex/auth.json: refresh tokens are single-use, so sharing them with
     Codex CLI / VS Code causes refresh_token_reused races. Adoption is an
     explicit one-time prompt via `minerva auth openai-codex`.
@@ -3005,7 +3005,7 @@ def _prune_stale_seeded_entries(
         # requested (an `minerva auth` command that confirmed the source is gone).
         if entry.source.startswith("env:"):
             return prune_env_sources
-        # File-backed singletons and Hermes PKCE disappear when their backing file is gone.
+        # File-backed singletons and Minerva PKCE disappear when their backing file is gone.
         return is_borrowed_credential_source(entry.source, entry.provider) or entry.source == "hermes_pkce"
 
     retained = [

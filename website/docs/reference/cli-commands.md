@@ -94,7 +94,7 @@ The install also ships `hermes-agent`, a minimal runner that sends one query and
 | `minerva memory` | Configure external memory provider. Plugin-specific subcommands (e.g. `minerva honcho`) register automatically when their provider is active. |
 | `minerva acp` | Run Hermes as an ACP server for editor integration. |
 | `minerva mcp` | Manage MCP server configurations and run Hermes as an MCP server. |
-| `minerva plugins` | Manage Hermes Agent plugins (install, enable, disable, remove). |
+| `minerva plugins` | Manage Minerva Agent plugins (install, enable, disable, remove). |
 | `minerva portal` | ABBBLE Portal status, subscription link, and Tool Gateway routing. See [Tool Gateway](../user-guide/features/tool-gateway.md). |
 | `minerva tools` | Configure enabled tools per platform. |
 | `minerva computer-use` | Install or check the Computer Use (cua-driver) backend (macOS/Windows/Linux). |

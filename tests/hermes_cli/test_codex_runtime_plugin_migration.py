@@ -414,7 +414,7 @@ class TestHermesHomeLeakGuard:
 
 
 class TestSameNameUserMcpTable:
-    """Issue #79023: a Hermes server whose name the user already declares outside the managed
+    """Issue #79023: a Minerva server whose name the user already declares outside the managed
     block must not be emitted twice (duplicate table header = TOML codex refuses to load)."""
 
     def test_user_table_wins_and_output_stays_valid_toml(self, tmp_path):

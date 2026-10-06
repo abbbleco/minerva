@@ -17,7 +17,7 @@ Build auditable financial workbooks headless via openpyxl.
 | Source | Optional — install with `minerva skills install official/finance/excel-author` |
 | Path | `optional-skills/finance/excel-author` |
 | Version | `1.0.0` |
-| Author | Anthropic (adapted by Nous Research) |
+| Author | Anthropic (adapted by ABBBLE CO) |
 | License | Apache-2.0 |
 | Platforms | linux, macos, windows |
 | Tags | `excel`, `openpyxl`, `finance`, `spreadsheet`, `modeling` |

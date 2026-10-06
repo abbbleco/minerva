@@ -1220,7 +1220,7 @@ def _begin_update_receipt_and_plan(args):
 
     # Plan phase: snapshot runtimes/supervisors/version (read-only; probe failure records
     # nothing). Re-read AFTER the restart phase to reconcile — the plan is the worklist.
-    # Plan phase (#91277 Phase 2): snapshot the pre-update fleet — every running Hermes runtime, its
+    # Plan phase (#91277 Phase 2): snapshot the pre-update fleet — every running Minerva runtime, its
     # supervisor, and its running code version — into the receipt, so a post-mortem can compare what the
     # update SAW against what it did. ``_pre_update_plan`` is read again AFTER the restart phase to
     # reconcile every planned runtime against the phase's bookkeeping (restart via declared mechanism — the
@@ -1357,7 +1357,7 @@ def _handle_update_called_process_error(
             print(f"✗ {stage} (the code update itself succeeded).")
             _print_called_process_error_tail(e)
             print()
-            print("  Hermes may not start until the dependencies are installed. Fix the error above")
+            print("  Minerva may not start until the dependencies are installed. Fix the error above")
             print("  (usually network or disk space), then run `minerva update` again.")
             if _m()._is_windows():
                 print("  If `minerva update` itself will not start, retry through the venv interpreter:")
@@ -1446,7 +1446,7 @@ def _cmd_update_impl(args, gateway_mode: bool):
     opts = _resolve_update_options(args, gateway_mode)
     gw_input_fn, assume_yes = opts.gw_input_fn, opts.assume_yes
 
-    print("☤ Updating Hermes Agent...")
+    print("☤ Updating Minerva Agent...")
     print()
 
     _pre_update_plan = _begin_update_receipt_and_plan(args)

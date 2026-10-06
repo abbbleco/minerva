@@ -1,7 +1,7 @@
 """Tests for hermes_cli.agent_import — ``minerva import-agent``.
 
 Covers: source detection, Claude Code and Codex parsing, mapping into the
-real Hermes stores (memories/MEMORY.md, config.yaml command_allowlist /
+real Minerva stores (memories/MEMORY.md, config.yaml command_allowlist /
 approvals.deny / mcp_servers, skills/), dry-run write-nothing guarantees,
 malformed-input skip reports, and the never-import-secrets rule.
 

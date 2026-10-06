@@ -40,7 +40,7 @@ def configured_provider(home: Path) -> str:
 
 
 def provider_present(name: str, home: Path) -> bool:
-    """True when the provider resolves anywhere Hermes looks for *home* (bundled, that home's user
+    """True when the provider resolves anywhere Minerva looks for *home* (bundled, that home's user
     plugins, entry point). The lookup reads the active home, so it is bound explicitly: the update
     hook walks several profile homes from one process."""
     from plugins.memory import find_provider_dir
@@ -251,7 +251,7 @@ def recover_at_startup(name: str, *, say: Optional[Callable[[str], None]] = None
     from pm.install import lazy_installs_allowed
     if not lazy_installs_allowed():
         report(f"⚠ Memory provider '{name}' is not installed, so external memory is off for this session. "
-               f"security.allow_lazy_installs is off, so Hermes did not fetch it: "
+               f"security.allow_lazy_installs is off, so Minerva did not fetch it: "
                f"run `{_install_command(name, home)}`.")
         return False
     return migrate_home(home, install=_install_into(home), say=report) == name

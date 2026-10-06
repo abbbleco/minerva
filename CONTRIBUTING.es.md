@@ -1,6 +1,6 @@
-# Contribuir a Hermes Agent
+# Contribuir a Minerva Agent
 
-¡Gracias por contribuir a Hermes Agent! Esta guía cubre todo lo que necesitas: configurar tu entorno de desarrollo, entender la arquitectura, decidir qué construir y conseguir que tu PR sea aceptado.
+¡Gracias por contribuir a Minerva Agent! Esta guía cubre todo lo que necesitas: configurar tu entorno de desarrollo, entender la arquitectura, decidir qué construir y conseguir que tu PR sea aceptado.
 
 ---
 
@@ -9,7 +9,7 @@
 Valoramos las contribuciones en este orden:
 
 1. **Correcciones de errores** — bloqueos, comportamiento incorrecto, pérdida de datos. Siempre la máxima prioridad.
-2. **Compatibilidad entre plataformas** — macOS, diferentes distribuciones de Linux y WSL2 en Windows. Queremos que Hermes funcione en todas partes.
+2. **Compatibilidad entre plataformas** — macOS, diferentes distribuciones de Linux y WSL2 en Windows. Queremos que Minerva funcione en todas partes.
 3. **Fortalecimiento de seguridad** — inyección de shell, inyección de prompts, traversal de rutas, escalada de privilegios. Ver [Consideraciones de Seguridad](#consideraciones-de-seguridad).
 4. **Rendimiento y robustez** — lógica de reintento, manejo de errores, degradación elegante.
 5. **Nuevas habilidades** — pero solo las ampliamente útiles. Ver [¿Debería ser una Habilidad o una Herramienta?](#debería-ser-una-habilidad-o-una-herramienta)
@@ -45,7 +45,7 @@ Las habilidades incluidas (en `skills/`) se envían con cada instalación de Her
 
 Si tu habilidad es oficial y útil pero no universalmente necesaria (ej., una integración de servicio de pago, una dependencia pesada), ponla en **`optional-skills/`** — se envía con el repositorio pero no está activada por defecto. Los usuarios pueden descubrirla a través de `minerva skills browse` (etiquetada como "oficial") e instalarla con `minerva skills install` (sin advertencia de terceros, confianza integrada).
 
-Si tu habilidad es especializada, contribuida por la comunidad o de nicho, es mejor para un **Skills Hub** — súbela a un registro de habilidades y compártela en el [Discord de Nous Research](https://discord.gg/NousResearch). Los usuarios pueden instalarla con `minerva skills install`.
+Si tu habilidad es especializada, contribuida por la comunidad o de nicho, es mejor para un **Skills Hub** — súbela a un registro de habilidades y compártela en el [Discord de ABBBLE CO](https://discord.gg/NousResearch). Los usuarios pueden instalarla con `minerva skills install`.
 
 ---
 
@@ -100,7 +100,7 @@ scripts/run_tests.sh tests/agent/ -v
 
 La ruta de salida no debe existir. Para regenerarla, detén sus procesos y elimina
 explícitamente solo ese entorno desechable. PM no elimina destinos existentes.
-No modifiques los entornos de Hermes con comandos directos de pip o uv.
+No modifiques los entornos de Minerva con comandos directos de pip o uv.
 En Windows, ejecuta el script de pruebas mediante Bash.
 
 Si cambias `pyproject.toml`, regenera el lock, vuelve a cargar la activación y
@@ -375,7 +375,7 @@ Todo skill nuevo o modernizado — incluido, opcional o contribuido — debe cum
 
 1. **`description` ≤ 60 caracteres, una oración, termina con punto.** Las descripciones largas saturan la UI de listado de habilidades. Indica la capacidad, no la implementación. Sin palabras de marketing ("potente", "completo", "fluido", "avanzado").
 
-2. **Las herramientas referenciadas en el cuerpo de SKILL.md deben ser herramientas nativas de Hermes o servidores MCP que la habilidad espere explícitamente.** Usa los nombres de herramientas en comillas invertidas: `` `terminal` ``, `` `web_extract` ``, `` `web_search` ``, `` `read_file` ``, `` `write_file` ``, etc.
+2. **Las herramientas referenciadas en el cuerpo de SKILL.md deben ser herramientas nativas de Minerva o servidores MCP que la habilidad espere explícitamente.** Usa los nombres de herramientas en comillas invertidas: `` `terminal` ``, `` `web_extract` ``, `` `web_search` ``, `` `read_file` ``, `` `write_file` ``, etc.
 
 3. **El campo `platforms:` auditado contra las importaciones reales del script.** Las habilidades que usen primitivos solo de POSIX deben declarar sus plataformas soportadas.
 
@@ -567,7 +567,7 @@ test(tools): añadir tests unitarios para file_operations
 ## Reportar Issues
 
 - Usa [GitHub Issues](https://github.com/abbbleco/minerva/issues)
-- Incluye: SO, versión de Python, versión de Hermes (`minerva --version`), traza de error completa
+- Incluye: SO, versión de Python, versión de Minerva (`minerva --version`), traza de error completa
 - Incluye pasos para reproducir
 - Verifica los issues existentes antes de crear duplicados
 - Para vulnerabilidades de seguridad, por favor reporta de forma privada

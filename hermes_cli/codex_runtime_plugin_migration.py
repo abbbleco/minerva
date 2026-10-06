@@ -1,4 +1,4 @@
-"""Migrate Hermes MCP server config and Codex's installed curated plugins into ~/.codex/config.toml.
+"""Migrate Minerva MCP server config and Codex's installed curated plugins into ~/.codex/config.toml.
 """
 
 from __future__ import annotations
@@ -50,7 +50,7 @@ class MigrationReport:
                 note = f" (skipped: {', '.join(skipped)})" if skipped else ""
                 lines.append(f"  - {name}{note}")
         else:
-            lines.append("No MCP servers found in Hermes config.")
+            lines.append("No MCP servers found in Minerva config.")
         if self.migrated_plugins:
             lines.append(f"Migrated {len(self.migrated_plugins)} native Codex plugin(s):")
             lines.extend(f"  - {name}" for name in self.migrated_plugins)
@@ -66,8 +66,8 @@ class MigrationReport:
         return "\n".join(lines)
 
 
-# Hermes MCP keys codex understands (transport stdio/http, timeouts, general). Any other key is
-# dropped with a warning: ``sampling`` has no codex equivalent; the rest are unknown Hermes keys.
+# Minerva MCP keys codex understands (transport stdio/http, timeouts, general). Any other key is
+# dropped with a warning: ``sampling`` has no codex equivalent; the rest are unknown Minerva keys.
 _KNOWN_HERMES_KEYS = {
     "command", "args", "env", "cwd",
     "url", "headers", "transport",
@@ -87,7 +87,7 @@ def _str_map(d: dict) -> dict[str, str]:
 
 
 def _translate_one_server(name: str, hermes_cfg: dict) -> tuple[Optional[dict], list[str]]:
-    """Translate one Hermes MCP server config to codex's inline-table dict.
+    """Translate one Minerva MCP server config to codex's inline-table dict.
 
     Returns ``(codex_entry, skipped_keys)``; ``codex_entry`` is None when the config is unusable.
     stdio (``command``) wins over ``url`` when both are set. Hermes' ``transport: sse`` hint is
@@ -128,7 +128,7 @@ def _translate_one_server(name: str, hermes_cfg: dict) -> tuple[Optional[dict], 
         if key in _KEYS_DROPPED_WITH_WARNING:
             skipped.append(f"{key} (no codex equivalent)")
         elif key not in _KNOWN_HERMES_KEYS:
-            skipped.append(f"{key} (unknown Hermes key)")
+            skipped.append(f"{key} (unknown Minerva key)")
     return out, skipped
 
 
@@ -247,7 +247,7 @@ def _unmanaged_mcp_server_names(toml_text: str) -> set[str]:
 
     Unlike ``[plugins.*]`` — where ``plugin/list`` is the source of truth and we own the
     namespace — ``mcp_servers`` is shared: the docs promise that anything outside the managed
-    block is the user's. A Hermes server whose name is already declared by the user is therefore
+    block is the user's. A Minerva server whose name is already declared by the user is therefore
     NOT re-emitted (the user's table wins and is preserved verbatim); emitting both would be a
     duplicate table header, which is invalid TOML that codex refuses to load (issue #79023).
     """
@@ -424,7 +424,7 @@ def migrate(
     hermes_config: dict, *, codex_home: Optional[Path] = None, dry_run: bool = False,
     discover_plugins: bool = True, default_permission_profile: Optional[str] = ":workspace",
     expose_hermes_tools: bool = True) -> MigrationReport:
-    """Translate Hermes mcp_servers config + Codex curated plugins into ~/.codex/config.toml.
+    """Translate Minerva mcp_servers config + Codex curated plugins into ~/.codex/config.toml.
 
     ``discover_plugins`` spawns the live codex CLI (set False in tests); discovery is best-effort
     and never blocks the migration. ``default_permission_profile`` (default ":workspace"; built-ins
@@ -440,7 +440,7 @@ def migrate(
     report.target_path = target
     hermes_servers = (hermes_config or {}).get("mcp_servers") or {}
     if not isinstance(hermes_servers, dict):
-        report.errors.append("mcp_servers in Hermes config is not a dict; cannot migrate.")
+        report.errors.append("mcp_servers in Minerva config is not a dict; cannot migrate.")
         return report
     translated: dict[str, dict] = {}
     for raw_name, cfg in hermes_servers.items():

@@ -133,11 +133,11 @@ def _ensure_tui_workspace(tui_dir: Path) -> None:
         return
 
     print(
-        "Error: the TUI workspace is missing from this Hermes checkout.\n"
+        "Error: the TUI workspace is missing from this Minerva checkout.\n"
         f"Expected directory: {tui_dir}\n"
         "This usually means `minerva update` left tracked ui-tui files deleted.\n"
         "Recovery:\n"
-        "  1. From the Hermes checkout, run `git restore -- ui-tui`\n"
+        "  1. From the Minerva checkout, run `git restore -- ui-tui`\n"
         "  2. Run `npm install --silent --no-fund --no-audit --progress=false`\n"
         "  3. Retry `minerva --tui`\n"
         "If the checkout is still inconsistent, run `minerva update --force`.",

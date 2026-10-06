@@ -396,7 +396,7 @@ def _held_open(path: Path) -> bool:
     Best effort, not exact: Linux answers through /proc, but a live git that owns ``index.lock`` without
     an open fd (``commit`` waiting in the editor, or between closing the lock and renaming it) reads as
     dead; Windows refuses to unlink a file another process has open, so the caller's unlink is its probe;
-    macOS/BSD have no portable check at all. The claim only orders Hermes launches, so on those paths a
+    macOS/BSD have no portable check at all. The claim only orders Minerva launches, so on those paths a
     live git's lock can be removed; its command then fails and the marker stays for the next launch.
     """
     proc = Path("/proc")
@@ -456,7 +456,7 @@ def restore_interrupted_pull(project_root: Path | None = None) -> bool:
             return False
         with _restore_claim(marker.parent) as claimed:
             if not claimed:
-                print("⚠ Another Hermes launch is still repairing the checkout after an interrupted "
+                print("⚠ Another Minerva launch is still repairing the checkout after an interrupted "
                       "`minerva update`; if this one fails, launch again in a moment.", file=sys.stderr)
                 return False
             if not marker.is_file():

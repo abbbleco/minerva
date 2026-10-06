@@ -1777,7 +1777,7 @@ class TestMcpInvocationResolution:
     """Surface 8 (abbbleco/minerva#47072): instead of hardcoding
     `["mcp"]` as the cua-driver subcommand, we ask the driver via its
     `manifest` JSON (trycua/cua#1961) so a future rename or relocation of
-    the MCP subcommand doesn't require a Hermes patch.
+    the MCP subcommand doesn't require a Minerva patch.
 
     The discovery hop must NEVER prevent the wrapper from starting — every
     failure mode (no manifest verb, non-zero exit, junk JSON, missing
@@ -2068,7 +2068,7 @@ class TestElementTokenAttachment:
 
 
 class TestSessionLifecycle:
-    """Surface gap (audit June 2026): Hermes never declared a cua-driver
+    """Surface gap (audit June 2026): Minerva never declared a cua-driver
     session, so the agent-cursor overlay was inert and per-run state
     (config overrides, recording ownership, cursor identity) was shared
     across concurrent runs. Wired now: backend.start() calls

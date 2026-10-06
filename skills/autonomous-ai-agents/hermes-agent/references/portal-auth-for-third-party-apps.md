@@ -9,14 +9,14 @@ them in order before proposing solutions.
 
 ---
 
-## Layer 1 — Is this thing a Hermes plugin, or a separate app?
+## Layer 1 — Is this thing a Minerva plugin, or a separate app?
 
 This is the question to answer FIRST. The "OpenViking" case in particular
 trips agents up.
 
 | Surface | What it actually is | Auth path |
 |---|---|---|
-| **OpenViking memory plugin** (`plugins/memory/openviking/`) | Code that runs **inside the Hermes process**. Its LLM calls go through Hermes's already-configured provider. | Already uses Portal if user's Hermes is configured for Portal. Nothing extra needed. `OPENVIKING_API_KEY` is the OpenViking *server's* own auth, not LLM auth. |
+| **OpenViking memory plugin** (`plugins/memory/openviking/`) | Code that runs **inside the Minerva process**. Its LLM calls go through Hermes's already-configured provider. | Already uses Portal if user's Minerva is configured for Portal. Nothing extra needed. `OPENVIKING_API_KEY` is the OpenViking *server's* own auth, not LLM auth. |
 | **OpenViking the standalone server** (separate container) | A separate context-DB service. If it ever calls an LLM on its own, that's a separate HTTP client. | Same as any external app — Layer 2/3 below. |
 | **Karakeep, n8n, LibreChat, OpenWebUI, any self-hosted app** | Different process, often different machine. Makes its own HTTPS calls to `inference-api.nousresearch.com`. | Layer 2/3 below. |
 
@@ -41,7 +41,7 @@ There is **no general OAuth 2.0 authorization server**. There is no
 against. There is no shared cookie or session that browser-Portal-login
 extends to other apps on the same machine.
 
-What Hermes Agent has that *feels* like OAuth — `minerva login --provider nous`
+What Minerva Agent has that *feels* like OAuth — `minerva login --provider nous`
 opening a browser, user signs in, token lands in `~/.hermes/auth.json` — is a
 **Hermes-specific browser flow**. Under the hood it produces a credential
 Hermes uses as a bearer. It is not a public OAuth provider that Karakeep et al.
@@ -62,7 +62,7 @@ OAuth flow, an app on the user's machine can:
 
 Karakeep/OpenWebUI/etc. then point at `http://localhost:NNNN/v1` with any
 placeholder key. The user never copies their Portal key around — the proxy
-rides on the credential Hermes already holds.
+rides on the credential Minerva already holds.
 
 Where this could live in Hermes:
 
@@ -100,7 +100,7 @@ without depending on third-party app changes:
   the sub, scope a key to specific models), in a shape every existing app
   already supports.
 - **Per-key rate limits** so a noisy app can be capped without eating the
-  user's headroom for Hermes itself.
+  user's headroom for Minerva itself.
 
 ---
 
@@ -108,7 +108,7 @@ without depending on third-party app changes:
 
 When the user asks "can $APP use my Portal subscription":
 
-1. First decide: Hermes plugin (runs inside Hermes) or separate app? If plugin,
+1. First decide: Minerva plugin (runs inside Hermes) or separate app? If plugin,
    it already uses Portal via Hermes's provider config — done.
 2. If separate app: today, paste the static API key from Portal → API Keys.
    Base URL `https://inference-api.nousresearch.com/v1`. Rate limits are
@@ -117,12 +117,12 @@ When the user asks "can $APP use my Portal subscription":
    the local-broker-proxy answer (Layer 3). Worth building. Not a Portal-side
    OAuth roadmap problem.
 4. Mixed setup ("Portal for some things, OpenRouter/Ollama Cloud for the
-   Hermes agent itself") is fully supported. Hermes treats agent
+   Minerva agent itself") is fully supported. Minerva treats agent
    provider/model and tool-side LLM calls as independent config; you can
    point each at a different endpoint.
 
 **Note on the Tool Gateway**: the "no separate accounts, no API key juggling"
-pitch in the Tool Gateway announcement is specifically about Hermes Agent's
+pitch in the Tool Gateway announcement is specifically about Minerva Agent's
 *tools* (web search, browser, image gen, TTS) flowing through the Portal
-subscription when Hermes is configured to use Portal as its provider. It is
+subscription when Minerva is configured to use Portal as its provider. It is
 **not** a claim that arbitrary third-party apps inherit Portal auth.

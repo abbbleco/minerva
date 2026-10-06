@@ -2,7 +2,7 @@
 setup.py — wheel/sdist build guard.
 
 pip/PyPI and Homebrew are no longer supported distribution methods for
-Hermes Agent (see website/docs/getting-started/platform-support.md). The
+Minerva Agent (see website/docs/getting-started/platform-support.md). The
 wheel would ship without bundled assets (locales, skills, optional-mcps,
 web_dist, tui_dist, plugin manifests) since those are resolved at runtime
 via env-var overrides set by the nix wrapper or the source-checkout layout.
@@ -42,7 +42,7 @@ _BLOCK_MESSAGE = (
     "  source ./activate  # PowerShell: . .\\activate.ps1\n"
     "\n"
     "If you are building with Nix (uv2nix), this error should not fire —\n"
-    "the Hermes Nix derivation sets HERMES_NIX_BUILD=1. If it does, file a bug."
+    "the Minerva Nix derivation sets HERMES_NIX_BUILD=1. If it does, file a bug."
 )
 
 

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 title: "Updating & Uninstalling"
-description: "How to update Hermes Agent to the latest version or uninstall it"
+description: "How to update Minerva Agent to the latest version or uninstall it"
 ---
 
 # Updating & Uninstalling

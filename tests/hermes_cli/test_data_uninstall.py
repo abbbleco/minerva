@@ -102,7 +102,7 @@ def test_directory_replaced_with_a_link_does_not_expand_removal(layout, tmp_path
     foreign = tmp_path / "foreign"
     foreign.mkdir()
     witness = foreign / "notes.txt"
-    witness.write_text("not Hermes data", encoding="utf-8")
+    witness.write_text("not Minerva data", encoding="utf-8")
     probe = tmp_path / "symlink-probe"
     try:
         probe.symlink_to(foreign, target_is_directory=True)
@@ -114,7 +114,7 @@ def test_directory_replaced_with_a_link_does_not_expand_removal(layout, tmp_path
     original.symlink_to(foreign, target_is_directory=True)
     _, failures = remove_data(plan)
     assert failures
-    assert witness.read_text(encoding="utf-8") == "not Hermes data"
+    assert witness.read_text(encoding="utf-8") == "not Minerva data"
 
 
 def test_data_only_preserves_the_containing_bundled_application(layout, monkeypatch):

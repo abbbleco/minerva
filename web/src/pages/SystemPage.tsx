@@ -1506,8 +1506,8 @@ export default function SystemPage() {
             </div>
             <ConfirmDialog
               open={!!importConfirmTarget}
-              title="Restore full Hermes backup?"
-              description={`This will overwrite your current Hermes configuration, skills, sessions, and data with the contents of ${backupImportLabel(importConfirmTarget)}. This cannot be undone.`}
+              title="Restore full Minerva backup?"
+              description={`This will overwrite your current Minerva configuration, skills, sessions, and data with the contents of ${backupImportLabel(importConfirmTarget)}. This cannot be undone.`}
               destructive
               confirmLabel="Restore"
               cancelLabel="Cancel"
@@ -1533,7 +1533,7 @@ export default function SystemPage() {
                   <span className="text-sm font-medium">Share debug report</span>
                   <span className="text-xs text-muted-foreground max-w-prose">
                     Uploads system info + logs to a public paste service and
-                    returns links to send the Hermes team. Pastes auto-delete
+                    returns links to send the Minerva team. Pastes auto-delete
                     after 6 hours.
                   </span>
                 </div>

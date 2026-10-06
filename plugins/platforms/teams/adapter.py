@@ -265,7 +265,7 @@ _SDK_IMPORTS = {
 @contextmanager
 def _suppress_third_party_dotenv() -> Iterator[None]:
     """No-op ``dotenv.load_dotenv`` while importing the Teams SDK: ``microsoft_teams.apps.app`` loads a
-    cwd-discovered ``.env`` at import, mutating process-global ``os.environ``. Hermes owns dotenv loading.
+    cwd-discovered ``.env`` at import, mutating process-global ``os.environ``. Minerva owns dotenv loading.
 
     See #62935.
     """

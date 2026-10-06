@@ -12,7 +12,7 @@ Hermes intent that never reaches the model, and the suite asserts none are sent.
 gives to server-initiated requests (approvals, elicitation) are validated the same way.
 
 State lives in ``DIR``: ``scenario.json`` (scripted turns, consumed one per ``turn/start`` across
-processes), ``threads.json`` (the "rollout store" that ``thread/resume`` reads, so a NEW Hermes process
+processes), ``threads.json`` (the "rollout store" that ``thread/resume`` reads, so a NEW Minerva process
 can resume a thread) and ``transcript.jsonl`` (every message in both directions, plus spawn/exit
 events with PIDs). Only stdlib: the wrapper runs it with the test interpreter.
 """
@@ -38,7 +38,7 @@ GRANDCHILD_RELEASE = "release-grandchildren"
 
 
 # ---------------------------------------------------------------------------------------------------
-# Protocol schema (subset of the codex app-server v2 bundle Hermes can reach) + serde-style validator
+# Protocol schema (subset of the codex app-server v2 bundle Minerva can reach) + serde-style validator
 # ---------------------------------------------------------------------------------------------------
 
 class Invalid(Exception):
@@ -654,7 +654,7 @@ class FakeCodex:
         return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
 
     def requests(self, method: Optional[str] = None) -> list[dict]:
-        """Client requests Hermes sent (full transcript entries), optionally one method."""
+        """Client requests Minerva sent (full transcript entries), optionally one method."""
         return [e for e in self.entries() if e.get("dir") == "in" and "method" in e.get("msg", {})
                 and "id" in e["msg"] and (method is None or e["msg"]["method"] == method)]
 
@@ -678,14 +678,14 @@ class FakeCodex:
         return _Store(self.state_dir / "threads.json").load()["threads"]
 
     def assert_wire_clean(self) -> None:
-        """Every request/response Hermes sent is valid AND carries no field codex would silently drop."""
+        """Every request/response Minerva sent is valid AND carries no field codex would silently drop."""
         assert not self.violations(), f"protocol violations: {self.violations()}"
         assert not self.ignored_fields(), f"fields codex ignores (intent silently lost): {self.ignored_fields()}"
 
 
 @dataclass
 class CodexRun:
-    """Outcome of :func:`run_codex_scenario`: the fake, the Hermes home and one ChatResult per CLI run."""
+    """Outcome of :func:`run_codex_scenario`: the fake, the Minerva home and one ChatResult per CLI run."""
     fake: FakeCodex
     home: Any
     results: list

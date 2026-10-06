@@ -263,6 +263,17 @@ export default function ContactHero(): JSX.Element {
                       <input type="hidden" name="utm_campaign" value="" />
                       <input type="hidden" name="utm_term" value="" />
                       <input type="hidden" name="utm_content" value="" />
+                      {/* Honeypot: invisible to humans (off-screen, unfocusable),
+                          filled by naive bots. Forwarded to the intake upstream,
+                          which accept-and-discards it. */}
+                      <input
+                        type="text"
+                        name="companyWebsite"
+                        autoComplete="off"
+                        tabIndex={-1}
+                        aria-hidden="true"
+                        style={{ position: "absolute", left: "-9999px", top: "auto", width: "1px", height: "1px", overflow: "hidden" }}
+                      />
                       <input
                         type="hidden"
                         name="utm_first_site_page"
@@ -313,6 +324,27 @@ export default function ContactHero(): JSX.Element {
                         </label>
                         <div className="contact-hero_form-field-error-msg">
                           Please enter valid email
+                        </div>
+                      </div>
+                      <div className="contact-hero_form-input-wrapper">
+                        <input
+                          className="contact-hero_form-input w-input"
+                          maxLength={32}
+                          name="Phone-number"
+                          data-name="Phone number"
+                          data-optional="true"
+                          placeholder=""
+                          type="tel"
+                          id="Phone-number"
+                        />
+                        <label
+                          htmlFor="Phone-number"
+                          className="contact-hero_form-label"
+                        >
+                          Phone (optional)
+                        </label>
+                        <div className="contact-hero_form-field-error-msg">
+                          Please enter a valid phone number
                         </div>
                       </div>
                       <div

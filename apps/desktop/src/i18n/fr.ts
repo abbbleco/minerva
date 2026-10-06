@@ -395,6 +395,8 @@ export const frOverrides = {
     ideas: 'Idées',
     feeds: 'Flux',
     goals: 'Objectifs',
+    prds: 'PRDs',
+    leads: 'Leads',
     copied: 'Copié',
     copy: 'Copier',
     copyFailed: 'Échec de la copie',

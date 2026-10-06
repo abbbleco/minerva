@@ -1,4 +1,4 @@
-"""Configuration management for Hermes Agent: config.yaml / .env loading, saving,
+"""Configuration management for Minerva Agent: config.yaml / .env loading, saving,
 validation, migration, and the ``minerva config`` command."""
 
 # Stale-module bridge — must run before ANY import below can bind a root-level symbol.
@@ -79,10 +79,10 @@ _ENV_VAR_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 # Env var names that influence how the next subprocess executes — never writable through
 # ``save_env_value``: dynamic loader (LD_*/DYLD_*: attacker code loads before main()),
-# interpreter init (PYTHON*, NODE_*: Hermes restarts through them), PATH (fix tool lookup
+# interpreter init (PYTHON*, NODE_*: Minerva restarts through them), PATH (fix tool lookup
 # with absolute paths instead), git rewrites (fire on every plugin install/update),
 # implicitly-invoked commands (BROWSER/EDITOR/VISUAL/PAGER = RCE on next $EDITOR), SHELL,
-# and Hermes runtime-location / security-policy flags (config.yaml is the supported surface).
+# and Minerva runtime-location / security-policy flags (config.yaml is the supported surface).
 #
 # ``HERMES_*`` overall is NOT blocked — many integration credentials use that prefix
 # (HERMES_LANGFUSE_PUBLIC_KEY, HERMES_SPOTIFY_CLIENT_ID, ...). The denylist is name-by-name so
@@ -119,7 +119,7 @@ _ENV_VAR_NAME_DENYLIST: frozenset[str] = frozenset({
     "GIT_PROXY_COMMAND", "GIT_TEMPLATE_DIR", "GIT_DIR",
     # Shell init files / interactive hooks — sourced before or during execution
     "BASH_ENV", "ENV", "ZDOTDIR", "PROMPT_COMMAND", "VIMINIT", "EXINIT",
-    # Hermes runtime location
+    # Minerva runtime location
     "HERMES_HOME", "HERMES_PROFILE", "HERMES_CONFIG", "HERMES_ENV",
     "HERMES_CONFIG_PATH", "HERMES_ENV_PATH",
     # MCP catalog trust root; package-manager wrappers may still set it in the process env.
@@ -149,7 +149,7 @@ def validate_env_var_name_for_write(key: str) -> None:
         raise ValueError(
             f"Environment variable {key!r} is on the writer denylist. "
             "Names that influence subprocess execution (LD_PRELOAD, PYTHONPATH, PATH, EDITOR, ...) "
-            "or Hermes runtime location and security policy (HERMES_HOME, HERMES_YOLO_MODE, ...) "
+            "or Minerva runtime location and security policy (HERMES_HOME, HERMES_YOLO_MODE, ...) "
             "cannot be persisted via the env writer. If you really need this, edit ~/.hermes/.env "
             "directly.")
 
@@ -233,14 +233,14 @@ _NIX_STORE = Path("/nix/store")
 
 
 def is_managed() -> bool:
-    """Check if Hermes is running in package-manager-managed mode."""
+    """Check if Minerva is running in package-manager-managed mode."""
     return get_managed_system() is not None
 
 
 # Nix installs arrive by several routes (nix run, nix profile, system flake, home-manager) and
 # the running process cannot tell which, so the text names the routes instead of one command.
 _NIX_UPDATE_MSG = (
-    "Update Hermes through the Nix source that installed it "
+    "Update Minerva through the Nix source that installed it "
     "(e.g. nix profile upgrade, or update your flake input and rebuild with nixos-rebuild or home-manager switch)"
 )
 
@@ -265,7 +265,7 @@ def _install_method_stamp(path: Path) -> Optional[str]:
 
 
 def detect_install_method(project_root: Optional[Path] = None) -> str:
-    """Detect how Hermes was installed: apt/docker/nix/nixos/home-manager/git/unknown.
+    """Detect how Minerva was installed: apt/docker/nix/nixos/home-manager/git/unknown.
     Order: code-scoped ``<install tree>/.install_method`` stamp (authoritative) -> legacy
     ``$HERMES_HOME/.install_method`` -> managed marker -> /nix/store path -> .git dir -> unknown.
     The stamp lives next to the code because HERMES_HOME is shared data: a container and a host
@@ -355,7 +355,7 @@ def recommended_update_command() -> str:
 _DOCKER_UPDATE_MESSAGE = """\
 ✗ ``minerva update`` doesn't apply inside the Docker container.
 
-Hermes Agent runs as a published image (abbbleco/minerva), not a
+Minerva Agent runs as a published image (abbbleco/minerva), not a
 git checkout — the container has no working tree to pull into.  Update by
 pulling a fresh image and restarting your container instead:
 
@@ -387,11 +387,11 @@ def format_docker_update_message() -> str:
     return _DOCKER_UPDATE_MESSAGE
 
 
-def format_managed_message(action: str = "modify this Hermes installation") -> str:
+def format_managed_message(action: str = "modify this Minerva installation") -> str:
     """Build a user-facing error for managed installs."""
     managed_system = get_managed_system() or "a package manager"
     return (
-        f"Cannot {action}: this Hermes installation is managed by {managed_system}.\n"
+        f"Cannot {action}: this Minerva installation is managed by {managed_system}.\n"
         "Use your package manager to upgrade or reinstall Hermes.")
 
 
@@ -1219,7 +1219,7 @@ def _validate_quoted_containers(config: Dict[str, Any], issues: List[ConfigIssue
             continue
         if isinstance(parsed, (list, dict)):
             _issue(issues, "warning",
-                   f"{key} is the quoted string {value!r} — Hermes expects a YAML {kind} here "
+                   f"{key} is the quoted string {value!r} — Minerva expects a YAML {kind} here "
                    "and every reader ignores the string",
                    f"Run: hermes config set {key} {shlex.quote(value)}  (stores a real {kind}), "
                    "or remove the quotes in config.yaml")
@@ -1250,7 +1250,7 @@ def validate_config_structure(config: Optional[Dict[str, Any]] = None) -> List["
 
     if cp and not config.get("model"):
         _issue(issues, "warning",
-               "custom_providers defined but no 'model' section — Hermes won't know which provider to use",
+               "custom_providers defined but no 'model' section — Minerva won't know which provider to use",
                "Add a model section:\n  model:\n    provider: custom\n    default: your-model-name\n"
                "    base_url: https://...")
 
@@ -2197,7 +2197,7 @@ def terminal_config_env_var_for_key(key: str) -> Optional[str]:
 
 
 def _is_ssh_remote_tilde_cwd(backend: str, cwd: str) -> bool:
-    """Whether the remote SSH shell must expand *cwd* itself: ``~`` expanded on the Hermes host
+    """Whether the remote SSH shell must expand *cwd* itself: ``~`` expanded on the Minerva host
     would name the host/container home instead of the SSH user's."""
     return (backend or "").strip().lower() == "ssh" and (cwd == "~" or cwd.startswith("~/"))
 
@@ -2863,7 +2863,7 @@ def save_env_value_secure(key: str, value: str) -> Dict[str, Any]:
 
 def reload_env() -> int:
     """Re-read ~/.hermes/.env into os.environ; returns count of vars changed.
-    Removes deleted vars only when known to Hermes (OPTIONAL_ENV_VARS and _EXTRA_ENV_KEYS) so
+    Removes deleted vars only when known to Minerva (OPTIONAL_ENV_VARS and _EXTRA_ENV_KEYS) so
     unrelated environment is never clobbered."""
     env_vars = load_env()
     count = 0
@@ -3122,7 +3122,7 @@ def show_config():
 
     print()
     print(color("┌─────────────────────────────────────────────────────────┐", Colors.CYAN))
-    print(color("│              ☤ Hermes Configuration                    │", Colors.CYAN))
+    print(color("│              ☤ Minerva Configuration                    │", Colors.CYAN))
     print(color("└─────────────────────────────────────────────────────────┘", Colors.CYAN))
     _show_managed_banner()
 
@@ -3585,7 +3585,7 @@ def _write_user_config(config_path: Path, user_config: Dict[str, Any]) -> None:
 def _print_unknown_key_notice(key: str, suggestion: Optional[str]) -> None:
     print(color(
         f"⚠ '{key}' is not a recognized config key — it was saved anyway, "
-        "but Hermes may not read it.", Colors.YELLOW))
+        "but Minerva may not read it.", Colors.YELLOW))
     if suggestion:
         print(color(f"  Did you mean: {suggestion}", Colors.YELLOW))
     # The env bridge covers custom TOP-LEVEL keys only; an unseeded nested path (``stt.provider``)
@@ -3791,7 +3791,7 @@ def get_config_value(key: str, *, as_json: bool = False, raw: bool = False):
         is_known, suggestion = _validate_config_key(key)
         if not is_known:
             print(color(
-                f"⚠ '{key}' is not a recognized config key — Hermes may not read it; the value "
+                f"⚠ '{key}' is not a recognized config key — Minerva may not read it; the value "
                 "printed above comes from your config file.", Colors.YELLOW), file=sys.stderr)
             if suggestion:
                 print(color(f"  Did you mean: {suggestion}", Colors.YELLOW), file=sys.stderr)
@@ -4079,7 +4079,7 @@ def _platform_manifest_paths(home: Optional[Path] = None, source: PlatformManife
     """Yield ``(dir_name, manifest_path, require_kind, stat)`` for every platform plugin manifest.
     ``source`` is ``"bundled"`` (shipped ``plugins/platforms/*``), ``"user"`` (``<home>/plugins/
     platforms/*`` plus flat ``<home>/plugins/*`` installs, which must declare ``kind: platform``,
-    #46600) or ``"all"``. ``home`` defaults to the bound Hermes home. A directory that cannot be
+    #46600) or ``"all"``. ``home`` defaults to the bound Minerva home. A directory that cannot be
     listed or searched yields ``(name, None, require_kind, error)``: a plugin there can't load
     either, so callers skip it. One ``scandir`` per root and one ``stat`` per candidate, because
     the child-env scrub stamps these on every spawn."""

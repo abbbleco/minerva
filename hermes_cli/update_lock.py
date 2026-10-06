@@ -1,4 +1,4 @@
-"""Cross-process mutual exclusion for in-flight Hermes updates.
+"""Cross-process mutual exclusion for in-flight Minerva updates.
 
 The marker file the Tauri updater writes (``UpdateMarkerGuard`` in
 ``apps/bootstrap-installer/src-tauri/src/update.rs``) and the Electron desktop reads
@@ -46,7 +46,7 @@ UPDATE_EXIT_CONCURRENT = 2
 def update_marker_path() -> Path:
     """Path of the shared update marker.
 
-    Uses the *process* Hermes home (never the context-local profile override): the Rust
+    Uses the *process* Minerva home (never the context-local profile override): the Rust
     updater resolves ``$HERMES_HOME`` or the platform default and the desktop pins that same
     value into the updater's env, so a profile-scoped path would be one the other owners never look at.
     """
@@ -288,7 +288,7 @@ def describe_holder(holder: UpdateHolder | None) -> str:
     elapsed = f"{minutes}m {seconds}s" if minutes else f"{seconds}s"
     who = f", process {holder.pid}" if holder else ""
     return (
-        f"✗ Another Hermes update is already running (started {elapsed} ago{who}).\n"
+        f"✗ Another Minerva update is already running (started {elapsed} ago{who}).\n"
         "\n"
         "  Running two at once would corrupt the install. Wait for it to finish\n"
         "  (watch `minerva logs`), or close the Desktop/dashboard window that\n"

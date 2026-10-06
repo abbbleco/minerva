@@ -223,7 +223,7 @@ The director turns this into actual `kanban_create` calls.
 ## API-key prerequisites check
 
 Before firing the kanban, verify required keys are available. Check both
-the Hermes `.env` (`${HERMES_HOME:-$HOME/.hermes}/.env`) and macOS Keychain
+the Minerva `.env` (`${HERMES_HOME:-$HOME/.hermes}/.env`) and macOS Keychain
 (if on macOS):
 
 ```bash

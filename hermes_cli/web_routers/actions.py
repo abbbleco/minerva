@@ -1,4 +1,4 @@
-"""Gateway restart/drain, Hermes update and background-action status dashboard routes.
+"""Gateway restart/drain, Minerva update and background-action status dashboard routes.
 
 Extracted from ``hermes_cli.web_server``; helpers/state that tests monkeypatch on
 ``web_server`` stay there and are late-bound (cycle-safe).
@@ -262,7 +262,7 @@ _NON_APPLYABLE_MESSAGES = {
 
 @router.get("/api/hermes/update/check")
 async def check_hermes_update(force: bool = False, profile: Optional[str] = None):
-    """Report whether a Hermes update is available, without applying it.
+    """Report whether a Minerva update is available, without applying it.
 
     Returns install_method ('apt'|'git'|'docker'|'nix'|'nixos'|'unknown'),
     current_version, behind (commits behind, 0 = up to date, -1 = unknown count,

@@ -17,7 +17,7 @@ Hand-drawn Excalidraw JSON diagrams (arch, flow, seq).
 | Source | Optional — install with `minerva skills install official/creative/excalidraw` |
 | Path | `optional-skills/creative/excalidraw` |
 | Version | `1.0.1` |
-| Author | Hermes Agent |
+| Author | Minerva Agent |
 | License | MIT |
 | Platforms | linux, macos, windows |
 | Tags | `Excalidraw`, `Diagrams`, `Flowcharts`, `Architecture`, `Visualization`, `JSON` |

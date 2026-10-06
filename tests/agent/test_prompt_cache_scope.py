@@ -353,7 +353,7 @@ class TestTransportWiring:
 class TestPerResponseRunNonceIsolation:
     """Issue #96570 — hosts that mint one physical session per RESPONSE.
 
-    Hermes Studio group chat builds ``gc_run_<room>_<profile>_<name>_<uuid4hex>``
+    Minerva Studio group chat builds ``gc_run_<room>_<profile>_<name>_<uuid4hex>``
     for every reply and destroys it when the reply completes
     (``groupRuntimeSessionId``), so every conversation-affinity hint Hermes
     derives from that id is re-keyed on every reply. What is demonstrated here
@@ -446,7 +446,7 @@ class TestPerResponseRunNonceIsolation:
         The Studio bridge creates the row with ``create_session(id, source,
         model)`` — no ``parent_session_id`` — so ``resolve_prompt_cache_scope``
         returns the physical id. This is the invariant, not a defect record:
-        an owner Hermes was never told about must never be guessed. #96811
+        an owner Minerva was never told about must never be guessed. #96811
         closes the gap by having the host declare the logical conversation (a
         stable session id, or an explicit key); rows that still declare
         nothing keep resolving exactly like this.

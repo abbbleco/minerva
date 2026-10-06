@@ -173,7 +173,7 @@ def sandbox_mcp_invocation() -> Optional[Tuple[Tuple[str, List[str]], Dict[str, 
 
 
 def sanitized_cua_driver_env() -> Dict[str, str]:
-    """``cua_driver_child_env()`` with Hermes provider secrets stripped — cua-driver is a third-party binary and must
+    """``cua_driver_child_env()`` with Minerva provider secrets stripped — cua-driver is a third-party binary and must
     never inherit API keys. Falls back to the unsanitized telemetry env if the sanitizer can't import."""
     env = cua_driver_child_env()
     with contextlib.suppress(Exception):
@@ -268,7 +268,7 @@ class CuaDriverBackend(_CaptureMixin, _InputMixin, ComputerUseBackend):
         # windows all say Qt6Application), `_snapshot_tokens` (element_index -> element_token, attached to actions so
         # cua-driver reports "stale" instead of silently re-resolving).
         self._clear_active_target()
-        # Public session label (one per Hermes run) sent as `session` on every call: owns the cursor color and
+        # Public session label (one per Minerva run) sent as `session` on every call: owns the cursor color and
         # gives config/recording state a stable owner across transport restarts. Part of the 0.20 runtime contract.
         self._session_id: str = f"hermes-{uuid.uuid4().hex[:12]}"
         self._session.set_transport_reset_callback(self._handle_transport_reset)

@@ -122,7 +122,7 @@ _PR_SET_CHILD_SUBREAPER = 36
 def become_subreaper() -> None:
     """Adopt this test process's orphaned descendants (Linux ``PR_SET_CHILD_SUBREAPER``).
 
-    A Hermes child that daemonises a helper leaves it reparented to init, outside the test's
+    A Minerva child that daemonises a helper leaves it reparented to init, outside the test's
     process tree, so teardown could neither reap it nor (under the local live-system guard)
     signal it. As subreaper the orphans stay our children: ``kill_tagged`` stays in-tree and
     ``reap_adopted`` (``Rig.stop``) collects them instead of leaving zombies."""

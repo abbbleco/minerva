@@ -7,7 +7,7 @@ plugin-registered backends. Handles background processes, sandbox lifecycle
 (per-task cache, idle reaper, atexit teardown) and sudo password plumbing.
 Cloud-sandbox persistent filesystems preserve working state across sandbox
 recreation but do NOT guarantee the same live sandbox or long-running
-processes survive cleanup, idle reaping, or Hermes exit.
+processes survive cleanup, idle reaping, or Minerva exit.
 
 Companion modules (re-exported here, so ``tools.terminal_tool.<name>`` stays the
 import/patch target): ``terminal_tool_config`` (TERMINAL_* reads, ``_quiet``),
@@ -113,7 +113,7 @@ def _current_session_key() -> str:
 
 
 def _current_session_profile() -> str:
-    """Active session's Hermes profile name, or "" (same lookup discipline as
+    """Active session's Minerva profile name, or "" (same lookup discipline as
     :func:`_current_session_key`)."""
     from gateway.session_context import get_session_env
 
@@ -187,11 +187,11 @@ def _maybe_reap_docker_orphans(container_config: Dict[str, Any]) -> None:
     """Run the docker orphan reaper once per process, if enabled.
 
     Sweeps Exited containers labeled ``hermes-agent=1`` for the current
-    profile — leftovers of Hermes processes that died without firing
+    profile — leftovers of Minerva processes that died without firing
     ``atexit`` (SIGKILL, OOM, closed terminal). Conservative: only containers
     older than ``2 × lifetime_seconds``, profile-scoped. Gates:
     ``terminal.docker_orphan_reaper: false`` (operator opt-out, e.g. several
-    Hermes processes sharing a profile) and the once-per-interpreter flag so
+    Minerva processes sharing a profile) and the once-per-interpreter flag so
     parallel subagent / RL-rollout calls don't re-sweep.
     """
     global _docker_orphan_reaper_ran

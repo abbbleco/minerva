@@ -19,7 +19,7 @@ import { defineWidgetApp, listWidgetApps, removeWidgetApp } from './registry.js'
 import { isCtrl } from './types.js'
 
 /**
- * User widget apps — Hermes authors its own TUI widgets, mirroring the
+ * User widget apps — Minerva authors its own TUI widgets, mirroring the
  * Python plugin contract: drop `<name>.mjs` into `$HERMES_HOME/tui-widgets/`,
  * default-export `register(sdk)`, and the app surfaces in `/` completions
  * and dispatch automatically (the registry is the catalog). Plain ESM so the
@@ -156,7 +156,7 @@ export async function loadUserWidgets(dir = widgetsDir()): Promise<UserWidgetLoa
 let watching = false
 
 /** Generative-UI hot loading: watch the widgets directory and re-scan on
- *  every change, so a widget Hermes writes appears within ~a second — no
+ *  every change, so a widget Minerva writes appears within ~a second — no
  *  `/widgets-reload`, no restart (GUI parity). Debounced (editors and
  *  write_file emit bursts); polls until the directory exists so the very
  *  first widget ever written also hot-loads. */

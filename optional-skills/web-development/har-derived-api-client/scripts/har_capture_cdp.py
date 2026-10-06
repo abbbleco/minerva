@@ -2,7 +2,7 @@
 """Capture a HAR from a browser you connect to over CDP (not one you launch).
 
 Use this when the browser is owned by someone else and only reachable over the
-Chrome DevTools Protocol: Hermes cloud backends (Browserbase, Browser-Use,
+Chrome DevTools Protocol: Minerva cloud backends (Browserbase, Browser-Use,
 Firecrawl), a Camofox session exposing CDP, or anything wired via
 `/browser connect <url>` / BROWSER_CDP_URL / browser.cdp_url in config.
 

@@ -1,12 +1,12 @@
 ---
 sidebar_position: 1
 title: "ABBBLE Portal"
-description: "一个订阅，300+ 前沿模型，以及 Tool Gateway —— 运行 Hermes Agent 的推荐方式"
+description: "一个订阅，300+ 前沿模型，以及 Tool Gateway —— 运行 Minerva Agent 的推荐方式"
 ---
 
 # ABBBLE Portal
 
-[ABBBLE Portal](https://portal.nousresearch.com) 是 Nous Research 的统一订阅网关，也是**运行 Hermes Agent 的推荐方式**。一次 OAuth 登录，即可替代原本需要手动配置的各模型厂商独立账号、API 密钥和计费关系。
+[ABBBLE Portal](https://portal.nousresearch.com) 是 ABBBLE CO 的统一订阅网关，也是**运行 Minerva Agent 的推荐方式**。一次 OAuth 登录，即可替代原本需要手动配置的各模型厂商独立账号、API 密钥和计费关系。
 
 如果你只有时间配置一件事，就配置这个。最快路径：
 
@@ -46,7 +46,7 @@ Portal 代理了来自整个生态系统的精选 agentic 模型目录——统�
 
 ### Nous Tool Gateway
 
-同一订阅还解锁了 [Tool Gateway](../user-guide/features/tool-gateway.md)，将 Hermes Agent 的工具调用路由至 Nous 托管的基础设施。五个后端，一次登录：
+同一订阅还解锁了 [Tool Gateway](../user-guide/features/tool-gateway.md)，将 Minerva Agent 的工具调用路由至 Nous 托管的基础设施。五个后端，一次登录：
 
 | 工具 | 合作方 | 功能说明 |
 |------|---------|--------------|
@@ -70,9 +70,9 @@ Portal 代理了来自整个生态系统的精选 agentic 模型目录——统�
 
 ## 关于 Hermes 4 的说明
 
-Nous Research 自家的 **Hermes 4** 系列（Hermes-4-70B、Hermes-4-405B）通过 Portal 提供，享有大幅折扣。这些是**前沿混合推理对话模型**——在数学、科学、指令遵循、schema 遵从、角色扮演和长文写作方面表现出色。
+ABBBLE CO 自家的 **Hermes 4** 系列（Hermes-4-70B、Hermes-4-405B）通过 Portal 提供，享有大幅折扣。这些是**前沿混合推理对话模型**——在数学、科学、指令遵循、schema 遵从、角色扮演和长文写作方面表现出色。
 
-但**不建议在 Hermes Agent 内部使用它们**。Hermes 4 针对对话和推理进行了调优，而非 agent 所依赖的高频工具调用循环。请将它们用于研究工作流，或通过[订阅代理](../user-guide/features/subscription-proxy.md)从其他工具调用——但在 agent 场景下，请从目录中选择前沿 agentic 模型：
+但**不建议在 Minerva Agent 内部使用它们**。Hermes 4 针对对话和推理进行了调优，而非 agent 所依赖的高频工具调用循环。请将它们用于研究工作流，或通过[订阅代理](../user-guide/features/subscription-proxy.md)从其他工具调用——但在 agent 场景下，请从目录中选择前沿 agentic 模型：
 
 ```bash
 /model anthropic/claude-sonnet-4.6     # 最佳通用 agentic 模型
@@ -81,7 +81,7 @@ Nous Research 自家的 **Hermes 4** 系列（Hermes-4-70B、Hermes-4-405B）通
 /model deepseek/deepseek-v3.2          # 高性价比代码模型
 ```
 
-Portal 自身的[模型信息页](https://portal.nousresearch.com/info)也有相同警告，因此这不是 Hermes 侧的主观意见——这是 Nous Research 的官方指导。
+Portal 自身的[模型信息页](https://portal.nousresearch.com/info)也有相同警告，因此这不是 Hermes 侧的主观意见——这是 ABBBLE CO 的官方指导。
 
 ## 配置
 

@@ -1,4 +1,4 @@
-"""Skills Hub discovery: the centralized Hermes index fetch (cached, stale-
+"""Skills Hub discovery: the centralized Minerva index fetch (cached, stale-
 fallback), the source router, and parallel/unified search across source
 adapters.
 

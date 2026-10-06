@@ -164,7 +164,7 @@ function run (argv) {
     false
   )
 
-  // Don't allow closing while Hermes is updating.
+  // Don't allow closing while Minerva is updating.
   const closeButton = win.standardWindowButton($.NSWindowCloseButton)
   closeButton.enabled = false
 
@@ -240,7 +240,7 @@ function run (argv) {
   if (settled === 'done') {
     line.stringValue = 'Opening Hermes…\nYou can close this window.'
   } else if (settled === 'manual') {
-    line.stringValue = message || 'Reopen Hermes to finish.'
+    line.stringValue = message || 'Reopen Minerva to finish.'
   } else {
     line.stringValue = 'Run hermes debug share in a terminal to send a report.'
   }

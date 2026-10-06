@@ -155,7 +155,7 @@ mining, per-epoch anchor windows) before default flip.
    gold: `do NOT cherry-pick. Surgical reapply as maintainer-authored commit, Co-authored-by the GitHub PR author`
 8. **How should an agent handle a 'gh pr merge' 502 error?**  
    gold: `retry the same command once after the "Merge already in progress" settles (~45s); check PR state between attempts`
-9. **Which two properties shape almost every design decision in Hermes according to the Development Guide?**  
+9. **Which two properties shape almost every design decision in Minerva according to the Development Guide?**  
    gold: `Per-conversation prompt caching is sacred and The core is a narrow waist; capability lives at the edges.`
 10. **What error message does the live-checkout git guard display when blocking a history-rewriting command?**  
    gold: `Blocked: `git <op>` would rewrite Hermes's live source checkout (/home/teknium/.hermes/hermes-agent) and can mix module `
@@ -181,7 +181,7 @@ mining, per-epoch anchor windows) before default flip.
 
 <details><summary>15 exam questions (questions-36d3d87e0b.json)</summary>
 
-1. **What is the PR number for the authored fix addressing mid-turn message ordering bugs in Hermes Desktop?**  
+1. **What is the PR number for the authored fix addressing mid-turn message ordering bugs in Minerva Desktop?**  
    gold: `#86617`
 2. **According to the contribution rubric in AGENTS.md, which type of config belongs in '.env' and which belongs in 'config.yaml'?**  
    gold: `.env is for secrets only (API keys, tokens, passwords). All behavioral settings... go in config.yaml.`
@@ -195,9 +195,9 @@ mining, per-epoch anchor windows) before default flip.
    gold: `pane sash grab band made asymmetric 1px/7px`
 7. **Which contributor's email was mapped to 'baihemax' during the attribution audit of PR #86588?**  
    gold: `602028@ky-tech.com.cn`
-8. **What error message does the Hermes terminal tool return when a git command is blocked to prevent rewriting the live source checkout?**  
+8. **What error message does the Minerva terminal tool return when a git command is blocked to prevent rewriting the live source checkout?**  
    gold: `Blocked: `git <op>` would rewrite Hermes's live source checkout`
-9. **What is the core design principle regarding 'Narrow Waist' in Hermes development?**  
+9. **What is the core design principle regarding 'Narrow Waist' in Minerva development?**  
    gold: `The core is a narrow waist; capability lives at the edges.`
 10. **What was the result of the rebase-merge attempt for PR #86589?**  
    gold: `GraphQL: Pull Request has merge conflicts (mergePullRequest)`

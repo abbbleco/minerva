@@ -590,7 +590,7 @@ def command_line_runs_inline_source(tokens: list[str]) -> bool:
     return inline_source_flag_index(tokens) is not None
 
 
-# Hermes' own inline bootstraps hand control to a Hermes entry point IN this process, so the argv
+# Hermes' own inline bootstraps hand control to a Minerva entry point IN this process, so the argv
 # they run with is this process's own identity; every other ``-c`` program keeps its trailing argv
 # as data (#107002). Each pattern is one emitted source shape, anchored at both ends so a program
 # merely CARRYING a bootstrap command line (the restart watcher's respawn argv) never matches.
@@ -636,7 +636,7 @@ def _bootstrap_entry(source: str, argv: list[str]) -> list[str] | None:
 
 def inline_bootstrap_argv(tokens: list[str]) -> list[str] | None:
     """*tokens* as the equivalent ``python -m <module> <argv…>`` when this interpreter's ``-c`` source
-    is a Hermes bootstrap running an entry point in-process; None for any other inline source.
+    is a Minerva bootstrap running an entry point in-process; None for any other inline source.
 
     Command lines usually arrive space-joined (``/proc``, psutil, ``ps``), which splits the source
     across tokens; the shortest token run that ends in a recognised tail is the source, whatever
@@ -656,7 +656,7 @@ def inline_bootstrap_argv(tokens: list[str]) -> list[str] | None:
 def _gateway_command_subcommand(command: str | None) -> str | None:
     """Hermes gateway lifecycle subcommand from a command line, or None. No loose substring matches
     (``"gateway" in cmdline`` also matched ``gateway status`` / ``python -m tui_gateway``): needs a
-    Hermes entrypoint plus the ``gateway`` subcommand, or a gateway-dedicated entrypoint. Tokenizes
+    Minerva entrypoint plus the ``gateway`` subcommand, or a gateway-dedicated entrypoint. Tokenizes
     quote-aware (Windows paths with spaces); ``--profile``/``-p`` selectors are stripped anywhere in
     argv since ``_apply_profile_override`` removes them before argparse."""
     if not command:
@@ -675,7 +675,7 @@ def _gateway_command_subcommand(command: str | None) -> str | None:
     # the inline source will spawn later, not to this process (#107002). Case-preserving tokens:
     # the operand-taking ``-X``/``-W``/``-Q`` must not be conflated with ``-q``/``-b``.
     if command_line_runs_inline_source(cased_tokens):
-        # …unless the source is a Hermes bootstrap running the entry point in THIS process (store
+        # …unless the source is a Minerva bootstrap running the entry point in THIS process (store
         # launcher, launcher script, venv_sync re-entry): then its argv is this process's (#124318).
         cased_tokens = inline_bootstrap_argv(cased_tokens)
         if cased_tokens is None:
@@ -766,7 +766,7 @@ def looks_like_gateway_runtime_command_line(command: str | None) -> bool:
 
 
 def _looks_like_gateway_process(pid: int) -> bool:
-    """True when the live PID still looks like the Hermes gateway."""
+    """True when the live PID still looks like the Minerva gateway."""
     cmdline = _read_process_cmdline(pid)
     return bool(cmdline) and looks_like_gateway_command_line(cmdline)
 
@@ -1411,7 +1411,7 @@ class GatewayLiveness:
 
 
 def profile_name_for_home(profile_home: Path) -> Optional[str]:
-    """Profile id of any Hermes home: ``<root>/profiles/<name>`` → ``<name>``, the default root →
+    """Profile id of any Minerva home: ``<root>/profiles/<name>`` → ``<name>``, the default root →
     ``"default"``, anything else → None. Multiplex-only makes ``default`` an ordinary served
     profile, so reporting surfaces need a name for it too."""
     home = Path(profile_home)

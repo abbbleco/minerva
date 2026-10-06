@@ -1467,7 +1467,7 @@ def test_stream_current_completed_response_releases_managed_stream(relay_turn, m
 
 
 def test_stream_current_primes_lazy_completed_response(relay_turn, monkeypatch):
-    """A lazy Relay stream must run once before Hermes decides its shape."""
+    """A lazy Relay stream must run once before Minerva decides its shape."""
     _relay, _turn = relay_turn
     completed = _completed_response()
 

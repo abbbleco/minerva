@@ -1,4 +1,4 @@
-"""Shared constants for Hermes Agent.
+"""Shared constants for Minerva Agent.
 
 Import-safe, stdlib-only — importable from anywhere without circular-import risk.
 """
@@ -24,7 +24,7 @@ DEFAULT_INDICATOR_STYLE: str = "kaomoji"
 
 
 def set_hermes_home_override(path: str | Path | None) -> Token:
-    """Set a context-local Hermes home override and return its reset token.
+    """Set a context-local Minerva home override and return its reset token.
 
     Deliberately does not mutate ``os.environ`` (shared by every thread in the process).
     """
@@ -33,18 +33,18 @@ def set_hermes_home_override(path: str | Path | None) -> Token:
 
 
 def reset_hermes_home_override(token: Token) -> None:
-    """Restore the previous context-local Hermes home override."""
+    """Restore the previous context-local Minerva home override."""
     _HERMES_HOME_OVERRIDE.reset(token)
 
 
 def get_hermes_home_override() -> str | None:
-    """Return the active context-local Hermes home override, if any."""
+    """Return the active context-local Minerva home override, if any."""
     override = _HERMES_HOME_OVERRIDE.get()
     return str(override) if override is not _UNSET and override else None
 
 
 def _expand_hermes_home(path: str) -> Path:
-    """Expand environment and user-home syntax in a Hermes home path."""
+    """Expand environment and user-home syntax in a Minerva home path."""
     return Path(os.path.expanduser(os.path.expandvars(path)))
 
 
@@ -127,7 +127,7 @@ _HOME_KEY_CACHE: dict[str, str] = {}
 
 
 def hermes_home_key(path: str | Path | None = None) -> str:
-    """Stable registry key for a Hermes home/profile dir.
+    """Stable registry key for a Minerva home/profile dir.
 
     ``strict=False`` so profiles whose directories don't exist yet still get a key.
 
@@ -235,7 +235,7 @@ def get_default_hermes_root(*, home: str | Path | None = None) -> Path:
 
 # Tombstone lives beside the profile dir (not inside) so a stale mkdir or rmtree cannot erase it.
 _DELETED_PROFILES_DIR = ".deleted"
-# Files marking a real Hermes home; arbitrary dirs with a ``profiles`` segment lack them.
+# Files marking a real Minerva home; arbitrary dirs with a ``profiles`` segment lack them.
 _HERMES_HOME_MARKERS = ("config.yaml", ".env", "state.db")
 
 
@@ -264,7 +264,7 @@ def _is_hermes_profiles_root(profiles_dir: Path) -> bool:
 def named_profile_home(path: str | Path) -> Path | None:
     """Return ``<root>/profiles/<name>`` when *path* is that home or under it.
 
-    Requires ``<name>`` not to start with ``.`` and the ``profiles`` parent to be a real Hermes home;
+    Requires ``<name>`` not to start with ``.`` and the ``profiles`` parent to be a real Minerva home;
     a default home whose path merely contains a ``profiles`` segment is not a named profile.
     """
     current = Path(path)
@@ -280,7 +280,7 @@ def named_profile_home(path: str | Path) -> Path | None:
 def profile_name_for_home(path: str | Path | None) -> str | None:
     """Return the canonical profile id owning *path*, or ``None`` when it is not a profile home.
 
-    The default home is the Hermes root itself, so its basename is an installation detail (``.hermes``
+    The default home is the Minerva root itself, so its basename is an installation detail (``.hermes``
     on POSIX and commonly ``hermes`` on Windows), not the profile id ``default``.
     """
     if path is None or not str(path).strip():
@@ -411,7 +411,7 @@ def get_bundled_skills_dir(default: Path | None = None) -> Path:
 
 
 def get_hermes_dir(new_subpath: str, old_name: str, *, home: Path | None = None) -> Path:
-    """Resolve a Hermes subdirectory, honouring a populated legacy ``<old_name>/`` (no migration).
+    """Resolve a Minerva subdirectory, honouring a populated legacy ``<old_name>/`` (no migration).
 
     An empty legacy dir does NOT count (install scaffolds, manual mkdir) so it cannot shadow the new path.
 
@@ -666,7 +666,7 @@ def _iter_real_home_candidates(env: dict[str, str] | None = None) -> list[str]:
 
 
 def get_real_home(env: dict[str, str] | None = None) -> str:
-    """The OS user's real home, avoiding the Hermes profile HOME.
+    """The OS user's real home, avoiding the Minerva profile HOME.
 
     ``HOME`` belongs to the OS account and external CLIs keeping credentials under ``~``; a parent
     already running with ``HOME={HERMES_HOME}/home`` is repaired back when possible.
@@ -822,7 +822,7 @@ def _resolve_hermes_uid_gid() -> tuple[int | None, int | None]:
     The entrypoint chowns HERMES_HOME once, but subdirs created at runtime (``profiles/<name>/``)
     need the same chown or they land root:root and block later uid-mapped workers.
 
-    Docker containers running Hermes commonly set these to map the in-container user to a host user so
+    Docker containers running Minerva commonly set these to map the in-container user to a host user so
     volume-mounted state files end up with the right ownership. See #34107.
     """
     if sys.platform == "win32":
@@ -854,7 +854,7 @@ def _chown_to_hermes_uid(path) -> None:
 
 
 def apply_secure_dir_policy(path, *, home: str | Path | None = None) -> None:
-    """Apply the canonical Hermes home-directory permission policy to *path*.
+    """Apply the canonical Minerva home-directory permission policy to *path*.
 
     Owner-only ``0700`` by default, but the operator's explicit and managed sharing choices
     win (#117347): managed installs are left exactly as the package manager / activation
@@ -890,9 +890,9 @@ def apply_secure_dir_policy(path, *, home: str | Path | None = None) -> None:
 
 
 def get_scratch_dir(home: str | Path | None = None, *, prune: bool = True) -> Path:
-    """``<home>/cache/scratch`` (created, owner-only); *home* defaults to the active Hermes home.
+    """``<home>/cache/scratch`` (created, owner-only); *home* defaults to the active Minerva home.
 
-    Every Hermes process and child gets ``TMPDIR``/``TMP``/``TEMP`` pointed here at boot (see
+    Every Minerva process and child gets ``TMPDIR``/``TMP``/``TEMP`` pointed here at boot (see
     :func:`export_scratch_tmp_env`), so ``tempfile`` defaults land here without call sites
     knowing. Entries idle for ``SCRATCH_MAX_IDLE_HOURS`` are pruned at most once per process
     and once per hour across processes (stamp file), so a fan-out of children stays cheap.
@@ -957,7 +957,7 @@ def apply_scratch_tmp_env(env: MutableMapping[str, str]) -> bool:
     """Point ``TMPDIR``/``TMP``/``TEMP`` in *env* at the scratch dir of ``env["HERMES_HOME"]``.
 
     A temp var the user (or the OS: macOS ``/var/folders``, Windows ``%TEMP%``) set is
-    respected and nothing changes. A value Hermes itself exported earlier — recognisable
+    respected and nothing changes. A value Minerva itself exported earlier — recognisable
     because it equals ``HERMES_SCRATCH_DIR`` — is re-derived, so a child running under another
     profile's home gets that home's scratch dir rather than its parent's. Returns True when
     the vars were (re)written.
@@ -1174,7 +1174,7 @@ def wsl_unc_path_to_posix(path: str) -> str | None:
 
 
 def translate_cwd_for_wsl_backend(cwd: str) -> str:
-    """Map a Windows-host cwd (drive path or ``\\\\wsl.localhost\\`` UNC) to POSIX when Hermes runs in WSL.
+    """Map a Windows-host cwd (drive path or ``\\\\wsl.localhost\\`` UNC) to POSIX when Minerva runs in WSL.
 
     No-op off WSL and for paths already POSIX.
     """
@@ -1359,7 +1359,7 @@ FIRST_PARTY_MODULE_ROOTS = frozenset({
 
 
 def is_first_party_module(name: str | None) -> bool:
-    """True when *name* ships with Hermes (exact first segment; ``startswith`` would claim ``agentops``)."""
+    """True when *name* ships with Minerva (exact first segment; ``startswith`` would claim ``agentops``)."""
     root = str(name).split(".")[0] if name else ""
     return bool(root) and (root in FIRST_PARTY_MODULE_ROOTS or root.startswith("hermes_"))
 

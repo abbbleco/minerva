@@ -1,4 +1,4 @@
-"""Bounded product contract for the first Hermes shared-metrics slice."""
+"""Bounded product contract for the first Minerva shared-metrics slice."""
 
 from __future__ import annotations
 
@@ -442,17 +442,17 @@ TURN_ACTIVITY_BUCKETS = frozenset({
     "0", "1", "2", "3_to_5", "6_to_10", "11_to_25", "26_to_50", "51_to_100", "gte_101",
 })
 WASTE_REASONS = frozenset({"interrupt", "retry", "undo"})
-# Characters of one raw tool result, before Hermes spills or truncates it.
+# Characters of one raw tool result, before Minerva spills or truncates it.
 TOOL_OUTPUT_SIZE_BUCKETS = frozenset({
     "lt_1k", "1k_to_10k", "10k_to_50k", "50k_to_100k", "100k_to_500k", "gte_500k", "unknown",
 })
 TOOL_SCHEMA_TOKEN_BUCKETS = frozenset({
     "0", "lt_2k", "2k_to_5k", "5k_to_10k", "10k_to_20k", "20k_to_40k", "gte_40k",
 })
-# Toolsets Hermes ships; MCP servers and plugin toolsets collapse to custom.
+# Toolsets Minerva ships; MCP servers and plugin toolsets collapse to custom.
 TOOLSET_NAMES = BUILTIN_TOOLSET_NAMES | {"custom"}
-# compression is the expected cause; the rest are Hermes invalidating a warm prefix (bugs or
-# user-driven), or the provider reporting a cold read Hermes did not cause.
+# compression is the expected cause; the rest are Minerva invalidating a warm prefix (bugs or
+# user-driven), or the provider reporting a cold read Minerva did not cause.
 CACHE_BREAK_CAUSES = frozenset({
     "cache_expired", "compression", "model_switch", "provider_reported_miss", "system_prompt_rebuild",
     "toolset_change",
@@ -615,7 +615,7 @@ def client_architecture(value: Any) -> str:
 
 
 def client_install_method(value: Any) -> str:
-    """Return an allowlisted Hermes installation method."""
+    """Return an allowlisted Minerva installation method."""
     normalized = _norm(value)
     return _allowlisted("nixos" if normalized == "nix" else normalized, CLIENT_INSTALL_METHODS)
 
@@ -1113,7 +1113,7 @@ def model_call_dimensions(event: Any) -> dict[str, str] | None:
 
 
 def _auxiliary_model_call_dimensions(event: Any) -> dict[str, str] | None:
-    """Project a terminal auxiliary route from its Hermes logical scope."""
+    """Project a terminal auxiliary route from its Minerva logical scope."""
     metadata = _relay_metadata(
         event, RUNTIME_SCHEMA_KEY, RUNTIME_SCHEMA_VERSION, "hermes.call_role"
     )
@@ -1426,7 +1426,7 @@ def task_failure_class(kwargs: dict[str, Any], outcome: str | None = None) -> st
 
 
 def task_terminal_state(kwargs: dict[str, Any]) -> tuple[str, str, str]:
-    """Map Hermes terminal state to bounded (outcome, end_reason, termination)."""
+    """Map Minerva terminal state to bounded (outcome, end_reason, termination)."""
     reason = _norm(kwargs.get("turn_exit_reason"))
     if kwargs.get("interrupted") or "interrupt" in reason or "cancel" in reason:
         return "cancelled", "user_cancelled", "user_cancelled"
@@ -1488,7 +1488,7 @@ _TOOL_CATEGORY_PREFIXES = (
 
 
 def tool_category(kwargs: dict[str, Any]) -> str:
-    """Map Hermes registry toolset metadata to a low-cardinality category."""
+    """Map Minerva registry toolset metadata to a low-cardinality category."""
     toolset = _norm(kwargs.get("toolset"))
     if not toolset:
         return "unknown"
@@ -1507,7 +1507,7 @@ _TOOL_STATUS_OUTCOMES = {
 
 
 def tool_outcome(kwargs: dict[str, Any]) -> str:
-    """Normalize the terminal Hermes tool status without inspecting its result."""
+    """Normalize the terminal Minerva tool status without inspecting its result."""
     return _TOOL_STATUS_OUTCOMES.get(_norm(kwargs.get("status")), "unknown")
 
 

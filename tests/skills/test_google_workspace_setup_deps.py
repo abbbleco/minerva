@@ -32,7 +32,7 @@ def test_oauth_stops_at_pm_restart_boundary(command, monkeypatch, tmp_path, caps
         path.write_text(json.dumps({"state": "pending-state", "code_verifier": "verifier"}))
         monkeypatch.setattr(module, name, path)
     before = {path: path.read_bytes() for path in tmp_path.glob("*.json")}
-    ensure = Mock(side_effect=pm.InstallError("venv", "google installed; restart Hermes to activate"))
+    ensure = Mock(side_effect=pm.InstallError("venv", "google installed; restart Minerva to activate"))
     monkeypatch.setattr(pm, "ensure_import", ensure)
     monkeypatch.setattr("subprocess.check_call", Mock(side_effect=AssertionError("ambient install")))
     monkeypatch.setattr(sys, "argv", [str(SETUP_PATH), command] + (["code"] if command == "--auth-code" else []))
@@ -49,7 +49,7 @@ def test_oauth_stops_at_pm_restart_boundary(command, monkeypatch, tmp_path, caps
 @pytest.mark.parametrize("command", ["--install-deps", "--auth-url"])
 def test_standalone_without_hermes_reports_setup_not_ambient_installs(command, tmp_path):
     # -I -S excludes both the checkout and installed site packages, just as a
-    # copied skill run with an unrelated interpreter has no Hermes PM module.
+    # copied skill run with an unrelated interpreter has no Minerva PM module.
     (tmp_path / "google_client_secret.json").write_text("{}")
     result = subprocess.run(
         [sys.executable, "-I", "-S", str(SETUP_PATH), command],

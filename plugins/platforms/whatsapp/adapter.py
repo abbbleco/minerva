@@ -202,7 +202,7 @@ def _cache_dirs() -> tuple:
 
 
 def _is_allowed_bridge_path(url: str) -> bool:
-    """Absolute bridge path resolves (symlinks included) inside a Hermes cache dir — a rogue bridge could hand back /etc/passwd."""
+    """Absolute bridge path resolves (symlinks included) inside a Minerva cache dir — a rogue bridge could hand back /etc/passwd."""
     try:
         resolved = Path(url).resolve()
     except (OSError, ValueError):
@@ -971,7 +971,7 @@ async def _standalone_send(pconfig, chat_id, message, *, thread_id=None, media_f
                 if not (health.get("capabilities") or {}).get("outboundMentions"):
                     return {"error": (
                         "WhatsApp bridge does not support native mentions; "
-                        "restart it from the same Hermes version.")}
+                        "restart it from the same Minerva version.")}
 
             async def _post(path, payload, total, error_label=None):
                 """``(messageId, None)`` on 200, else ``(None, error_dict)`` (body read only when labelled)."""

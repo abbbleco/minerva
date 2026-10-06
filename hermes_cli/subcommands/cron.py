@@ -79,7 +79,7 @@ def build_cron_parser(subparsers, *, cmd_cron: Callable) -> None:
             "clamped by the provider at request time. Omit to follow config.")
     cron_create.add_argument("--interpreter",
         help="Absolute or ~ path to a Python in your own venv (e.g. ~/venvs/report/bin/python) "
-            "for a .py --script / --monitor-script, so it can import packages Hermes does not "
+            "for a .py --script / --monitor-script, so it can import packages Minerva does not "
             "ship. .sh/.bash still run under bash. Omit to use Hermes' Python.")
     cron_create.add_argument(
         "--continuity", dest="continuity", action="store_const", const=True, default=None,

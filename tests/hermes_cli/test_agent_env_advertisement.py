@@ -12,7 +12,7 @@ standard-var matching there is exact, so any other value is attributed to
 The terminal backends additionally export both vars inside every wrapped
 shell command (``BaseEnvironment._wrap_command``) so the marker reaches
 REMOTE backends (Docker/SSH/Modal/Daytona/Singularity/Vercel) whose exec
-environment does not inherit the Hermes process env, and survives the
+environment does not inherit the Minerva process env, and survives the
 cross-session leak guard that strips ``HERMES_SESSION_*`` from subprocess
 envs in engaged multi-session hosts.
 """

@@ -822,7 +822,7 @@ MIGRATIONS: Tuple[Tuple[int, Callable[[Dict[str, Any], bool], None]], ...] = (
 #: ``_config_version`` is current-schema content that was never stamped (installers seed it from
 #: cli-config.yaml.example; targeted writers never stamp), so it gets only these: every other step
 #: decides by a value or an absence that, in such a file, is the user's own choice. v13 is left
-#: out: it clears OPENAI_MODEL from .env, a generic name Hermes never reads but the user's tools may.
+#: out: it clears OPENAI_MODEL from .env, a generic name Minerva never reads but the user's tools may.
 #: v41 is left out too: it rewrites profile SOUL.md on a heading match, an artifact whose
 #: provenance the config stamp says nothing about.
 LEGACY_KEY_STEPS = frozenset({12, 14, 16, 17, 29, 33, 38, 39, 42, 43, 46})

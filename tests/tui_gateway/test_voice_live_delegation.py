@@ -1,12 +1,12 @@
 """GPT-Live voice chat mode: the full-duplex voice frontend that delegates to Hermes.
 
 The live voice model owns the microphone and speaker and has no tools; every real
-request is delegated to Hermes as a normal turn on the open session. Two contracts
+request is delegated to Minerva as a normal turn on the open session. Two contracts
 matter and are pinned here:
 
 * the gateway never hands the OpenAI key to the renderer — ``POST /v1/live/sessions``
   is performed server-side from the renderer's SDP offer, with the session pinned to
-  client delegation so Hermes (any model) is the backend;
+  client delegation so Minerva (any model) is the backend;
 * a turn submitted from the live voice surface carries the spoken-delegation note on
   the MODEL INPUT only (the byte-stable system prompt is untouched), exactly like the
   HUD note it sits beside.

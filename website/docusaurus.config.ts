@@ -4,7 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 import relativeDocLinks from './src/remark/relativeDocLinks';
 
 const config: Config = {
-  title: 'Hermes Agent',
+  title: 'Minerva Agent',
   tagline: 'The self-improving AI agent',
   favicon: 'img/favicon.ico',
 
@@ -123,9 +123,9 @@ const config: Config = {
       },
     },
     navbar: {
-      title: 'Hermes Agent',
+      title: 'Minerva Agent',
       logo: {
-        alt: 'Hermes Agent',
+        alt: 'Minerva Agent',
         src: 'img/logo.png',
         srcDark: 'img/logo-dark.png',
       },
@@ -197,11 +197,11 @@ const config: Config = {
           items: [
             { label: 'Desktop Download', href: 'https://hermes-agent.nousresearch.com/' },
             { label: 'GitHub', href: 'https://github.com/abbbleco/minerva' },
-            { label: 'Nous Research', href: 'https://nousresearch.com' },
+            { label: 'ABBBLE CO', href: 'https://nousresearch.com' },
           ],
         },
       ],
-      copyright: `Built by <a href="https://nousresearch.com">Nous Research</a> · MIT License · ${new Date().getFullYear()}`,
+      copyright: `Built by <a href="https://nousresearch.com">ABBBLE CO</a> · MIT License · ${new Date().getFullYear()}`,
     },
     prism: {
       theme: prismThemes.github,

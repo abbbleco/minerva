@@ -1,4 +1,4 @@
-"""``minerva doctor`` — diagnose (and with --fix, repair) a Hermes install.
+"""``minerva doctor`` — diagnose (and with --fix, repair) a Minerva install.
 
 ``run_doctor`` walks ``DOCTOR_CHECKS`` in order; each check prints its own rows and returns a ``Finding``.
 Check bodies live in the ``doctor_*`` siblings.
@@ -176,7 +176,7 @@ def run_doctor(args):
         return _ack_advisory(args.ack)
     print()
     for line in ("┌─────────────────────────────────────────────────────────┐",
-                 "│                 🩺 Hermes Doctor                        │",
+                 "│                 🩺 Minerva Doctor                        │",
                  "└─────────────────────────────────────────────────────────┘"):
         print(color(line, Colors.CYAN))
     total = Finding()

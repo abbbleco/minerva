@@ -1,4 +1,4 @@
-"""Unified self-relaunch for Hermes CLI: preserves inherited flags (--tui, --dev, --profile, --model…)
+"""Unified self-relaunch for Minerva CLI: preserves inherited flags (--tui, --dev, --profile, --model…)
 across process replacement so ``minerva sessions browse`` / post-setup relaunch keep the user's mode."""
 
 import os

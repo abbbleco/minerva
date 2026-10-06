@@ -7,7 +7,7 @@ description: >-
   Sites, CMS collections, and pages via Webflow's hosted MCP.
 source: https://developers.webflow.com/mcp/reference/getting-started
 
-# Official vendor-hosted remote MCP (URL-only — Hermes never spawns a local
+# Official vendor-hosted remote MCP (URL-only — Minerva never spawns a local
 # process for this entry). Native OAuth 2.1 + Dynamic Client Registration;
 # Hermes's MCP client + mcp_oauth_manager handle discovery, PKCE, token
 # exchange, and refresh.
@@ -27,6 +27,6 @@ suggest:
     - webflow.com
 
 post_install: |
-  On first connection Hermes opens a browser to authorize with
+  On first connection Minerva opens a browser to authorize with
   Webflow (or run `minerva mcp login webflow`). Approve access,
   then restart the session so tools load.

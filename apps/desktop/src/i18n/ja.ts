@@ -100,6 +100,8 @@ export const ja = defineLocale({
     ideas: 'アイデア',
     feeds: 'フィード',
     goals: 'ゴール',
+    prds: 'PRD',
+    leads: '???',
     copied: 'コピーしました',
     copy: 'コピー',
     copyFailed: 'コピーに失敗しました',

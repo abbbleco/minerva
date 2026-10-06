@@ -243,7 +243,7 @@ class TestJsonOutput:
              patch("sys.stdout", new_callable=StringIO) as out:
             doctor.run_doctor(json_output=True)
         # Verify the captured text round-trips through json.loads. Upstream
-        # health_report keys are preserved; Hermes adds hermes_identity.
+        # health_report keys are preserved; Minerva adds hermes_identity.
         parsed = json.loads(out.getvalue())
         report = _ok_report()
         for key, value in report.items():

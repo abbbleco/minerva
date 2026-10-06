@@ -4,7 +4,7 @@ One real install, taken through a dependency-changing ``minerva update`` so the 
 is not the installer's. Then:
 
 * every ``hermes`` the install ships agrees on what the install is. The selected generation's own
-  console script (``<gen>/venv/bin/hermes``) is on PATH for every child a Hermes process spawns
+  console script (``<gen>/venv/bin/hermes``) is on PATH for every child a Minerva process spawns
   (``activate_dependencies`` prepends that ``bin``), so the agent's terminal, workers and scripts
   resolve ``hermes`` to it. It must report the checkout as the install and be able to check for
   updates; it reports the workspace copy instead (gated on #122425 and #122627);

@@ -1,4 +1,4 @@
-"""Process bootstrap for Hermes entry points: Windows UTF-8 stdio and ANSI console, import-path
+"""Process bootstrap for Minerva entry points: Windows UTF-8 stdio and ANSI console, import-path
 hardening, durable lazy-install target, and dual-stack (Happy Eyeballs) connects.
 
 Windows binds stdio to the console code page (cp1252), so ``print("café")`` raises
@@ -10,7 +10,7 @@ process still needs an explicit ``encoding="utf-8"`` (ruff ``PLW1514``). POSIX i
 alone deliberately — users' ``LANG``/``LC_*`` choices are respected.
 
 Stdlib only: entry points import this before ``harden_import_path()`` runs, so nothing
-here may pull in a Hermes package that a project-local directory could shadow.
+here may pull in a Minerva package that a project-local directory could shadow.
 """
 
 from __future__ import annotations
@@ -339,7 +339,7 @@ def install_never_free_environ() -> None:
     On glibc < 2.41 adding a name reallocs ``environ`` and frees the old array while a
     thread that dropped the GIL (``getaddrinfo``, OpenSSL's ``SSL_CERT_FILE`` lookup) may
     still be walking it; the freed slots hold tcache pointers, so the walk segfaults the
-    whole process. Hermes writes new names at runtime from many places (``session.create``
+    whole process. Minerva writes new names at runtime from many places (``session.create``
     turns on gateway prompts, the agent build sets ``HERMES_SESSION_ID``) while background
     threads fetch catalogs, so the tui_gateway died with SIGSEGV. This is glibc 2.41's own
     fix: entry strings are cached per ``NAME=value`` and never freed; a new name is
@@ -432,13 +432,13 @@ def install_never_free_environ() -> None:
 
 
 def harden_import_path(src_root: str | None = None) -> None:
-    """Stop a package in the current directory from shadowing Hermes modules.
+    """Stop a package in the current directory from shadowing Minerva modules.
 
-    Hermes ships top-level modules with common names (``utils``, ``proxy``, ``ui``); a
+    Minerva ships top-level modules with common names (``utils``, ``proxy``, ``ui``); a
     project with its own ``utils/`` launched from its directory would win the import.
     The cwd reaches ``sys.path`` as ``""``/``"."`` (script/``-m`` launches) AND as an
     absolute path (venv activation, PYTHONPATH), so both are handled: relative forms are
-    dropped and the Hermes root is *relocated* to the front, not merely inserted when
+    dropped and the Minerva root is *relocated* to the front, not merely inserted when
     absent. ``src_root`` defaults to this module's directory (the repo root for every
     shipped entry point), so no spawner env var is required.
     """
@@ -502,7 +502,7 @@ def _legacy_post_swap_invocation(argv: list[str]) -> tuple[Path, list[str]] | No
     return Path(argv[marker + 1]), argv[1:marker]
 
 
-# Everything below imports Hermes packages, so the root goes on sys.path first. A venv
+# Everything below imports Minerva packages, so the root goes on sys.path first. A venv
 # editable-installed from a pre-PM tree maps only the top-level packages it knew then:
 # without this, ``pm`` is unimportable and the launch silently skips PM adoption.
 harden_import_path(str(_root))
@@ -553,7 +553,7 @@ if not _pm_repair:
             raise SystemExit(1) from None
         # Degrade, never brick the CLI: the previous dependency generation is still selected
         # (a failed sync commits nothing), so an offline or half-finished update leaves a
-        # usable Hermes plus a warning. Activation below is the real gate — a tree whose
+        # usable Minerva plus a warning. Activation below is the real gate — a tree whose
         # dependencies cannot load still exits with the repair remedy.
         print(f"hermes: source-update completion failed: {exc}; "
               "running with the previous dependencies — run `minerva update` to finish it",

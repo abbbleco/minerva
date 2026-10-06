@@ -161,7 +161,7 @@ class _Runner:
         if target.kind == "plugin":
             entry = self.installer.plugin_entry(target.name)
             if entry is None:
-                raise LookupError(f"'{target.name}' is not in the Hermes plugin catalog")
+                raise LookupError(f"'{target.name}' is not in the Minerva plugin catalog")
             self.facts[target.name] = entry
             target.extra = _plugin_row(entry)
             target.required_env = [{"name": name, "required": False, "secret": True, "default": ""}

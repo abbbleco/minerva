@@ -5,7 +5,7 @@ These tune the agent loop itself: which fuzzy-match strategies earn their keep, 
 guards fire, whether a model recovers after a failed tool call, which kinds of commands fail, and
 which models return empty / refused / truncated replies. Producers pass RAW values; every builder
 maps them onto closed enums. Nothing here reads command text, file paths, tool arguments or reply
-text beyond the structural checks Hermes already makes (think-block stripping for "visible text").
+text beyond the structural checks Minerva already makes (think-block stripping for "visible text").
 
 Hermes-owned agent loops (the background self-improvement review and the curator fork) are not user
 work and never count. Recording is a no-op unless shared metrics are enabled for the owning profile,

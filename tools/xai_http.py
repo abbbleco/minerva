@@ -141,7 +141,7 @@ def xai_storage_notice_text(section_name: str) -> str:
 
 
 def maybe_mark_xai_storage_notice_seen(section_name: str) -> Optional[str]:
-    """Return the storage notice once per Hermes home, then mark it seen."""
+    """Return the storage notice once per Minerva home, then mark it seen."""
     notice = xai_storage_notice_text(section_name)
     if not notice:
         return None

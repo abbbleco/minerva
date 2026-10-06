@@ -1,4 +1,4 @@
-"""Multi-provider authentication system for Hermes Agent.
+"""Multi-provider authentication system for Minerva Agent.
 
 - ``ProviderConfig`` / ``PROVIDER_REGISTRY`` describe every known inference provider.
 - The auth store (``~/.hermes/auth.json``) holds per-provider state, the credential pool and
@@ -1260,7 +1260,7 @@ def _config_selects_provider(normalized: str) -> bool:
 
 
 def _explicit_pool_entry_present(normalized: str) -> bool:
-    """Pool rows from EXPLICIT Hermes flows (manual add / device-code / PKCE) or live env keys;
+    """Pool rows from EXPLICIT Minerva flows (manual add / device-code / PKCE) or live env keys;
     ambient borrowed sources (gh_cli / claude_code / qwen-cli) are deliberately excluded."""
     return any(_pool_entry_is_explicit(entry) for entry in read_credential_pool(normalized))
 
@@ -1308,7 +1308,7 @@ def _explicit_env_credentials_present(normalized: str) -> bool:
 
 
 def _pool_entry_is_explicit(entry: Any) -> bool:
-    """True for pool rows the user created via an explicit Hermes flow (or a still-live env key)."""
+    """True for pool rows the user created via an explicit Minerva flow (or a still-live env key)."""
     if not isinstance(entry, dict):
         return False
     source = str(entry.get("source") or "").strip().lower()
@@ -2283,7 +2283,7 @@ def _get_azure_foundry_auth_status() -> Dict[str, Any]:
                     "azure-identity is installed; live credential validation "
                     "is skipped here. Run `minerva doctor` to verify token acquisition."
                 ) if installed else (
-                    "azure-identity not installed. From the Hermes environment, run: "
+                    "azure-identity not installed. From the Minerva environment, run: "
                     f"{install_hint('azure-identity')}. "
                     "Then restart Hermes."))
         except Exception as exc:

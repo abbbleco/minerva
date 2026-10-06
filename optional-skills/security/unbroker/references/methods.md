@@ -1,6 +1,6 @@
 # Opt-out method playbooks
 
-How the agent executes each broker `optout.method` using native Hermes tools. Obey **least-disclosure**:
+How the agent executes each broker `optout.method` using native Minerva tools. Obey **least-disclosure**:
 submit only the subject's OWN identifiers, and only the fields a broker's official channel requires
 (`pdd.py plan` lists them per broker). Never disclose more than that, and confirm a listing is really
 the subject's before acting on any THIRD-PARTY / indirect record (see "Distinguish the subject" and
@@ -199,7 +199,7 @@ actually sends depends on `email_mode`:
 1. **browser mode (no password, autonomous):** the command returns a recipient-locked `compose`
    payload (`to`/`subject`/`body`). Compose a NEW message in the operator's **logged-in webmail** via
    `browser_*` (paste `compose.body` exactly, disclosing nothing beyond it) and send. No credentials
-   stored. Requires the inbox signed in in the browser Hermes uses.
+   stored. Requires the inbox signed in in the browser Minerva uses.
 2. **programmatic mode (SMTP creds):** the command SMTP-sends it directly, no human.
 3. **draft_only fallback:** `pdd.py render-email <subject> <broker> --listing <url>`; a digest entry
    tells the operator to send it, and the agent records `submitted --channel email` afterward.

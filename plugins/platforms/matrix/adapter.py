@@ -156,7 +156,7 @@ def _resolve_matrix_bang_command(name: str) -> str | None:
 
 
 def _normalize_matrix_bang_command(text: str) -> str:
-    """Convert Matrix ``!command`` aliases to normal Hermes ``/command`` text."""
+    """Convert Matrix ``!command`` aliases to normal Minerva ``/command`` text."""
     if not text or not text.startswith("!"):
         return text
     match = _MATRIX_BANG_COMMAND_RE.match(text)
@@ -1182,7 +1182,7 @@ class MatrixAdapter(BasePlatformAdapter):
         elif self._password and self._user_id:
             try:
                 resp = await client.login(
-                    identifier=self._user_id, password=self._password, device_name="Hermes Agent",
+                    identifier=self._user_id, password=self._password, device_name="Minerva Agent",
                     device_id=self._device_id or None)
                 if resp and hasattr(resp, "device_id"):
                     client.device_id = resp.device_id
@@ -2952,7 +2952,7 @@ class MatrixAdapter(BasePlatformAdapter):
 
     def _strip_mention(self, body: str) -> str:
         """Strip explicit ``@user:server`` / ``@localpart`` tokens only — never bare localpart
-        words, or "Hermes Agent" would become "Agent"."""
+        words, or "Minerva Agent" would become "Agent"."""
         if not body:
             return ""
         if self._user_id:
@@ -3163,7 +3163,7 @@ def interactive_setup() -> None:
 
             print_info("Preparing Matrix dependencies...")
             sync_venv(["matrix"], explicit=True)
-            print_success("Matrix dependencies prepared. Restart Hermes to use them.")
+            print_success("Matrix dependencies prepared. Restart Minerva to use them.")
         except Exception as exc:
             print_warning(f"Matrix dependencies could not be prepared: {exc}")
             print_info("Run `minerva pm install`, then restart Hermes.")
@@ -3175,7 +3175,7 @@ def interactive_setup() -> None:
             print_success("Matrix allowlist configured")
         else:
             print_info("⚠️  No allowlist set - anyone who can message the bot can use it!")
-        for line in ("📬 Home Room: where Hermes delivers cron job results and notifications.",
+        for line in ("📬 Home Room: where Minerva delivers cron job results and notifications.",
                      "   Room IDs look like !abc123:server (shown in Element room settings)",
                      "   You can also set this later by typing /set-home in a Matrix room.",
                      "Leave blank to clear a previously saved home room (cron / notifications)."):

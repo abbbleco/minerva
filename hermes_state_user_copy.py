@@ -26,8 +26,8 @@ _DOCTOR = "Run `minerva {profile_arg}doctor --fix` to diagnose and repair."
 _STORAGE_FAILURES: dict[str, tuple[str, str, str]] = {
     "locked": (
         "storage_locked",
-        "the session database is locked by another Hermes process",
-        "Wait a moment and try again; if it persists, stop the other Hermes process "
+        "the session database is locked by another Minerva process",
+        "Wait a moment and try again; if it persists, stop the other Minerva process "
         "(`minerva {profile_arg}gateway stop`).",
     ),
     "disk_full": (
@@ -57,18 +57,18 @@ _STORAGE_FAILURES: dict[str, tuple[str, str, str]] = {
     ),
     "replaced": (
         "storage_replaced",
-        "the session database file was replaced while Hermes was running",
-        "Stop Hermes (`minerva {profile_arg}gateway stop`), run `minerva {profile_arg}doctor`, then start it again.",
+        "the session database file was replaced while Minerva was running",
+        "Stop Minerva (`minerva {profile_arg}gateway stop`), run `minerva {profile_arg}doctor`, then start it again.",
     ),
     # Code stays `storage_replaced` (GUI clients key on it); the copy names the real remedy: every writer
     # on the profile must stop, doctor names the ones still holding the retired log (#110054).
     "deleted_wal": (
         "storage_replaced",
-        "another Hermes process still holds an old copy of the session database's write-ahead log, "
-        "so Hermes stopped writing to keep the file safe",
-        "Nothing is lost. Quit every Hermes process on this profile (Desktop app, "
+        "another Minerva process still holds an old copy of the session database's write-ahead log, "
+        "so Minerva stopped writing to keep the file safe",
+        "Nothing is lost. Quit every Minerva process on this profile (Desktop app, "
         "`minerva {profile_arg}gateway stop`, dashboard, cron), run `minerva {profile_arg}doctor` — it names "
-        "any process still holding the log — then start Hermes again. Do not run `doctor --fix` or delete "
+        "any process still holding the log — then start Minerva again. Do not run `doctor --fix` or delete "
         "any state.db files while they run. Guide: " + STORAGE_RECOVERY_DOCS_URL,
     ),
     "compression": (
@@ -83,7 +83,7 @@ _STORAGE_FAILURES: dict[str, tuple[str, str, str]] = {
     ),
     "turn_lease": (
         "storage_busy",
-        "another Hermes process took over this session",
+        "another Minerva process took over this session",
         "Wait for it to finish, then send your message again.",
     ),
     "unknown": (

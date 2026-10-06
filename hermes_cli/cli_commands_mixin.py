@@ -184,7 +184,7 @@ _CRON_SUBCOMMANDS = {
 _ON_WORDS = {"on", "enable", "true", "1"}
 _OFF_WORDS = {"off", "disable", "false", "0"}
 
-# /busy modes; what Enter does while Hermes is working lives in the catalog as
+# /busy modes; what Enter does while Minerva is working lives in the catalog as
 # ``cli.commands.busy.short_<mode>`` (status line) / ``long_<mode>`` (post-set explanation).
 _BUSY_MODES = ("queue", "steer", "interrupt")
 
@@ -718,7 +718,7 @@ class CLICommandsMixin:
     # ---- /diff ----------------------------------------------------------------------------
     def _handle_diff_command(self, command: str):
         """Handle /diff [working|staged|all|session] [--stat] [<path>...] — git changes in the
-        cwd; ``session`` is everything Hermes changed since the checkpoint baseline."""
+        cwd; ``session`` is everything Minerva changed since the checkpoint baseline."""
         stat_only = False
         mode = "working"
         paths: list[str] = []
@@ -2283,6 +2283,13 @@ class CLICommandsMixin:
             if not result.kickoff:
                 _cp(_dim_line(_t("goal.continuing") if queued else _t("goal.send_to_kick")))
 
+    def _handle_prd_command(self, cmd: str) -> None:
+        from hermes_cli.prd_command import dispatch_prd_command
+
+        result = dispatch_prd_command(_command_arg(cmd), actor="reviewer:cli")
+        for line in result.output.splitlines():
+            _cp(f"  {line}")
+
     def _kick_goal(self, prompt: str) -> bool:
         """Queue the next turn without mutating cached conversation history."""
         try:
@@ -2599,7 +2606,7 @@ class CLICommandsMixin:
                             scope=_scope_outcome(explicit_global, saved))))
 
     def _handle_busy_command(self, cmd: str):
-        """Handle /busy [status|queue|steer|interrupt] — what Enter does while Hermes is working."""
+        """Handle /busy [status|queue|steer|interrupt] — what Enter does while Minerva is working."""
         arg = _command_arg(cmd, lower=True)
         usage = _dim_line(_t("busy.usage"))
         if not arg or arg == "status":

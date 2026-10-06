@@ -36,7 +36,7 @@
  * called at runtime, but the Info.plist doesn't declare the corresponding
  * `NS*UsageDescription` key, so the system prompt is either silent (with a
  * generic "denied" error to the agent) or worded in a way that confuses the
- * user ("Hermes wants to access Music" when Hermes never touches the Music
+ * user ("Hermes wants to access Music" when Minerva never touches the Music
  * library). The closed-PR family (#59486 / its duplicates #59833, #59915,
  * #59950, #60013 for Contacts; #39854 for Calendar; #64582 for Reminders)
  * established that the right fix shape is: add the key + pin it in a test.

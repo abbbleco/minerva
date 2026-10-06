@@ -1,6 +1,6 @@
 """The linux relaunch gate must compare canonical paths, not spellings.
 
-``--install-root`` keeps whatever spelling the app's Hermes root had (a symlinked
+``--install-root`` keeps whatever spelling the app's Minerva root had (a symlinked
 ``~/.hermes/hermes-agent``, or ``/home`` on Fedora/ostree where it is a link to
 ``/var/home``), while ``--relaunch-target`` comes from ``process.execPath`` /
 ``/proc/<pid>/exe`` and is already resolved.  A raw prefix compare then reads the

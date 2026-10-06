@@ -17,7 +17,7 @@ except ModuleNotFoundError as exc:
     if exc.name != "hermes_bootstrap":
         raise  # the bootstrap exists but cannot load: skipping it would skip PM activation
 else:
-    # Stop a ``utils/``/``proxy/``/``ui/`` package in the launch cwd from shadowing Hermes modules.
+    # Stop a ``utils/``/``proxy/``/``ui/`` package in the launch cwd from shadowing Minerva modules.
     hermes_bootstrap.harden_import_path()
 
 # `hermes-acp` runs without hermes_cli.main: repair a `minerva update` killed mid-pull here, before
@@ -95,11 +95,11 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     from hermes_cli._parser import invocation_prog
     parser = argparse.ArgumentParser(
         prog=invocation_prog("hermes-acp", "hermes-acp", "minerva-acp"),
-        description="Run Hermes Agent as an ACP stdio server.")
-    parser.add_argument("--version", action="store_true", help="Print Hermes version and exit")
+        description="Run Minerva Agent as an ACP stdio server.")
+    parser.add_argument("--version", action="store_true", help="Print Minerva version and exit")
     parser.add_argument("--check", action="store_true", help="Verify ACP dependencies and adapter imports, then exit")
     parser.add_argument("--setup", action="store_true",
-                        help="Run interactive Hermes provider/model setup for ACP terminal auth")
+                        help="Run interactive Minerva provider/model setup for ACP terminal auth")
     parser.add_argument("--setup-browser", action="store_true",
                         help="Prepare PM's pinned browser tools and Chromium.")
     parser.add_argument("--yes", "-y", action="store_true", dest="assume_yes",

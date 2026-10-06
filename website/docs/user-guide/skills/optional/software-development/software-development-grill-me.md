@@ -17,7 +17,7 @@ Adversarial plan interview before implementation.
 | Source | Optional — install with `minerva skills install official/software-development/grill-me` |
 | Path | `optional-skills/software-development/grill-me` |
 | Version | `2.0.0` |
-| Author | Rafael Zendron (rafaumeu) + Matt Pocock (mattpocock/skills, grilling) + Hermes Agent |
+| Author | Rafael Zendron (rafaumeu) + Matt Pocock (mattpocock/skills, grilling) + Minerva Agent |
 | License | MIT |
 | Platforms | linux, macos, windows |
 | Tags | `planning`, `adversarial`, `interview`, `decision-tree`, `pre-implementation`, `review`, `alignment` |

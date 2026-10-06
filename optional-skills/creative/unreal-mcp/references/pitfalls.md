@@ -6,12 +6,12 @@ delivery.
 
 ## Setup & Connection
 
-### 1. Start order: editor first, Hermes second
+### 1. Start order: editor first, Minerva second
 
 Hermes probes MCP servers at session start. If the editor (and its server)
 isn't up yet, no `mcp_unreal_engine_*` tools exist in the session. Fix:
 launch the editor, confirm the server bound (Output Log shows
-`LogModelContextProtocol` with the address), then open a NEW Hermes session.
+`LogModelContextProtocol` with the address), then open a NEW Minerva session.
 Tools don't hot-appear mid-session.
 
 ### 2. Server enabled but no tools advertised
@@ -19,7 +19,7 @@ Tools don't hot-appear mid-session.
 The Unreal MCP plugin ships the SERVER, not the tools. If `list_toolsets`
 returns nothing/near-nothing, the toolset provider plugin (AllToolsets) or
 Toolset Registry isn't enabled in this project. Fix in Edit > Plugins,
-restart the editor, restart the Hermes session.
+restart the editor, restart the Minerva session.
 
 ### 3. macOS: full Xcode is required, not just Command Line Tools
 
@@ -56,15 +56,15 @@ if tools were lost).
 `ModelContextProtocol.GenerateClientConfig` writes config files for Claude
 Code/Cursor/VSCode/Gemini/Codex into the project root. Hermes' connection
 lives in `~/.hermes/config.yaml` via `minerva mcp install unreal-engine`.
-Running GenerateClientConfig neither helps nor harms Hermes — just don't
-mistake it for the Hermes setup step.
+Running GenerateClientConfig neither helps nor harms Minerva — just don't
+mistake it for the Minerva setup step.
 
 ## Calling Discipline
 
 ### 6. One call at a time — never batch MCP calls
 
 The server executes tool calls serially on the game thread and Epic
-explicitly warns against overlapping calls. Hermes executes same-turn tool
+explicitly warns against overlapping calls. Minerva executes same-turn tool
 calls concurrently — so batching two `mcp_unreal_engine_*` calls in one turn
 IS issuing overlapping calls. Strictly sequential: call, await, then next.
 This deliberately overrides the general "batch independent calls" guidance.
@@ -85,7 +85,7 @@ the user to look at the editor for a dialog. Prefer tool paths/parameters
 that avoid interactive prompts; save proactively so "unsaved changes"
 prompts don't appear at bad times.
 
-### 9. Timeouts: Hermes gives up before Unreal does
+### 9. Timeouts: Minerva gives up before Unreal does
 
 Hermes' default per-call timeout is 120 s. Asset imports, first-shader
 compiles, big saves, and renders can exceed it — the call "fails" while the
@@ -237,7 +237,7 @@ import/export file arguments and screenshot output paths.
 ### 18. Filesystem results land on the EDITOR host
 
 Screenshots, renders, and exports write to the machine running Unreal (e.g.
-`<Project>/Saved/Screenshots/...`). If Hermes runs elsewhere (SSH backend,
+`<Project>/Saved/Screenshots/...`). If Minerva runs elsewhere (SSH backend,
 container), `read_file` on that path reads the wrong filesystem. Same-machine
 setups (the default here) can read captures directly.
 

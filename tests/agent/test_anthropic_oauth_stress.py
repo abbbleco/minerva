@@ -74,7 +74,7 @@ def _process_claude_code_refresh_worker(
     def fake_refresh(refresh_token, *, use_json=False):
         # The state file models a single-use token endpoint. The lock here
         # protects only the fake server's accounting; the production lock is
-        # what must ensure that the second Hermes process never calls this
+        # what must ensure that the second Minerva process never calls this
         # function after the first one has rotated the shared credential.
         with auth_mod._auth_store_lock(timeout_seconds=10, target_path=server_path):
             state = json.loads(server_path.read_text(encoding="utf-8"))

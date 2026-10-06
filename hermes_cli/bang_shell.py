@@ -130,7 +130,7 @@ def run_bang_command(command: str, *, cwd: Optional[str] = None, timeout: int = 
         emit(f"!: command timed out after {timeout}s")
         return 124
     except KeyboardInterrupt:
-        # Ctrl+C interrupts the command, not the Hermes session.
+        # Ctrl+C interrupts the command, not the Minerva session.
         proc.kill()
         emit("!: interrupted")
         return 130

@@ -17,7 +17,7 @@ Design and build cinematic, award-level web pages.
 | Source | Optional — install with `minerva skills install official/creative/auteur` |
 | Path | `optional-skills/creative/auteur` |
 | Version | `1.3.1` |
-| Author | agiwhitelist (https://github.com/agiwhitelist, upstream agiwhitelist/auteur), ported by Hermes Agent |
+| Author | agiwhitelist (https://github.com/agiwhitelist, upstream agiwhitelist/auteur), ported by Minerva Agent |
 | License | MIT |
 | Platforms | linux, macos, windows |
 | Tags | `web-design`, `cinematic`, `scroll-animation`, `design-system`, `anti-slop`, `frontend` |

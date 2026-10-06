@@ -1,6 +1,6 @@
-# Hermes Plugin Catalog
+# Minerva Plugin Catalog
 
-Curated, Nous-approved Hermes plugins. Each YAML file in this directory
+Curated, Nous-approved Minerva plugins. Each YAML file in this directory
 (except `removed.yaml`) is one catalog entry, discoverable via
 `minerva plugins catalog` / `minerva plugins search` and installable with
 `minerva plugins install <name>`.
@@ -30,7 +30,7 @@ meaningful:
 5. **Owner-or-major-contributor submissions, or a maintainer-curated sweep.**
    An entry may be submitted by the plugin repository's owner or a major
    contributor to it; drive-by submissions of third-party repos are declined.
-   Hermes maintainers may also add entries in batches from a reviewed sweep
+   Minerva maintainers may also add entries in batches from a reviewed sweep
    of community plugins (every pin validated and scanned at the pinned
    commit, self-updater and credential-store checks run, English-first UI).
    Authors of swept-in entries keep control: a PR from the owner adjusting
@@ -57,7 +57,7 @@ meaningful:
    hide, click or rewrite core UI). `minerva plugins validate` refuses these at
    admission (`desktop surface` check); a plugin that needs a capability the
    SDK lacks asks for an SDK hook instead of patching around it.
-9. **No runtime overrides of Hermes core.** A listed plugin extends Hermes only
+9. **No runtime overrides of Minerva core.** A listed plugin extends Minerva only
    through public surfaces: hooks, middleware, provider profiles and the
    other `register_*` APIs, and Desktop SDK slots and routes. It must not
    replace, wrap or rebind core functions, methods, module attributes or
@@ -87,7 +87,7 @@ meaningful:
    explicit maintainer ruling; a read-only build is the usual way through.
 12. **Approvals and unattended runs are respected.** A plugin never routes around
    Hermes's approval system: no auto-approving, no disabling guards, and no
-   spawning Hermes or shell children that inherit YOLO or non-interactive mode
+   spawning Minerva or shell children that inherit YOLO or non-interactive mode
    to run commands nobody approved. Anything that waits for a person (a prompt,
    an OAuth browser flow) fails cleanly or times out under cron, the messaging
    gateway and other unattended runs instead of hanging the agent.

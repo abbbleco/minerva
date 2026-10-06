@@ -1,4 +1,4 @@
-"""Prepare an interpreter that can run the icon generator without a Hermes install.
+"""Prepare an interpreter that can run the icon generator without a Minerva install.
 
 Pillow and resvg-py are core runtime dependencies, so builders that have no
 Hermes runtime environment (desktop bundles, product staging) render icons on

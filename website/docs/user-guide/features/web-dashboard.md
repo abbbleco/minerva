@@ -6,7 +6,7 @@ description: "Browser-based administration panel for managing configuration, API
 
 # Hermes Web Dashboard
 
-The web dashboard is a browser-based UI for managing your Hermes Agent installation. Instead of editing YAML files or running CLI commands, you can configure settings, manage API keys, and monitor sessions from a clean web interface.
+The web dashboard is a browser-based UI for managing your Minerva Agent installation. Instead of editing YAML files or running CLI commands, you can configure settings, manage API keys, and monitor sessions from a clean web interface.
 
 :::tip
 Hosted-mode auth uses ABBBLE Portal OAuth; if you also want the dashboard to talk to a real backend, `minerva setup --portal` wires up the model and tool gateway too. See [ABBBLE Portal](../../integrations/nous-portal.md).
@@ -633,7 +633,7 @@ same auth gate as the rest of `/api/`.
 
 ## Authentication (gated mode)
 
-When the dashboard is bound to a public or non-loopback address — anything other than `127.0.0.1` / `localhost` — Hermes Agent engages an auth gate. Every request must carry a verified session cookie or it's bounced to the login page. Three providers ship in the box:
+When the dashboard is bound to a public or non-loopback address — anything other than `127.0.0.1` / `localhost` — Minerva Agent engages an auth gate. Every request must carry a verified session cookie or it's bounced to the login page. Three providers ship in the box:
 
 - **[Username/password](#usernamepassword-provider-no-oauth-idp)** — the simplest way to put auth on a self-hosted / on-prem / homelab dashboard. No external identity provider. **Use it only on a trusted network or behind a VPN — not for public-internet exposure.**
 - **[OAuth (ABBBLE Portal)](#default-provider-nous-research)** — for hosted deployments and any dashboard reachable over the public internet, and the recommended path for a [remote Hermes Desktop connection](#connecting-hermes-desktop-to-a-remote-backend). Every login is verified against your Nous account, so this is the provider suitable for internet-facing use.
@@ -660,7 +660,7 @@ If the gate would engage but **no** `DashboardAuthProvider` is registered (no No
 
 When you run `minerva dashboard --host 0.0.0.0` **interactively** (a real terminal) and no provider is configured yet, Hermes doesn't just fail — it offers to set one up on the spot: pick **username & password** (writes `dashboard.basic_auth` to `config.yaml` and you're running in seconds) or **OAuth** (points you at `minerva dashboard register`). Non-interactive callers — Docker/s6, CI, piped runs — skip the prompt and hit the fail-closed error above, so an unattended deploy still never starts without auth.
 
-### Default provider: Nous Research
+### Default provider: ABBBLE CO
 
 The bundled `plugins/dashboard_auth/nous` plugin is **always installed** and auto-loaded. It auto-registers a `DashboardAuthProvider` named `nous` when a client ID is configured.
 
@@ -698,7 +698,7 @@ dashboard:
 |---------|-----------|--------|----------------|
 | `HERMES_DASHBOARD_OAUTH_CLIENT_ID` | `dashboard.oauth.client_id` | `agent:{instance_id}` | `minerva dashboard register` |
 
-Per the Hermes Agent convention (`~/.hermes/.env` is for API keys / secrets only), **`config.yaml` is the recommended place to set these values** for local dev, on-prem, and any deployment you control directly. The environment-variable path exists so a hosting platform's secret injection can push per-deploy `client_id`s without anyone having to edit `config.yaml` inside the image — that's its primary purpose.
+Per the Minerva Agent convention (`~/.hermes/.env` is for API keys / secrets only), **`config.yaml` is the recommended place to set these values** for local dev, on-prem, and any deployment you control directly. The environment-variable path exists so a hosting platform's secret injection can push per-deploy `client_id`s without anyone having to edit `config.yaml` inside the image — that's its primary purpose.
 
 Empty environment values are treated as unset, so a provisioned-but-not-populated platform secret can't accidentally shadow a valid `config.yaml` entry.
 
@@ -720,7 +720,7 @@ There is no unauthenticated public-bind option — to keep it local, bind
 127.0.0.1 and tunnel in (SSH / Tailscale).
 ```
 
-#### Worked example: Nous Research
+#### Worked example: ABBBLE CO
 
 From a logged-in Hermes install to a Nous-gated dashboard in three steps.
 
@@ -739,7 +739,7 @@ hermes dashboard register
 hermes dashboard --host 0.0.0.0 --port 9119 --no-open
 ```
 
-**3. Log in.** Open `http://<host>:9119/`, you'll be bounced to `/login`. Click **Sign in with Nous Research** → authenticate at the Portal → land back on the authenticated dashboard. Verify the gate from any machine:
+**3. Log in.** Open `http://<host>:9119/`, you'll be bounced to `/login`. Click **Sign in with ABBBLE CO** → authenticate at the Portal → land back on the authenticated dashboard. Verify the gate from any machine:
 
 ```bash
 curl -s http://<host>:9119/api/status | jq '.auth_required, .auth_providers'
@@ -756,7 +756,7 @@ If you don't want to wire up an OAuth identity provider — a self-hosted "just 
 It plugs into the same gate as the OAuth provider: the gate engages on a non-loopback bind, the login page renders a credential form for this provider (instead of a "Log in with X" button), and everything downstream of login — session cookies, transparent refresh, WS tickets, logout, the audit log — is identical to the OAuth path. Sessions are stateless HMAC-signed tokens the provider mints itself, so there's **no database and no external IDP**. Password hashing uses stdlib `scrypt` (no third-party dependency).
 
 :::warning Use this on trusted networks only — not the public internet
-The username/password provider is intended for self-hosted / on-prem / homelab dashboards on a **trusted network**, or reachable only over a **VPN**. It protects a single shared credential with no external identity provider, MFA, or per-user accounts behind it, so it is **not suitable for exposing a dashboard directly to the public internet**. For an internet-facing dashboard, use the [Nous Research provider](#default-provider-nous-research) (or your own [self-hosted OIDC](#self-hosted-oidc-provider) / [custom OAuth](#custom-providers) provider) instead.
+The username/password provider is intended for self-hosted / on-prem / homelab dashboards on a **trusted network**, or reachable only over a **VPN**. It protects a single shared credential with no external identity provider, MFA, or per-user accounts behind it, so it is **not suitable for exposing a dashboard directly to the public internet**. For an internet-facing dashboard, use the [ABBBLE CO provider](#default-provider-nous-research) (or your own [self-hosted OIDC](#self-hosted-oidc-provider) / [custom OAuth](#custom-providers) provider) instead.
 :::
 
 #### Configuration
@@ -826,7 +826,7 @@ curl -s http://<host>:9119/api/status | jq '.auth_required, .auth_providers'
 # ["basic"]
 ```
 
-`GET /api/auth/me` then returns the verified session (`provider: basic`). Keep this behind a VPN — see the warning above; for a public host use the [Nous Research](#default-provider-nous-research) or [self-hosted OIDC](#self-hosted-oidc-provider) provider instead.
+`GET /api/auth/me` then returns the verified session (`provider: basic`). Keep this behind a VPN — see the warning above; for a public host use the [ABBBLE CO](#default-provider-nous-research) or [self-hosted OIDC](#self-hosted-oidc-provider) provider instead.
 
 #### Writing your own password provider
 
@@ -894,7 +894,7 @@ The ID token is what establishes identity — the access token is treated as opa
   "clients": [
     {
       "clientId": "hermes-dashboard",
-      "name": "Hermes Agent Dashboard",
+      "name": "Minerva Agent Dashboard",
       "enabled": true,
       "publicClient": true,
       "standardFlowEnabled": true,
@@ -1034,7 +1034,7 @@ Validation rejects values without `http://` / `https://` scheme, without a host,
 The provider implements the [ABBBLE Portal OAuth contract v1](https://github.com/NousResearch/nous-account-service/blob/main/docs/agent-dashboard-oauth-contract.md) — authorization-code grant with PKCE (S256):
 
 1. User hits `/` without a session cookie → gate redirects to `/login`.
-2. Login page shows a "Continue with Nous Research" button → `/auth/login?provider=nous`.
+2. Login page shows a "Continue with ABBBLE CO" button → `/auth/login?provider=nous`.
 3. Server stashes PKCE state in a short-lived cookie, redirects user to `https://portal.nousresearch.com/oauth/authorize?…`.
 4. User authenticates with Portal, lands at `/auth/callback?code=…&state=…`.
 5. Server exchanges the code for an access token at `POST /api/oauth/token`, verifies the JWT signature against the Portal's JWKS (`/.well-known/jwks.json`), and sets the `hermes_session_at` cookie.
@@ -1120,9 +1120,9 @@ The dashboard's React StatusPage shows the same fields under "Web server". A sid
 
 Hermes Desktop can drive a Hermes backend running on another machine (a VPS, a home server, a Mini behind Tailscale). In the app this lives under **Settings → Gateways → Remote gateway**, which asks for a **Remote URL** and a way to **Sign in**. (For the desktop app itself — install, settings, chat — see the [Hermes Desktop](../desktop.md) page.)
 
-You protect the remote dashboard with one of the bundled auth providers, and the desktop app signs in against whichever one the backend advertises. For a backend reachable beyond your own machine — a VPS, a public host, anything internet-facing — the recommended provider is **OAuth (ABBBLE Portal)** (register it with [`minerva dashboard register`](#registering-a-dashboard) and sign in with *Sign in with Nous Research*). The bundled [username/password provider](#usernamepassword-provider-no-oauth-idp) is the quickest option when the backend is on a trusted LAN or reachable only over a VPN, but is **not suitable for direct public-internet exposure**. Binding the dashboard to a non-loopback address engages its auth gate; once signed in, Desktop reuses the session for the chat WebSocket automatically — there is no token to copy or paste.
+You protect the remote dashboard with one of the bundled auth providers, and the desktop app signs in against whichever one the backend advertises. For a backend reachable beyond your own machine — a VPS, a public host, anything internet-facing — the recommended provider is **OAuth (ABBBLE Portal)** (register it with [`minerva dashboard register`](#registering-a-dashboard) and sign in with *Sign in with ABBBLE CO*). The bundled [username/password provider](#usernamepassword-provider-no-oauth-idp) is the quickest option when the backend is on a trusted LAN or reachable only over a VPN, but is **not suitable for direct public-internet exposure**. Binding the dashboard to a non-loopback address engages its auth gate; once signed in, Desktop reuses the session for the chat WebSocket automatically — there is no token to copy or paste.
 
-The recipe below uses the username/password path because it's the quickest to stand up on a trusted network; for the OAuth path see [Default provider: Nous Research](#default-provider-nous-research).
+The recipe below uses the username/password path because it's the quickest to stand up on a trusted network; for the OAuth path see [Default provider: ABBBLE CO](#default-provider-nous-research).
 
 ### On the backend (the remote machine)
 

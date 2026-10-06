@@ -73,7 +73,7 @@ def _try_lazy_install_stt() -> bool:
         logger.warning(
             "Lazy install of faster-whisper failed: %s. "
             "When the message names a restart, this process selected its dependency generation at "
-            "boot and a new one cannot take effect in-flight; otherwise the Hermes process user "
+            "boot and a new one cannot take effect in-flight; otherwise the Minerva process user "
             "may not be able to write to the dependency environment. Run `minerva tools` as the "
             "Hermes installation owner and select Local Whisper under Speech-to-Text.",
             exc)
@@ -281,8 +281,8 @@ def _transcribe_local_command(
             command = command_template.format(
                 input_path=shlex.quote(prepared_input), output_dir=shlex.quote(output_dir),
                 language=shlex.quote(language), model=shlex.quote(normalized_model))
-            # Scrub Hermes secrets from the child env (same policy as _run_command_stt).
-            # Scrub Hermes secrets from the child env (sibling path to #56332 / _run_command_stt — this
+            # Scrub Minerva secrets from the child env (same policy as _run_command_stt).
+            # Scrub Minerva secrets from the child env (sibling path to #56332 / _run_command_stt — this
             # local-whisper path previously inherited the full process environment).
             from tools.environments.local import hermes_subprocess_env
             _run_quiet(shlex.split(command), timeout=300, env=hermes_subprocess_env(inherit_credentials=False))

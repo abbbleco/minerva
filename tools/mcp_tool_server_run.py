@@ -361,7 +361,7 @@ class MCPServerRunMixin:
                 # Task was cancelled (shutdown, gateway restart, explicit task.cancel()). Don't treat this
                 # as a connection failure — CancelledError inherits from BaseException (not Exception) in
                 # Python 3.11+, so the broad ``except Exception`` below would NOT catch it; we'd silently
-                # exit the reconnect loop and the MCP server would stay dead until Hermes is fully
+                # exit the reconnect loop and the MCP server would stay dead until Minerva is fully
                 # restarted. See #9930.
                 self.session = None
                 raise

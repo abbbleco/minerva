@@ -101,11 +101,11 @@ ANON_TERMINAL_CODES = frozenset({ANON_GATE_CLOSED, ANON_POW_REQUIRED, ANON_ACCOU
 ANON_UNREACHABLE_CODES = frozenset({ANON_UNREACHABLE, ANON_SERVER_ERROR})
 
 # Copy per code: what happened, then the one honest way forward. The free MODEL is never "off":
-# what is unavailable is using Hermes without signing in, and signing in is free.
+# what is unavailable is using Minerva without signing in, and signing in is free.
 _SIGNIN_IS_FREE = "Signing in is free."
 ANON_FAILURE_COPY = {
     ANON_GATE_CLOSED: f"This version can't be used without a Nous account. {_SIGNIN_IS_FREE}",
-    ANON_GATE_PAUSED: f"Using Hermes without signing in is paused for a moment. {_SIGNIN_IS_FREE}",
+    ANON_GATE_PAUSED: f"Using Minerva without signing in is paused for a moment. {_SIGNIN_IS_FREE}",
     ANON_RATE_LIMITED: "Lots of people are getting started right now. Try again in {wait}. "
                        "Signing in is free and skips the wait.",
     ANON_POW_REQUIRED: "The Nous server asked for a proof of work, but that isn't implemented in your "
@@ -495,7 +495,7 @@ def _note_mint_failure(err: AuthError) -> MintFailure:
 def _reconcile_and_provision(*, timeout_seconds: float) -> Optional[Dict[str, Any]]:
     """The lifecycle body, run under profile lock THEN shared lock (the documented order).
 
-    1. The shared store is the identity of record for this Hermes root. If it holds an identity
+    1. The shared store is the identity of record for this Minerva root. If it holds an identity
        that differs from the profile's, the profile adopts it (a stale guest never outlives a
        sibling profile's sign-in, and never overwrites it).
     2. Otherwise the profile's own identity stands.
@@ -642,7 +642,7 @@ _WELCOME_ROUTE_COPY = {
     "anon_on_paid_host": "This install is set to use a different Nous server (NOUS_INFERENCE_BASE_URL). "
                          "Unset it to use the free model, or sign in. {signin}",
     "named_on_welcome_host": "This Nous account needs to reconnect. {model_hint}",
-    "tier_disabled": "Using Hermes without signing in is switched off right now. "
+    "tier_disabled": "Using Minerva without signing in is switched off right now. "
                      "Sign in to keep chatting, it's free. {signin}",
 }
 # The sign-in door, phrased for a chat surface (slash command) and for a terminal.
@@ -692,7 +692,7 @@ def welcome_refusal_copy(refusal: Dict[str, Any], *, model: str = "", in_chat: b
     wait = friendly_wait(retry) if retry > 0 else "a little while"
     if reason == "model_not_free":
         what = f"{model} isn't" if model else "That model isn't"
-        return (f"{what} available without signing in, so Hermes uses {serves} for now. "
+        return (f"{what} available without signing in, so Minerva uses {serves} for now. "
                 f"Sign in for more models. {signin}").rstrip()
     if reason == "feature_not_free":
         return f"That isn't available without signing in. Sign in to use it, it's free. {signin}".rstrip()

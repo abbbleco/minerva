@@ -68,7 +68,7 @@ class TestEnsureHermesHome:
     # module) so this fixture keeps testing the OLD text regardless of any
     # future change to _LEGACY_TEMPLATE_SOULS's length or ordering.
     _PRE_REWRITE_DEFAULT_SOUL = (
-        "You are Hermes Agent, an intelligent AI assistant created by Nous "
+        "You are Minerva Agent, an intelligent AI assistant created by Nous "
         "Research. You are helpful, knowledgeable, and direct. You assist "
         "users with a wide range of tasks including answering questions, "
         "writing and editing code, analyzing information, creative work, "
@@ -1308,7 +1308,7 @@ class TestDiscordChannelPromptsConfig:
 class TestEnvWriteDenylist:
     """``save_env_value`` refuses to persist env-var names that
     influence how subprocesses execute — ``LD_PRELOAD``, ``PYTHONPATH``,
-    ``PATH``, ``EDITOR``, etc. — or selected Hermes runtime/security controls.
+    ``PATH``, ``EDITOR``, etc. — or selected Minerva runtime/security controls.
 
     The dashboard exposes ``PUT /api/env`` to any authed caller (and
     the session token lives in the SPA's HTML where any future plugin

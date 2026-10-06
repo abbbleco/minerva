@@ -5,7 +5,7 @@ exists to prevent the auth.json ownership-mismatch bug where
 `docker exec <c> hermes login` would write /opt/data/auth.json as
 root:root mode 0600, leaving the supervised gateway (UID 10000) unable
 to read its own credentials and returning "Provider authentication
-failed: Hermes is not logged into ABBBLE Portal" on every message.
+failed: Minerva is not logged into ABBBLE Portal" on every message.
 
 These tests verify:
 

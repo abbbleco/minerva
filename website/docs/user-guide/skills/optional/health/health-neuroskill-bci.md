@@ -17,7 +17,7 @@ Use live BCI cognitive and mood state from NeuroSkill.
 | Source | Optional — install with `minerva skills install official/health/neuroskill-bci` |
 | Path | `optional-skills/health/neuroskill-bci` |
 | Version | `1.0.0` |
-| Author | Hermes Agent + Nous Research |
+| Author | Minerva Agent + ABBBLE CO |
 | License | MIT |
 | Platforms | linux, macos, windows |
 | Tags | `BCI`, `neurofeedback`, `health`, `focus`, `EEG`, `cognitive-state`, `biometrics`, `neuroskill` |

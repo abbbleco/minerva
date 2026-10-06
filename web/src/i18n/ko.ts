@@ -50,12 +50,12 @@ export const ko: Translations = {
   },
 
   app: {
-    brand: "Hermes Agent",
+    brand: "Minerva Agent",
     brandShort: "HA",
     closeNavigation: "내비게이션 닫기",
     closeModelTools: "모델 및 도구 닫기",
     footer: {
-      org: "Nous Research",
+      org: "ABBBLE CO",
     },
     activeSessionsLabel: "활성 세션:",
     gatewayStatusLabel: "게이트웨이 상태:",
@@ -513,7 +513,7 @@ export const ko: Translations = {
       kicker: "Agentic Gamerscore",
       title: "Hermes Achievements",
       subtitle:
-        "실제 세션 기록에서 획득하는 Hermes 컬렉터블 배지입니다. 알려져 있지만 아직 달성되지 않은 업적은 Discovered로 표시되며, Secret 업적은 일치하는 동작이 처음 나타날 때까지 숨겨집니다.",
+        "실제 세션 기록에서 획득하는 Minerva 컬렉터블 배지입니다. 알려져 있지만 아직 달성되지 않은 업적은 Discovered로 표시되며, Secret 업적은 일치하는 동작이 처음 나타날 때까지 숨겨집니다.",
       scan_subtitle:
         "Hermes 세션 기록을 스캔하고 있습니다. 기록이 많으면 첫 스캔에 5~10초가 걸릴 수 있습니다.",
     },
@@ -611,7 +611,7 @@ export const ko: Translations = {
         "X에 공유를 누르면 새 탭에서 미리 작성된 게시물이 열립니다. 1200×630 배지를 첨부하려면 먼저 이미지 복사를 누르세요 — X 작성기에서 바로 붙여넣을 수 있습니다. PNG 다운로드는 파일을 저장하여 어디서나 사용할 수 있게 합니다.",
       clipboard_unsupported:
         "이 브라우저에서는 클립보드 이미지 복사를 지원하지 않습니다 — 대신 다운로드를 이용하세요.",
-      tweet_text: "Just unlocked {tier_part}\"{name}\" in Hermes Agent ☤",
+      tweet_text: "Just unlocked {tier_part}\"{name}\" in Minerva Agent ☤",
     },
   },
   kanban: {

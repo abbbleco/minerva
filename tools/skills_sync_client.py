@@ -57,7 +57,7 @@ def resolve_identity() -> Dict[str, Any]:
             "nous_admin": claims.get(NOUS_ADMIN_CLAIM) is True, "claims": claims}
 
 
-# Configuration -- env-first so Hermes Cloud can enable sync via environment alone. Every knob:
+# Configuration -- env-first so Minerva Cloud can enable sync via environment alone. Every knob:
 # HERMES_SYNC_<KEY> env -> config.yaml ``sync.<key>`` -> default (base_url = the sync plane, NOT
 # the inference URL; enabled; default_opt_in; org_auto_propose).
 DEFAULT_SYNC_BASE_URL = "https://gateway-gateway.nousresearch.com"
@@ -221,7 +221,7 @@ def _default_device_label() -> str:
 
 def stable_device_id() -> str:
     """Per-device label at ~/.hermes/skills/.sync_device_id. An existing file always wins; else seeded
-    from HERMES_SYNC_DEVICE_NAME (first use only, for Hermes Cloud) or a friendly default, then persisted."""
+    from HERMES_SYNC_DEVICE_NAME (first use only, for Minerva Cloud) or a friendly default, then persisted."""
     with suppress(OSError):
         val = _device_id_path().read_text(encoding="utf-8-sig").strip()
         if val:

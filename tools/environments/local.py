@@ -513,7 +513,7 @@ def restore_managed_env(env: dict) -> dict:
 
 # --- Shell discovery ---
 def _find_bash() -> str:
-    """Resolve the shell Hermes runs commands with. Owned by pm (the store
+    """Resolve the shell Minerva runs commands with. Owned by pm (the store
     is the authority on bundled bash); this is a thin wrapper over
     pm.shell() for callers that need a bash binary."""
     import pm.shell
@@ -522,7 +522,7 @@ def _find_bash() -> str:
     if bash:
         return bash
     raise RuntimeError(
-        "No shell found. Hermes needs bash (Git for Windows on Windows). "
+        "No shell found. Minerva needs bash (Git for Windows on Windows). "
         "Run `minerva pm install` or reinstall the bundle."
     )
 
@@ -632,8 +632,8 @@ def _managed_runtime_path_entries() -> list[str]:
     """Return existing Hermes-managed runtime dirs for the terminal subshell PATH.
 
     The terminal tool spawns a subshell whose PATH is the agent process's PATH
-    plus ``_SANE_PATH``. Neither carries the runtimes Hermes installs for
-    itself, so on a machine where Hermes provisioned its own toolchain a
+    plus ``_SANE_PATH``. Neither carries the runtimes Minerva installs for
+    itself, so on a machine where Minerva provisioned its own toolchain a
     command the agent runs resolves a system copy instead — or nothing at all:
 
     - the pm store's node/npm entries — installed to satisfy the desktop and
@@ -696,7 +696,7 @@ def _apply_windows_msys_bash_env_defaults(env: dict) -> None:
 
     Git Bash rewrites arguments that look like Unix paths (``/FO``, ``/TN``, ``/Create``) into
     ``C:/.../git/FO``-style paths, which breaks native Windows commands such as ``tasklist``, ``schtasks``,
-    and ``wmic``. Hermes runs terminal commands through bash on Windows, so set the standard MSYS opt-out by
+    and ``wmic``. Minerva runs terminal commands through bash on Windows, so set the standard MSYS opt-out by
     default. Refs #56700.
     MSYS2-proper and Cygwin bash (which ``_find_bash`` can still return via the final ``shutil.which``
     fallback) ignore it and honor ``MSYS2_ARG_CONV_EXCL`` instead, so set both. ``*`` disables all argv
@@ -741,7 +741,7 @@ def _make_run_env(env: dict) -> dict:
     return run_env
 
 
-# --- Hermes venv / repo-root detection (module-level, computed once) ---
+# --- Minerva venv / repo-root detection (module-level, computed once) ---
 # Owned here; read lazily by tools.environments.local_pythonpath (tests patch here).
 # The Electron app prepends the repo root to PYTHONPATH so the backend can ``import
 # tools``; other subprocesses must not inherit it. Aliases: launchers may emit other
@@ -955,7 +955,7 @@ class LocalEnvironment(BaseEnvironment):
 
     _sudo_nopasswd_probe_supported = True
     _profile_scoped_passthrough = True
-    # Commands run on the Hermes host itself — controller-side platform behavior
+    # Commands run on the Minerva host itself — controller-side platform behavior
     # (macOS TCC pruning, etc.) legitimately applies here.
     is_local = True
 
@@ -977,7 +977,7 @@ class LocalEnvironment(BaseEnvironment):
     def get_temp_dir(self) -> str:
         """Shell-safe writable temp dir. Precedence: ``TERMINAL_TEMP_DIR``, TMPDIR/TMP/TEMP
         (Termux has no system temp dir), ``HERMES_HOME/cache/terminal`` (real storage: a
-        tmpfs system temp dir fills under Hermes load; pruned by ``cleanup_terminal_temp_cache``),
+        tmpfs system temp dir fills under Minerva load; pruned by ``cleanup_terminal_temp_cache``),
         ``tempfile.gettempdir()``; backend env before process env so terminal.env
         overrides work. Windows: ``%TEMP%`` often has spaces that break unquoted bash,
         so always the HERMES_HOME cache dir with forward slashes (bash- and Python-valid)."""
