@@ -269,7 +269,7 @@ test('platform detection surfaces transport failures as themselves, not unsuppor
           throw new Error('not recognized')
         }
 
-        throw new Error('Hermes is not installed on the remote Windows host.')
+        throw new Error('Minerva is not installed on the remote Windows host.')
       })
     ),
     (err: any) => err.kind === 'unsupported-platform' && /Hermes is not installed/.test(err.message)

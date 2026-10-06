@@ -1370,3 +1370,16 @@ Verified: Python 30/30, tsc 0, vitest 90/90. LEADS plan closed (all 5
 phases). Repairs: merged-away 404 vs unmerge action (restructured PATCH),
 re-link idempotency expectation, two eaten test-def lines, one
 removal-instead-of-harden, TS/backend contact_id shape alignment.
+---
+
+# Session 27 — portal device approve without agency (2026-10-06)
+
+Auth debugging (localhost:3000/?code= loop) traced to Supabase project Site
+URL still on localhost (fixed in dashboard, not code). Follow-up product fix
+in `apps/portal/app/api/portal/device/approve/route.ts`: device connect no
+longer 403s on missing agency membership. No membership rows at all ?
+auto-provisions a personal agency (owner) and proceeds; suspended/invited rows
+keep the refusal (no laundering); viewer-only keeps editor-required. Downstream
+key/device writes use the resolved agency id. Runtime callers (transcription,
+qqbot adapter) already degrade without pilk/keys, untouched. tsc/eslint clean.
+Needs portal redeploy to take effect; verify via device-code sign-in E2E.

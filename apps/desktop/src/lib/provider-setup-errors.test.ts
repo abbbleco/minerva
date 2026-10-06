@@ -16,7 +16,7 @@ describe('isProviderSetupErrorMessage', () => {
     // tui_gateway/user_messages.py::agent_init_failed_message wrapping agent/agent_init.py's raise.
     expect(
       isProviderSetupErrorMessage(
-        'Hermes could not start the assistant for this session. Details: No LLM provider configured. Run `minerva model` to select a provider, or run `minerva setup` for first-time configuration. Check the model and provider with /model, or run `minerva setup` in a terminal to reconfigure.'
+        'Minerva could not start the assistant for this session. Details: No LLM provider configured. Run `minerva model` to select a provider, or run `minerva setup` for first-time configuration. Check the model and provider with /model, or run `minerva setup` in a terminal to reconfigure.'
       )
     ).toBe(true)
   })

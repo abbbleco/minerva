@@ -72,7 +72,7 @@ describe('installCrashForensics', () => {
 
     // The exact shape an intentional quit leaves behind: the AbortController
     // reason from local-backend-lifecycle rejecting an in-flight start.
-    const sentinel = markExpectedTransition(new Error('Hermes Desktop is quitting.'))
+    const sentinel = markExpectedTransition(new Error('Minerva Desktop is quitting.'))
     sentinel.stack =
       'Error: Minerva Desktop is quitting.\n    at Object.run [as shutdown] (file:///app.asar/dist/electron-main.mjs:1374:40)'
 
@@ -81,7 +81,7 @@ describe('installCrashForensics', () => {
     expect(log).toHaveBeenCalledTimes(1)
     const message = log.mock.calls[0]?.[0] as string
     expect(message).toContain('expected shutdown transition')
-    expect(message).toContain('Hermes Desktop is quitting.')
+    expect(message).toContain('Minerva Desktop is quitting.')
     // No stack frames: the line must not read as a crash in desktop.log.
     expect(message).not.toContain('electron-main.mjs')
     expect(flush).toHaveBeenCalledTimes(1)
@@ -90,7 +90,7 @@ describe('installCrashForensics', () => {
   it('marks only stamped errors — a same-message unmarked error still renders its stack', () => {
     const { listeners, log } = harness()
 
-    const lookalike = new Error('Hermes Desktop is quitting.')
+    const lookalike = new Error('Minerva Desktop is quitting.')
     lookalike.stack = 'Error: Minerva Desktop is quitting.\n    at main'
 
     listeners.get('unhandledRejection')?.(lookalike)

@@ -30,7 +30,7 @@ Object.assign(env, {
   HOME: sandbox, HERMES_HOME: path.join(sandbox, '.hermes'), HERMES_SHARED_AUTH_DIR: path.join(sandbox, '.hermes/shared'),
   HERMES_DESKTOP_USER_DATA_DIR: path.join(sandbox, 'electron'), HERMES_DESKTOP_CWD: path.join(sandbox, 'work'),
   HERMES_DESKTOP_HERMES_ROOT: root, HERMES_DESKTOP_PYTHON: python,
-  HERMES_DESKTOP_IGNORE_EXISTING: '1', HERMES_DESKTOP_APP_NAME: 'Hermes Connector Rehearsal',
+  HERMES_DESKTOP_IGNORE_EXISTING: '1', HERMES_DESKTOP_APP_NAME: 'Minerva Connector Rehearsal',
   HERMES_GUEST_ONBOARDING: '1', HERMES_DESKTOP_DEV_SERVER: url, HERMES_DESKTOP_CDP_PORT: '9344'
 })
 const entry = path.join(desktop, 'dist/connector-rehearsal.mjs')

@@ -379,7 +379,7 @@ export async function waitFor<T>(
 /** Copy of the first-run chooser / bootstrap installer overlay (the screens a healthy install must never show). */
 export const FIRST_RUN_SCREENS = [
   'Set up Minerva Desktop',
-  'Hermes needs a one-time install',
+  'Minerva needs a one-time install',
   'Setting up Minerva Agent',
   'Install Minerva locally',
   'Use Minerva on this computer'

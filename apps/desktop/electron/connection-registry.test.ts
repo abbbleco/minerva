@@ -288,7 +288,7 @@ test('registry primary reuses a matching primary backend descriptor', () => {
     lastUsed: 'hermes-vps',
     connections: [
       { id: LOCAL_CONNECTION_ID, kind: 'local', label: 'This device' },
-      { id: 'hermes-vps', kind: 'ssh', label: 'Hermes VPS', host: 'hermes-vps' }
+      { id: 'hermes-vps', kind: 'ssh', label: 'Minerva VPS', host: 'hermes-vps' }
     ]
   })
 
@@ -1494,7 +1494,7 @@ test('normalizeRegistry round-trips a valid registry unchanged in shape', () => 
       {
         id: 'cloud-1',
         kind: 'cloud',
-        label: 'Hermes Cloud',
+        label: 'Minerva Cloud',
         url: 'https://a.hermes.cloud',
         authMode: 'oauth',
         org: 'nous'

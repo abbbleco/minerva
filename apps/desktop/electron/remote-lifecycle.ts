@@ -262,7 +262,7 @@ async function locateHermes(ssh, remoteHermesPath) {
   }
 
   const err: any = new Error(
-    'Hermes is not installed on the remote host (could not find a `hermes` executable). ' +
+    'Minerva is not installed on the remote host (could not find a `hermes` executable). ' +
       'Install it on the remote with:  curl -fsSL https://hermes-agent.nousresearch.com/install.sh | sh  ' +
       '— or set the Minerva path explicitly in the SSH connection settings.'
   )

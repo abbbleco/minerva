@@ -3114,7 +3114,7 @@ async function waitForUpdateToFinish() {
       rememberLog(`[updates] detached update finished with manual action (branch ${result.branch}): ${result.message}`)
       dialog.showMessageBox({
         type: 'warning',
-        title: 'Hermes update',
+        title: 'Minerva update',
         message: 'The update finished, but needs one more step',
         detail: result.message
       })
@@ -3130,7 +3130,7 @@ async function waitForUpdateToFinish() {
       void dialog
         .showMessageBox({
           type: 'error',
-          title: 'Hermes update',
+          title: 'Minerva update',
           message: "Hermes couldn't finish updating",
           detail:
             "You're still on the previous version and can keep using it. Try the update again, or open the update log to report the problem.\n\n" +
@@ -5549,7 +5549,7 @@ async function ensureRuntime(
 
     if (await handOffWindowsBootstrapRecovery('bootstrap-needed')) {
       const handoffError: Error & { isBootstrapFailure?: boolean; bootstrapHandedOff?: boolean } = new Error(
-        'Hermes recovery was handed off to Minerva Setup. The desktop will restart when recovery completes.'
+        'Minerva recovery was handed off to Minerva Setup. The desktop will restart when recovery completes.'
       )
 
       handoffError.isBootstrapFailure = true
@@ -5613,7 +5613,7 @@ async function ensureRuntime(
     bootstrapAbortController = null
 
     if (bootstrapResult.cancelled) {
-      const cancelledError = new Error('Hermes install was cancelled.') as any
+      const cancelledError = new Error('Minerva install was cancelled.') as any
       cancelledError.isBootstrapFailure = true
       cancelledError.bootstrapCancelled = true
       bootstrapFailure = cancelledError
@@ -12916,7 +12916,7 @@ function reportPrimaryRecoveryCrashLoop(code: number | null, signal: string | nu
   }
 
   const message =
-    'Hermes backend keeps crashing right after it restarts; not restarting it again. Relaunch Minerva Desktop.'
+    'Minerva backend keeps crashing right after it restarts; not restarting it again. Relaunch Minerva Desktop.'
 
   rememberLog(`[supervisor] ${message}`)
   sendBackendExit({ code, signal, error: message })
@@ -13003,7 +13003,7 @@ async function runHermesStart({ supervisorRecovery = false }: { supervisorRecove
   // otherwise SIGTERMs the running instance's live backend (#87295).
   if (!isPrimaryInstance) {
     rememberLog('[boot] non-primary instance: skipping backend machinery')
-    throw new Error('Hermes Desktop is already running in another window.')
+    throw new Error('Minerva Desktop is already running in another window.')
   }
 
   await reapOrphanedBackendsOnce()
@@ -13319,7 +13319,7 @@ async function runHermesStart({ supervisorRecovery = false }: { supervisorRecove
     if (!processOwner) {
       await localBackendLifecycle.stop(hermesProcess)
       releaseBackendChild(hermesProcess)
-      throw new Error('Hermes backend start was superseded by a newer connection attempt.')
+      throw new Error('Minerva backend start was superseded by a newer connection attempt.')
     }
 
     hermesProcess.stdout.on('data', rememberLog)
@@ -13337,7 +13337,7 @@ async function runHermesStart({ supervisorRecovery = false }: { supervisorRecove
       if (!backendConnectionState.clearForCurrentProcess(processOwner)) {
         rememberLog(`Ignoring stale Minerva backend error: ${error.message}`)
         scheduleUnexpectedPrimaryRecovery({ error: error.message, ready: backendReady })
-        rejectBackendStart?.(new Error('Hermes backend start was superseded by a newer connection attempt.'))
+        rejectBackendStart?.(new Error('Minerva backend start was superseded by a newer connection attempt.'))
 
         return
       }
@@ -13369,13 +13369,13 @@ async function runHermesStart({ supervisorRecovery = false }: { supervisorRecove
         scheduleUnexpectedPrimaryRecovery({ code, signal, ready: backendReady })
 
         if (!backendReady) {
-          rejectBackendStart?.(new Error('Hermes backend start was superseded by a newer connection attempt.'))
+          rejectBackendStart?.(new Error('Minerva backend start was superseded by a newer connection attempt.'))
         }
 
         return
       }
 
-      rememberLog(formatBackendExitLine('Hermes backend exited', code, signal, primaryOutputTail))
+      rememberLog(formatBackendExitLine('Minerva backend exited', code, signal, primaryOutputTail))
 
       // The current primary child is gone; release its routing pin so the
       // next startHermes() re-reads active-profile.json instead of re-pinning
@@ -13458,7 +13458,7 @@ async function runHermesStart({ supervisorRecovery = false }: { supervisorRecove
 
     updateBootProgress({
       phase: 'backend.ready',
-      message: 'Hermes backend is ready. Finalizing desktop startup',
+      message: 'Minerva backend is ready. Finalizing desktop startup',
       progress: 94,
       running: true,
       error: null
@@ -15488,7 +15488,7 @@ function createWindow() {
         const exit = details?.exitCode === undefined ? '' : `, exit code ${String(details.exitCode)}`
         rememberLog(`[renderer:main] renderer terminated while live (reason=${reason}${exit}); surfacing recovery page`)
         void loadRendererLoadErrorPage(mainWindow, {
-          title: 'Hermes desktop UI was terminated',
+          title: 'Minerva desktop UI was terminated',
           errorDescription:
             `The desktop UI process was terminated unexpectedly (reason: ${reason}${exit}). ` +
             'Your sessions and the background gateway are unaffected — reload to continue.',
@@ -15854,7 +15854,7 @@ ipcMain.handle('hermes:window:openInTerminal', async (_event, sessionId, opts) =
     const backend = await resolveHermesBackend(tuiResumeArgs(sessionId.trim(), profile || undefined))
 
     if (!backend.command) {
-      return { ok: false, error: 'Hermes is not installed yet' }
+      return { ok: false, error: 'Minerva is not installed yet' }
     }
 
     const { cwd } = sanitizeWorkspaceCwd(opts?.cwd)

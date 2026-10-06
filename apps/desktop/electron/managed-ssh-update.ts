@@ -216,7 +216,7 @@ function windowsChildPath(home: string, name: string): string {
  */
 function buildPosixManagedUpdateLaunch(target: RemoteUpdateTarget, correlationId: string): string {
   const correlation = validateCorrelationId(correlationId)
-  const home = validateRemoteValue(target.hermesHome, 'Hermes home')
+  const home = validateRemoteValue(target.hermesHome, 'Minerva home')
   const hermesPath = validateRemoteValue(target.hermesPath, 'launcher path')
   const statusPath = posixChildPath(home, `.update_exit_code.${correlation}`)
   const intentPath = posixChildPath(home, `.update_launch_intent.${correlation}`)
@@ -263,7 +263,7 @@ function buildPosixManagedUpdateLaunch(target: RemoteUpdateTarget, correlationId
 /** Windows equivalent of buildPosixManagedUpdateLaunch. */
 function buildWindowsManagedUpdateLaunch(target: RemoteUpdateTarget, correlationId: string): string {
   const correlation = validateCorrelationId(correlationId)
-  const home = validateRemoteValue(target.hermesHome, 'Hermes home')
+  const home = validateRemoteValue(target.hermesHome, 'Minerva home')
   const hermesPath = validateRemoteValue(target.hermesPath, 'launcher path')
   const statusPath = windowsChildPath(home, `.update_exit_code.${correlation}`)
   const readyPath = windowsChildPath(home, `.update_coordinator_ready.${correlation}`)
@@ -463,7 +463,7 @@ print(json.dumps({'marker':state['state'],'markerPid':state.get('pid'),'launchIn
 
 function buildRemoteUpdateObservationCommand(target: RemoteUpdateTarget, correlationId: string): string {
   const correlation = validateCorrelationId(correlationId)
-  const home = validateRemoteValue(target.hermesHome, 'Hermes home')
+  const home = validateRemoteValue(target.hermesHome, 'Minerva home')
 
   if (target.platform === 'Windows') {
     const python = validateRemoteValue(target.pythonPath || '', 'Python path')
