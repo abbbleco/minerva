@@ -32,9 +32,21 @@ export async function resolveAgencyContext(request: Request): Promise<AgencyCont
   const header = request.headers.get("authorization") ?? "";
   const match = /^Bearer[ ]+(.+)$/i.exec(header.trim());
   if (!match) {
-    const error = new Error("missing bearer token") as Error & { status?: number };
-    error.status = 401;
-    throw error;
+    // Browser callers (plans grid, manage page) carry the Supabase session in
+    // cookies, not a Bearer header — without this fallback every website fetch
+    // reads as signed-out while the user stares at their own account. Only a
+    // missing user is a 401; broken env/transport still surfaces as 5xx.
+    const { getSupabaseServer } = await import("@/app/lib/supabase-server");
+    const supabase = await getSupabaseServer();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) {
+      const error = new Error("missing bearer token") as Error & { status?: number };
+      error.status = 401;
+      throw error;
+    }
+    return await contextForUser(serviceClient(), user.id);
   }
   const token = match[1]!.trim();
   const admin = serviceClient();
@@ -79,18 +91,44 @@ export async function resolveAgencyContext(request: Request): Promise<AgencyCont
       error.status = 401;
       throw error;
     }
-    const { data: memberships } = await admin
-      .from("agency_memberships")
-      .select("agency_id, role")
-      .eq("user_id", user.id)
-      .eq("status", "active")
-      .limit(10);
-    const membership = ((memberships ?? []) as Array<{ agency_id: string; role: string }>)[0];
-    if (!membership) return null;
-    agencyId = membership.agency_id;
-    role = membership.role;
+    const context = await contextForUser(admin, user.id);
+    if (!context) return null;
+    agencyId = context.agency.id;
+    role = context.membership.role;
+    return context;
   }
 
+  // Only the key path falls through (both Bearer branches return above).
+  if (!agencyId) {
+    const error = new Error("invalid api key") as Error & { status?: number };
+    error.status = 401;
+    throw error;
+  }
+  return await contextForAgency(admin, agencyId, role);
+}
+
+/** Agency context for a signed-in member (first active membership wins). */
+async function contextForUser(
+  admin: ReturnType<typeof serviceClient>,
+  userId: string
+): Promise<AgencyContext | null> {
+  const { data: memberships } = await admin
+    .from("agency_memberships")
+    .select("agency_id, role")
+    .eq("user_id", userId)
+    .eq("status", "active")
+    .limit(10);
+  const membership = ((memberships ?? []) as Array<{ agency_id: string; role: string }>)[0];
+  if (!membership) return null;
+  return contextForAgency(admin, membership.agency_id, membership.role);
+}
+
+/** Agency context for a known agency + role (shared tail of every credential shape). */
+async function contextForAgency(
+  admin: ReturnType<typeof serviceClient>,
+  agencyId: string,
+  role: string
+): Promise<AgencyContext | null> {
   const { data: agency, error: agencyError } = await admin
     .from("agencies")
     .select("id, slug, name, status, credits_balance_usd")

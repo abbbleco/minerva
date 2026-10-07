@@ -1905,3 +1905,15 @@ key fails clean with guidance (exit 1); touched files eslint-clean.
 Operator runs it with their own key â€” no credentials handled here.
 
 
+
+# Session 40 — Website session recognized by billing API (2026-10-07)
+
+Signed-in website users were sent to login/signup from plan CTAs: resolveAgencyContext (portal agency-billing.ts) accepted Bearer tokens only, but browser fetches (plans-grid to /api/billing/subscription) carry the Supabase session in cookies — so every website read resolved logged-out. No Bearer means no session proof, and none was ever sent.
+
+- resolveAgencyContext falls back to the cookie session when no Bearer header is present (shared contextForUser/contextForAgency tail for all three credential shapes; only a missing user is 401, broken env/transport still surfaces 5xx). Backend Bearer behavior unchanged.
+- No UI change needed: the grid's subscription-aware CTAs and manage-page state now resolve for website sessions as designed.
+
+Deliberately not changed: desktop and website sessions stay separate (a desktop device sign-in holds a router key, not browser cookies — the website still correctly shows signed-out until a web sign-in; no SSO invented here); engine NAS paths untouched.
+
+Verify: portal typecheck clean, test 33 pass / 0 fail.
+
