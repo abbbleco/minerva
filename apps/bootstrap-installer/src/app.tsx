@@ -10,7 +10,7 @@ import { $bootstrap, $route, initialize } from './store'
 /*
  * App shell — Minerva Setup.
  *
- * No header chrome (the OS title bar already says "Hermes Setup"; an
+ * No header chrome (the OS title bar already says "Minerva Setup"; an
  * in-window repeat of the H mark + words was redundant slop).
  *
  * Route state lives in a single $route atom — 4 screens, no react-router.

@@ -26,7 +26,7 @@ Make a verified AI presenter video from script + image.
 ## Reference: full SKILL.md
 
 :::info
-The following is the complete skill definition that Hermes loads when this skill is triggered. This is what the agent sees as instructions when the skill is active.
+The following is the complete skill definition that Minerva loads when this skill is triggered. This is what the agent sees as instructions when the skill is active.
 :::
 
 # AI Presenter Video
@@ -44,13 +44,13 @@ is actually available in the session (FAL video/image models via
 the whisper/STT tooling, ffmpeg for everything deterministic).
 
 > Ported from cclank/lanshu-create-ai-presenter-video (MIT). Upstream body
-> kept substantively verbatim in `references/`; Hermes adaptations live in
+> kept substantively verbatim in `references/`; Minerva adaptations live in
 > this hub file. Scripts are deterministic (no network, no credentials).
 
-## Hermes adaptations (read first)
+## Minerva adaptations (read first)
 
 - **Skill dir resolution** — upstream hardcoded its own agent's skills path.
-  In Hermes the loader expands `${HERMES_SKILL_DIR}` to this skill's installed
+  In Minerva the loader expands `${HERMES_SKILL_DIR}` to this skill's installed
   directory, so every command below uses that token directly:
 
   ```bash

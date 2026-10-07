@@ -203,7 +203,7 @@ gateway:
     set: "⊙ 目标已设置（{budget} 轮预算）：{goal}\n我将持续工作直到目标完成、你暂停/清除它，或预算耗尽。\n控制命令：/goal status · /goal pause · /goal resume · /goal clear"
     gate_add_admin_only: "⛔ /goal gate add 需要显式配置的网关管理员（私聊用 allow_admin_from，群组用 group_allow_admin_from）。"
   help:
-    header: "📖 **Hermes 命令**\n"
+    header: "📖 **Minerva 命令**\n"
     skill_header: "\n⚡ **技能命令**（{count} 个活跃）："
     more_use_commands: "\n... 还有 {count} 个。使用 `/commands` 查看完整分页列表。"
   insights:
@@ -422,7 +422,7 @@ gateway:
     source_line: "来源：{source}；各类别计数为本地估算。"
     hint_all: "使用 /context all 查看每个技能和工具集的开销。"
   status:
-    header: "📊 **Hermes 网关状态**"
+    header: "📊 **Minerva 网关状态**"
     matrix_scope_header: "**Matrix 范围：**"
     matrix_scope_room: "  room: {room}"
     matrix_scope_room_id: "  room_id: {room_id}"
@@ -470,11 +470,11 @@ gateway:
     untitled_session: "未命名会话"
     restore_step_1: "1. 创建或打开一个话题。要新建话题，请打开 All Messages 并在其中发送任意消息。"
     restore_step_2: "2. 在该话题内发送 /topic <session-id>。"
-    default_title: "Hermes 聊天"
+    default_title: "Minerva 聊天"
     root_lobby: "此主聊天仅用于系统命令。\n\n要开始新的 Minerva 聊天，请打开此机器人界面顶部的 All Messages 话题并在其中发送任意消息。Telegram 会为该消息创建一个新话题；每个话题都是独立的 Minerva 会话。"
     root_new: "要开始一个新的并行 Minerva 聊天，请打开此机器人界面顶部的 All Messages 话题并在其中发送任意消息。Telegram 会为它创建一个新话题。\n\n每个话题都是独立的 Minerva 会话。只有想替换某个话题的当前会话时，才在该话题内使用 /new。"
     new_header: "已在此话题中开始新的 Minerva 会话。\n\n提示：如需并行工作，请打开 All Messages 并在其中发送消息来创建单独的话题，而不是在这里使用 /new。/new 会替换当前话题绑定的会话。"
-    help: "/topic——启用多会话私聊模式（一个机器人，多个并行聊天）\n\n用法：\n  /topic             启用话题模式；若已启用则显示状态\n  /topic help        显示本帮助\n  /topic off         关闭话题模式并清除话题绑定\n  /topic <id>        在话题内：按 ID 恢复之前的会话\n\n工作方式：\n1. 在此私聊中运行一次 /topic——Hermes 会检查 BotFather 的 Threads\n   Settings 是否已开启，并切换到多会话模式。\n2. 点击机器人顶部的 All Messages 并发送任意消息。\n   Telegram 会为该消息创建新话题；每个话题都是\n   独立的 Minerva 会话（全新历史、全新上下文）。\n3. 根私聊变为系统大厅——在那里发送 /topic、/status、\n   /help、/usage。普通提示词请在话题内发送。\n4. 在话题内使用 /new 只重置该话题的会话。\n5. 在话题内使用 /topic <id> 可将旧会话恢复到该话题。"
+    help: "/topic——启用多会话私聊模式（一个机器人，多个并行聊天）\n\n用法：\n  /topic             启用话题模式；若已启用则显示状态\n  /topic help        显示本帮助\n  /topic off         关闭话题模式并清除话题绑定\n  /topic <id>        在话题内：按 ID 恢复之前的会话\n\n工作方式：\n1. 在此私聊中运行一次 /topic——Minerva 会检查 BotFather 的 Threads\n   Settings 是否已开启，并切换到多会话模式。\n2. 点击机器人顶部的 All Messages 并发送任意消息。\n   Telegram 会为该消息创建新话题；每个话题都是\n   独立的 Minerva 会话（全新历史、全新上下文）。\n3. 根私聊变为系统大厅——在那里发送 /topic、/status、\n   /help、/usage。普通提示词请在话题内发送。\n4. 在话题内使用 /new 只重置该话题的会话。\n5. 在话题内使用 /topic <id> 可将旧会话恢复到该话题。"
     system_topic_name: "系统"
     system_topic_intro: "用于 Minerva 命令和状态的系统话题。"
     setup_image_caption: "BotFather → Bot Settings → Threads Settings"
@@ -494,7 +494,7 @@ gateway:
     not_your_session: "该会话不属于此 Telegram 用户。"
     already_linked: "该会话已绑定到另一个 Telegram 话题。"
     restored: "会话已恢复：{title}"
-    restored_last_message: "\n\nHermes 的最后一条消息：\n{text}"
+    restored_last_message: "\n\nMinerva 的最后一条消息：\n{text}"
   undo:
     nothing: "没有可撤销的内容。"
     removed: "↩️ 已撤销 {turns} 个回合（{count} 条消息）。\n已备份到：「{preview}」\n复制/编辑上面的文本并发送，即可从此处重新提问。"
@@ -502,7 +502,7 @@ gateway:
   update:
     platform_not_messaging: "✗ /update 仅在消息平台可用。请在终端运行 `minerva update`。"
     not_git_repo: "✗ 不是 git 仓库 — 无法更新。"
-    hermes_cmd_not_found: "✗ 无法找到 `hermes` 命令。Hermes 正在运行，但更新命令无法在 PATH 上或通过当前 Python 解释器找到可执行文件。请尝试在终端中手动运行 `minerva update`。"
+    hermes_cmd_not_found: "✗ 无法找到 `hermes` 命令。Minerva 正在运行，但更新命令无法在 PATH 上或通过当前 Python 解释器找到可执行文件。请尝试在终端中手动运行 `minerva update`。"
     start_failed: "✗ 启动更新失败：{error}"
     starting: "☤ 正在启动 Minerva 更新…… 进度将在此处显示。"
     reply_failed: "✗ 向更新进程发送响应失败：{error}"
@@ -601,7 +601,7 @@ gateway:
     none_value: "无"
     unknown_value: "未知"
   exec_approval:
-    header: "Hermes 想要运行一条需要你确认的命令"
+    header: "Minerva 想要运行一条需要你确认的命令"
     reason_label: "标记原因"
     default_reason: "危险命令"
     smart_deny_line: "智能拒绝：所有者覆盖仅对本次操作生效。"
@@ -728,18 +728,18 @@ gateway:
     draining_maintenance: "⏳ 此代理正在为维护操作排空任务，目前不接受新的回合。稍后即会恢复——请稍等片刻后重新发送。"
     another_turn_running: "⏳ 此会话上还有另一回合仍在运行。为保护对话记录，这条消息未被处理。请等待当前回合结束后重新发送。"
     behavior_queue_short: "排队至下一回合"
-    behavior_queue_long: "Hermes 忙碌时，消息将排队至下一回合处理。"
+    behavior_queue_long: "Minerva 忙碌时，消息将排队至下一回合处理。"
     behavior_steer_short: "引导至当前运行（下一次工具调用后）"
     behavior_steer_long: "消息将被引导至当前运行（在下一次工具调用后送达）。"
     behavior_interrupt_short: "中断当前运行"
-    behavior_interrupt_long: "Hermes 忙碌时，消息将中断当前运行。"
+    behavior_interrupt_long: "Minerva 忙碌时，消息将中断当前运行。"
     status: "**忙碌输入模式：`{mode}`\n忙碌时的消息：_{behavior}_\n可用 `/busy queue`、`/busy steer` 或 `/busy interrupt` 更改。"
     unknown_mode: "未知模式 `{arg}`。请使用 `/busy queue`、`/busy steer` 或 `/busy interrupt`。"
     save_failed: "忙碌输入模式无法保存到配置。模式未更改。"
     set: "忙碌输入模式已设为 **`{mode}`**（已保存）。\n_{behavior}_"
   pause:
     resumed: "▶️ 已恢复——重新开始接受新任务。"
-    not_paused: "Hermes 并未暂停。"
+    not_paused: "Minerva 并未暂停。"
     reason_suffix: " （原因：{reason}）"
     already_paused: "⏸️ Minerva 已处于暂停状态{suffix}。用 `/pause off` 恢复。"
     paused: "⏸️ 已暂停{suffix}。新的定时任务/看板/网关任务将被搁置；进行中的任务正常完成。用 `/pause off` 恢复。"
@@ -826,7 +826,7 @@ gateway:
     task_status_complete: "已完成"
     task_status_error: "出错"
     task_line: "- {title} - {status}"
-    task_card_title: "Hermes 正在处理"
+    task_card_title: "Minerva 正在处理"
   pairing:
     validity_hour: "{hours} 小时"
     validity_hours: "{hours} 小时"
@@ -842,7 +842,7 @@ gateway:
     handoff_thread_title: "Hermes——{title}"
     restarted: "♻ 网关已成功重启。你的会话继续有效。"
     free_tier_line: "推理：Nous 免费套餐（nous/welcome）。登录以获得更多：/login"
-    online: "♻️ 网关已上线——Hermes 已恢复就绪。"
+    online: "♻️ 网关已上线——Minerva 已恢复就绪。"
     db_corrupt: "⚠️ 检测到会话数据库损坏。消息可能无法持久化。恢复方案：\n1. 运行 `minerva {profile_arg}doctor --fix`\n2. 停止网关，然后执行恢复：\n   hermes {profile_arg}sessions recover --source {db_path} --inspect-only\n   （若报告可恢复）hermes {profile_arg}sessions recover --source {db_path} --output recovered-state.db\n   ——恢复会先对损坏文件做快照；切勿对正在使用的 state.db 运行 `sqlite3 ... \\\".recover\\\"`，有漏洞的 sqlite3 CLI 可能使其进一步损坏\n3. 从 {backups_dir}/ 中的备份恢复\n运行 `minerva {profile_arg}doctor` 获取脱敏诊断信息。"
     db_fts_corrupt: "⚠️ 会话数据库报告了仅限于搜索索引（FTS5）的损坏错误；消息表未受损。修复前消息可能无法持久化：请运行 `minerva {profile_arg}doctor --fix`，然后重启网关。除非 `minerva {profile_arg}doctor` 确认存在损坏，否则不要运行恢复工具或还原备份。"
     db_then_restart: "{action} 然后执行 `minerva {profile_arg}gateway restart`。"
@@ -1006,7 +1006,7 @@ platform:
       resolved_cancel: "已取消"
     prompt:
       truncated_marker: "... [已截断]"
-      clarify_title: "Hermes 需要你的输入"
+      clarify_title: "Minerva 需要你的输入"
       clarify_hint_buttons: "从下方选择一项，或点击 ✏️ 其他 输入自定义回答。"
       clarify_hint_text: "请在此频道回复你的答案。"
       default_hint: " （默认：{default}）"
@@ -1313,7 +1313,7 @@ platform:
       thinking: "正在思考..."
       still_working: "仍在处理中…（{elapsed}）"
     task_card:
-      title: "Hermes 正在处理"
+      title: "Minerva 正在处理"
     slash:
       reply_truncated: "\n\n_[回复已截断：还有 {count} 部分超出了 Slack 临时回复的长度限制。]_"
       running: "正在运行 `/{command}`…"
@@ -1321,7 +1321,7 @@ platform:
       seed: ":thread: Minerva 交接——*{name}*"
   matrix:
     handoff:
-      default_name: "Hermes 会话"
+      default_name: "Minerva 会话"
     media:
       image_download_failed: "我无法下载图片并上传到 Matrix。源 URL 可能包含私密令牌，因此未显示。"
     approval:
@@ -1379,7 +1379,7 @@ platform:
       header: "问题"
       question: "❓ {question}"
     typing:
-      thinking: "Hermes 正在思考…"
+      thinking: "Minerva 正在思考…"
       interrupted: "（已中断）"
       no_reply: "（无回复）"
     attachment_fallback:
@@ -1544,7 +1544,7 @@ slash:
   steer:
     description: "在下一次工具调用后插入一条消息，不打断执行"
   goal:
-    description: "设定一个长期目标，Hermes 会跨回合持续推进直到达成"
+    description: "设定一个长期目标，Minerva 会跨回合持续推进直到达成"
   heartbeat:
     description: "设置一条周期性提示词，在空闲时重新进入此会话"
   refine:
@@ -1608,7 +1608,7 @@ slash:
   voice:
     description: "开关语音模式"
   wake:
-    description: "开关 'Hey Hermes' 唤醒词监听"
+    description: "开关 'Hey Minerva' 唤醒词监听"
   busy:
     description: "控制 Minerva 工作期间收到消息时的处理方式"
   tools:
@@ -2124,7 +2124,7 @@ cli:
     err_termux_app_missing: "检测到 Termux:API 命令包，但缺少对应的 Android 应用。\n请安装/更新 Termux:API Android 应用，然后重试 /voice on。"
     err_mic_access: "语音模式需要麦克风权限。\n请运行 pkg install termux-api 并安装 Termux:API Android 应用，然后重试 /voice on。"
     err_audio_capture: "语音模式需要音频采集功能。"
-    err_stt_provider: "语音模式需要一个 STT 提供方来进行转写。\n请运行 hermes tools 并配置 Speech-to-Text，然后重启 Hermes。"
+    err_stt_provider: "语音模式需要一个 STT 提供方来进行转写。\n请运行 hermes tools 并配置 Speech-to-Text，然后重启 Minerva。"
     silence_autostop: "检测到静音，自动停止..."
     hint_continuous: "静音时自动停止 | {shortcut} 停止并退出连续模式"
     hint_termux: "Termux:API 采集 | {shortcut} 停止"
@@ -2473,7 +2473,7 @@ cli:
     yolo_bypass_suffix: " （YOLO 绕过已启用）"
     ctx_left_prefix: "剩余 {percent}% · "
     ctx_tokens_used: "{left}已用 {used} / {max} tokens"
-    status_title: "Hermes CLI 状态"
+    status_title: "Minerva CLI 状态"
     label_reasoning: "推理"
     label_approvals: "审批"
     label_context: "上下文"
@@ -2616,9 +2616,9 @@ cli:
       short_queue: "排队到下一回合"
       short_steer: "引导到当前运行中（在下一次工具调用后）"
       short_interrupt: "立即重定向当前运行"
-      long_queue: "Hermes 忙碌时，按 Enter 会将后续输入排队。"
+      long_queue: "Minerva 忙碌时，按 Enter 会将后续输入排队。"
       long_steer: "按 Enter 会将你的消息引导到当前运行中（在下一次工具调用后）。"
-      long_interrupt: "Hermes 忙碌时，按 Enter 会重定向当前运行；/stop 仍可取消它。"
+      long_interrupt: "Minerva 忙碌时，按 Enter 会重定向当前运行；/stop 仍可取消它。"
       usage: "用法：/busy [queue|steer|interrupt|status]"
       status: "忙碌输入模式：{mode}"
       enter_while_busy: "忙碌时按 Enter：{behavior}"
@@ -3087,7 +3087,7 @@ cli:
   tip_line: "✦ 提示：{tip}"
   banner:
     context_too_low: "⚠️  上下文长度仅有 {tokens} tokens — 对于使用工具的代理来说可能太小了。"
-    context_minimum: "Hermes 至少需要 {tokens} tokens。工具 schema 加系统提示词会占用很大的固定前缀。"
+    context_minimum: "Minerva 至少需要 {tokens} tokens。工具 schema 加系统提示词会占用很大的固定前缀。"
     fix_ollama: "Ollama 修复方法：OLLAMA_CONTEXT_LENGTH={tokens} ollama serve"
     fix_lm_studio: "LM Studio 修复方法：在模型设置中设置上下文长度 → 重新加载模型"
     fix_local_server: "修复方法：启动服务器时至少使用 {tokens_k}K 上下文（llama.cpp：-c {tokens}），或在 config.yaml 中将 model.ollama_num_ctx 设为服务器实际提供的窗口大小"
@@ -3142,7 +3142,7 @@ cli:
     the_provider: "提供方"
     the_current_model: "当前模型"
     with_details: "{lead}\n详情：{details}"
-    agent_init_failed: "Hermes 无法建立模型连接：{error}。你的消息未发送。运行 `minerva doctor` 检查配置，或用 /model 选择其他提供方。"
+    agent_init_failed: "Minerva 无法建立模型连接：{error}。你的消息未发送。运行 `minerva doctor` 检查配置，或用 /model 选择其他提供方。"
   gateway:
     starting: "正在启动 Minerva 网关（消息平台）..."
   gateway_status:
@@ -3462,12 +3462,12 @@ explainer:
     turn_lease: "本回合已停止，因为另一个 Minerva 进程接管了此会话。你的回复未保存——请等待另一个进程完成后重新发送。"
     session_row_missing: "此会话在聊天仍打开时被从存储中删除，且 Minerva 无法重新创建它，因此这条消息未保存。请重新发送；如果持续失败，请运行 `minerva {profile_arg}doctor`。"
     locked: "本回合已停止，因为会话存储正忙（另一个 Minerva 进程正在写入状态数据库）。你的消息应已保存——请稍后重新发送。"
-    replaced: "会话数据库文件在 Minerva 运行期间被替换，因此这条消息未保存（副本保留在 {home}/sessions/ 中）。请停止 Hermes（`minerva {profile_arg}gateway stop`），运行 `minerva {profile_arg}doctor`——不要运行 `minerva {profile_arg}doctor --fix`，那会就地修复错误的文件——然后重新启动并再次发送你的消息。高级恢复步骤见日志。"
-    deleted_wal: "另一个 Minerva 进程仍持有会话数据库预写日志的旧副本，为保护文件安全，Hermes 已停止写入，因此这条消息未保存（副本保留在 {home}/sessions/ 中）。数据没有丢失。请退出此配置文件下的所有 Minerva 进程（桌面应用、`minerva {profile_arg}gateway stop`、控制台、定时任务），运行 `minerva {profile_arg}doctor`——它会列出仍持有日志的进程——然后重新启动 Minerva 并再次发送你的消息。在这些进程运行期间，不要运行 `doctor --fix` 或删除任何 state.db 文件。指南：{recovery_docs}"
+    replaced: "会话数据库文件在 Minerva 运行期间被替换，因此这条消息未保存（副本保留在 {home}/sessions/ 中）。请停止 Minerva（`minerva {profile_arg}gateway stop`），运行 `minerva {profile_arg}doctor`——不要运行 `minerva {profile_arg}doctor --fix`，那会就地修复错误的文件——然后重新启动并再次发送你的消息。高级恢复步骤见日志。"
+    deleted_wal: "另一个 Minerva 进程仍持有会话数据库预写日志的旧副本，为保护文件安全，Minerva 已停止写入，因此这条消息未保存（副本保留在 {home}/sessions/ 中）。数据没有丢失。请退出此配置文件下的所有 Minerva 进程（桌面应用、`minerva {profile_arg}gateway stop`、控制台、定时任务），运行 `minerva {profile_arg}doctor`——它会列出仍持有日志的进程——然后重新启动 Minerva 并再次发送你的消息。在这些进程运行期间，不要运行 `doctor --fix` 或删除任何 state.db 文件。指南：{recovery_docs}"
     corrupt: "本回合已停止，因为状态数据库报告了结构性损坏（重启后对话记录将会丢失）。释放磁盘空间无济于事。恢复选项：\n1. 运行 `minerva {profile_arg}doctor --fix`\n2. 停止网关，然后用以下命令恢复：\n   hermes {profile_arg}sessions recover --source {db_path} --inspect-only\n   （如果报告可恢复）hermes {profile_arg}sessions recover --source {db_path} --output recovered-state.db\n   ——恢复前会先对受损文件做快照；切勿对正在使用的 state.db 运行 `sqlite3 ... \\\".recover\\\"`，有漏洞的 sqlite3 命令行可能使其进一步损坏\n3. 从 {backups_dir}/ 中的备份恢复\n然后重新发送你的消息。"
-    fts_index: "本回合已停止，因为会话搜索索引（FTS5）已损坏且无法分离，因此这条消息未保存。消息存储本身没有损坏：不要运行恢复工具或还原备份。请运行 `minerva {profile_arg}doctor --fix`（或重启 Hermes，它会在打开时修复索引），然后重新发送你的消息。"
-    disk: "Hermes 无法将此对话保存到磁盘，为避免丢失你的消息已停止。磁盘可能已满：请释放一些空间（或修复 {home}/state.db 的权限），然后重新发送你的消息。"
-    default: "Hermes 无法保存此对话，为避免丢失你的消息已停止。可能的原因：磁盘空间不足，或另一个 Minerva 进程正占用数据库。请关闭其他 Minerva 窗口，运行 `minerva {profile_arg}doctor` 检查存储，然后重新发送你的消息。"
+    fts_index: "本回合已停止，因为会话搜索索引（FTS5）已损坏且无法分离，因此这条消息未保存。消息存储本身没有损坏：不要运行恢复工具或还原备份。请运行 `minerva {profile_arg}doctor --fix`（或重启 Minerva，它会在打开时修复索引），然后重新发送你的消息。"
+    disk: "Minerva 无法将此对话保存到磁盘，为避免丢失你的消息已停止。磁盘可能已满：请释放一些空间（或修复 {home}/state.db 的权限），然后重新发送你的消息。"
+    default: "Minerva 无法保存此对话，为避免丢失你的消息已停止。可能的原因：磁盘空间不足，或另一个 Minerva 进程正占用数据库。请关闭其他 Minerva 窗口，运行 `minerva {profile_arg}doctor` 检查存储，然后重新发送你的消息。"
   file_mutation:
     header: "⚠️ 文件修改校验器：本回合有 {count} 处文件编辑失败，无论上方措辞如何暗示。请运行 `git status` 或 `read_file` 确认实际落地的内容。"
     entry: "  • `{path}`——[{tool}] {preview}"
@@ -3608,7 +3608,7 @@ tips:
   t130: "如果两个配置档不慎共用同一个机器人 token，第二个网关会被阻止并给出明确的错误提示。"
   t131: "会话会在第一轮交流后自动生成描述性标题——无需手动命名。"
   t132: "会话标题支持谱系：\"my project\" → \"my project #2\" → \"my project #3\"。"
-  t133: "退出时，Hermes 会打印一条带会话 ID 和统计信息的恢复命令。"
+  t133: "退出时，Minerva 会打印一条带会话 ID 和统计信息的恢复命令。"
   t134: "hermes sessions export backup.jsonl 导出所有会话，用于备份或分析。"
   t135: "hermes -r SESSION_ID 按 ID 恢复任意指定的历史会话。"
   t136: "记忆是冻结快照——更改只会在下次会话启动时才出现在系统提示词中。"
@@ -3632,10 +3632,10 @@ tips:
   t154: "/voice on 在 CLI 中启用语音模式。Ctrl+B 切换按键说话录音。"
   t155: "流式 TTS 边生成边逐句播放——无需等待完整回复。"
   t156: "Telegram、Discord、WhatsApp 和 Slack 上的语音消息会被自动转写。"
-  t157: "Hermes 可运行在 21 个消息平台上：Telegram、Discord、Slack、WhatsApp、Signal、Matrix、IRC、Microsoft Teams、邮件等。"
+  t157: "Minerva 可运行在 21 个消息平台上：Telegram、Discord、Slack、WhatsApp、Signal、Matrix、IRC、Microsoft Teams、邮件等。"
   t158: "hermes gateway install 把它设置为开机自启的系统服务。"
   t159: "钉钉使用 Stream 模式——无需 webhook 或公网 URL。"
-  t160: "BlueBubbles 通过本地 macOS 服务器把 iMessage 接入 Hermes。"
+  t160: "BlueBubbles 通过本地 macOS 服务器把 iMessage 接入 Minerva。"
   t161: "Webhook 路由支持 HMAC 校验、速率限制和事件过滤。"
   t162: "API 服务器提供 OpenAI 兼容端点，可与 Open WebUI 和 LibreChat 配合使用。"
   t163: "Discord 语音频道模式：机器人加入语音频道，转写语音并用语音回复。"
@@ -3652,7 +3652,7 @@ tips:
   t174: "上下文达到阈值时会自动压缩——记忆会被写入，历史会被总结。"
   t175: "随着上下文占用增加，状态栏会依次变为黄色、橙色、红色。"
   t176: "SOUL.md 是代理的核心身份文件——可自定义它来塑造代理行为。"
-  t177: "Hermes 从 .hermes.md、AGENTS.md、CLAUDE.md 或 .cursorrules 加载项目上下文（取首个匹配）。"
+  t177: "Minerva 从 .hermes.md、AGENTS.md、CLAUDE.md 或 .cursorrules 加载项目上下文（取首个匹配）。"
   t178: "子目录中的 AGENTS.md 文件会随着代理进入相应文件夹而逐步被发现。"
   t179: "上下文文件上限为 20,000 字符，超出部分会智能保留首尾截断。"
   t180: "五种浏览器提供方：本地 Chromium、Browserbase、Browser Use、Camofox 和 Firecrawl。"
@@ -3683,7 +3683,7 @@ tips:
   t205: "斜杠命令支持前缀匹配：/h 会解析为 /help，/mod 解析为 /model。"
   t206: "把文件路径拖进终端，图片会自动附加，其他文件会作为上下文发送。"
   t207: "仓库根目录下的 .worktreeinclude 列出需要复制到工作树里的被 gitignore 忽略的文件。"
-  t208: "hermes acp 以 ACP 服务器方式运行 Hermes，用于集成 VS Code、Zed 和 JetBrains。"
+  t208: "hermes acp 以 ACP 服务器方式运行 Minerva，用于集成 VS Code、Zed 和 JetBrains。"
   t209: "自定义提供方：在 config.yaml 的 custom_providers 下保存命名端点。"
   t210: "HERMES_EPHEMERAL_SYSTEM_PROMPT 注入一段永不写入历史记录的系统提示词。"
   t211: "credential_pool_strategies 支持 fill_first、round_robin、least_used 和 random 轮换策略。"
@@ -3698,7 +3698,7 @@ tips:
   t220: "首次运行时 SOUL.md 会自动填入默认人格。编辑它即可自定义。"
   t221: "/compress <focus topic> 会把 60-70% 的摘要预算分配给你指定的主题，并大幅精简其余内容。"
   t222: "第二次及之后的压缩，压缩器会在上一次摘要的基础上更新，而不是从头开始。"
-  t223: "网关会话重置之前，Hermes 会在后台自动把重要事实写入记忆。"
+  t223: "网关会话重置之前，Minerva 会在后台自动把重要事实写入记忆。"
   t224: "在 config.yaml 中设置 network.force_ipv4: true 可修复 IPv6 损坏的服务器上的卡死问题——通过给 socket 打补丁实现。"
   t225: "terminal 工具会标注常见退出码：grep 返回 1 = “未找到匹配（并非错误）”。"
   t226: "失败的前台终端命令会自动重试最多 3 次，采用指数退避（2 秒、4 秒、8 秒）。"
@@ -3760,7 +3760,7 @@ tips:
   t282: "来自可信仓库（NousResearch）的技能获得 'trusted' 安全级别；社区技能会经过额外扫描。"
   t283: "技能隔离区位于 ~/.hermes/skills/.hub/quarantine/，存放等待安全审查的技能。"
   t284: "/steer <prompt> 会在下一次工具调用后注入一条备注——在任务中途调整方向而不打断执行。"
-  t285: "/goal <text> 设定一个持续的 Ralph 循环目标——Hermes 会一回合接一回合自动继续，直到评审判定完成。"
+  t285: "/goal <text> 设定一个持续的 Ralph 循环目标——Minerva 会一回合接一回合自动继续，直到评审判定完成。"
   t286: "/snapshot create [label] 保存 Minerva 配置的完整状态快照；之后可用 /snapshot restore <id> 回退。"
   t287: "/copy [N] 把最后一条助手回复复制到剪贴板，加数字则复制倒数第 N 条。"
   t288: "/redraw 强制完整重绘界面，修复 tmux 调整大小或鼠标选择后残留的终端错位。"

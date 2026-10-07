@@ -18,15 +18,15 @@ flowchart LR
     B -->|SSE 流式响应| A
 ```
 
-Open WebUI 连接 Minerva Agent 的 API 服务器，方式与连接 OpenAI 完全相同。Hermes 使用其完整工具集——终端、文件操作、网络搜索、记忆、技能——处理请求并返回最终响应。
+Open WebUI 连接 Minerva Agent 的 API 服务器，方式与连接 OpenAI 完全相同。Minerva 使用其完整工具集——终端、文件操作、网络搜索、记忆、技能——处理请求并返回最终响应。
 
 :::important 运行时位置
-API 服务器是一个 **Hermes agent 运行时**，而非纯 LLM 代理。对于每个请求，Hermes 会在 API 服务器所在主机上创建一个服务端 `AIAgent`。工具调用在该 API 服务器运行的位置执行。
+API 服务器是一个 **Minerva agent 运行时**，而非纯 LLM 代理。对于每个请求，Minerva 会在 API 服务器所在主机上创建一个服务端 `AIAgent`。工具调用在该 API 服务器运行的位置执行。
 
-例如，如果笔记本电脑将 Open WebUI 或其他 OpenAI 兼容客户端指向远程机器上的 Hermes API 服务器，则 `pwd`、文件工具、浏览器工具、本地 MCP 工具及其他工作区工具将在远程 API 服务器主机上运行，而非在笔记本电脑上。
+例如，如果笔记本电脑将 Open WebUI 或其他 OpenAI 兼容客户端指向远程机器上的 Minerva API 服务器，则 `pwd`、文件工具、浏览器工具、本地 MCP 工具及其他工作区工具将在远程 API 服务器主机上运行，而非在笔记本电脑上。
 :::
 
-Open WebUI 与 Hermes 之间是服务器到服务器的通信，因此此集成无需配置 `API_SERVER_CORS_ORIGINS`。
+Open WebUI 与 Minerva 之间是服务器到服务器的通信，因此此集成无需配置 `API_SERVER_CORS_ORIGINS`。
 
 ## 快速设置
 
@@ -130,7 +130,7 @@ docker compose up -d
 5. 点击 **+ Add New Connection**
 6. 填写：
    - **URL**：`http://host.docker.internal:8642/v1`
-   - **API Key**：与 Hermes 中 `API_SERVER_KEY` 完全相同的值
+   - **API Key**：与 Minerva 中 `API_SERVER_KEY` 完全相同的值
 7. 点击**对勾**验证连接
 8. **保存**
 
@@ -162,7 +162,7 @@ Open WebUI 连接后端时支持两种 API 模式：
 3. 将 **API Type** 从 "Chat Completions" 改为 **"Responses (Experimental)"**
 4. 保存
 
-使用 Responses API 时，Open WebUI 以 Responses 格式发送请求（`input` 数组 + `instructions`），Minerva Agent 可通过 `previous_response_id` 在多轮对话中保留完整的工具调用历史。当 `stream: true` 时，Hermes 还会流式传输符合规范的 `function_call` 和 `function_call_output` 事件，这使得支持 Responses 事件渲染的客户端能够展示自定义结构化工具调用 UI。
+使用 Responses API 时，Open WebUI 以 Responses 格式发送请求（`input` 数组 + `instructions`），Minerva Agent 可通过 `previous_response_id` 在多轮对话中保留完整的工具调用历史。当 `stream: true` 时，Minerva 还会流式传输符合规范的 `function_call` 和 `function_call_output` 事件，这使得支持 Responses 事件渲染的客户端能够展示自定义结构化工具调用 UI。
 
 :::note
 Open WebUI 目前即使在 Responses 模式下也在客户端管理对话历史——它在每个请求中发送完整的消息历史，而非使用 `previous_response_id`。Responses 模式目前的主要优势在于结构化事件流：文本增量、`function_call` 和 `function_call_output` 事件以 OpenAI Responses SSE 事件形式到达，而非 Chat Completions 分块。
@@ -179,9 +179,9 @@ Open WebUI 目前即使在 Responses 模式下也在客户端管理对话历史�
 5. Agent 的最终文本响应流式返回给 Open WebUI
 6. Open WebUI 在聊天界面中显示响应
 
-你的 agent 可以访问该 API 服务器 Hermes 实例所拥有的相同工具和能力。如果 API 服务器是远程的，这些工具也是远程的。
+你的 agent 可以访问该 API 服务器 Minerva 实例所拥有的相同工具和能力。如果 API 服务器是远程的，这些工具也是远程的。
 
-如果你今天需要工具在**本地**工作区运行，请在本地运行 Hermes 并将其指向纯 LLM 提供商或纯 OpenAI 兼容模型代理（例如 vLLM、LiteLLM、Ollama、llama.cpp、OpenAI、OpenRouter 等）。"远程大脑、本地执行"的分离运行时模式正在 [#18715](https://github.com/abbbleco/minerva/issues/18715) 中跟踪；这不是当前 API 服务器的行为。
+如果你今天需要工具在**本地**工作区运行，请在本地运行 Minerva 并将其指向纯 LLM 提供商或纯 OpenAI 兼容模型代理（例如 vLLM、LiteLLM、Ollama、llama.cpp、OpenAI、OpenRouter 等）。"远程大脑、本地执行"的分离运行时模式正在 [#18715](https://github.com/abbbleco/minerva/issues/18715) 中跟踪；这不是当前 API 服务器的行为。
 
 :::tip 工具进度
 启用流式传输（默认）后，工具运行时你会看到简短的内联指示——工具 emoji 及其关键参数。这些内容在 agent 最终答案之前出现在响应流中，让你了解后台正在发生的事情。
@@ -213,7 +213,7 @@ Open WebUI 目前即使在 Responses 模式下也在客户端管理对话历史�
 - **验证 gateway 是否运行**：`curl http://localhost:8642/health` 应返回 `{"status": "ok"}`
 - **检查模型列表**：`curl -H "Authorization: Bearer your-secret-key" http://localhost:8642/v1/models` 应返回包含 `hermes-agent` 的列表
 - **Docker 网络**：在 Docker 内部，`localhost` 指容器本身，而非你的主机。请使用 `host.docker.internal` 或 `--network=host`。
-- **空 Ollama 后端遮挡选择器**：如果你省略了 `ENABLE_OLLAMA_API=false`，Open WebUI 会在你的 Hermes 模型上方显示一个空的 Ollama 区域。请使用 `-e ENABLE_OLLAMA_API=false` 重启容器，或在 **Admin Settings → Connections** 中禁用 Ollama。
+- **空 Ollama 后端遮挡选择器**：如果你省略了 `ENABLE_OLLAMA_API=false`，Open WebUI 会在你的 Minerva 模型上方显示一个空的 Ollama 区域。请使用 `-e ENABLE_OLLAMA_API=false` 重启容器，或在 **Admin Settings → Connections** 中禁用 Ollama。
 
 ### 连接测试通过但模型无法加载
 
@@ -233,7 +233,7 @@ Open WebUI 在首次启动后会将 OpenAI 兼容连接设置持久化到其自�
 
 ## 多用户设置与 Profiles
 
-要为每个用户运行独立的 Hermes 实例——各自拥有独立的配置、记忆和技能——请使用 [profiles](../profiles.md)。每个 profile 在不同端口上运行自己的 API 服务器，并自动将 profile 名称作为模型名称公告给 Open WebUI。
+要为每个用户运行独立的 Minerva 实例——各自拥有独立的配置、记忆和技能——请使用 [profiles](../profiles.md)。每个 profile 在不同端口上运行自己的 API 服务器，并自动将 profile 名称作为模型名称公告给 Open WebUI。
 
 ### 1. 创建 profiles 并配置 API 服务器
 
@@ -271,7 +271,7 @@ hermes -p bob gateway &
 | Alice | `http://host.docker.internal:8650/v1` | `alice-secret` |
 | Bob | `http://host.docker.internal:8651/v1` | `bob-secret` |
 
-模型下拉列表将显示 `alice` 和 `bob` 作为独立模型。你可以通过管理员面板将模型分配给 Open WebUI 用户，为每个用户提供其独立的 Hermes agent。
+模型下拉列表将显示 `alice` 和 `bob` 作为独立模型。你可以通过管理员面板将模型分配给 Open WebUI 用户，为每个用户提供其独立的 Minerva agent。
 
 :::tip 自定义模型名称
 模型名称默认为 profile 名称。如需覆盖，请在 profile 的 `.env` 中设置 `API_SERVER_MODEL_NAME`：

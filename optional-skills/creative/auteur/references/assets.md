@@ -1,4 +1,4 @@
-> **Hermes adaptation note:** upstream auteur routed asset generation to several local image CLIs by strength. In Minerva there is one route: the built-in `image_generate` tool for every still and edit (move the returned file into the project's `assets/gen/` path), the `terminal` tool for `ffmpeg`/`node`/`npx`, and `browser_exec` or Playwright-via-terminal for screenshot loops. The taste guidance below transfers; the per-CLI shootout tables were dropped in the port.
+> **Minerva adaptation note:** upstream auteur routed asset generation to several local image CLIs by strength. In Minerva there is one route: the built-in `image_generate` tool for every still and edit (move the returned file into the project's `assets/gen/` path), the `terminal` tool for `ffmpeg`/`node`/`npx`, and `browser_exec` or Playwright-via-terminal for screenshot loops. The taste guidance below transfers; the per-CLI shootout tables were dropped in the port.
 
 # assets.md — producing visual assets
 

@@ -475,7 +475,7 @@ async fn run_update(app: AppHandle) -> Result<()> {
     // second `minerva update` runs clean because the now-current module is loaded
     // from the start. Rather than make the parked user click Update twice (and
     // stare at a scary crash first), retry once automatically. Skip the retry
-    // for the concurrent-instance guard (exit 2) — that's a "close Hermes" state
+    // for the concurrent-instance guard (exit 2) — that's a "close Minerva" state
     // a retry can't fix.
     if legacy_install && !matches!(update.exit_code, Some(0) | Some(UPDATE_EXIT_CONCURRENT)) {
         emit_log(
@@ -828,7 +828,7 @@ const STDOUT_TAIL_LINES: usize = 40;
 fn concurrent_update_message(stdout_tail: &[String]) -> String {
     match stdout_tail.iter().rposition(|l| l.trim_start().starts_with('✗')) {
         Some(start) => stdout_tail[start..].join("\n").trim().to_string(),
-        None => "Hermes is still running. Close all Minerva windows and try \
+        None => "Minerva is still running. Close all Minerva windows and try \
                  the update again."
             .to_string(),
     }
@@ -992,7 +992,7 @@ fn update_child_env(install_root: &Path) -> Vec<(String, OsString)> {
     // `minerva update` child claims that SAME lock (hermes_cli/update_lock.py).
     // Name our pid so the child recognizes the live holder as its own
     // orchestrator and runs under our claim — without this every GUI update
-    // refuses its parent's marker with exit 2 ("Hermes is still running")
+    // refuses its parent's marker with exit 2 ("Minerva is still running")
     // and no number of retries can ever succeed. Keep the variable name in
     // sync with HANDOFF_PID_ENV in hermes_cli/update_lock.py.
     envs.push((
@@ -1055,7 +1055,7 @@ async fn install_macos_app_update(
 
     let rebuilt_app = crate::bootstrap::resolve_hermes_desktop_app(install_root).ok_or_else(|| {
         anyhow!(
-            "desktop rebuild succeeded but no Hermes.app was found under {}",
+            "desktop rebuild succeeded but no Minerva.app was found under {}",
             install_root.join("apps").join("desktop").join("release").display()
         )
     })?;
@@ -1385,7 +1385,7 @@ mod tests {
 
     #[test]
     fn concurrent_update_message_falls_back_without_a_refusal_block() {
-        let generic = "Hermes is still running. Close all Minerva windows and try the update again.";
+        let generic = "Minerva is still running. Close all Minerva windows and try the update again.";
         assert_eq!(concurrent_update_message(&[]), generic);
         assert_eq!(concurrent_update_message(&lines("→ Fetching updates...\n")), generic);
     }
@@ -1632,7 +1632,7 @@ mod tests {
         );
 
         // And with the marker gone the heal can never fire twice (the retry's
-        // own exit 2, e.g. a genuinely still-running Hermes, stays terminal).
+        // own exit 2, e.g. a genuinely still-running Minerva, stays terminal).
         assert!(!should_heal_self_marker_refusal(
             Some(UPDATE_EXIT_CONCURRENT),
             &marker

@@ -614,7 +614,7 @@ def test_genuine_recovery_still_resets_the_budget(tmp_path):
 def test_forensic_backup_includes_the_rollback_journal(tmp_path):
     """DELETE mode leaves a hot -journal, and that file interprets the damage.
 
-    Rollback-journal mode is Hermes's fallback on NFS/SMB/FUSE/ZFS and on
+    Rollback-journal mode is Minerva's fallback on NFS/SMB/FUSE/ZFS and on
     WAL-reset-vulnerable SQLite builds. A forensic copy without the journal
     cannot be rolled back to a consistent state by hand.
     """

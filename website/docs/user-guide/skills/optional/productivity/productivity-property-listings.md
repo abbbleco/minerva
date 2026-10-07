@@ -25,12 +25,12 @@ Present property and rental listings as desktop cards.
 ## Reference: full SKILL.md
 
 :::info
-The following is the complete skill definition that Hermes loads when this skill is triggered. This is what the agent sees as instructions when the skill is active.
+The following is the complete skill definition that Minerva loads when this skill is triggered. This is what the agent sees as instructions when the skill is active.
 :::
 
 # Property Listings Skill
 
-Present researched properties as browsable cards in the Hermes desktop transcript.
+Present researched properties as browsable cards in the Minerva desktop transcript.
 This is a presentation recipe, not a listing search service or an investment valuation.
 
 ## When to Use
@@ -41,7 +41,7 @@ This is a presentation recipe, not a listing search service or an investment val
 
 ## Prerequisites
 
-- A Hermes desktop conversation for native cards; the backend may be local or remote.
+- A Minerva desktop conversation for native cards; the backend may be local or remote.
 - Property details supplied by the user or verified through `web_search`, `web_extract`, or the browser tools available in this session.
 - No additional API keys or dependencies are required for card formatting.
 

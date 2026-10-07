@@ -98,7 +98,7 @@ def report_deprecated_config_and_env(raw_config: dict | None = None, env_map: di
 
 @doctor_check("Relay plugin check failed: {e}")
 def _check_relay_plugins(should_fix: bool, f: Finding) -> None:
-    """Name the plugins.toml files Relay applies to Hermes, including ones outside the Minerva home."""
+    """Name the plugins.toml files Relay applies to Minerva, including ones outside the Minerva home."""
     from agent.relay_runtime import resolve_plugin_sources
     try:
         sources = resolve_plugin_sources()
@@ -108,7 +108,7 @@ def _check_relay_plugins(should_fix: bool, f: Finding) -> None:
         check_ok("NeMo Relay is not available on this platform")
         return
     except Exception as exc:
-        check_warn("Relay plugin configuration could not be read", "(Hermes runs without Relay plugins)")
+        check_warn("Relay plugin configuration could not be read", "(Minerva runs without Relay plugins)")
         _relay_info_lines(cause for cause in (exc, exc.__cause__) if cause is not None)
         f.manual_issues.append("Fix the Relay plugin configuration shown under NeMo Relay Plugins.")
         return
@@ -116,7 +116,7 @@ def _check_relay_plugins(should_fix: bool, f: Finding) -> None:
         check_ok("No Relay plugin files found")
         return
     if sources.errors:
-        check_warn("Relay will reject this plugin configuration", "(Hermes runs without Relay plugins)")
+        check_warn("Relay will reject this plugin configuration", "(Minerva runs without Relay plugins)")
         f.manual_issues.append("Fix the Relay plugin configuration shown under NeMo Relay Plugins.")
     else:
         # Validation cannot load dynamic plugins, so Relay reports what it cannot confirm as a warning.

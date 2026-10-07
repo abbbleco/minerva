@@ -104,7 +104,7 @@ class _ManagedAttempt:
         def guarded() -> Any:
             # See #77244.
             # See #77244.
-            # Hermes-side callbacks run while the native pipeline drives this stream; nested relay calls
+            # Minerva-side callbacks run while the native pipeline drives this stream; nested relay calls
             # they make must bypass managed execution (#77244).
             with relay_runtime.managed_callback_guard():
                 return callback(*args)
@@ -658,7 +658,7 @@ class AnthropicStreamAccumulator:
         return {**self._message, "content": blocks}
 
     def response(self, base: Any = None) -> Any:
-        """Return the attribute-shaped response consumed by Hermes."""
+        """Return the attribute-shaped response consumed by Minerva."""
         assembled = self.finalize()
         content = assembled.pop("content", [])
         merged = {**_jsonable_dict(base), **assembled}
@@ -723,7 +723,7 @@ def _complete_logical(
             )
         except Exception:
             # Provider result is authoritative; retain the handle so turn finalization can retry.
-            logger.warning("Hermes Relay logical LLM finalization failed", exc_info=True)
+            logger.warning("Minerva Relay logical LLM finalization failed", exc_info=True)
             return
         if popped is False:
             logger.debug(

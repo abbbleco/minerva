@@ -158,7 +158,7 @@ def _warn_if_openclaw_running(auto_yes: bool) -> None:
         auto_yes, "OpenClaw appears to be running:", running,
         ("Messaging platforms (Telegram, Discord, Slack) only allow one "
          "active session per bot token. If you continue, both OpenClaw and "
-         "Hermes may try to use the same token, causing disconnects.",
+         "Minerva may try to use the same token, causing disconnects.",
          "Recommendation: stop OpenClaw before migrating."),
         "Continue anyway?", declined="Migration cancelled. Stop OpenClaw and try again.",
         non_tty=("Non-interactive session — continuing to preview only.",),
@@ -191,7 +191,7 @@ def _warn_if_gateway_running(auto_yes: bool) -> None:
     connected = [name for name, info in platforms.items()
                  if isinstance(info, dict) and info.get("state") == "connected"]
     if connected and _warn_running(
-        auto_yes, "Hermes gateway is running with active connections: " + ", ".join(connected), [],
+        auto_yes, "Minerva gateway is running with active connections: " + ", ".join(connected), [],
         ("Migrating bot tokens while the gateway is active will cause "
          "conflicts (Telegram, Discord, and Slack only allow one active "
          "session per token).",
@@ -260,7 +260,7 @@ def claw_command(args):
         _cmd_cleanup(args)
     else:
         print("Usage: hermes claw <command> [options]\n\nCommands:\n"
-              "  migrate          Migrate settings from OpenClaw to Hermes\n"
+              "  migrate          Migrate settings from OpenClaw to Minerva\n"
               "  cleanup          Archive leftover OpenClaw directories after migration\n\n"
               "Run 'hermes claw <command> --help' for options.")
 

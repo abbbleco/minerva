@@ -479,8 +479,8 @@ class TestHermesConfigWriteProtection:
 
 
     def test_reads_and_unrelated_writes_are_safe(self):
-        # Reading config is not a write; a non-Hermes absolute config.yaml is
-        # handled by the project patterns, not the Hermes-home rule.
+        # Reading config is not a write; a non-Minerva absolute config.yaml is
+        # handled by the project patterns, not the Minerva-home rule.
         for cmd in (
             "cat ~/.hermes/config.yaml",
             "sed -i 's/a/b/' /srv/app/config.yaml",
@@ -628,7 +628,7 @@ class TestSensitiveInPlaceEditPattern:
 
 
 class TestWindowsAbsolutePathFolding:
-    """Windows absolute home / Hermes-home prefixes must fold to ~/ and
+    """Windows absolute home / Minerva-home prefixes must fold to ~/ and
     ~/.hermes/ in dangerous-command detection.
 
     Regression: on native Windows the home prefix uses backslash separators
@@ -1128,7 +1128,7 @@ class TestLaunchctlGatewayLifecycle:
             assert dangerous is True, cmd
 
     def test_unrelated_labels_not_flagged(self):
-        """Read-only inspection, and lifecycle ops on non-Hermes labels, are
+        """Read-only inspection, and lifecycle ops on non-Minerva labels, are
         out of scope for the gateway-lifecycle guard."""
         for cmd in (
             "launchctl print system/com.apple.WindowServer",

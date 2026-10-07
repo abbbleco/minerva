@@ -1,13 +1,13 @@
 ---
 name: openclaw-migration
-description: Import an OpenClaw setup (memories, skills) into Hermes.
+description: Import an OpenClaw setup (memories, skills) into Minerva.
 version: 1.0.0
 author: Minerva Agent (ABBBLE CO)
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [Migration, OpenClaw, Hermes, Memory, Persona, Import]
+    tags: [Migration, OpenClaw, Minerva, Memory, Persona, Import]
     related_skills: [hermes-agent]
 ---
 
@@ -38,7 +38,7 @@ It uses `scripts/openclaw_to_hermes.py` to:
 - import `SOUL.md` into the Minerva home directory as `SOUL.md`
 - transform OpenClaw `MEMORY.md` and `USER.md` into Minerva memory entries
 - merge OpenClaw command approval patterns into Minerva `command_allowlist`
-- migrate Hermes-compatible messaging settings such as `TELEGRAM_ALLOWED_USERS`, and map OpenClaw workspace settings to Minerva working-directory configuration
+- migrate Minerva-compatible messaging settings such as `TELEGRAM_ALLOWED_USERS`, and map OpenClaw workspace settings to Minerva working-directory configuration
 - copy OpenClaw skills into `~/.hermes/skills/openclaw-imports/`
 - optionally copy the OpenClaw workspace instructions file into a chosen Minerva workspace
 - mirror compatible workspace assets such as `workspace/tts/` into `~/.hermes/tts/`
@@ -64,7 +64,7 @@ Before running the helper:
 3. Only use `find` as a fallback if the installed location is missing or the skill was moved manually.
 4. When calling the terminal tool, do not pass `workdir: "~"`. Use an absolute directory such as the user's home directory, or omit `workdir` entirely.
 
-With `--migrate-secrets`, it will also import a small allowlisted set of Hermes-compatible secrets, currently:
+With `--migrate-secrets`, it will also import a small allowlisted set of Minerva-compatible secrets, currently:
 
 - `TELEGRAM_BOT_TOKEN`
 
@@ -84,7 +84,7 @@ With `--migrate-secrets`, it will also import a small allowlisted set of Hermes-
 
 ## User interaction protocol
 
-Hermes CLI supports the `clarify` tool for interactive prompts, but it is limited to:
+Minerva CLI supports the `clarify` tool for interactive prompts, but it is limited to:
 
 - one choice at a time
 - up to 4 predefined choices
@@ -159,7 +159,7 @@ Execution gate:
 Use these exact `clarify` payload shapes as the default pattern:
 
 - `{"question":"Your existing SOUL.md conflicts with the imported one. What should I do?","choices":["keep existing","overwrite with backup","review first"]}`
-- `{"question":"One or more imported OpenClaw skills already exist in Hermes. How should I handle those skill conflicts?","choices":["keep existing skills","overwrite conflicting skills with backup","import conflicting skills under renamed folders"]}`
+- `{"question":"One or more imported OpenClaw skills already exist in Minerva. How should I handle those skill conflicts?","choices":["keep existing skills","overwrite conflicting skills with backup","import conflicting skills under renamed folders"]}`
 - `{"question":"Choose migration mode: migrate only user data, or run the full compatible migration including allowlisted secrets?","choices":["user-data only","full compatible migration","cancel"]}`
 - `{"question":"Do you want to copy the OpenClaw workspace instructions file into a Minerva workspace?","choices":["skip workspace instructions","copy to a workspace path","decide later"]}`
 - `{"question":"Please provide an absolute path where the workspace instructions should be copied."}`
@@ -226,7 +226,7 @@ The helper script still supports category-level `--include` / `--exclude`, but t
 
 ## Commands
 
-Run the helper with Hermes' Python environment, which includes `ruamel.yaml`.
+Run the helper with Minerva' Python environment, which includes `ruamel.yaml`.
 For a standalone Python environment, install `ruamel.yaml==0.18.17` first.
 
 Dry run with full discovery:

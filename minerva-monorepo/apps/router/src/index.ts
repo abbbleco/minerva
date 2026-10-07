@@ -24,7 +24,7 @@ export { debitInference, readCreditSummary } from './ledger.js';
 export function start(): void {
   void import('@hono/node-server').then(({ serve }) => {
     serve({ fetch: app.fetch, port: PORT });
-    console.log(`minerva-router listening on :${PORT} (mode=${STUB ? 'stub' : 'live'})`);
+    console.log(`minrouter listening on :${PORT} (mode=${STUB ? 'stub' : 'live'})`);
   });
 }
 

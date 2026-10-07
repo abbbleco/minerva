@@ -144,7 +144,7 @@ For long-lived processes: Minerva gateway, tui_gateway, a daemon, a process that
 
 ### Setup
 
-For Hermes, use a separate development checkout and data home, not a live
+For Minerva, use a separate development checkout and data home, not a live
 production generation. Follow the
 [PM developer workflow](https://hermes-agent.nousresearch.com/docs/reference/package-management#developer-workflow)
 and activate that checkout — PowerShell: `. .\activate.ps1`. The declared `dev`
@@ -253,7 +253,7 @@ This is fine for one-off automation but painful as an interactive UX.
 
 ```json
 {
-  "name": "Attach to Hermes",
+  "name": "Attach to Minerva",
   "type": "debugpy",
   "request": "attach",
   "connect": { "host": "127.0.0.1", "port": 5678 },
@@ -287,7 +287,7 @@ nc 127.0.0.1 4444
 
 `remote-pdb` is the cleanest agent-friendly choice when `debugpy`'s DAP protocol is overkill. Use `debugpy` only when you actually need IDE integration.
 
-## Debugging Hermes-specific Processes
+## Debugging Minerva-specific Processes
 
 ### Tests
 See Recipe 3. The wrapper captures subprocess output, so run pytest directly for interactive pdb.

@@ -5,7 +5,7 @@ Hermes' ``copilot-acp`` provider spawns an external agent process per model call
 Agent Client Protocol to it: JSON-RPC 2.0, one JSON object per line over stdio
 (https://agentclientprotocol.com/protocol/overview). This module is that process. It
 
-* answers ``<cmd> --help`` with a usage text advertising ``--acp`` (Hermes probes it before spawning);
+* answers ``<cmd> --help`` with a usage text advertising ``--acp`` (Minerva probes it before spawning);
 * validates every client request against the published ACP schema (the ``agent-client-protocol``
   package's pydantic models, ``acp.schema``) plus the spec rules the models do not encode
   (initialize-first, absolute ``cwd``, no custom root fields, known ``sessionId``) and REJECTS
@@ -110,7 +110,7 @@ class AcpFake:
         self.launcher.chmod(0o755)
 
     def env(self) -> dict[str, str]:
-        """Env vars that point Hermes' copilot-acp client at this fake."""
+        """Env vars that point Minerva' copilot-acp client at this fake."""
         return {"HERMES_COPILOT_ACP_COMMAND": str(self.launcher),
                 "HERMES_COPILOT_ACP_ARGS": f"--acp --stdio --state {self.state_dir}"}
 
@@ -125,7 +125,7 @@ class AcpFake:
         return [r for r in self.records() if r["dir"] == "in" and (method is None or r["msg"].get("method") == method)]
 
     def main_prompts(self) -> list[dict[str, Any]]:
-        """Main-turn ``session/prompt`` records (those carrying Hermes' tool bridge)."""
+        """Main-turn ``session/prompt`` records (those carrying Minerva' tool bridge)."""
         return [r for r in self.inbound("session/prompt") if r.get("main")]
 
     def aux_prompts(self) -> list[dict[str, Any]]:

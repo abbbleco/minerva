@@ -99,7 +99,7 @@ export function liveEndedMessage(
  *
  * Status mapping: `listening` = session up, voice idle; `speaking` = the
  * remote track is producing audio; `thinking` = a delegation is in flight in
- * Hermes. There is no `transcribing` phase: the voice model owns speech.
+ * Minerva. There is no `transcribing` phase: the voice model owns speech.
  */
 export function useVoiceLiveConversation({
   busy,

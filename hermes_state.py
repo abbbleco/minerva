@@ -366,7 +366,7 @@ _NETWORK_DRIVE_ACTION = (
 
 
 def format_session_db_unavailable(
-    prefix: str = "Hermes can't open its session history right now",
+    prefix: str = "Minerva can't open its session history right now",
     *,
     details: bool = False,
 ) -> str:

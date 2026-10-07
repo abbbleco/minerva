@@ -203,7 +203,7 @@ gateway:
     set: "⊙ حُدِّد الهدف (ميزانية {budget} دور): {goal}\nسأواصل العمل حتى يكتمل الهدف، أو توقفه/تمسحه، أو تنفد الميزانية.\nالتحكم: /goal status · /goal pause · /goal resume · /goal clear"
     gate_add_admin_only: "⛔ يتطلّب /goal gate add مشرف بوّابة مضبوطًا صراحةً (allow_admin_from للرسائل الخاصة، group_allow_admin_from للمجموعات)."
   help:
-    header: "📖 **أوامر Hermes**\n"
+    header: "📖 **أوامر Minerva**\n"
     skill_header: "\n⚡ **أوامر المهارات** ({count} نشطة):"
     more_use_commands: "\n... و{count} آخر. استخدم `/commands` للقائمة الكاملة المُقسّمة إلى صفحات."
   insights:
@@ -422,7 +422,7 @@ gateway:
     source_line: "المصدر: {source}؛ أعداد الفئات تقديرات محلية."
     hint_all: "استخدم /context all لتكاليف كل مهارة وكل مجموعة أدوات."
   status:
-    header: "📊 **حالة بوابة Hermes**"
+    header: "📊 **حالة بوابة Minerva**"
     matrix_scope_header: "**نطاق Matrix:**"
     matrix_scope_room: "  الغرفة: {room}"
     matrix_scope_room_id: "  معرّف الغرفة: {room_id}"
@@ -470,7 +470,7 @@ gateway:
     untitled_session: "جلسة دون عنوان"
     restore_step_1: "1. أنشئ موضوعًا أو افتحه. لإنشاء موضوع جديد، افتح All Messages وأرسل أي رسالة هناك."
     restore_step_2: "2. أرسل /topic <session-id> داخل ذلك الموضوع."
-    default_title: "محادثة Hermes"
+    default_title: "محادثة Minerva"
     root_lobby: "هذه المحادثة الرئيسية مخصّصة لأوامر النظام.\n\nلبدء محادثة Minerva جديدة، افتح موضوع All Messages في أعلى واجهة البوت وأرسل أي رسالة هناك. سينشئ Telegram موضوعًا جديدًا لتلك الرسالة؛ ويعمل كل موضوع كجلسة Minerva مستقلة."
     root_new: "لبدء محادثة Minerva متوازية جديدة، افتح موضوع All Messages في أعلى واجهة البوت وأرسل أي رسالة هناك. سينشئ Telegram موضوعًا جديدًا لها.\n\nكل موضوع جلسة Minerva مستقلة. استخدم /new داخل موضوع موجود فقط إذا أردت استبدال الجلسة الحالية لذلك الموضوع."
     new_header: "بدأت جلسة Minerva جديدة في هذا الموضوع.\n\nنصيحة: للعمل المتوازي، افتح All Messages وأرسل رسالة هناك لإنشاء موضوع منفصل بدلًا من استخدام /new هنا. فـ /new يستبدل الجلسة المرتبطة بالموضوع الحالي."
@@ -494,7 +494,7 @@ gateway:
     not_your_session: "تلك الجلسة لا تنتمي إلى مستخدم Telegram هذا."
     already_linked: "تلك الجلسة مرتبطة بالفعل بموضوع Telegram آخر."
     restored: "تمت استعادة الجلسة: {title}"
-    restored_last_message: "\n\nآخر رسالة من Hermes:\n{text}"
+    restored_last_message: "\n\nآخر رسالة من Minerva:\n{text}"
   undo:
     nothing: "لا شيء للتراجع عنه."
     removed: "↩️ تم التراجع عن {turns} دور ({count} رسالة).\nنُسخ احتياطيًا إلى: \"{preview}\"\nانسخ/عدّل النص أعلاه وأرسله لإعادة التوجيه من هنا."
@@ -504,13 +504,13 @@ gateway:
     not_git_repo: "✗ ليس مستودع git — لا يمكن التحديث."
     hermes_cmd_not_found: "✗ تعذّر تحديد موقع أمر `hermes`. Minerva يعمل، لكن أمر التحديث لم يجد الملف التنفيذي على PATH أو عبر مُفسّر Python الحالي. جرّب تشغيل `minerva update` يدويًا في طرفيتك."
     start_failed: "✗ فشل بدء التحديث: {error}"
-    starting: "☤ جارٍ بدء تحديث Hermes… سأبثّ التقدّم هنا."
+    starting: "☤ جارٍ بدء تحديث Minerva… سأبثّ التقدّم هنا."
     reply_failed: "✗ فشل إرسال الردّ إلى عملية التحديث: {error}"
     reply_sent: "✓ أُرسل `{label}` إلى عملية التحديث."
-    failed_notice: "❌ فشل تحديث Hermes؛ الإصدار السابق لا يزال يعمل. شغّل `minerva update` على المضيف لرؤية الخطأ كاملًا، أو جرّب /update لاحقًا."
+    failed_notice: "❌ فشل تحديث Minerva؛ الإصدار السابق لا يزال يعمل. شغّل `minerva update` على المضيف لرؤية الخطأ كاملًا، أو جرّب /update لاحقًا."
     prompt_default: " (الافتراضي: {default})"
     prompt: "☤ **التحديث يحتاج إلى ردّك:**\n\n{prompt}{default_hint}\n\nأرسل `{prefix}approve` (نعم) أو `{prefix}deny` (لا)، أو اكتب إجابتك مباشرة."
-    finished: "✅ انتهى تحديث Hermes."
+    finished: "✅ انتهى تحديث Minerva."
     timed_out: "❌ انتهت مهلة تحديث Minerva بعد 30 دقيقة."
     finished_success: "✅ انتهى تحديث Minerva بنجاح."
     last_lines: "{msg}\n\nآخر الأسطر:\n```\n{tail}\n```"
@@ -826,7 +826,7 @@ gateway:
     task_status_complete: "مكتمل"
     task_status_error: "خطأ"
     task_line: "- {title} - {status}"
-    task_card_title: "Hermes يعمل"
+    task_card_title: "Minerva يعمل"
   pairing:
     validity_hour: "{hours} ساعة"
     validity_hours: "{hours} ساعات"
@@ -835,11 +835,11 @@ gateway:
   shutdown:
     action_shutting_down: "قيد إيقاف التشغيل"
     action_restarting: "قيد إعادة التشغيل"
-    cron_interrupted: "⚠️ قُطعت المهمة المجدولة '{job}' لأن Minerva {action}؛ لا نتيجة لهذا التشغيل. ستعمل مجددًا في موعدها، أو شغّلها الآن بـ `minerva cron run {job}` بعد عودة Hermes."
+    cron_interrupted: "⚠️ قُطعت المهمة المجدولة '{job}' لأن Minerva {action}؛ لا نتيجة لهذا التشغيل. ستعمل مجددًا في موعدها، أو شغّلها الآن بـ `minerva cron run {job}` بعد عودة Minerva."
     notice_shutdown: "⚠️ Minerva قيد إيقاف التشغيل — ستُقطع مهمتك الحالية. عند عودته إلى الاتصال، أرسل أي رسالة وسأحاول المتابعة من حيث توقفنا."
     notice_restart: "⚠️ Minerva قيد إعادة التشغيل — ستُقطع مهمتك الحالية. أرسل أي رسالة بعد إعادة التشغيل وسأحاول الاستئناف من حيث توقفت."
   startup:
-    handoff_thread_title: "Hermes — {title}"
+    handoff_thread_title: "Minerva — {title}"
     restarted: "♻ أُعيد تشغيل البوّابة بنجاح. جلستك مستمرة."
     free_tier_line: "الاستدلال: الطبقة المجانية من Nous (nous/welcome). سجّل الدخول للمزيد: /login"
     online: "♻️ البوّابة متصلة — Minerva عاد وجاهز."
@@ -1006,7 +1006,7 @@ platform:
       resolved_cancel: "أُلغي"
     prompt:
       truncated_marker: "... [مقتطع]"
-      clarify_title: "Hermes يحتاج إلى ردّك"
+      clarify_title: "Minerva يحتاج إلى ردّك"
       clarify_hint_buttons: "اختر أحد الخيارات أدناه، أو اضغط ✏️ أخرى لكتابة إجابة مخصصة."
       clarify_hint_text: "أجب في هذه القناة بردّك."
       default_hint: " (افتراضي: {default})"
@@ -1071,7 +1071,7 @@ platform:
       undo:
         description: "إزالة آخر تبادل"
       status:
-        description: "عرض حالة جلسة Hermes"
+        description: "عرض حالة جلسة Minerva"
         followup: "أُرسلت الحالة~"
       stop:
         description: "إيقاف وكيل Minerva قيد التشغيل"
@@ -1143,7 +1143,7 @@ platform:
         arg_question: "السؤال الجانبي المراد الإجابة عنه دون مقاطعة"
         followup: "أُرسل السؤال الجانبي~"
       skill:
-        description: "تشغيل مهارة Hermes"
+        description: "تشغيل مهارة Minerva"
         arg_name: "المهارة المراد تشغيلها"
         arg_args: "وسائط اختيارية للمهارة"
         unknown: "مهارة غير معروفة: `{name}`. ابدأ الكتابة للحصول على اقتراحات الإكمال التلقائي."
@@ -1163,9 +1163,9 @@ platform:
     security:
       unauthorized_slash_alert: "⚠️ محاولة أمر مائل غير مصرّح بها على Discord\nالمستخدم: {user_name} ({user_id})\nالقناة: {chan_id} (الخادم {guild_id})\nالأمر: {command_text}\nالسبب: {reason}"
     thread:
-      seed_message: "🧵 سلسلة أنشأها Hermes: **{name}**"
+      seed_message: "🧵 سلسلة أنشأها Minerva: **{name}**"
       default_name: "Hermes"
-      handoff_seed: "🧵 تسليم Hermes: **{name}**"
+      handoff_seed: "🧵 تسليم Minerva: **{name}**"
       auto_create_failed: "⚠️ تعذّر على Minerva إنشاء سلسلة Discord لهذه الرسالة، لذا لم تتم معالجة الطلب. يرجى إعادة المحاولة."
       auto_create_failed_generic: "لم تتم معالجة الطلب. يرجى إعادة المحاولة."
     media:
@@ -1313,7 +1313,7 @@ platform:
       thinking: "يفكّر..."
       still_working: "لا يزال يعمل… ({elapsed})"
     task_card:
-      title: "Hermes يعمل"
+      title: "Minerva يعمل"
     slash:
       reply_truncated: "\n\n_[اقتُطع الرد: {count} جزء إضافي تجاوز حد الردود المؤقتة في Slack.]_"
       running: "جارٍ تشغيل `/{command}`…"
@@ -1321,7 +1321,7 @@ platform:
       seed: ":thread: تسليم Minerva — *{name}*"
   matrix:
     handoff:
-      default_name: "جلسة Hermes"
+      default_name: "جلسة Minerva"
     media:
       image_download_failed: "تعذّر عليّ تنزيل الصورة ورفعها إلى Matrix. لم يُعرض عنوان المصدر لأنه قد يحتوي على رموز وصول خاصة."
     approval:
@@ -1379,7 +1379,7 @@ platform:
       header: "سؤال"
       question: "❓ {question}"
     typing:
-      thinking: "Hermes يفكّر…"
+      thinking: "Minerva يفكّر…"
       interrupted: "(قُطع)"
       no_reply: "(لا ردّ)"
     attachment_fallback:
@@ -1608,9 +1608,9 @@ slash:
   voice:
     description: "تبديل وضع الصوت"
   wake:
-    description: "تبديل مستمع كلمة التنبيه 'Hey Hermes'"
+    description: "تبديل مستمع كلمة التنبيه 'Hey Minerva'"
   busy:
-    description: "التحكم في سلوك الرسائل أثناء عمل Hermes"
+    description: "التحكم في سلوك الرسائل أثناء عمل Minerva"
   tools:
     description: "إدارة الأدوات: /tools [list|disable|enable] [name...]"
   toolsets:
@@ -2124,7 +2124,7 @@ cli:
     err_termux_app_missing: "تم اكتشاف حزمة أوامر Termux:API، لكن تطبيق Android غير موجود.\nثبّت/حدّث تطبيق Termux:API لنظام Android، ثم أعِد المحاولة بـ /voice on."
     err_mic_access: "يحتاج وضع الصوت إلى الوصول إلى الميكروفون.\nشغّل pkg install termux-api وثبّت تطبيق Termux:API لنظام Android، ثم أعِد المحاولة بـ /voice on."
     err_audio_capture: "يتطلب وضع الصوت التقاط الصوت."
-    err_stt_provider: "يتطلب وضع الصوت مزوّد STT للنسخ الصوتي.\nشغّل hermes tools واضبط تحويل الكلام إلى نص، ثم أعِد تشغيل Hermes."
+    err_stt_provider: "يتطلب وضع الصوت مزوّد STT للنسخ الصوتي.\nشغّل hermes tools واضبط تحويل الكلام إلى نص، ثم أعِد تشغيل Minerva."
     silence_autostop: "تم اكتشاف صمت، إيقاف تلقائي..."
     hint_continuous: "يتوقف تلقائيًا عند الصمت | {shortcut} للإيقاف والخروج من الوضع المستمر"
     hint_termux: "التقاط عبر Termux:API | {shortcut} للإيقاف"
@@ -3462,10 +3462,10 @@ explainer:
     turn_lease: "أُوقف الدور لأن عملية Minerva أخرى استولت على هذه الجلسة. لم يُحفظ ردّك — انتظر انتهاء العملية الأخرى، ثم أرسل رسالتك مجددًا."
     session_row_missing: "حُذفت هذه الجلسة من التخزين بينما كانت المحادثة لا تزال مفتوحة، ولم يستطع Minerva إعادة إنشائها، فلم تُحفظ هذه الرسالة. أرسل رسالتك مجددًا؛ وإن استمر الفشل، شغّل `minerva {profile_arg}doctor`."
     locked: "أُوقف الدور لأن تخزين الجلسة كان مشغولًا (عملية Minerva أخرى كانت تكتب في قاعدة بيانات الحالة). من المفترض أن رسالتك محفوظة بالفعل — يُرجى إرسالها مجددًا بعد لحظات."
-    replaced: "استُبدل ملف قاعدة بيانات الجلسات أثناء تشغيل Hermes، فلم تُحفظ هذه الرسالة (تُحتفظ نسخة منها في {home}/sessions/). أوقف Minerva (`minerva {profile_arg}gateway stop`)، وشغّل `minerva {profile_arg}doctor` — وليس `minerva {profile_arg}doctor --fix`، لأنه سيُصلح الملف الخطأ في مكانه — ثم شغّله من جديد وأرسل رسالتك مرة أخرى. خطوات الاسترداد المتقدمة موجودة في السجل."
+    replaced: "استُبدل ملف قاعدة بيانات الجلسات أثناء تشغيل Minerva، فلم تُحفظ هذه الرسالة (تُحتفظ نسخة منها في {home}/sessions/). أوقف Minerva (`minerva {profile_arg}gateway stop`)، وشغّل `minerva {profile_arg}doctor` — وليس `minerva {profile_arg}doctor --fix`، لأنه سيُصلح الملف الخطأ في مكانه — ثم شغّله من جديد وأرسل رسالتك مرة أخرى. خطوات الاسترداد المتقدمة موجودة في السجل."
     deleted_wal: "لا تزال عملية Minerva أخرى تحتفظ بنسخة قديمة من سجل الكتابة المسبقة لقاعدة بيانات الجلسات، فتوقّف Minerva عن الكتابة حفاظًا على سلامة الملف ولم تُحفظ هذه الرسالة (تُحتفظ نسخة منها في {home}/sessions/). لم يُفقد شيء. أنهِ كل عمليات Minerva على هذا الملف التعريفي (تطبيق سطح المكتب، `minerva {profile_arg}gateway stop`، لوحة التحكم، cron)، وشغّل `minerva {profile_arg}doctor` — فهو يسمّي أي عملية لا تزال تحتفظ بالسجل — ثم شغّل Minerva من جديد وأرسل رسالتك مرة أخرى. لا تشغّل `doctor --fix` ولا تحذف أي ملفات state.db أثناء تشغيلها. الدليل: {recovery_docs}"
     corrupt: "أُوقف الدور لأن قاعدة بيانات الحالة أبلغت عن تلف بنيوي (كان النص الكامل سيُفقد عند إعادة التشغيل). لن يفيد تحرير مساحة على القرص. خيارات الاسترداد:\n1. شغّل `minerva {profile_arg}doctor --fix`\n2. أوقف البوّابة، ثم استردّ عبر:\n   hermes {profile_arg}sessions recover --source {db_path} --inspect-only\n   (إن أبلغ بأن الاسترداد ممكن) hermes {profile_arg}sessions recover --source {db_path} --output recovered-state.db\n   — يأخذ الاسترداد لقطة من الملف المتضرر أولًا؛ لا تشغّل `sqlite3 ... \".recover\"` على state.db الحيّ، فقد يزيد sqlite3 CLI المعرّض للثغرات من تلفه\n3. استعد من نسخة احتياطية في {backups_dir}/\nثم أرسل رسالتك مجددًا."
-    fts_index: "أُوقف الدور لأن فهرس بحث الجلسات (FTS5) تالف ولم يُمكن فصله، فلم تُحفظ هذه الرسالة. مخزن الرسائل نفسه غير متضرر: لا تشغّل أدوات الاسترداد ولا تستعد نسخة احتياطية. شغّل `minerva {profile_arg}doctor --fix` (أو أعد تشغيل Hermes، فهو يُصلح الفهرس عند الفتح)، ثم أرسل رسالتك مجددًا."
+    fts_index: "أُوقف الدور لأن فهرس بحث الجلسات (FTS5) تالف ولم يُمكن فصله، فلم تُحفظ هذه الرسالة. مخزن الرسائل نفسه غير متضرر: لا تشغّل أدوات الاسترداد ولا تستعد نسخة احتياطية. شغّل `minerva {profile_arg}doctor --fix` (أو أعد تشغيل Minerva، فهو يُصلح الفهرس عند الفتح)، ثم أرسل رسالتك مجددًا."
     disk: "تعذّر على Minerva حفظ هذه المحادثة على القرص، فتوقّف بدلًا من أن يفقد رسائلك. القرص ممتلئ على الأرجح: حرّر بعض المساحة (أو أصلح أذونات {home}/state.db)، ثم أرسل رسالتك مجددًا."
     default: "تعذّر على Minerva حفظ هذه المحادثة، فتوقّف بدلًا من أن يفقد رسائلك. الأسباب المحتملة: لم يتبقّ مكان على القرص، أو عملية Minerva أخرى تحتجز قاعدة البيانات. أغلق نوافذ Minerva الأخرى، وشغّل `minerva {profile_arg}doctor` للتحقق من التخزين، ثم أرسل رسالتك مجددًا."
   file_mutation:
@@ -3761,7 +3761,7 @@ tips:
   t283: "يحتفظ حجر المهارات في ~/.hermes/skills/.hub/quarantine/ بالمهارات المنتظرة للمراجعة الأمنية."
   t284: "يحقن /steer <prompt> ملاحظة بعد استدعاء الأداة التالي — لتوجيه المسار أثناء المهمة دون قطعها."
   t285: "يحدّد /goal <text> هدفًا دائمًا بأسلوب حلقة Ralph — يواصل Minerva تلقائيًا دورًا بعد دور حتى يقرّر حَكَم أن العمل تم."
-  t286: "/snapshot create [label] يحفظ لقطة كاملة لحالة إعدادات Hermes؛ ويُعيدها لاحقًا /snapshot restore <id>."
+  t286: "/snapshot create [label] يحفظ لقطة كاملة لحالة إعدادات Minerva؛ ويُعيدها لاحقًا /snapshot restore <id>."
   t287: "/copy [N] ينسخ آخر رد للمساعد إلى الحافظة، أو الرد رقم N من النهاية إذا حددت رقمًا."
   t288: "/redraw يُعيد رسم الواجهة بالكامل لإصلاح انحراف الطرفية بعد تغيير حجم tmux أو آثار التحديد بالفأرة."
   t289: "/agents (الاسم البديل /tasks) يعرض الوكلاء النشطين والمهام العاملة في الخلفية عبر الجلسة الحالية."

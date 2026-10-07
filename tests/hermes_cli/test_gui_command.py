@@ -188,7 +188,7 @@ def _stamped_macos_bundle(app: Path, asar: bytes) -> Path:
 
 @pytest.mark.platforms("macos")
 def test_packaged_launch_opens_the_refreshed_installed_app(tmp_path, monkeypatch):
-    """#52339: Finder and the Dock open the installed Hermes.app, so ``minerva desktop`` must launch
+    """#52339: Finder and the Dock open the installed Minerva.app, so ``minerva desktop`` must launch
     that copy (brought up to the checkout build) instead of a second bundle under release/."""
     import shutil
 
@@ -369,7 +369,7 @@ def _write_info_plist(bundle: Path, identifier: str) -> None:
 
 
 def _make_signable_app(desktop_dir: Path) -> Path:
-    """Build a fake packaged Hermes.app with the pieces the signer must find."""
+    """Build a fake packaged Minerva.app with the pieces the signer must find."""
     ent_dir = desktop_dir / "electron"
     ent_dir.mkdir(parents=True, exist_ok=True)
     (ent_dir / "entitlements.mac.plist").write_text("<plist/>", encoding="utf-8")
@@ -380,7 +380,7 @@ def _make_signable_app(desktop_dir: Path) -> Path:
     (app / "Contents" / "MacOS").mkdir(parents=True)
     (app / "Contents" / "MacOS" / "Hermes").write_text("", encoding="utf-8")
 
-    helper = app / "Contents" / "Frameworks" / "Hermes Helper.app"
+    helper = app / "Contents" / "Frameworks" / "Minerva Helper.app"
     _write_info_plist(helper, "com.nousresearch.hermes.helper")
 
     framework = app / "Contents" / "Frameworks" / "Electron Framework.framework"
@@ -411,7 +411,7 @@ def test_desktop_macos_local_codesign_signs_native_binaries(tmp_path, monkeypatc
     """The standalone Mach-O pass must actually find files inside the bundle.
 
     Regression: an absolute-path parts check always matches the outer
-    Hermes.app component, silently skipping every .node/.dylib/crashpad
+    Minerva.app component, silently skipping every .node/.dylib/crashpad
     binary — codesign then rejects the outer signature (nested code unsigned).
     """
     desktop_dir = tmp_path / "apps" / "desktop"
@@ -461,7 +461,7 @@ def test_setup_tcc_identity_creates_cert_imports_trusts_and_configures(tmp_path,
     )
     monkeypatch.setattr(cli_main.Path, "home", classmethod(lambda cls: tmp_path))
 
-    identity = "Hermes Local Signing"
+    identity = "Minerva Local Signing"
     calls = []
     state = {"trusted": False}
 
@@ -510,7 +510,7 @@ def test_setup_tcc_identity_retries_pkcs12_with_legacy_on_mac_verification_failu
     )
     monkeypatch.setattr(cli_main.Path, "home", classmethod(lambda cls: tmp_path))
 
-    identity = "Hermes Local Signing"
+    identity = "Minerva Local Signing"
     calls = []
     state = {"legacy_exported": False, "trusted": False}
 
@@ -569,7 +569,7 @@ def test_setup_tcc_identity_fails_when_trust_step_fails(tmp_path, monkeypatch, c
 
     monkeypatch.setattr(cli_main.subprocess, "run", fake_run)
 
-    assert main_desktop._desktop_macos_setup_tcc_identity("Hermes Local Signing") is False
+    assert main_desktop._desktop_macos_setup_tcc_identity("Minerva Local Signing") is False
 
 
 @pytest.mark.platforms("macos")
@@ -591,7 +591,7 @@ def test_setup_tcc_identity_fails_when_identity_never_becomes_valid(tmp_path, mo
 
     monkeypatch.setattr(cli_main.subprocess, "run", fake_run)
 
-    assert main_desktop._desktop_macos_setup_tcc_identity("Hermes Local Signing") is False
+    assert main_desktop._desktop_macos_setup_tcc_identity("Minerva Local Signing") is False
 
 
 @pytest.mark.platforms("macos")
@@ -609,7 +609,7 @@ def test_setup_tcc_identity_skips_generation_when_already_valid(tmp_path, monkey
     def fake_run(cmd, **kwargs):
         calls.append(list(cmd))
         if cmd[:4] == ["/usr/bin/security", "find-identity", "-v", "-p"]:
-            return _fake_proc(cmd, stdout='  1) ABCD "Hermes Local Signing"\n     1 valid identities found')
+            return _fake_proc(cmd, stdout='  1) ABCD "Minerva Local Signing"\n     1 valid identities found')
         return _fake_proc(cmd)
 
     monkeypatch.setattr(cli_main.subprocess, "run", fake_run)
@@ -617,7 +617,7 @@ def test_setup_tcc_identity_skips_generation_when_already_valid(tmp_path, monkey
     monkeypatch.setattr(main_desktop, "_desktop_macos_relaunchable_fixup", lambda d: True)
     monkeypatch.setattr("hermes_cli.config.set_config_value", lambda key, value: None)
 
-    assert main_desktop._desktop_macos_setup_tcc_identity("Hermes Local Signing") is True
+    assert main_desktop._desktop_macos_setup_tcc_identity("Minerva Local Signing") is True
 
     # No openssl generation, no security import — only find-identity + config.
     assert not any(c[0] == "/usr/bin/openssl" for c in calls)
@@ -645,7 +645,7 @@ def test_setup_tcc_identity_untrusted_existing_cert_is_repaired(tmp_path, monkey
             # -v never lists the untrusted cert; it only appears once the
             # repair path has run add-trusted-cert.
             if state["trusted"]:
-                return _fake_proc(cmd, stdout='  1) ABCD "Hermes Local Signing"\n     1 valid identities found')
+                return _fake_proc(cmd, stdout='  1) ABCD "Minerva Local Signing"\n     1 valid identities found')
             return _fake_proc(cmd, stdout="     0 valid identities found")
         if cmd[0] == "/usr/bin/security" and cmd[1] == "add-trusted-cert":
             state["trusted"] = True
@@ -657,7 +657,7 @@ def test_setup_tcc_identity_untrusted_existing_cert_is_repaired(tmp_path, monkey
     monkeypatch.setattr(main_desktop, "_desktop_macos_relaunchable_fixup", lambda d: True)
     monkeypatch.setattr("hermes_cli.config.set_config_value", lambda key, value: None)
 
-    assert main_desktop._desktop_macos_setup_tcc_identity("Hermes Local Signing") is True
+    assert main_desktop._desktop_macos_setup_tcc_identity("Minerva Local Signing") is True
     assert any(c[0] == "/usr/bin/security" and c[1] == "add-trusted-cert" for c in calls)
 
 
@@ -673,10 +673,10 @@ def test_cmd_gui_setup_tcc_identity_exits_before_build(tmp_path, monkeypatch):
     with patch("hermes_cli.main_desktop._desktop_macos_setup_tcc_identity", return_value=True) as mock_setup, \
          patch("hermes_cli.source_build.prepare_source_dependencies") as mock_install, \
          pytest.raises(SystemExit) as exc:
-        cli_main.cmd_gui(_ns(setup_tcc_identity=True, identity="Hermes Local Signing"))
+        cli_main.cmd_gui(_ns(setup_tcc_identity=True, identity="Minerva Local Signing"))
 
     assert exc.value.code == 0
-    mock_setup.assert_called_once_with("Hermes Local Signing")
+    mock_setup.assert_called_once_with("Minerva Local Signing")
     mock_install.assert_not_called()
 
 
@@ -749,7 +749,7 @@ def test_relaunchable_fixup_configured_identity_failure_never_falls_back_to_adho
     )
     monkeypatch.setattr(cli_main.subprocess, "run", fake_run)
     monkeypatch.setattr(main_desktop, "_desktop_macos_has_valid_real_signature", lambda a: False)
-    monkeypatch.setattr(main_desktop, "_desktop_macos_local_signing_identity", lambda: "Hermes Local Signing")
+    monkeypatch.setattr(main_desktop, "_desktop_macos_local_signing_identity", lambda: "Minerva Local Signing")
     # The bundle being re-signed in place is publisher-signed (Team ID): a degraded
     # replacement would orphan its keychain ACLs and TCC grants.
     monkeypatch.setattr(
@@ -783,7 +783,7 @@ def test_relaunchable_fixup_configured_identity_success_still_signs(tmp_path, mo
 
     calls: list[list[str]] = []
     monkeypatch.setattr(main_desktop, "_desktop_macos_has_valid_real_signature", lambda a: False)
-    monkeypatch.setattr(main_desktop, "_desktop_macos_local_signing_identity", lambda: "Hermes Local Signing")
+    monkeypatch.setattr(main_desktop, "_desktop_macos_local_signing_identity", lambda: "Minerva Local Signing")
 
     def fake_local_codesign(app, *, desktop_dir, identity):
         calls.append(["local-codesign", identity])
@@ -796,7 +796,7 @@ def test_relaunchable_fixup_configured_identity_success_still_signs(tmp_path, mo
     )
 
     assert cli_main._desktop_macos_relaunchable_fixup(desktop_dir) is True
-    assert ["local-codesign", "Hermes Local Signing"] in calls
+    assert ["local-codesign", "Minerva Local Signing"] in calls
     assert not any("--deep" in c for c in calls)
     assert not any("delete-generic-password" in c for c in calls)
 
@@ -954,7 +954,7 @@ def test_relaunchable_fixup_failed_identity_uses_pinned_adhoc_before_legacy(tmp_
     monkeypatch.delenv("APPLE_SIGNING_IDENTITY", raising=False)
     monkeypatch.setattr(main_desktop, "_desktop_macos_has_valid_real_signature", lambda _app: False)
     monkeypatch.setattr(
-        main_desktop, "_desktop_macos_local_signing_identity", lambda: "Hermes Local Signing",
+        main_desktop, "_desktop_macos_local_signing_identity", lambda: "Minerva Local Signing",
     )
 
     seen: list[str] = []
@@ -979,7 +979,7 @@ def test_relaunchable_fixup_failed_identity_uses_pinned_adhoc_before_legacy(tmp_
     monkeypatch.setattr(main_desktop.subprocess, "run", fake_run)
 
     assert main_desktop._desktop_macos_relaunchable_fixup(desktop_dir) is True
-    assert seen == ["Hermes Local Signing", "-"]
+    assert seen == ["Minerva Local Signing", "-"]
     assert not any(cmd[:5] == ["/usr/bin/codesign", "--force", "--deep", "--sign", "-"] for cmd in calls)
 
 
@@ -997,7 +997,7 @@ def test_relaunchable_fixup_legacy_when_pinned_adhoc_also_fails(tmp_path, monkey
     monkeypatch.delenv("APPLE_SIGNING_IDENTITY", raising=False)
     monkeypatch.setattr(main_desktop, "_desktop_macos_has_valid_real_signature", lambda _app: False)
     monkeypatch.setattr(
-        main_desktop, "_desktop_macos_local_signing_identity", lambda: "Hermes Local Signing",
+        main_desktop, "_desktop_macos_local_signing_identity", lambda: "Minerva Local Signing",
     )
 
     seen: list[str] = []
@@ -1020,7 +1020,7 @@ def test_relaunchable_fixup_legacy_when_pinned_adhoc_also_fails(tmp_path, monkey
     monkeypatch.setattr(main_desktop.subprocess, "run", fake_run)
 
     assert main_desktop._desktop_macos_relaunchable_fixup(desktop_dir) is True
-    assert seen == ["Hermes Local Signing", "-"]
+    assert seen == ["Minerva Local Signing", "-"]
     assert ["/usr/bin/codesign", "--force", "--deep", "--sign", "-", str(app)] in calls
 
 

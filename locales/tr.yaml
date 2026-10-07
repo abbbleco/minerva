@@ -203,7 +203,7 @@ gateway:
     set: "⊙ Hedef ayarlandı ({budget} turluk bütçe): {goal}\nHedef tamamlanana, siz duraklatana/temizleyene veya bütçe tükenene kadar çalışmaya devam edeceğim.\nKontroller: /goal status · /goal pause · /goal resume · /goal clear"
     gate_add_admin_only: "⛔ /goal gate add, açıkça yapılandırılmış bir gateway yöneticisi gerektirir (DM'ler için allow_admin_from, gruplar için group_allow_admin_from)."
   help:
-    header: "📖 **Hermes Komutları**\n"
+    header: "📖 **Minerva Komutları**\n"
     skill_header: "\n⚡ **Skill Komutları** ({count} aktif):"
     more_use_commands: "\n... ve {count} tane daha. Tam sayfalı liste için `/commands` kullanın."
   insights:
@@ -422,7 +422,7 @@ gateway:
     source_line: "Kaynak: {source}; kategori sayıları yerel tahminlerdir."
     hint_all: "Skill ve araç seti başına maliyetler için /context all kullanın."
   status:
-    header: "📊 **Hermes Gateway Durumu**"
+    header: "📊 **Minerva Gateway Durumu**"
     matrix_scope_header: "**Matrix kapsamı:**"
     matrix_scope_room: "  room: {room}"
     matrix_scope_room_id: "  room_id: {room_id}"
@@ -470,13 +470,13 @@ gateway:
     untitled_session: "Adsız oturum"
     restore_step_1: "1. Bir konu oluşturun veya açın. Yeni bir konu oluşturmak için Tüm Mesajlar'ı açıp orada herhangi bir mesaj gönderin."
     restore_step_2: "2. O konunun içinde /topic <session-id> gönderin."
-    default_title: "Hermes Sohbeti"
+    default_title: "Minerva Sohbeti"
     root_lobby: "Bu ana sohbet sistem komutlarına ayrılmıştır.\n\nYeni bir Minerva sohbeti başlatmak için bu bot arayüzünün üst kısmındaki Tüm Mesajlar konusunu açın ve orada herhangi bir mesaj gönderin. Telegram o mesaj için yeni bir konu oluşturur; her konu bağımsız bir Minerva oturumu olarak çalışır."
     root_new: "Yeni bir paralel Minerva sohbeti başlatmak için bu bot arayüzünün üst kısmındaki Tüm Mesajlar konusunu açın ve orada herhangi bir mesaj gönderin. Telegram bunun için yeni bir konu oluşturur.\n\nHer konu bağımsız bir Minerva oturumudur. Mevcut bir konunun içinde /new komutunu yalnızca o konunun geçerli oturumunu değiştirmek istiyorsanız kullanın."
     new_header: "Bu konuda yeni bir Minerva oturumu başlatıldı.\n\nİpucu: paralel çalışma için burada /new kullanmak yerine Tüm Mesajlar'ı açıp orada bir mesaj göndererek ayrı bir konu oluşturun. /new, geçerli konuya bağlı oturumun yerini alır."
-    help: "/topic — çoklu oturumlu DM modunu etkinleştirir (tek bot, birçok paralel sohbet)\n\nKullanım:\n  /topic             Konu modunu etkinleştir veya zaten açıksa durumu göster\n  /topic help        Bu mesajı göster\n  /topic off         Konu modunu kapat ve konu bağlantılarını temizle\n  /topic <id>        Bir konunun içinde: önceki bir oturumu kimliğiyle geri yükle\n\nNasıl çalışır:\n1. Bu DM'de /topic komutunu bir kez çalıştırın — Hermes, BotFather Threads\n   Settings ayarının etkin olduğunu doğrular ve çoklu oturum modunu açar.\n2. Botun üst kısmındaki Tüm Mesajlar'a dokunup herhangi bir mesaj gönderin.\n   Telegram o mesaj için yeni bir konu oluşturur; her konu bağımsız bir\n   Minerva oturumudur (yeni geçmiş, yeni bağlam).\n3. Kök DM bir sistem lobisine dönüşür — /topic, /status, /help, /usage\n   komutlarını orada gönderin. Normal istemler bir konuya yazılır.\n4. Bir konunun içindeki /new yalnızca o konunun oturumunu sıfırlar.\n5. Bir konunun içindeki /topic <id> eski bir oturumu o konuya geri yükler."
+    help: "/topic — çoklu oturumlu DM modunu etkinleştirir (tek bot, birçok paralel sohbet)\n\nKullanım:\n  /topic             Konu modunu etkinleştir veya zaten açıksa durumu göster\n  /topic help        Bu mesajı göster\n  /topic off         Konu modunu kapat ve konu bağlantılarını temizle\n  /topic <id>        Bir konunun içinde: önceki bir oturumu kimliğiyle geri yükle\n\nNasıl çalışır:\n1. Bu DM'de /topic komutunu bir kez çalıştırın — Minerva, BotFather Threads\n   Settings ayarının etkin olduğunu doğrular ve çoklu oturum modunu açar.\n2. Botun üst kısmındaki Tüm Mesajlar'a dokunup herhangi bir mesaj gönderin.\n   Telegram o mesaj için yeni bir konu oluşturur; her konu bağımsız bir\n   Minerva oturumudur (yeni geçmiş, yeni bağlam).\n3. Kök DM bir sistem lobisine dönüşür — /topic, /status, /help, /usage\n   komutlarını orada gönderin. Normal istemler bir konuya yazılır.\n4. Bir konunun içindeki /new yalnızca o konunun oturumunu sıfırlar.\n5. Bir konunun içindeki /topic <id> eski bir oturumu o konuya geri yükler."
     system_topic_name: "Sistem"
-    system_topic_intro: "Hermes komutları ve durumu için sistem konusu."
+    system_topic_intro: "Minerva komutları ve durumu için sistem konusu."
     setup_image_caption: "BotFather → Bot Settings → Threads Settings"
     no_chat_id: "Sohbet kimliği belirlenemedi."
     mode_not_enabled: "Çoklu oturumlu konu modu bu sohbet için şu anda etkin değil."
@@ -634,7 +634,7 @@ gateway:
     turn_error_detailed: "Üzgünüm, bir hatayla karşılaştım ({error_type}).\n{error_detail}\nYeniden deneyin veya yeni bir oturum başlatmak için /reset kullanın."
     turn_error: "Üzgünüm, bir hatayla karşılaştım."
     context_injection_refused: "Bağlam eklemesi reddedildi."
-    no_home_channel: "📬 {platform} için ana kanal ayarlanmamış. Ana kanal, Hermes'in cron işi sonuçlarını ve platformlar arası mesajları ilettiği yerdir.\n\nBu sohbeti ana kanalınız yapmak için {sethome_cmd} yazın veya atlamak için yoksayın."
+    no_home_channel: "📬 {platform} için ana kanal ayarlanmamış. Ana kanal, Minerva'in cron işi sonuçlarını ve platformlar arası mesajları ilettiği yerdir.\n\nBu sohbeti ana kanalınız yapmak için {sethome_cmd} yazın veya atlamak için yoksayın."
   unauthorized:
     action_notice: "Bu bot özeldir ve izin listesinde değilsiniz. Sahibi sizseniz ana makinede `minerva pairing approve {platform} <request-id>` çalıştırın (`minerva pairing list` kimliği gösterir)."
     admin_only_can_run: "Çalıştırabileceğiniz komutlar: "
@@ -728,18 +728,18 @@ gateway:
     draining_maintenance: "⏳ Bu ajan bir bakım işlemi için boşaltılıyor ve şu anda yeni tur kabul etmiyor. Kısa süre içinde geri dönecek — lütfen biraz sonra yeniden gönderin."
     another_turn_running: "⏳ Bu oturumda başka bir tur hâlâ çalışıyor. Transkripti korumak için bu mesaj işlenmedi. Aktif turun bitmesini bekleyin, ardından yeniden gönderin."
     behavior_queue_short: "sonraki tur için sıraya alır"
-    behavior_queue_long: "Hermes meşgulken mesajlar sonraki tur için sıraya alınır."
+    behavior_queue_long: "Minerva meşgulken mesajlar sonraki tur için sıraya alınır."
     behavior_steer_short: "mevcut çalışmaya yönlendirir (sonraki araç çağrısından sonra)"
     behavior_steer_long: "Mesajlar mevcut çalışmaya yönlendirilir (sonraki araç çağrısından sonra)."
     behavior_interrupt_short: "mevcut çalışmayı keser"
-    behavior_interrupt_long: "Hermes meşgulken mesajlar mevcut çalışmayı keser."
+    behavior_interrupt_long: "Minerva meşgulken mesajlar mevcut çalışmayı keser."
     status: "**Meşgul giriş modu: `{mode}`\nMeşgulken gelen mesajlar: _{behavior}_\n`/busy queue`, `/busy steer` veya `/busy interrupt` ile değiştirin."
     unknown_mode: "Bilinmeyen mod `{arg}`. `/busy queue`, `/busy steer` veya `/busy interrupt` kullanın."
     save_failed: "Meşgul giriş modu yapılandırmaya kaydedilemedi. Mod değişmedi."
     set: "Meşgul giriş modu **`{mode}`** olarak ayarlandı (kaydedildi).\n_{behavior}_"
   pause:
     resumed: "▶️ Devam ediliyor — yeni işler yeniden kabul ediliyor."
-    not_paused: "Hermes duraklatılmamıştı."
+    not_paused: "Minerva duraklatılmamıştı."
     reason_suffix: " (neden: {reason})"
     already_paused: "⏸️ Minerva zaten duraklatılmış{suffix}. Devam etmek için `/pause off` kullanın."
     paused: "⏸️ Duraklatıldı{suffix}. Yeni cron/kanban/gateway işleri beklemeye alındı; sürmekte olan işler normal şekilde tamamlanır. Devam etmek için `/pause off` kullanın."
@@ -826,7 +826,7 @@ gateway:
     task_status_complete: "tamamlandı"
     task_status_error: "hata"
     task_line: "- {title} - {status}"
-    task_card_title: "Hermes çalışıyor"
+    task_card_title: "Minerva çalışıyor"
   pairing:
     validity_hour: "{hours} saat"
     validity_hours: "{hours} saat"
@@ -839,7 +839,7 @@ gateway:
     notice_shutdown: "⚠️ Minerva kapanıyor — geçerli göreviniz yarıda kesilecek. Yeniden çevrimiçi olduğunda herhangi bir mesaj gönderin; kaldığımız yerden devam etmeyi deneyeceğim."
     notice_restart: "⚠️ Minerva yeniden başlatılıyor — geçerli göreviniz yarıda kesilecek. Yeniden başlatmadan sonra herhangi bir mesaj gönderin; kaldığınız yerden sürdürmeyi deneyeceğim."
   startup:
-    handoff_thread_title: "Hermes — {title}"
+    handoff_thread_title: "Minerva — {title}"
     restarted: "♻ Gateway başarıyla yeniden başlatıldı. Oturumunuz devam ediyor."
     free_tier_line: "Çıkarım: Nous ücretsiz katman (nous/welcome). Daha fazlası için giriş yapın: /login"
     online: "♻️ Gateway çevrimiçi — Minerva geri döndü ve hazır."
@@ -986,7 +986,7 @@ platform:
     transformed_notice: "\n\n[Yanıt akıştan sonra dönüştürüldü]\n"
   discord:
     approval:
-      question: "Hermes bu komutu çalıştırsın mı?"
+      question: "Minerva bu komutu çalıştırsın mı?"
       requested_command_label: "İstenen komut:"
       confirm_title: "Onayla"
       already_resolved: "Bu onay zaten sonuçlandırıldı~"
@@ -1006,7 +1006,7 @@ platform:
       resolved_cancel: "İptal edildi"
     prompt:
       truncated_marker: "... [kısaltıldı]"
-      clarify_title: "Hermes girdinize ihtiyaç duyuyor"
+      clarify_title: "Minerva girdinize ihtiyaç duyuyor"
       clarify_hint_buttons: "Aşağıdan birini seçin veya özel bir yanıt yazmak için ✏️ Diğer'e tıklayın."
       clarify_hint_text: "Yanıtınızı bu kanala yazın."
       default_hint: " (varsayılan: {default})"
@@ -1049,7 +1049,7 @@ platform:
         description: "Yeni bir konuşma başlat"
         followup: "Yeni konuşma başlatıldı~"
       reset:
-        description: "Hermes oturumunuzu sıfırla"
+        description: "Minerva oturumunuzu sıfırla"
         followup: "Oturum sıfırlandı~"
       model:
         description: "Modeli göster veya değiştir"
@@ -1071,7 +1071,7 @@ platform:
       undo:
         description: "Son alışverişi kaldır"
       status:
-        description: "Hermes oturum durumunu göster"
+        description: "Minerva oturum durumunu göster"
         followup: "Durum gönderildi~"
       stop:
         description: "Çalışan Minerva ajanını durdur"
@@ -1110,7 +1110,7 @@ platform:
       update:
         followup: "Güncelleme başlatıldı~"
       restart:
-        description: "Hermes gateway'ini düzgün şekilde yeniden başlat"
+        description: "Minerva gateway'ini düzgün şekilde yeniden başlat"
         followup: "Yeniden başlatma istendi~"
       approve:
         arg_scope: "İsteğe bağlı: 'all', 'session', 'always', 'all session', 'all always'"
@@ -1120,7 +1120,7 @@ platform:
       thread:
         description: "Yeni bir konu oluştur ve içinde bir Minerva oturumu başlat"
         arg_name: "Konu adı"
-        arg_message: "İsteğe bağlı: konuda Hermes'e gönderilecek ilk mesaj"
+        arg_message: "İsteğe bağlı: konuda Minerva'e gönderilecek ilk mesaj"
         arg_auto_archive: "Otomatik arşivleme süresi, dakika (60, 1440, 4320, 10080)"
         error_unknown: "bilinmeyen hata"
         failed: "Konu oluşturulamadı: {error}"
@@ -1313,7 +1313,7 @@ platform:
       thinking: "düşünüyor..."
       still_working: "hâlâ çalışıyor… ({elapsed})"
     task_card:
-      title: "Hermes çalışıyor"
+      title: "Minerva çalışıyor"
     slash:
       reply_truncated: "\n\n_[Yanıt kısaltıldı: {count} parça daha Slack'in geçici yanıt sınırını aştı.]_"
       running: "`/{command}` çalıştırılıyor…"
@@ -1321,7 +1321,7 @@ platform:
       seed: ":thread: Minerva devri — *{name}*"
   matrix:
     handoff:
-      default_name: "Hermes oturumu"
+      default_name: "Minerva oturumu"
     media:
       image_download_failed: "Görüntüyü indirip Matrix'e yükleyemedim. Kaynak URL, özel token'lar içerebileceği için gösterilmedi."
     approval:
@@ -1379,7 +1379,7 @@ platform:
       header: "Soru"
       question: "❓ {question}"
     typing:
-      thinking: "Hermes düşünüyor…"
+      thinking: "Minerva düşünüyor…"
       interrupted: "(kesildi)"
       no_reply: "(yanıt yok)"
     attachment_fallback:
@@ -1488,7 +1488,7 @@ slash:
     plugin_default_desc: "/{name} komutunu çalıştır"
     plugin_command_desc: "Eklenti komutu"
   hermes:
-    description: "Hermes ile konuş veya bir alt komut çalıştır"
+    description: "Minerva ile konuş veya bir alt komut çalıştır"
   start:
     description: "Platform başlangıç ping'lerini yanıt vermeden kabul et"
   new:
@@ -1522,7 +1522,7 @@ slash:
   rollback:
     description: "Dosya sistemi kontrol noktalarını listele veya geri yükle (geri yükleme elle düzenlemelerinizi korur; --all bunu geçersiz kılar)"
   snapshot:
-    description: "Hermes yapılandırma/durumunun anlık görüntülerini oluştur veya geri yükle"
+    description: "Minerva yapılandırma/durumunun anlık görüntülerini oluştur veya geri yükle"
   export:
     description: "Bir profili (yapılandırma, skill'ler, tema) paylaşılabilir bir arşive dışa aktar"
   import:
@@ -1608,9 +1608,9 @@ slash:
   voice:
     description: "Ses modunu aç/kapat"
   wake:
-    description: "'Hey Hermes' uyandırma sözcüğü dinleyicisini aç/kapat"
+    description: "'Hey Minerva' uyandırma sözcüğü dinleyicisini aç/kapat"
   busy:
-    description: "Hermes çalışırken mesajların nasıl işleneceğini denetle"
+    description: "Minerva çalışırken mesajların nasıl işleneceğini denetle"
   tools:
     description: "Araçları yönet: /tools [list|disable|enable] [name...]"
   toolsets:
@@ -2124,7 +2124,7 @@ cli:
     err_termux_app_missing: "Termux:API komut paketi algılandı ancak Android uygulaması eksik.\nTermux:API Android uygulamasını kurun/güncelleyin, ardından /voice on komutunu yeniden deneyin."
     err_mic_access: "Ses modu için mikrofon erişimi gerekir.\npkg install termux-api komutunu çalıştırıp Termux:API Android uygulamasını kurun, ardından /voice on komutunu yeniden deneyin."
     err_audio_capture: "Ses modu için ses yakalama gerekir."
-    err_stt_provider: "Ses modu, yazıya dökme için bir STT sağlayıcısı gerektirir.\nhermes tools komutunu çalıştırıp Speech-to-Text ayarını yapın, ardından Hermes'i yeniden başlatın."
+    err_stt_provider: "Ses modu, yazıya dökme için bir STT sağlayıcısı gerektirir.\nhermes tools komutunu çalıştırıp Speech-to-Text ayarını yapın, ardından Minerva'i yeniden başlatın."
     silence_autostop: "Sessizlik algılandı, otomatik durduruluyor..."
     hint_continuous: "sessizlikte otomatik durur | durdurup sürekli moddan çıkmak için {shortcut}"
     hint_termux: "Termux:API yakalama | durdurmak için {shortcut}"
@@ -2473,7 +2473,7 @@ cli:
     yolo_bypass_suffix: " (YOLO atlaması etkin)"
     ctx_left_prefix: "%{percent} kaldı · "
     ctx_tokens_used: "{left}{used} / {max} token kullanıldı"
-    status_title: "Hermes CLI Durumu"
+    status_title: "Minerva CLI Durumu"
     label_reasoning: "Akıl yürütme"
     label_approvals: "Onaylar"
     label_context: "Bağlam"
@@ -2616,9 +2616,9 @@ cli:
       short_queue: "sonraki tur için sıraya alır"
       short_steer: "geçerli çalışmaya yönlendirir (sonraki araç çağrısından sonra)"
       short_interrupt: "geçerli çalışmayı hemen yeniden yönlendirir"
-      long_queue: "Hermes meşgulken Enter, takip girişini sıraya alır."
+      long_queue: "Minerva meşgulken Enter, takip girişini sıraya alır."
       long_steer: "Enter, mesajınızı geçerli çalışmaya yönlendirir (sonraki araç çağrısından sonra)."
-      long_interrupt: "Hermes meşgulken Enter, geçerli çalışmayı yeniden yönlendirir; /stop yine de iptal eder."
+      long_interrupt: "Minerva meşgulken Enter, geçerli çalışmayı yeniden yönlendirir; /stop yine de iptal eder."
       usage: "Kullanım: /busy [queue|steer|interrupt|status]"
       status: "Meşgul giriş modu: {mode}"
       enter_while_busy: "Meşgulken Enter: {behavior}"
@@ -3087,7 +3087,7 @@ cli:
   tip_line: "✦ İpucu: {tip}"
   banner:
     context_too_low: "⚠️  Bağlam uzunluğu yalnızca {tokens} token — bu, araçlarla ajan kullanımı için büyük olasılıkla çok düşük."
-    context_minimum: "Hermes en az {tokens} token gerektirir. Araç şemaları + sistem istemi büyük ve sabit bir ön ek kullanır."
+    context_minimum: "Minerva en az {tokens} token gerektirir. Araç şemaları + sistem istemi büyük ve sabit bir ön ek kullanır."
     fix_ollama: "Ollama çözümü: OLLAMA_CONTEXT_LENGTH={tokens} ollama serve"
     fix_lm_studio: "LM Studio çözümü: Model ayarlarında bağlam uzunluğunu belirleyin → modeli yeniden yükleyin"
     fix_local_server: "Çözüm: sunucunuzu en az {tokens_k}K bağlamla başlatın (llama.cpp: -c {tokens}) veya config.yaml içinde model.ollama_num_ctx değerini gerçekten sunduğu pencereye ayarlayın"
@@ -3142,9 +3142,9 @@ cli:
     the_provider: "sağlayıcı"
     the_current_model: "geçerli model"
     with_details: "{lead}\nAyrıntılar: {details}"
-    agent_init_failed: "Hermes model bağlantısını başlatamadı: {error}. Mesajınız gönderilmedi. Kurulumu denetlemek için `minerva doctor` çalıştırın veya farklı bir sağlayıcı seçmek için /model kullanın."
+    agent_init_failed: "Minerva model bağlantısını başlatamadı: {error}. Mesajınız gönderilmedi. Kurulumu denetlemek için `minerva doctor` çalıştırın veya farklı bir sağlayıcı seçmek için /model kullanın."
   gateway:
-    starting: "Hermes Gateway başlatılıyor (mesajlaşma platformları)..."
+    starting: "Minerva Gateway başlatılıyor (mesajlaşma platformları)..."
   gateway_status:
     header: "(✿◠‿◠) Gateway Durumu"
     platform_config_header: "Mesajlaşma Platformu Yapılandırması:"
@@ -3462,12 +3462,12 @@ explainer:
     turn_lease: "tur durduruldu çünkü başka bir Minerva süreci bu oturumu devraldı. Yanıtınız kaydedilmedi — diğer sürecin bitmesini bekleyin, sonra mesajınızı yeniden gönderin."
     session_row_missing: "bu oturum sohbet hâlâ açıkken depolamadan silindi ve Minerva onu yeniden oluşturamadı; bu nedenle bu mesaj kaydedilmedi. Mesajınızı yeniden gönderin; sorun sürerse `minerva {profile_arg}doctor` çalıştırın."
     locked: "tur durduruldu çünkü oturum depolaması meşguldü (başka bir Minerva süreci durum veritabanına yazıyordu). Mesajınız zaten kaydedilmiş olmalı — lütfen birazdan yeniden gönderin."
-    replaced: "oturum veritabanı dosyası Minerva çalışırken değiştirildi; bu nedenle bu mesaj kaydedilmedi (bir kopyası {home}/sessions/ altında tutuluyor). Hermes'i durdurun (`minerva {profile_arg}gateway stop`), `minerva {profile_arg}doctor` çalıştırın — `minerva {profile_arg}doctor --fix` DEĞİL; o, yanlış dosyayı yerinde onarır — sonra yeniden başlatıp mesajınızı bir kez daha gönderin. İleri düzey kurtarma adımları günlükte."
-    deleted_wal: "başka bir Minerva süreci oturum veritabanının önceden yazma günlüğünün (WAL) eski bir kopyasını hâlâ tutuyor; bu yüzden Minerva dosyayı korumak için yazmayı durdurdu ve bu mesaj kaydedilmedi (bir kopyası {home}/sessions/ altında tutuluyor). Hiçbir şey kaybolmadı. Bu profildeki her Minerva sürecinden çıkın (Masaüstü uygulaması, `minerva {profile_arg}gateway stop`, panel, cron), `minerva {profile_arg}doctor` çalıştırın — günlüğü hâlâ tutan süreçleri adıyla gösterir — sonra Hermes'i yeniden başlatıp mesajınızı bir kez daha gönderin. Süreçler çalışırken `doctor --fix` çalıştırmayın ve hiçbir state.db dosyasını silmeyin. Kılavuz: {recovery_docs}"
+    replaced: "oturum veritabanı dosyası Minerva çalışırken değiştirildi; bu nedenle bu mesaj kaydedilmedi (bir kopyası {home}/sessions/ altında tutuluyor). Minerva'i durdurun (`minerva {profile_arg}gateway stop`), `minerva {profile_arg}doctor` çalıştırın — `minerva {profile_arg}doctor --fix` DEĞİL; o, yanlış dosyayı yerinde onarır — sonra yeniden başlatıp mesajınızı bir kez daha gönderin. İleri düzey kurtarma adımları günlükte."
+    deleted_wal: "başka bir Minerva süreci oturum veritabanının önceden yazma günlüğünün (WAL) eski bir kopyasını hâlâ tutuyor; bu yüzden Minerva dosyayı korumak için yazmayı durdurdu ve bu mesaj kaydedilmedi (bir kopyası {home}/sessions/ altında tutuluyor). Hiçbir şey kaybolmadı. Bu profildeki her Minerva sürecinden çıkın (Masaüstü uygulaması, `minerva {profile_arg}gateway stop`, panel, cron), `minerva {profile_arg}doctor` çalıştırın — günlüğü hâlâ tutan süreçleri adıyla gösterir — sonra Minerva'i yeniden başlatıp mesajınızı bir kez daha gönderin. Süreçler çalışırken `doctor --fix` çalıştırmayın ve hiçbir state.db dosyasını silmeyin. Kılavuz: {recovery_docs}"
     corrupt: "tur durduruldu çünkü durum veritabanı yapısal bozulma bildirdi (yeniden başlatmada transkript kaybolacaktı). Disk alanı boşaltmak işe yaramaz. Kurtarma seçenekleri:\n1. `minerva {profile_arg}doctor --fix` çalıştırın\n2. Gateway'i durdurun, sonra şununla kurtarın:\n   hermes {profile_arg}sessions recover --source {db_path} --inspect-only\n   (kurtarılabilir bildirirse) hermes {profile_arg}sessions recover --source {db_path} --output recovered-state.db\n   — kurtarma önce hasarlı dosyanın anlık görüntüsünü alır; canlı state.db üzerinde `sqlite3 ... \\\".recover\\\"` ÇALIŞTIRMAYIN, güvenlik açığı olan bir sqlite3 CLI dosyayı daha da bozabilir\n3. {backups_dir}/ içindeki bir yedekten geri yükleyin\nArdından mesajınızı yeniden gönderin."
-    fts_index: "tur durduruldu çünkü oturum arama dizini (FTS5) bozuk ve ayrılamadı; bu nedenle bu mesaj kaydedilmedi. Mesaj deposunun kendisi hasarlı değil: kurtarma araçları çalıştırmayın ve yedek geri yüklemeyin. `minerva {profile_arg}doctor --fix` çalıştırın (veya Hermes'i yeniden başlatın; dizini açılışta onarır), sonra mesajınızı yeniden gönderin."
-    disk: "Hermes bu konuşmayı diske kaydedemedi; mesajlarınızı kaybetmektense durdu. Disk büyük olasılıkla dolu: biraz yer açın (veya {home}/state.db dosyasının izinlerini düzeltin), sonra mesajınızı yeniden gönderin."
-    default: "Hermes bu konuşmayı kaydedemedi; mesajlarınızı kaybetmektense durdu. Olası nedenler: sürücüde yer kalmamış ya da başka bir Minerva süreci veritabanını tutuyor. Diğer Minerva pencerelerini kapatın, depolamayı kontrol etmek için `minerva {profile_arg}doctor` çalıştırın, sonra mesajınızı yeniden gönderin."
+    fts_index: "tur durduruldu çünkü oturum arama dizini (FTS5) bozuk ve ayrılamadı; bu nedenle bu mesaj kaydedilmedi. Mesaj deposunun kendisi hasarlı değil: kurtarma araçları çalıştırmayın ve yedek geri yüklemeyin. `minerva {profile_arg}doctor --fix` çalıştırın (veya Minerva'i yeniden başlatın; dizini açılışta onarır), sonra mesajınızı yeniden gönderin."
+    disk: "Minerva bu konuşmayı diske kaydedemedi; mesajlarınızı kaybetmektense durdu. Disk büyük olasılıkla dolu: biraz yer açın (veya {home}/state.db dosyasının izinlerini düzeltin), sonra mesajınızı yeniden gönderin."
+    default: "Minerva bu konuşmayı kaydedemedi; mesajlarınızı kaybetmektense durdu. Olası nedenler: sürücüde yer kalmamış ya da başka bir Minerva süreci veritabanını tutuyor. Diğer Minerva pencerelerini kapatın, depolamayı kontrol etmek için `minerva {profile_arg}doctor` çalıştırın, sonra mesajınızı yeniden gönderin."
   file_mutation:
     header: "⚠️ Dosya değişikliği doğrulayıcısı: yukarıdaki ifadeler aksini düşündürse bile bu turda {count} dosya düzenlemesi BAŞARISIZ oldu. Gerçekte neyin uygulandığını doğrulamak için `git status` veya `read_file` çalıştırın."
     entry: "  • `{path}` — [{tool}] {preview}"
@@ -3518,7 +3518,7 @@ tips:
   t040: "Birden fazla referansı birleştirin: \"Review @file:main.py and @file:test.py for consistency.\""
   t041: "Alt+Enter çok satırlı giriş için yeni satır ekler. (Windows Terminal Alt+Enter'ı yakalar — yerine Ctrl+Enter kullanın.)"
   t042: "Ctrl+C ajanı durdurur. Zorla çıkmak için 2 saniye içinde iki kez basın."
-  t043: "Ctrl+Z Hermes'i arka plana alır — devam etmek için kabuğunuzda fg çalıştırın."
+  t043: "Ctrl+Z Minerva'i arka plana alır — devam etmek için kabuğunuzda fg çalıştırın."
   t044: "Tab otomatik öneri hayalet metnini kabul eder veya slash komutlarını tamamlar."
   t045: "Ajan çalışırken yeni bir mesaj yazarak onu durdurup yönlendirebilirsiniz."
   t046: "Alt+V panonuzdaki bir görseli konuşmaya yapıştırır."
@@ -3547,7 +3547,7 @@ tips:
   t069: "hermes skills tap add myorg/skills-repo özel bir GitHub skill kaynağı ekler."
   t070: "hermes skills snapshot export setup.json skill yapılandırmanızı yedekleme veya paylaşım için dışa aktarır."
   t071: "hermes mcp add github --command npx komut satırından MCP sunucuları ekler."
-  t072: "hermes mcp serve Hermes'in kendisini diğer ajanlar için bir MCP sunucusu olarak çalıştırır."
+  t072: "hermes mcp serve Minerva'in kendisini diğer ajanlar için bir MCP sunucusu olarak çalıştırır."
   t073: "hermes auth add kimlik bilgisi havuzu rotasyonu için birden fazla API anahtarı eklemenizi sağlar."
   t074: "hermes completion bash >> ~/.bashrc tüm komutlar ve profiller için tab tamamlamayı etkinleştirir."
   t075: "hermes logs -f agent.log dosyasını gerçek zamanlı izler. --level WARNING --since 1h çıktıyı filtreler."
@@ -3555,7 +3555,7 @@ tips:
   t077: "hermes profile create coder kendi komutu haline gelen yalıtılmış bir profil oluşturur."
   t078: "hermes profile create work --clone mevcut yapılandırmanızı ve anahtarlarınızı yeni bir profile kopyalar."
   t079: "hermes update yeni paketlenmiş skill'leri TÜM profillere otomatik olarak eşitler."
-  t080: "hermes gateway install Hermes'i sistem hizmeti olarak kurar (systemd/launchd)."
+  t080: "hermes gateway install Minerva'i sistem hizmeti olarak kurar (systemd/launchd)."
   t081: "hermes memory setup harici bir bellek sağlayıcısı (Honcho, Mem0 vb.) yapılandırmanızı sağlar."
   t082: "hermes webhook subscribe HMAC doğrulamalı, olay güdümlü webhook rotaları oluşturur."
   t083: "Tasarruf edin: hermes tools kullanılmayan araçları devre dışı bırakır, hermes skills config skill'leri azaltır."
@@ -3632,10 +3632,10 @@ tips:
   t154: "/voice on, CLI'da ses modunu etkinleştirir. Ctrl+B bas-konuş kaydını açar/kapatır."
   t155: "Akışlı TTS cümleleri üretildikçe seslendirir — yanıtın tamamını beklemeniz gerekmez."
   t156: "Telegram, Discord, WhatsApp ve Slack'teki sesli mesajlar otomatik olarak yazıya dökülür."
-  t157: "Hermes 21 mesajlaşma platformunda çalışır: Telegram, Discord, Slack, WhatsApp, Signal, Matrix, IRC, Microsoft Teams, e-posta ve daha fazlası."
+  t157: "Minerva 21 mesajlaşma platformunda çalışır: Telegram, Discord, Slack, WhatsApp, Signal, Matrix, IRC, Microsoft Teams, e-posta ve daha fazlası."
   t158: "hermes gateway install, gateway'i açılışta başlayan bir sistem hizmeti olarak kurar."
   t159: "DingTalk, Stream Mode kullanır — webhook veya herkese açık URL gerekmez."
-  t160: "BlueBubbles, yerel bir macOS sunucusu üzerinden iMessage'ı Hermes'e getirir."
+  t160: "BlueBubbles, yerel bir macOS sunucusu üzerinden iMessage'ı Minerva'e getirir."
   t161: "Webhook rotaları HMAC doğrulaması, hız sınırlama ve olay filtrelemeyi destekler."
   t162: "API sunucusu, Open WebUI ve LibreChat ile uyumlu, OpenAI uyumlu bir uç nokta sunar."
   t163: "Discord ses kanalı modu: bot sesli kanala katılır, konuşmayı yazıya döker ve sesli yanıt verir."
@@ -3652,7 +3652,7 @@ tips:
   t174: "Bağlam eşiğe ulaştığında otomatik sıkıştırılır — bellekler yazılır ve geçmiş özetlenir."
   t175: "Bağlam dolarken durum çubuğu önce sarıya, sonra turuncuya, sonra kırmızıya döner."
   t176: "SOUL.md ajanın birincil kimlik dosyasıdır — davranışı şekillendirmek için özelleştirin."
-  t177: "Hermes proje bağlamını .hermes.md, AGENTS.md, CLAUDE.md veya .cursorrules dosyasından yükler (ilk eşleşen)."
+  t177: "Minerva proje bağlamını .hermes.md, AGENTS.md, CLAUDE.md veya .cursorrules dosyasından yükler (ilk eşleşen)."
   t178: "Alt dizinlerdeki AGENTS.md dosyaları, ajan klasörlere girdikçe aşamalı olarak keşfedilir."
   t179: "Bağlam dosyaları 20.000 karakterle sınırlıdır; akıllı baş/son kırpma uygulanır."
   t180: "Beş tarayıcı sağlayıcısı: yerel Chromium, Browserbase, Browser Use, Camofox ve Firecrawl."
@@ -3683,7 +3683,7 @@ tips:
   t205: "Slash komutları önek eşleşmesini destekler: /h, /help'e; /mod, /model'e çözümlenir."
   t206: "Terminale bir dosya yolu sürüklemek görüntüleri otomatik ekler veya dosyayı bağlam olarak gönderir."
   t207: "Depo kökünüzdeki .worktreeinclude, worktree'lere kopyalanacak gitignore'lu dosyaları listeler."
-  t208: "hermes acp, VS Code, Zed ve JetBrains entegrasyonu için Hermes'i bir ACP sunucusu olarak çalıştırır."
+  t208: "hermes acp, VS Code, Zed ve JetBrains entegrasyonu için Minerva'i bir ACP sunucusu olarak çalıştırır."
   t209: "Özel sağlayıcılar: adlandırılmış uç noktaları config.yaml içinde custom_providers altına kaydedin."
   t210: "HERMES_EPHEMERAL_SYSTEM_PROMPT, geçmişe hiç kaydedilmeyen bir sistem istemi enjekte eder."
   t211: "credential_pool_strategies; fill_first, round_robin, least_used ve random rotasyonunu destekler."
@@ -3694,7 +3694,7 @@ tips:
   t216: "Cron işlerine, stdout çıktısı isteme bağlam olarak enjekte edilen bir Python betiği (--script) eklenebilir."
   t217: "Cron betikleri ~/.hermes/scripts/ altında bulunur ve ajandan önce çalışır — veri toplama hatları için idealdir."
   t218: "config.yaml içindeki prefill_messages_file, her API çağrısına few-shot örnekler enjekte eder; geçmişe hiç kaydedilmez."
-  t219: "SOUL.md ajanın varsayılan kimliğini tamamen değiştirir — Hermes'i kendinize ait kılmak için yeniden yazın."
+  t219: "SOUL.md ajanın varsayılan kimliğini tamamen değiştirir — Minerva'i kendinize ait kılmak için yeniden yazın."
   t220: "SOUL.md ilk çalıştırmada varsayılan bir kişilikle otomatik doldurulur. Özelleştirmek için düzenleyin."
   t221: "/compress <focus topic>, özet bütçesinin %60-70'ini konunuza ayırır ve geri kalanını agresif biçimde kısaltır."
   t222: "İkinci ve sonraki sıkıştırmalarda sıkıştırıcı sıfırdan başlamak yerine önceki özeti günceller."
@@ -3850,7 +3850,7 @@ tips:
   t372: "config.yaml içindeki image_gen.model, FAL modelini seçer: flux-2/klein, gpt-image-2, nano-banana-pro ve daha fazlası."
   t373: "image_gen.provider, görüntü üretimini varsayılan yerine bir eklenti (OpenAI Images, Codex, FAL) üzerinden yönlendirir."
   t374: "AUXILIARY_VISION_BASE_URL + AUXILIARY_VISION_API_KEY, görüntü analizini OpenAI uyumlu herhangi bir uç noktaya yönlendirir."
-  t375: "security.tirith_fail_open: false, tirith tarayıcısının kendisi hata verdiğinde Hermes'in komutları engellemesini sağlar."
+  t375: "security.tirith_fail_open: false, tirith tarayıcısının kendisi hata verdiğinde Minerva'in komutları engellemesini sağlar."
   t376: "TIRITH_FAIL_OPEN ortam değişkeni, tirith_fail_open yapılandırmasını geçersiz kılar — config.yaml'ı düzenlemeden hızlı bir anahtar."
   t377: "--source tool sohbetleri varsayılan olarak hermes sessions list çıktısında yer almaz — görmek için --source değerini açıkça belirtin."
   t378: "Oturum kimlikleri zaman damgasıyla başlar (20250305_091523_abcd); böylece ls ve jq içinde sıralama doğal olarak çalışır."

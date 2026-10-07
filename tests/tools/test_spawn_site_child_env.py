@@ -75,7 +75,7 @@ def test_compute_host_is_hermes_and_keeps_its_full_environment(child_env, monkey
 @pytest.mark.platforms("posix")
 def test_openviking_server_keeps_provider_keys_but_never_tier1_secrets(child_env, monkeypatch):
     # Its embedding/VLM models call providers, so provider keys pass. Bot and relay tokens never do.
-    # It finds ov.conf through OPENVIKING_CONFIG_FILE or HOME; Hermes' PYTHONPATH would shadow its
+    # It finds ov.conf through OPENVIKING_CONFIG_FILE or HOME; Minerva' PYTHONPATH would shadow its
     # own site-packages (#78153).
     _plant(monkeypatch)
     monkeypatch.setenv("TERMINAL_HOME_MODE", "profile")  # HOME stays the user's even so

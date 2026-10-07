@@ -17,7 +17,7 @@ metadata:
 
 Create the simplest possible cute IP character: a compact, lovable symbol that remains recognizable at `32 × 32`, not a detailed character illustration.
 
-> **Hermes adaptation notes** (the rest of this document is the upstream
+> **Minerva adaptation notes** (the rest of this document is the upstream
 > workflow, kept intact — snapshot of
 > [s1dashu/ip-as-logo-skill](https://github.com/s1dashu/ip-as-logo-skill)
 > commit [`b1bf517c`](https://github.com/s1dashu/ip-as-logo-skill/commit/b1bf517c54a407452cfaca98a54668cd052f8e63),

@@ -763,7 +763,7 @@ def ensure_matrix_deps() -> bool:
     if extras.missing("matrix") and not extras.ensure_and_bind("matrix", _import, globals()):
         logger.warning(
             "Matrix: required packages not installed or need a restart. "
-            "Run `minerva pm install`, then restart Hermes."
+            "Run `minerva pm install`, then restart Minerva."
         )
         return False
     e2ee_mode = _resolve_e2ee_mode()
@@ -825,7 +825,7 @@ class MatrixAdapter(BasePlatformAdapter):
 
     supports_code_blocks = True  # Matrix renders fenced code blocks (HTML/markdown)
     splits_long_messages = True  # send() chunks via truncate_message(max_message_length)
-    typed_command_prefix = "!"  # clients reserve typed "/" for local commands; "!command" always reaches Hermes
+    typed_command_prefix = "!"  # clients reserve typed "/" for local commands; "!command" always reaches Minerva
     # Class-level defaults keep object.__new__-built test instances working.
     max_message_length = DEFAULT_MAX_MESSAGE_LENGTH
     _SPLIT_THRESHOLD = DEFAULT_MAX_MESSAGE_LENGTH - 100
@@ -3166,7 +3166,7 @@ def interactive_setup() -> None:
             print_success("Matrix dependencies prepared. Restart Minerva to use them.")
         except Exception as exc:
             print_warning(f"Matrix dependencies could not be prepared: {exc}")
-            print_info("Run `minerva pm install`, then restart Hermes.")
+            print_info("Run `minerva pm install`, then restart Minerva.")
         print_info("🔒 Security: Restrict who can use your bot")
         print_info("   Matrix user IDs look like @username:server")
         allowed_users = prompt("Allowed user IDs (comma-separated, leave empty for open access)")

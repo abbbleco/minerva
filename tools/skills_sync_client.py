@@ -115,7 +115,7 @@ def sync_org_auto_propose() -> bool:
 
 def sync_default_opt_in() -> bool:
     """False (default): opt-IN -- a skill syncs only after ``minerva sync enable`` or a plane manifest
-    opting it in. True: opt-OUT -- every eligible skill syncs unless disabled (Hermes Cloud default)."""
+    opting it in. True: opt-OUT -- every eligible skill syncs unless disabled (Minerva Cloud default)."""
     return _sync_config_bool("HERMES_SYNC_DEFAULT_OPT_IN", "default_opt_in", default=False)
 
 

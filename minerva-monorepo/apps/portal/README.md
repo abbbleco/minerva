@@ -23,7 +23,7 @@ Placeholder art in `public/placeholders/` is copied from
 
 Minerva dashboard = `minerva dashboard` (local web UI, port 9119). The portal:
 
-1. Shows the router address (`MINERVA_ROUTER_URL`, default `https://minrouter.abbble.co.za/v1`).
+1. Shows the router address (`MINERVA_ROUTER_URL`, default `https://minrouter.abbbleco.workers.dev/v1`).
 2. Mints a per-machine desktop key (`POST /api/portal/keys`, purpose `server`, `qkt_sec_*` Bearer).
 3. Prints the Minerva provider snippet (`base_url` + `api_key`) + `curl /v1/models` test.
 4. Maps errors → portal action (401 mint fresh key, 402 billing/upgrade/credits, 429 retry, 502 retry).

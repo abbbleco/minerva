@@ -1757,7 +1757,7 @@ class GatewayShutdownMixin:
         if not watchdog.start():
             return False
         self._systemd_watchdog = watchdog
-        watchdog.ready("Hermes Gateway running")
+        watchdog.ready("Minerva Gateway running")
         return True
 
     async def _stop_systemd_watchdog(self) -> None:

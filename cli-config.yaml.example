@@ -149,7 +149,7 @@ model:
   # ollama_num_ctx: 32768
   #
   # Output-token limits are provider-owned, not user configuration. Native
-  # protocols requiring a limit receive an internal value from Hermes.
+  # protocols requiring a limit receive an internal value from Minerva.
 
   # ── Custom request headers (optional) ─────────────────────────────────────
   #
@@ -184,7 +184,7 @@ model:
   #       CF-Access-Client-Secret: "${CF_ACCESS_SECRET}"
   #       X-Client-Name: "hermes-agent"
   #
-  # session_affinity_header: NAME of a header that carries Hermes' conversation
+  # session_affinity_header: NAME of a header that carries Minerva' conversation
   # id on every request to that provider (all api_modes + auxiliary calls). Off
   # unless set. For session-aware proxies that otherwise treat each agent-loop
   # request as a new conversation and replay the whole history upstream.
@@ -309,7 +309,7 @@ model:
 # =============================================================================
 # Unified Timeouts (operation deadlines)
 # =============================================================================
-# One place to override Hermes's internal operation deadlines (seconds).
+# One place to override Minerva's internal operation deadlines (seconds).
 # Keys are dotted paths resolved by agent/deadline.py:resolve_timeout().
 # Precedence: this section > legacy HERMES_* env var (back-compat) > built-in
 # default. 0 or a negative value disables the bound (unbounded); very large
@@ -588,7 +588,7 @@ terminal:
 #   # the session in (hermes -w, a Desktop project, terminal.cwd), or under a
 #   # directory listed here. In other checkouts, such as a repository the agent
 #   # cloned, only servers that run no project code start (pinned to
-#   # Hermes-side tools) and the npx tsc / rustfmt lint fallbacks are skipped.
+#   # Minerva-side tools) and the npx tsc / rustfmt lint fallbacks are skipped.
 #   trusted_workspaces:
 #     - ~/code/my-app
 
@@ -712,7 +712,7 @@ compression:
   # cap above the window is a no-op. Survives model switches and fallback activations.
   # threshold_tokens: 200000
 
-  # Existing Codex gpt-5.5 behavior: raise Hermes' compaction trigger to 85%
+  # Existing Codex gpt-5.5 behavior: raise Minerva' compaction trigger to 85%
   # for the ChatGPT Codex OAuth route. Set false to opt back down to threshold.
   codex_gpt55_autoraise: true
 
@@ -743,7 +743,7 @@ compression:
   max_attempts: 3
 
   # Codex app-server (codex CLI runtime) thread-compaction mode. The codex
-  # agent owns the real thread context on this runtime, so Hermes' summarizer
+  # agent owns the real thread context on this runtime, so Minerva' summarizer
   # cannot shrink it — compaction goes through the app server instead.
   #   native = let Codex decide when to compact its own thread (default)
   #   hermes = let Minerva threshold trigger Codex thread/compact/start
@@ -755,7 +755,7 @@ compression:
   # Codex subscription, plus gpt-6-astra (and its -900k alias) on official Codex OAuth, compact
   # server-side: OpenAI prunes older context into an
   # encrypted checkpoint that Minerva replays on later turns. No other provider,
-  # route, or model is affected. Hermes' local compression stays armed as the
+  # route, or model is affected. Minerva' local compression stays armed as the
   # fallback and still handles every non-eligible session.
   codex_responses_native: false
 
@@ -1255,7 +1255,7 @@ agent:
   # timeouts, 5xx, etc.) before the agent surfaces the failure. Lower this
   # to 1 if you use fallback providers and want fast failover on flaky
   # primaries (default 3). The OpenAI SDK does its own low-level retries
-  # underneath this wrapper — this is the Hermes-level loop.
+  # underneath this wrapper — this is the Minerva-level loop.
   # api_max_retries: 3
 
   # Once api_max_retries AND the fallback chain are spent on a transient outage
@@ -1669,7 +1669,7 @@ stt:
   # that provider.
   #
   # Length / truncation contract: Whisper-family backends (local, openai,
-  # groq, deepinfra) only use the final ~224 prompt tokens, so Hermes
+  # groq, deepinfra) only use the final ~224 prompt tokens, so Minerva
   # truncates longer prompts client-side (keeping the tail) with a WARNING
   # log — never an error. Other backends own their own validation.
   #
@@ -1723,7 +1723,7 @@ stt:
 #     model: ""
 #     voice: "default"
 
-# "Hey Hermes" hands-free wake word (off by default; toggle with /wake).
+# "Hey Minerva" hands-free wake word (off by default; toggle with /wake).
 # Full engine/provider options inherit from DEFAULT_CONFIG in
 # hermes_cli/config_defaults.py — only capture placement is documented here.
 # wake_word:
@@ -1829,7 +1829,7 @@ delegation:
 # Config: ~/.honcho/config.json (shared with Claude Code, Cursor, etc.)
 # API key: HONCHO_API_KEY in ~/.hermes/.env or ~/.honcho/config.json
 #
-# Hermes-specific overrides (optional — most config comes from ~/.honcho/config.json):
+# Minerva-specific overrides (optional — most config comes from ~/.honcho/config.json):
 # honcho: {}
 
 # =============================================================================

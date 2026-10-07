@@ -216,7 +216,7 @@
             the Minerva Desktop application (Electron).
 
             This adds `hermes-desktop` to home.packages, with an XDG
-            launcher entry on Linux. The launcher starts the same Hermes
+            launcher entry on Linux. The launcher starts the same Minerva
             runtime that `package` gives, and reads the HERMES_HOME of
             `services.hermes-agent`. Thus the application, the interactive
             shell and the services share one state directory.
@@ -224,7 +224,7 @@
             The Electron application carries its own Minerva runtime with
             the usual distribution. This module gives it the Nix package
             instead, with HERMES_DESKTOP_HERMES. It installs no second copy
-            of Hermes, and it downloads nothing on the first start
+            of Minerva, and it downloads nothing on the first start
           '';
 
           package = lib.mkOption {

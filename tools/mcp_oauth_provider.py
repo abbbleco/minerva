@@ -163,7 +163,7 @@ class HermesProviderMixin:
         installed on the context here and the SDK is handed an empty 204: ``handle_auth_metadata_response``
         reads that as "stop trying", leaving the installed document in place. ``auth_server_url`` is left
         untouched, so the SEP-2352 credential binding still uses the advertised identifier (stable across
-        runs), while the RFC 9207 ``iss`` check and Hermes' refresh-token binding use the document's issuer.
+        runs), while the RFC 9207 ``iss`` check and Minerva' refresh-token binding use the document's issuer.
         Every other response goes back to the SDK unchanged, including its issuer check."""
         # This compatibility shim is only for authorization-server metadata
         # responses. Never consume arbitrary 200 responses here: MCP resource
@@ -352,7 +352,7 @@ class HermesProviderMixin:
         await self._hermes_release_refresh_fence()
         storage = self.context.storage
         tokens_path = getattr(storage, "_tokens_path", None)
-        if tokens_path is None:  # pragma: no cover - non-Hermes storage
+        if tokens_path is None:  # pragma: no cover - non-Minerva storage
             return
         self._hermes_fence = await acquire_refresh_fence(tokens_path())
 
@@ -489,7 +489,7 @@ class HermesProviderMixin:
         Returns True only when disk holds a pair that is BOTH different from
         the one we just failed with AND still live. That is the signature of
         a writer outside the fence (an interactive ``minerva mcp login`` or a
-        pre-fence Hermes) having rotated the grant between our read and our
+        pre-fence Minerva) having rotated the grant between our read and our
         POST -- a recoverable race, not a dead credential.
 
         Returns False for the genuinely-expired case (nobody wrote a newer
@@ -567,7 +567,7 @@ def google_offline_access_params(context: Any) -> dict[str, str]:
 
 def bind_issuer_from_context(context: Any) -> None:
     """Record the discovered issuer so the next ``storage.set_tokens`` (exchange or refresh) carries
-    it. No-op when metadata is not discovered yet or storage is not Hermes'."""
+    it. No-op when metadata is not discovered yet or storage is not Minerva'."""
     from tools.mcp_oauth import HermesTokenStorage
     storage = getattr(context, "storage", None)
     issuer = _metadata_issuer(context)

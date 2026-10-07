@@ -28,7 +28,7 @@ def detect_provider() -> Optional[str]:
 
 
 def build_auth_methods() -> list[Any]:
-    """Return registry-compatible ACP auth methods for Hermes.
+    """Return registry-compatible ACP auth methods for Minerva.
 
     The ACP registry requires at least one usable auth method in the initial
     handshake. A fresh Zed install may have no Minerva credentials yet, so the
@@ -45,7 +45,7 @@ def build_auth_methods() -> list[Any]:
         ))
     methods.append(TerminalAuthMethod(
         id=TERMINAL_SETUP_AUTH_METHOD_ID, name="Configure Minerva provider", type="terminal", args=["--setup"],
-        description=("Open Hermes' interactive model/provider setup in a terminal. "
+        description=("Open Minerva' interactive model/provider setup in a terminal. "
                      "Use this when Minerva has not been configured on this machine yet."),
     ))
     return methods

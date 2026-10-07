@@ -96,7 +96,7 @@ def _format_missing_scopes(missing_scopes: list[str]) -> str:
 
 
 def install_deps():
-    """Sync Hermes' declared Google extra, ready for the next process."""
+    """Sync Minerva' declared Google extra, ready for the next process."""
     if pm is None:
         print("ERROR: Run this script in the Minerva environment; use hermes setup first.")
         return False
@@ -105,7 +105,7 @@ def install_deps():
     except Exception as exc:
         print(f"ERROR: Failed to install Google dependencies: {exc}")
         return False
-    print("Google dependencies synced. Restart Hermes, then rerun setup to continue OAuth.")
+    print("Google dependencies synced. Restart Minerva, then rerun setup to continue OAuth.")
     return True
 
 
@@ -415,7 +415,7 @@ def revoke():
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Google Workspace OAuth setup for Hermes")
+    parser = argparse.ArgumentParser(description="Google Workspace OAuth setup for Minerva")
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--check", action="store_true", help="Check if auth is valid (exit 0=yes, 1=no)")
     group.add_argument("--check-live", action="store_true", help="Check auth with a real API call (detects disabled_client)")

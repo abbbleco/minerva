@@ -583,7 +583,7 @@ def render_desktop_entry(exec_command: str, icon: str) -> str:
         "[Desktop Entry]\n"
         "Type=Application\n"
         "Name=Hermes\n"
-        "GenericName=Hermes Desktop\n"
+        "GenericName=Minerva Desktop\n"
         "Comment=Launch Minerva Desktop\n"
         f"Exec={exec_command}\n"
         f"Icon={icon}\n"
@@ -772,7 +772,7 @@ def _alias_legacy_desktop_entry(applications_dir: Path, exec_command: str, icon:
 
     Shells resolve a taskbar pin by the entry file name it was pinned against: deleting the
     file makes GNOME drop the favourite and Plasma leave an inert item, and nothing can
-    re-pin for the user. The alias stays launchable for old pins without listing Hermes
+    re-pin for the user. The alias stays launchable for old pins without listing Minerva
     twice. Only a file that still names this app is converted; anything else at that path
     is left alone. True when the legacy file was (re)written.
     """

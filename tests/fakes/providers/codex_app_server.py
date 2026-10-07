@@ -8,7 +8,7 @@ Protocol truth is the schema bundle emitted by ``codex app-server generate-json-
 0.147): request params are checked field by field with the real server's serde error strings
 (``-32600 "Invalid request: missing field `threadId`"``). The real server IGNORES unknown fields, so
 the fake answers them normally but records each one as ``ignored`` — a field codex silently drops is
-Hermes intent that never reaches the model, and the suite asserts none are sent. Responses Hermes
+Minerva intent that never reaches the model, and the suite asserts none are sent. Responses Minerva
 gives to server-initiated requests (approvals, elicitation) are validated the same way.
 
 State lives in ``DIR``: ``scenario.json`` (scripted turns, consumed one per ``turn/start`` across
@@ -333,7 +333,7 @@ class FakeAppServer:
                 self._pending_cv.notify_all()
 
     def server_request(self, method: str, params: dict, timeout: float = 60.0) -> dict:
-        """Issue a server-initiated request and block for Hermes' reply."""
+        """Issue a server-initiated request and block for Minerva' reply."""
         with self._pending_cv:
             self._next_server_id += 1
             rid = self._next_server_id
@@ -729,7 +729,7 @@ def run_codex_scenario(root: Path, turns: list[dict], runs: list[dict], *, confi
     fake = FakeCodex(root, turns, **scenario)
     model = {"provider": "openai", "default": "gpt-5.5", "openai_runtime": "codex_app_server",
              "codex_bin": str(fake.bin)}
-    # The app-server owns auth; the key only satisfies Hermes' provider resolution and never leaves.
+    # The app-server owns auth; the key only satisfies Minerva' provider resolution and never leaves.
     home = make_home(root, model, env_file={"OPENAI_API_KEY": "sk-fake-codex-e2e"}, extra_config=config)
     results, session_id = [], None
     for run in runs:

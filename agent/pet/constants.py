@@ -54,7 +54,7 @@ def resolve_cols(scale: float, unicode_cols: int = 0) -> int:
 
 
 class PetState(str, Enum):
-    """Animation state a pet can be shown in (Hermes names; Codex rows say ``jumping``/``running`` for ``jump``/``run``)."""
+    """Animation state a pet can be shown in (Minerva names; Codex rows say ``jumping``/``running`` for ``jump``/``run``)."""
 
     IDLE = "idle"
     WAVE = "wave"
@@ -65,7 +65,7 @@ class PetState(str, Enum):
     WAITING = "waiting"
 
 
-# Legacy Hermes/petdex row order (top -> bottom) for the older 8-row, 9-column atlas.
+# Legacy Minerva/petdex row order (top -> bottom) for the older 8-row, 9-column atlas.
 LEGACY_STATE_ROWS: list[str] = ["idle", "wave", "run", "failed", "review", "jump", "extra1", "extra2"]
 
 # Current Petdex row order (top -> bottom) for 1536x1872 atlases (8 cols x 9 rows).

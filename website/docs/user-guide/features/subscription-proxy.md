@@ -8,7 +8,7 @@ description: "Use your ABBBLE Portal subscription (or other OAuth provider) as a
 
 The subscription proxy is a local HTTP server that lets external apps —
 OpenViking, Karakeep, Open WebUI, anything that speaks OpenAI-compatible
-chat completions — use your Hermes-managed provider subscription as their
+chat completions — use your Minerva-managed provider subscription as their
 LLM endpoint. The proxy attaches the right credentials (refreshing them
 automatically) so the app never needs a static API key.
 
@@ -17,7 +17,7 @@ This is different from the [API server](./api-server.md):
 | | API server | Subscription proxy |
 |---|---|---|
 | What it serves | Your agent (full toolset, memory, skills) | Raw model inference |
-| Use case | "Use Hermes as a chat backend" | "Use my Portal sub from another app" |
+| Use case | "Use Minerva as a chat backend" | "Use my Portal sub from another app" |
 | Auth | Your `API_SERVER_KEY` | Any bearer (proxy attaches the real one) |
 | Tool calls | Yes — the agent runs tools | No — passthrough only |
 
@@ -32,8 +32,8 @@ proxy when you just want **the model** through your subscription.
 hermes portal
 ```
 
-This opens your browser for the ABBBLE Portal OAuth flow. Hermes stores
-the refresh token in `~/.hermes/auth.json` — the same place all Hermes
+This opens your browser for the ABBBLE Portal OAuth flow. Minerva stores
+the refresh token in `~/.hermes/auth.json` — the same place all Minerva
 provider logins live.
 
 ### 2. Start the proxy
@@ -43,7 +43,7 @@ hermes proxy start
 ```
 
 ```
-Starting Hermes proxy for ABBBLE Portal
+Starting Minerva proxy for ABBBLE Portal
   Listening on:  http://127.0.0.1:8645/v1
   Forwarding to: (resolved per-request from your subscription)
   Use any bearer token in the client — the proxy attaches your real credential.
@@ -59,7 +59,7 @@ Any OpenAI-compatible app config takes the same triple:
 ```
 Base URL:   http://127.0.0.1:8645/v1
 API key:    anything (e.g. "sk-unused")
-Model:      Hermes-4-70B    # or Hermes-4.3-36B, Hermes-4-405B
+Model:      Minerva-4-70B    # or Minerva-4.3-36B, Minerva-4-405B
 ```
 
 The proxy ignores the `Authorization` header from your app and attaches
@@ -83,7 +83,7 @@ hermes proxy status
 ```
 
 ```
-Hermes proxy upstream adapters
+Minerva proxy upstream adapters
 
   [nous    ] ABBBLE Portal — ready (bearer expires 2026-05-15T06:43:21Z)
 ```

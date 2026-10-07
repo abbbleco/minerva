@@ -168,7 +168,7 @@ function run (argv) {
   const closeButton = win.standardWindowButton($.NSWindowCloseButton)
   closeButton.enabled = false
 
-  win.title = 'Hermes'
+  win.title = 'Minerva'
   win.center
   win.releasedWhenClosed = false
   win.backgroundColor = bg
@@ -179,9 +179,9 @@ function run (argv) {
   loaderView.imageScaling = $.NSImageScaleProportionallyUpOrDown
   content.addSubview(loaderView)
 
-  const title = wrappedLabel('Updating Hermes', $.NSFont.systemFontOfSize(18), fg,
+  const title = wrappedLabel('Updating Minerva', $.NSFont.systemFontOfSize(18), fg,
     $.NSMakeRect(0, 178, 280, 26))
-  const line = wrappedLabel('Hermes will open once done.', $.NSFont.systemFontOfSize(12), null,
+  const line = wrappedLabel('Minerva will open once done.', $.NSFont.systemFontOfSize(12), null,
     $.NSMakeRect(24, 118, 232, 54))
   content.addSubview(title)
   content.addSubview(line)
@@ -238,7 +238,7 @@ function run (argv) {
   loaderView.hidden = true
   title.stringValue = settled === 'error' ? 'Failed to update' : 'Update complete'
   if (settled === 'done') {
-    line.stringValue = 'Opening Hermes…\nYou can close this window.'
+    line.stringValue = 'Opening Minerva…\nYou can close this window.'
   } else if (settled === 'manual') {
     line.stringValue = message || 'Reopen Minerva to finish.'
   } else {

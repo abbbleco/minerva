@@ -1013,7 +1013,7 @@ class TestBuildSkillsSystemPromptConditional:
 class TestContextFileReadTimeout:
     def test_slow_hermes_md_is_skipped_and_agents_md_still_loads(self, tmp_path, monkeypatch, caplog):
         (tmp_path / ".git").mkdir()
-        (tmp_path / ".hermes.md").write_text("Hermes project rules.")
+        (tmp_path / ".hermes.md").write_text("Minerva project rules.")
         (tmp_path / "AGENTS.md").write_text("Agent fallback rules.")
         # Patch the module object build_context_files_prompt actually closes
         # over: an earlier test re-imports agent.prompt_builder, so the
@@ -1037,7 +1037,7 @@ class TestContextFileReadTimeout:
 
         assert elapsed < 0.4, f"context load blocked for {elapsed:.2f}s"
         assert "Agent fallback rules" in result
-        assert "Hermes project rules" not in result
+        assert "Minerva project rules" not in result
         assert "timed out" in caplog.text.lower()
 
     def test_read_errors_still_propagate_to_caller(self, tmp_path):

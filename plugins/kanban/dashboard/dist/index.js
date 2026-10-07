@@ -1806,7 +1806,7 @@
       rel: "noopener noreferrer",
       className: "hermes-kanban-docs-link",
       title: "Open Minerva Kanban docs in a new tab",
-      "aria-label": "Hermes Kanban documentation",
+      "aria-label": "Minerva Kanban documentation",
     }, "?");
   }
 
@@ -3401,8 +3401,8 @@
                   : tx(t, "assigneePlaceholder", "assignee"),
                 className: "h-8 text-sm",
                 title: props.columnName === "triage"
-                  ? "Hermes profile that will spec this task (default: the dispatcher's configured specifier). Leave blank to let the dispatcher pick."
-                  : "Hermes profile to assign. Leave blank and the dispatcher will pick from available profiles when the task is Ready.",
+                  ? "Minerva profile that will spec this task (default: the dispatcher's configured specifier). Leave blank to let the dispatcher pick."
+                  : "Minerva profile to assign. Leave blank and the dispatcher will pick from available profiles when the task is Ready.",
                 style: { textTransform: "none" },
                 autoCapitalize: "none",
                 autoCorrect: "off",

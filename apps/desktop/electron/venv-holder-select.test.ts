@@ -96,7 +96,7 @@ test('matches the dashboard scheduled task (python -m hermes_cli / -m hermes)', 
 })
 
 test('never matches an unrelated process that merely borrows the venv interpreter', () => {
-  // a user's own script running on the venv python — NOT Hermes, must NOT be killed
+  // a user's own script running on the venv python — NOT Minerva, must NOT be killed
   assert.equal(
     isExternalVenvHolder('C:\\Hermes\\venv\\Scripts\\python.exe', 'python C:\\tools\\import.py', SCRIPTS),
     false

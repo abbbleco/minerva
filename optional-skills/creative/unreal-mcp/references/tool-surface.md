@@ -275,7 +275,7 @@ Console variables:
   advertised tool with schemas and offers form-based invocation — isolates
   "server broken" from "agent calling it wrong".
 - **After Live Coding / authoring:** connected clients can hold stale
-  schemas. `ModelContextProtocol.RefreshTools`, then reconnect (new Hermes
+  schemas. `ModelContextProtocol.RefreshTools`, then reconnect (new Minerva
   session) if schemas still look stale.
 
 ## Extending the surface: custom toolsets
@@ -328,7 +328,7 @@ Conventions that matter (they generate the schema the agent sees):
   `print()`/stdout go to the UE log, not back over MCP.
 
 After authoring: `ModelContextProtocol.RefreshTools` in the editor console,
-then re-`list_toolsets` from Hermes. Users on Claude Code can scaffold with
+then re-`list_toolsets` from Minerva. Users on Claude Code can scaffold with
 the `create-toolset` skill from Epic's `unreal-mcp` plugin pack; the
 conventions above still apply.
 

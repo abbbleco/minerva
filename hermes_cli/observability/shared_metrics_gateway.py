@@ -68,10 +68,10 @@ def _platform(value: Any) -> str:
     return adapter_platform(getattr(value, "platform", value))
 
 
-# ---- classification (closed classes from exception types, HTTP statuses and Hermes's own codes) ----
+# ---- classification (closed classes from exception types, HTTP statuses and Minerva's own codes) ----
 
 _STATUS_CLASSES = {401: "auth", 403: "forbidden", 413: "too_long", 429: "rate_limited"}
-# Adapter fatal codes are Hermes-authored identifiers (``telegram_auth_error``); first match wins, so
+# Adapter fatal codes are Minerva-authored identifiers (``telegram_auth_error``); first match wins, so
 # "missing credentials" reads as configuration, not a rejected credential.
 _CODE_CLASSES = (
     (("missing", "dependency", "npm", "config", "conflict", "lock", "bind"), "config"),

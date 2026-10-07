@@ -65,7 +65,7 @@ export function isDisplayUnavailable(error: unknown): boolean {
 }
 
 /** The bot's backend is a Portal-managed runtime (Minerva Cloud): its Minerva is updated by the
- *  platform, never by the user, so "update the bot's Hermes" is not an instruction the user
+ *  platform, never by the user, so "update the bot's Minerva" is not an instruction the user
  *  can follow. A `display.*` method-not-found from a managed release simply means Screen has
  *  not reached that release yet (#120852). */
 export function isManagedBackend(bot: RosterRow): boolean {

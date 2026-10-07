@@ -5,7 +5,7 @@ import { expect, test, vi } from 'vitest'
 import notarize, { runCommand } from '../apps/desktop/scripts/notarize.mjs'
 
 const submissionId = '00000000-0000-4000-8000-000000000001'
-const missingTicket = () => Object.assign(new Error('CloudKit query for Hermes.app failed due to "Record not found".\nThe staple and validate action failed! Error 65.'), { code: 65 })
+const missingTicket = () => Object.assign(new Error('CloudKit query for Minerva.app failed due to "Record not found".\nThe staple and validate action failed! Error 65.'), { code: 65 })
 
 function fixture() {
   const root = mkdtempSync(path.join(os.tmpdir(), 'hermes-notary-test-'))
@@ -14,7 +14,7 @@ function fixture() {
   writeFileSync(key, 'test credential path only')
   return {
     root,
-    context: { electronPlatformName: 'darwin', appOutDir: root, packager: { appInfo: { productFilename: 'Hermes' } } },
+    context: { electronPlatformName: 'darwin', appOutDir: root, packager: { appInfo: { productFilename: 'Minerva' } } },
     environments: [
       { APPLE_NOTARY_PROFILE: 'test-profile' },
       { APPLE_API_KEY: key, APPLE_API_KEY_ID: 'test-key', APPLE_API_ISSUER: 'test-issuer' }

@@ -285,7 +285,7 @@ print(json.dumps({'yaml': ruamel.yaml.__file__, 'idna': idna.__file__,
     assert "ModuleNotFoundError" in broken.stderr
     assert "ruamel.yaml" in broken.stderr
     repaired = _bare(python, repo, bootstrap + cli.format(action="repair"), env=env)
-    assert "Restart Hermes" in repaired.stdout
+    assert "Restart Minerva" in repaired.stdout
     restored = json.loads(_bare(python, repo, app_code, env=env).stdout)
     repaired_app = Path(restored["app"])
     assert repaired_app != app

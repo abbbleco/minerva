@@ -73,7 +73,7 @@ def _scan_dashboard_processes(*, exclude_pids: set[int] | None = None) -> list[t
     ``minerva update`` (every API call 401s). *exclude_pids* (Desktop's HERMES_DESKTOP_CHILD_PID
     backends) are never returned.
 
-    *exclude_pids* is an optional set of PIDs that must never be returned. This is used by the Hermes
+    *exclude_pids* is an optional set of PIDs that must never be returned. This is used by the Minerva
     Desktop Electron app to protect its own backend child process: when the desktop spawns ``minerva serve``
     as a backend and triggers an auto-update, the update must not kill the backend that the desktop itself
     manages. The desktop sets the environment variable ``HERMES_DESKTOP_CHILD_PID`` on the spawned backend

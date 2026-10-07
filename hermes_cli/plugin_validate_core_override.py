@@ -53,7 +53,7 @@ def _python_files(plugin_dir: Path) -> Iterable[Tuple[Path, Path]]:
 def _runtime_files(plugin_dir: Path, files: Dict[Path, ast.AST], local: Set[str]) -> Set[Path]:
     """The import closure of what Minerva loads: ``__init__.py`` (``register``) and ``dashboard/*.py``
     (dashboard plugin API). Benchmarks, CI and smoke scripts shipped beside them never run inside
-    Hermes, so a stub they install into ``sys.modules`` is not a runtime override."""
+    Minerva, so a stub they install into ``sys.modules`` is not a runtime override."""
     by_module: Dict[str, Set[Path]] = {}
     for rel in files:
         parts = rel.with_suffix("").parts
@@ -159,7 +159,7 @@ class _Analysis:
         return False
 
     def _lookup_is_core(self, arg: ast.AST) -> bool:
-        """Whether a module-name expression names Hermes: a literal, a module-level string
+        """Whether a module-name expression names Minerva: a literal, a module-level string
         constant, or an f-string whose literal head names it (``f"hermes_plugins.{p}.adapter"``).
         A name computed some other way (the plugin locating its own package) is not judged."""
         if isinstance(arg, ast.Name):

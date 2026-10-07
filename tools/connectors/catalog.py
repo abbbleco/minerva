@@ -275,7 +275,7 @@ def target_declared_env(fact: Any) -> List[str]:
 
 
 def _plugin_row(entry: Any) -> Dict[str, Any]:
-    requirements = [f"Hermes {entry.requires_hermes}"] if entry.requires_hermes else []
+    requirements = [f"Minerva {entry.requires_hermes}"] if entry.requires_hermes else []
     requirements += [f"{name} environment variable" for name in entry.capabilities.requires_env]
     from hermes_cli.plugin_catalog_presence import presence
 

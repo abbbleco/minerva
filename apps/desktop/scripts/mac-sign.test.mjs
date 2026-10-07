@@ -30,7 +30,7 @@ function fixture() {
   const payload = path.join(app, 'Contents', 'Resources', 'agent-payload')
   const tools = path.join(payload, 'tools')
   const nested = path.join(tools, 'chromium', 'Browser.app')
-  const binaries = [path.join(app, 'Contents', 'MacOS', 'Hermes'),
+  const binaries = [path.join(app, 'Contents', 'MacOS', 'Minerva'),
     path.join(tools, 'python', 'bin', 'python3'),
     path.join(nested, 'Contents', 'MacOS', process.platform === 'win32' ? 'chrome.exe' : 'Chromium')]
   for (const binary of binaries) {

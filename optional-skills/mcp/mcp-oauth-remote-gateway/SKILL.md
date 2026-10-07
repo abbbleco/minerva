@@ -20,10 +20,10 @@ inside the Minerva process and registers that loopback address as the OAuth
 `redirect_uri`. That works perfectly for a local CLI on the user's own machine.
 It breaks completely when Minerva runs as a remote gateway (container, VPS,
 messaging bot), because the user's browser resolves `127.0.0.1` to the user's own
-laptop, not the remote container — so the authorization code never reaches Hermes.
+laptop, not the remote container — so the authorization code never reaches Minerva.
 
 This skill does the OAuth dance by hand and writes the resulting tokens into the
-exact files Hermes' token storage expects, so a subsequent `/reload-mcp` finds
+exact files Minerva' token storage expects, so a subsequent `/reload-mcp` finds
 cached tokens and skips the browser flow entirely.
 
 ## When to Use
@@ -35,7 +35,7 @@ Use this skill when **all** of the following are true:
 3. The server supports OAuth 2.1 with PKCE and RFC 7591 Dynamic Client Registration (most modern MCP servers do — Better Stack, Linear, Cloudflare, Datadog, etc.). If it doesn't support DCR (GitHub is the notable exception), this skill does not apply — use a pre-registered OAuth App or a Personal Access Token instead.
 
 Do NOT use this for:
-- **Local CLI Hermes** — just set `auth: oauth` in `mcp_servers.<name>` and `/reload-mcp`. The built-in flow opens a browser and captures the callback on localhost. Works perfectly.
+- **Local CLI Minerva** — just set `auth: oauth` in `mcp_servers.<name>` and `/reload-mcp`. The built-in flow opens a browser and captures the callback on localhost. Works perfectly.
 - **Servers that accept a static Bearer token (API key)** — always prefer `headers.Authorization: "Bearer <token>"` when the user is willing. Simpler, no refresh dance.
 - **GitHub Copilot MCP** (`api.githubcopilot.com/mcp/`) — GitHub does not expose DCR. Use a PAT or a pre-registered OAuth App (see pitfall 12).
 
@@ -133,7 +133,7 @@ echo "$DISPLAY $WAYLAND_DISPLAY $SSH_CLIENT"
 ```
 
 No display + a remote indicator = remote gateway. `tools/mcp_oauth.py::_can_open_browser()`
-uses these same env vars, so if Hermes' own auto-detect says "headless", the
+uses these same env vars, so if Minerva' own auto-detect says "headless", the
 built-in flow won't work.
 
 ### 2. Find HERMES_HOME and the config path
@@ -240,7 +240,7 @@ When the user pastes the callback URL:
    - `resource=<mcp_server_url>` (if the AS required it in step 5, include here too)
 4. Response contains `access_token`, `refresh_token`, `token_type`, `expires_in`, `scope`.
 
-### 8. Write tokens in Hermes' exact schema
+### 8. Write tokens in Minerva' exact schema
 
 `tools/mcp_oauth.py::HermesTokenStorage` expects two files under
 `$HERMES_HOME/mcp-tokens/` (create dir with `0o700`, files with `0o600`):
@@ -356,7 +356,7 @@ tools. Refresh happens automatically before `expires_in` elapses.
 
 ## What NOT to do
 
-- **Don't use `mcp-remote` as a fallback.** It runs an npx subprocess whose OAuth callback server ALSO sits on the remote container's localhost — same problem. `mcp-remote` only helps when the MCP client doesn't speak remote HTTP at all (Hermes does natively).
+- **Don't use `mcp-remote` as a fallback.** It runs an npx subprocess whose OAuth callback server ALSO sits on the remote container's localhost — same problem. `mcp-remote` only helps when the MCP client doesn't speak remote HTTP at all (Minerva does natively).
 - **Don't push "paste your API token and I'll add headers"** if the user explicitly asked for OAuth. Offer the static-token shortcut only after explaining why the native OAuth flow fails in remote deployments. Respect the user's choice to do the extra legwork for rotation-free, scope-limited access.
 - **Don't claim Minerva doesn't support a feature without reading the source.** Grep the source tree before making capability claims.
 
@@ -367,5 +367,5 @@ tools. Refresh happens automatically before `expires_in` elapses.
 
 ## Related
 
-- `native-mcp` — general guide to configuring MCP in Hermes. Authoritative config reference lives there.
-- `mcporter` — the external CLI bridge, for ad-hoc MCP calls outside of Hermes' config.
+- `native-mcp` — general guide to configuring MCP in Minerva. Authoritative config reference lives there.
+- `mcporter` — the external CLI bridge, for ad-hoc MCP calls outside of Minerva' config.

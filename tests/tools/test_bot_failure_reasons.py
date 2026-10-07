@@ -22,7 +22,7 @@ FIXTURE_NO_PROVIDER = (
 FIXTURE_NO_TOKEN = "agent init failed: No access token found for ABBBLE Portal login."
 # Target-scope spawn refusals, verbatim from a relay ledger (the named-secret spelling is built live).
 FIXTURE_TARGET_SCOPE = (
-    "Hermes could not read this profile's API key (an internal profile-scoping bug on the "
+    "Minerva could not read this profile's API key (an internal profile-scoping bug on the "
     "multiplexed gateway, not your configuration). Run `minerva gateway restart`; if it keeps "
     "happening, report it with `minerva debug share`."
 )

@@ -43,9 +43,15 @@ const USER_AGENT = process.env.MINERVA_HTTP_USER_AGENT ?? "Minerva-Router/1.0";
 
 // Read env lazily, never at module scope. A module-scope `const` freezes the value at import
 // time, which breaks when env is injected afterwards (dotenv, container secrets, tests).
-function openRouterKey(): string {
-  return process.env.OPENROUTER_API_KEY ?? "";
-}
+// Credentials ride the shared key pool (`./upstream-keys.js`); this module only
+// shapes the embeddings request around whichever key it is handed.
+import {
+  cooldownMsFor,
+  failoverClass,
+  keyLabel,
+  sharedKeyPool,
+  upstreamKeys,
+} from "./upstream-keys.js";
 function openRouterUrl(): string {
   return process.env.OPENROUTER_URL ?? DEFAULT_OPENROUTER_URL;
 }
@@ -58,7 +64,7 @@ export function embeddingModelId(): string {
 }
 
 export function embeddingsConfigured(): boolean {
-  return openRouterKey().length > 0;
+  return upstreamKeys().length > 0;
 }
 
 export interface EmbeddingResult {
@@ -79,25 +85,61 @@ function estimateTokens(texts: string[]): number {
 export async function embed(texts: string[]): Promise<EmbeddingResult> {
   if (texts.length === 0) return { vectors: [], promptTokens: 0, model: embeddingModelId() };
 
-  const key = openRouterKey();
-  if (!key) throw new Error("OPENROUTER_API_KEY not configured — cannot embed");
+  const keys = upstreamKeys();
+  if (keys.length === 0) throw new Error("OPENROUTER_API_KEY not configured — cannot embed");
   const model = embeddingModelId();
+  const url = `${openRouterUrl()}/embeddings`;
+  // `dimensions` is the OpenAI-compatible knob; OpenRouter maps it onto Matryoshka-capable
+  // models. A model that ignores it returns its native width, which the assertion below
+  // catches rather than storing a mismatched vector.
+  const requestBody = JSON.stringify({ model, input: texts, dimensions: EMBEDDING_DIMS });
 
-  const res = await fetch(`${openRouterUrl()}/embeddings`, {
-    method: "POST",
-    headers: {
-      authorization: `Bearer ${key}`,
-      "content-type": "application/json",
-      // Paystack-style Cloudflare bot rules are not in play here, but an explicit UA keeps the
-      // client's identity deterministic rather than dependent on undici's default.
-      "user-agent": USER_AGENT,
-    },
-    // `dimensions` is the OpenAI-compatible knob; OpenRouter maps it onto Matryoshka-capable
-    // models. A model that ignores it returns its native width, which the assertion below
-    // catches rather than storing a mismatched vector.
-    body: JSON.stringify({ model, input: texts, dimensions: EMBEDDING_DIMS }),
-  });
+  const pool = sharedKeyPool();
+  const tried = new Set<number>();
+  let lastError = "";
+  while (tried.size < keys.length) {
+    const index = pool.pick(keys.length);
+    if (tried.has(index)) break;
+    tried.add(index);
+    let res: Response;
+    try {
+      res = await fetch(url, {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${keys[index] as string}`,
+          "content-type": "application/json",
+          // Paystack-style Cloudflare bot rules are not in play here, but an explicit UA keeps the
+          // client's identity deterministic rather than dependent on undici's default.
+          "user-agent": USER_AGENT,
+        },
+        body: requestBody,
+      });
+    } catch {
+      pool.report(index, cooldownMsFor("transport"));
+      lastError = "transport failure";
+      continue;
+    }
+    if (failoverClass(res.status) === "terminal" || tried.size >= keys.length) {
+      pool.report(index, null);
+      return parseEmbeddingResult(res, texts, model);
+    }
+    pool.report(index, cooldownMsFor(res.status));
+    console.warn(
+      `[router] upstream ${keyLabel(index, keys.length)} HTTP ${res.status} — failing over`
+    );
+    try {
+      await res.arrayBuffer();
+    } catch {
+      // Body already gone; the socket releases either way.
+    }
+    lastError = `HTTP ${res.status}`;
+  }
+  throw new Error(`embeddings upstream unavailable after ${tried.size} key(s): ${lastError}`);
+}
 
+async function parseEmbeddingResult(
+  res: Response, texts: string[], model: string
+): Promise<EmbeddingResult> {
   if (!res.ok) {
     throw new Error(
       `embeddings upstream HTTP ${res.status}: ${(await res.text().catch(() => "")).slice(0, 300)}`

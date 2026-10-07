@@ -1,4 +1,4 @@
-"""Hermes Achievements dashboard plugin backend, mounted at /api/plugins/hermes-achievements/.
+"""Minerva Achievements dashboard plugin backend, mounted at /api/plugins/hermes-achievements/.
 
 Scans the session history into per-session stats (checkpointed by fingerprint so warm
 scans are cheap), aggregates them, and evaluates the tiered / multi-condition catalog.
@@ -86,14 +86,14 @@ ACHIEVEMENTS: List[Dict[str, Any]] = [
     _ach("one_character_fix", "One Character Fix", "A tiny edit after a pile of errors. Painful. Beautiful.", "Vibe Coding", "needle", requires=[("tiny_patch_after_errors_events", 5), ("total_errors", 4000)], secret=True),
 
     # Minerva Native
-    _ach("skillsmith", "Skillsmith", "Work with Minerva skills enough to leave fingerprints.", "Hermes Native", "hammer_scroll", metric="skill_events", tiers=[5000, 15000, 40000, 100000, 250000]),
-    _ach("skill_issue_skill_created", "Skill Issue? Skill Created.", "Create or patch durable procedures instead of repeating yourself.", "Hermes Native", "anvil", metric="skill_manage_events", tiers=[25, 75, 200, 600, 1500]),
-    _ach("memory_keeper", "Memory Keeper", "Persist durable knowledge with memory or Mnemosyne.", "Hermes Native", "crystal", metric="memory_events", tiers=[100, 300, 1000, 3000, 8000]),
-    _ach("memory_palace", "Memory Palace", "Build a serious durable-memory trail.", "Hermes Native", "palace", metric="memory_write_events", tiers=[100, 300, 1000, 3000, 8000]),
-    _ach("context_dragon", "Context Dragon", "Brush against compression, huge context, or token pressure repeatedly.", "Hermes Native", "dragon", metric="context_events", tiers=[5000, 15000, 40000, 100000, 250000]),
-    _ach("gateway_dweller", "Gateway Dweller", "Live through gateway-connected Minerva workflows.", "Hermes Native", "antenna", metric="gateway_events", tiers=[5000, 15000, 40000, 100000, 250000]),
-    _ach("plugin_goblin", "Plugin Goblin", "Use or develop plugins enough that the dashboard notices.", "Hermes Native", "puzzle", metric="plugin_events", tiers=[1000, 3000, 8000, 20000, 50000]),
-    _ach("rollback_wizard", "Rollback Wizard", "Invoke rollback/checkpoint recovery magic.", "Hermes Native", "rewind", metric="rollback_events", tiers=[500, 1500, 4000, 10000, 25000], secret=True),
+    _ach("skillsmith", "Skillsmith", "Work with Minerva skills enough to leave fingerprints.", "Minerva Native", "hammer_scroll", metric="skill_events", tiers=[5000, 15000, 40000, 100000, 250000]),
+    _ach("skill_issue_skill_created", "Skill Issue? Skill Created.", "Create or patch durable procedures instead of repeating yourself.", "Minerva Native", "anvil", metric="skill_manage_events", tiers=[25, 75, 200, 600, 1500]),
+    _ach("memory_keeper", "Memory Keeper", "Persist durable knowledge with memory or Mnemosyne.", "Minerva Native", "crystal", metric="memory_events", tiers=[100, 300, 1000, 3000, 8000]),
+    _ach("memory_palace", "Memory Palace", "Build a serious durable-memory trail.", "Minerva Native", "palace", metric="memory_write_events", tiers=[100, 300, 1000, 3000, 8000]),
+    _ach("context_dragon", "Context Dragon", "Brush against compression, huge context, or token pressure repeatedly.", "Minerva Native", "dragon", metric="context_events", tiers=[5000, 15000, 40000, 100000, 250000]),
+    _ach("gateway_dweller", "Gateway Dweller", "Live through gateway-connected Minerva workflows.", "Minerva Native", "antenna", metric="gateway_events", tiers=[5000, 15000, 40000, 100000, 250000]),
+    _ach("plugin_goblin", "Plugin Goblin", "Use or develop plugins enough that the dashboard notices.", "Minerva Native", "puzzle", metric="plugin_events", tiers=[1000, 3000, 8000, 20000, 50000]),
+    _ach("rollback_wizard", "Rollback Wizard", "Invoke rollback/checkpoint recovery magic.", "Minerva Native", "rewind", metric="rollback_events", tiers=[500, 1500, 4000, 10000, 25000], secret=True),
 
     # Research/Web
     _ach("rabbit_hole_certified", "Rabbit Hole Certified", "Search or extract enough web content to qualify as a research spiral.", "Research/Web", "spiral", metric="total_web_calls", tiers=[400, 1200, 3000, 8000, 20000]),
@@ -121,8 +121,8 @@ ACHIEVEMENTS: List[Dict[str, Any]] = [
     _ach("open_weights_pilgrim", "Open Weights Pilgrim", "Actually chat with local/open-weight models through Minerva session metadata.", "Model Lore", "terminal", metric="local_model_chat_sessions", tiers=[1, 3, 10, 30, 100]),
 
     # Workflow Intelligence
-    _ach("toolset_cartographer", "Toolset Cartographer", "Navigate Minerva toolsets deliberately instead of treating tools as a blur.", "Hermes Native", "compass", metric="toolset_events", tiers=[20, 60, 200, 600, 1500]),
-    _ach("config_surgeon", "Config Surgeon", "Operate on real config files, manifests, env files, and dashboard settings without flinching.", "Hermes Native", "key", metric="config_events", tiers=[100, 300, 1000, 3000, 10000]),
+    _ach("toolset_cartographer", "Toolset Cartographer", "Navigate Minerva toolsets deliberately instead of treating tools as a blur.", "Minerva Native", "compass", metric="toolset_events", tiers=[20, 60, 200, 600, 1500]),
+    _ach("config_surgeon", "Config Surgeon", "Operate on real config files, manifests, env files, and dashboard settings without flinching.", "Minerva Native", "key", metric="config_events", tiers=[100, 300, 1000, 3000, 10000]),
     _ach("rebase_acrobat", "Rebase Acrobat", "Handle real git history surgery: rebase, conflict, merge, fetch, push.", "Vibe Coding", "branch", metric="git_history_events", tiers=[10, 30, 100, 300, 800]),
     _ach("test_suite_tamer", "Test Suite Tamer", "Run enough verification commands that green text becomes part of the ritual.", "Tool Mastery", "daemon", metric="test_events", tiers=[100, 300, 800, 2400, 6000]),
     _ach("screenshot_hunter", "Screenshot Hunter", "Capture, inspect, and polish visual proof instead of just claiming it works.", "Tool Mastery", "eye", metric="screenshot_events", tiers=[50, 150, 500, 1500, 5000]),
@@ -469,7 +469,7 @@ METRIC_LABELS = {
     "css_activity_events": "CSS, styling, Tailwind, or className activity",
     "git_events": "git workflow commands",
     "tiny_patch_after_errors_events": "tiny typo-style fixes after error clusters",
-    "skill_events": "Hermes skill mentions or tool use",
+    "skill_events": "Minerva skill mentions or tool use",
     "skill_manage_events": "skill_manage create/patch/delete operations",
     "memory_events": "memory or Mnemosyne tool events",
     "memory_write_events": "durable memory writes",
@@ -496,14 +496,14 @@ METRIC_LABELS = {
     "claude_events": "Claude/Anthropic model mentions",
     "gemini_events": "Gemini/Google model mentions",
     "local_model_events": "local/open-weight model mentions",
-    "local_model_chat_sessions": "Hermes sessions whose model metadata is local/open-weight",
+    "local_model_chat_sessions": "Minerva sessions whose model metadata is local/open-weight",
     "toolset_events": "toolset or tool-family mentions",
     "config_events": "configuration/environment/manifest activity",
     "git_history_events": "git history operations such as rebase, merge, fetch, push, or tag",
     "test_events": "test/check/verification command mentions",
     "screenshot_events": "screenshot, Playwright, PNG, or vision-inspection activity",
     "release_events": "release, version, publish, or git tag events",
-    "session_count": "Hermes sessions",
+    "session_count": "Minerva sessions",
     "weekend_sessions": "sessions started on weekends",
     "night_sessions": "sessions started late night or before dawn"}
 

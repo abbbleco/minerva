@@ -113,6 +113,6 @@ def test_delegation_cfg_as_task_projection():
     shaped = _delegation_cfg_as_task(
         {"delegation": {"provider": "nous", "model": "Hermes-4.5"}}
     )
-    assert _format_aux_current(shaped) == "nous · Hermes-4.5"
+    assert _format_aux_current(shaped) == "nous · Minerva-4.5"
     # Non-dict delegation section must not crash
     assert _format_aux_current(_delegation_cfg_as_task({"delegation": "bogus"})) == "auto"

@@ -25,7 +25,7 @@ Premium scroll-driven landing pages; scroll = timeline.
 ## Reference: full SKILL.md
 
 :::info
-The following is the complete skill definition that Hermes loads when this skill is triggered. This is what the agent sees as instructions when the skill is active.
+The following is the complete skill definition that Minerva loads when this skill is triggered. This is what the agent sees as instructions when the skill is active.
 :::
 
 # scrollcraft
@@ -242,7 +242,7 @@ build's row to `<workspace>/FINGERPRINTS.md`.
 ## Pitfalls
 
 - `scripts/shoot.mjs` needs Playwright (`npm install playwright` or
-  `playwright-core` plus a Chrome install). Hermes' `browser_exec` tool is the
+  `playwright-core` plus a Chrome install). Minerva' `browser_exec` tool is the
   lighter alternative for scroll-screenshot verification: serve the build,
   scroll in steps, capture screenshots, and inspect them yourself.
 - `scripts/kie.mjs` needs `KIE_AI_API_KEY` and paid credit; prefer

@@ -1,4 +1,4 @@
-"""Hermes Plugin System — discovers, loads, and manages plugins.
+"""Minerva Plugin System — discovers, loads, and manages plugins.
 
 Sources, later overriding earlier on key collision: bundled ``<repo>/plugins/<name>/`` (``memory/``
 and ``context_engine/`` have their own discovery), user ``~/.hermes/plugins/<name>/``, project

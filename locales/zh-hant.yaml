@@ -203,7 +203,7 @@ gateway:
     set: "⊙ 目標已設定（{budget} 輪預算）：{goal}\n我會持續工作直到目標完成、你暫停／清除目標，或預算耗盡。\n控制指令：/goal status · /goal pause · /goal resume · /goal clear"
     gate_add_admin_only: "⛔ /goal gate add 需要明確設定的閘道管理員（私訊用 allow_admin_from，群組用 group_allow_admin_from）。"
   help:
-    header: "📖 **Hermes 指令**\n"
+    header: "📖 **Minerva 指令**\n"
     skill_header: "\n⚡ **技能指令**（{count} 個作用中）："
     more_use_commands: "\n... 還有 {count} 個。使用 `/commands` 檢視完整分頁清單。"
   insights:
@@ -422,7 +422,7 @@ gateway:
     source_line: "來源：{source}；各類別數量為本機估算值。"
     hint_all: "使用 /context all 查看各技能與各工具集的成本。"
   status:
-    header: "📊 **Hermes 閘道狀態**"
+    header: "📊 **Minerva 閘道狀態**"
     matrix_scope_header: "**Matrix 範圍：**"
     matrix_scope_room: "  room: {room}"
     matrix_scope_room_id: "  room_id: {room_id}"
@@ -470,7 +470,7 @@ gateway:
     untitled_session: "未命名工作階段"
     restore_step_1: "1. 建立或開啟一個話題。若要建立新話題，請開啟「All Messages」並在那裡傳送任意訊息。"
     restore_step_2: "2. 在該話題內傳送 /topic <session-id>。"
-    default_title: "Hermes 聊天"
+    default_title: "Minerva 聊天"
     root_lobby: "此主聊天保留給系統指令使用。\n\n若要開始新的 Minerva 聊天，請開啟此 bot 介面頂端的「All Messages」話題並在那裡傳送任意訊息。Telegram 會為該訊息建立新話題；每個話題都是獨立的 Minerva 工作階段。"
     root_new: "若要開始新的平行 Minerva 聊天，請開啟此 bot 介面頂端的「All Messages」話題並在那裡傳送任意訊息。Telegram 會為它建立新話題。\n\n每個話題都是獨立的 Minerva 工作階段。只有在想取代某個話題目前的工作階段時，才在既有話題內使用 /new。"
     new_header: "已在此話題中開始新的 Minerva 工作階段。\n\n提示：若要平行作業，請開啟「All Messages」並在那裡傳送訊息以建立另一個話題，而不是在這裡使用 /new。/new 會取代目前話題所綁定的工作階段。"
@@ -494,7 +494,7 @@ gateway:
     not_your_session: "該工作階段不屬於此 Telegram 使用者。"
     already_linked: "該工作階段已連結至另一個 Telegram 話題。"
     restored: "已恢復工作階段：{title}"
-    restored_last_message: "\n\nHermes 的最後一則訊息：\n{text}"
+    restored_last_message: "\n\nMinerva 的最後一則訊息：\n{text}"
   undo:
     nothing: "沒有可復原的內容。"
     removed: "↩️ 已復原 {turns} 個回合（{count} 則訊息）。\n已備份至：「{preview}」\n複製/編輯上方的文字並傳送，即可從此處重新提問。"
@@ -502,7 +502,7 @@ gateway:
   update:
     platform_not_messaging: "✗ /update 僅在訊息平台上可用。請在終端機執行 `minerva update`。"
     not_git_repo: "✗ 不是 git 儲存庫 — 無法更新。"
-    hermes_cmd_not_found: "✗ 找不到 `hermes` 指令。Hermes 正在執行，但更新指令無法在 PATH 上或透過目前的 Python 解譯器找到執行檔。請嘗試在終端機中手動執行 `minerva update`。"
+    hermes_cmd_not_found: "✗ 找不到 `hermes` 指令。Minerva 正在執行，但更新指令無法在 PATH 上或透過目前的 Python 解譯器找到執行檔。請嘗試在終端機中手動執行 `minerva update`。"
     start_failed: "✗ 啟動更新失敗：{error}"
     starting: "☤ 正在啟動 Minerva 更新…… 進度將在此處顯示。"
     reply_failed: "✗ 無法將回應送至更新程序：{error}"
@@ -601,7 +601,7 @@ gateway:
     none_value: "無"
     unknown_value: "未知"
   exec_approval:
-    header: "Hermes 想執行一個需要你批准的指令"
+    header: "Minerva 想執行一個需要你批准的指令"
     reason_label: "標記原因"
     default_reason: "危險指令"
     smart_deny_line: "智慧拒絕：擁有者覆寫僅適用於這一次操作。"
@@ -728,18 +728,18 @@ gateway:
     draining_maintenance: "⏳ 此代理正在為維護操作收尾，目前不接受新的回合。稍後即會恢復 — 請稍後重新傳送。"
     another_turn_running: "⏳ 此工作階段仍有另一輪在執行中。為保護對話紀錄，這則訊息未被處理。請等目前這一輪結束後再重新傳送。"
     behavior_queue_short: "排入下一輪佇列"
-    behavior_queue_long: "Hermes 忙碌時，訊息會排入下一輪的佇列。"
+    behavior_queue_long: "Minerva 忙碌時，訊息會排入下一輪的佇列。"
     behavior_steer_short: "引導至目前的執行（於下一次工具呼叫後）"
     behavior_steer_long: "訊息會被引導至目前的執行（於下一次工具呼叫後）。"
     behavior_interrupt_short: "中斷目前的執行"
-    behavior_interrupt_long: "Hermes 忙碌時，訊息會中斷目前的執行。"
+    behavior_interrupt_long: "Minerva 忙碌時，訊息會中斷目前的執行。"
     status: "**忙碌輸入模式：`{mode}`\n忙碌時的訊息：_{behavior}_\n可用 `/busy queue`、`/busy steer` 或 `/busy interrupt` 變更。"
     unknown_mode: "未知模式 `{arg}`。請使用 `/busy queue`、`/busy steer` 或 `/busy interrupt`。"
     save_failed: "忙碌輸入模式無法儲存至設定。模式未變更。"
     set: "忙碌輸入模式已設為 **`{mode}`**（已儲存）。\n_{behavior}_"
   pause:
     resumed: "▶️ 已恢復 — 重新開始接受新工作。"
-    not_paused: "Hermes 並未暫停。"
+    not_paused: "Minerva 並未暫停。"
     reason_suffix: " （原因：{reason}）"
     already_paused: "⏸️ Minerva 已處於暫停狀態{suffix}。使用 `/pause off` 恢復。"
     paused: "⏸️ 已暫停{suffix}。新的排程／kanban／閘道工作將暫緩；進行中的工作會正常完成。使用 `/pause off` 恢復。"
@@ -826,7 +826,7 @@ gateway:
     task_status_complete: "已完成"
     task_status_error: "錯誤"
     task_line: "- {title} - {status}"
-    task_card_title: "Hermes 正在處理"
+    task_card_title: "Minerva 正在處理"
   pairing:
     validity_hour: "{hours} 小時"
     validity_hours: "{hours} 小時"
@@ -839,7 +839,7 @@ gateway:
     notice_shutdown: "⚠️ Minerva 正在關閉 — 你目前的任務將被中斷。恢復上線後，傳送任何訊息，我會試著從中斷處繼續。"
     notice_restart: "⚠️ Minerva 正在重新啟動 — 你目前的任務將被中斷。重新啟動後傳送任何訊息，我會試著從中斷處繼續。"
   startup:
-    handoff_thread_title: "Hermes — {title}"
+    handoff_thread_title: "Minerva — {title}"
     restarted: "♻ 閘道已成功重新啟動。你的工作階段將繼續。"
     free_tier_line: "推論：Nous 免費方案（nous/welcome）。登入以取得更多：/login"
     online: "♻️ 閘道已上線 — Minerva 已恢復並準備就緒。"
@@ -1006,7 +1006,7 @@ platform:
       resolved_cancel: "已取消"
     prompt:
       truncated_marker: "... [已截斷]"
-      clarify_title: "Hermes 需要你的輸入"
+      clarify_title: "Minerva 需要你的輸入"
       clarify_hint_buttons: "從下方選一個，或點 ✏️ 其他 來輸入自訂回答。"
       clarify_hint_text: "請在此頻道回覆你的答案。"
       default_hint: " (預設：{default})"
@@ -1313,7 +1313,7 @@ platform:
       thinking: "正在思考..."
       still_working: "仍在處理中…（{elapsed}）"
     task_card:
-      title: "Hermes 正在處理"
+      title: "Minerva 正在處理"
     slash:
       reply_truncated: "\n\n_[回覆已截斷：還有 {count} 個部分超過 Slack 的臨時回覆長度限制。]_"
       running: "正在執行 `/{command}`…"
@@ -1321,7 +1321,7 @@ platform:
       seed: ":thread: Minerva 交接 — *{name}*"
   matrix:
     handoff:
-      default_name: "Hermes 工作階段"
+      default_name: "Minerva 工作階段"
     media:
       image_download_failed: "我無法下載圖片並上傳到 Matrix。來源 URL 可能含有私密 token，因此未顯示。"
     approval:
@@ -1379,7 +1379,7 @@ platform:
       header: "問題"
       question: "❓ {question}"
     typing:
-      thinking: "Hermes 正在思考…"
+      thinking: "Minerva 正在思考…"
       interrupted: "（已中斷）"
       no_reply: "（沒有回覆）"
     attachment_fallback:
@@ -1608,7 +1608,7 @@ slash:
   voice:
     description: "切換語音模式"
   wake:
-    description: "切換「Hey Hermes」喚醒詞監聽"
+    description: "切換「Hey Minerva」喚醒詞監聽"
   busy:
     description: "控制 Minerva 工作中時訊息的處理方式"
   tools:
@@ -2124,7 +2124,7 @@ cli:
     err_termux_app_missing: "偵測到 Termux:API 指令套件，但缺少對應的 Android 應用程式。\n請安裝／更新 Termux:API Android 應用程式，然後重試 /voice on。"
     err_mic_access: "語音模式需要麥克風存取權限。\n請執行 pkg install termux-api 並安裝 Termux:API Android 應用程式，然後重試 /voice on。"
     err_audio_capture: "語音模式需要音訊擷取功能。"
-    err_stt_provider: "語音模式需要 STT 提供方進行轉錄。\n請執行 hermes tools 設定 Speech-to-Text，然後重新啟動 Hermes。"
+    err_stt_provider: "語音模式需要 STT 提供方進行轉錄。\n請執行 hermes tools 設定 Speech-to-Text，然後重新啟動 Minerva。"
     silence_autostop: "偵測到靜音，自動停止..."
     hint_continuous: "靜音時自動停止 | {shortcut} 停止並離開連續模式"
     hint_termux: "Termux:API 擷取中 | {shortcut} 停止"
@@ -2473,7 +2473,7 @@ cli:
     yolo_bypass_suffix: "（YOLO 略過批准中）"
     ctx_left_prefix: "剩餘 {percent}% · "
     ctx_tokens_used: "{left}已使用 {used} / {max} tokens"
-    status_title: "Hermes CLI 狀態"
+    status_title: "Minerva CLI 狀態"
     label_reasoning: "推理"
     label_approvals: "批准"
     label_context: "上下文"
@@ -2616,9 +2616,9 @@ cli:
       short_queue: "排入下一回合的佇列"
       short_steer: "引導進目前的執行（下一次工具呼叫後）"
       short_interrupt: "立即重新導向目前的執行"
-      long_queue: "Hermes 忙碌時，按 Enter 會將後續輸入排入佇列。"
+      long_queue: "Minerva 忙碌時，按 Enter 會將後續輸入排入佇列。"
       long_steer: "按 Enter 會將你的訊息引導進目前的執行（下一次工具呼叫後）。"
-      long_interrupt: "Hermes 忙碌時，按 Enter 會重新導向目前的執行；/stop 仍可取消。"
+      long_interrupt: "Minerva 忙碌時，按 Enter 會重新導向目前的執行；/stop 仍可取消。"
       usage: "用法：/busy [queue|steer|interrupt|status]"
       status: "忙碌時輸入模式：{mode}"
       enter_while_busy: "忙碌時按 Enter：{behavior}"
@@ -3087,7 +3087,7 @@ cli:
   tip_line: "✦ 提示：{tip}"
   banner:
     context_too_low: "⚠️  上下文長度只有 {tokens} tokens — 對於搭配工具使用的代理而言可能太低。"
-    context_minimum: "Hermes 至少需要 {tokens} tokens。工具結構描述加系統提示詞會佔用很大的固定前綴。"
+    context_minimum: "Minerva 至少需要 {tokens} tokens。工具結構描述加系統提示詞會佔用很大的固定前綴。"
     fix_ollama: "Ollama 修正方式：OLLAMA_CONTEXT_LENGTH={tokens} ollama serve"
     fix_lm_studio: "LM Studio 修正方式：在模型設定中調整上下文長度 → 重新載入模型"
     fix_local_server: "修正方式：以至少 {tokens_k}K 上下文啟動你的伺服器（llama.cpp：-c {tokens}），或在 config.yaml 設定 model.ollama_num_ctx 為實際提供的視窗大小"
@@ -3142,7 +3142,7 @@ cli:
     the_provider: "提供方"
     the_current_model: "目前的模型"
     with_details: "{lead}\n詳細資訊：{details}"
-    agent_init_failed: "Hermes 無法建立模型連線：{error}。你的訊息未送出。執行 `minerva doctor` 檢查設定，或用 /model 選擇其他提供方。"
+    agent_init_failed: "Minerva 無法建立模型連線：{error}。你的訊息未送出。執行 `minerva doctor` 檢查設定，或用 /model 選擇其他提供方。"
   gateway:
     starting: "正在啟動 Minerva 閘道（訊息平台）…"
   gateway_status:
@@ -3462,12 +3462,12 @@ explainer:
     turn_lease: "這一輪已停止，因為另一個 Minerva 程序接管了此工作階段。你的回覆未儲存 — 請等另一個程序完成後再傳送一次訊息。"
     session_row_missing: "此工作階段在聊天仍開啟時已從儲存空間中刪除，且 Minerva 無法重新建立它，因此這則訊息未儲存。請再傳送一次訊息；若持續失敗，請執行 `minerva {profile_arg}doctor`。"
     locked: "這一輪已停止，因為工作階段儲存空間忙碌中（另一個 Minerva 程序正在寫入狀態資料庫）。你的訊息應該已經儲存 — 請稍後再傳送一次。"
-    replaced: "工作階段資料庫檔案在 Minerva 執行期間被替換，因此這則訊息未儲存（副本保存在 {home}/sessions/）。請停止 Hermes（`minerva {profile_arg}gateway stop`），執行 `minerva {profile_arg}doctor` — 不要執行 `minerva {profile_arg}doctor --fix`，那會就地修復錯誤的檔案 — 然後重新啟動並再傳送一次訊息。進階復原步驟請見日誌。"
+    replaced: "工作階段資料庫檔案在 Minerva 執行期間被替換，因此這則訊息未儲存（副本保存在 {home}/sessions/）。請停止 Minerva（`minerva {profile_arg}gateway stop`），執行 `minerva {profile_arg}doctor` — 不要執行 `minerva {profile_arg}doctor --fix`，那會就地修復錯誤的檔案 — 然後重新啟動並再傳送一次訊息。進階復原步驟請見日誌。"
     deleted_wal: "另一個 Minerva 程序仍持有工作階段資料庫預寫日誌（WAL）的舊副本，因此 Minerva 為保護檔案已停止寫入，這則訊息未儲存（副本保存在 {home}/sessions/）。沒有任何資料遺失。請結束此設定檔下的所有 Minerva 程序（Desktop 應用程式、`minerva {profile_arg}gateway stop`、儀表板、排程任務），執行 `minerva {profile_arg}doctor` — 它會列出仍持有該日誌的程序 — 然後重新啟動 Minerva 並再傳送一次訊息。在這些程序執行期間，不要執行 `doctor --fix` 或刪除任何 state.db 檔案。指南：{recovery_docs}"
     corrupt: "這一輪已停止，因為狀態資料庫回報結構損毀（重新啟動後對話紀錄將會遺失）。釋放磁碟空間沒有幫助。復原選項：\n1. 執行 `minerva {profile_arg}doctor --fix`\n2. 停止閘道，然後用以下指令復原：\n   hermes {profile_arg}sessions recover --source {db_path} --inspect-only\n   （若回報可復原）hermes {profile_arg}sessions recover --source {db_path} --output recovered-state.db\n   — 復原會先為損毀的檔案建立快照；切勿對執行中的 state.db 執行 `sqlite3 ... \".recover\"`，有漏洞的 sqlite3 CLI 可能使其損毀得更嚴重\n3. 從 {backups_dir}/ 中的備份還原\n然後再傳送一次訊息。"
-    fts_index: "這一輪已停止，因為工作階段搜尋索引（FTS5）已損毀且無法卸離，因此這則訊息未儲存。訊息儲存區本身未受損：不要執行復原工具或還原備份。請執行 `minerva {profile_arg}doctor --fix`（或重新啟動 Hermes，開啟時會修復索引），然後再傳送一次訊息。"
-    disk: "Hermes 無法將此對話儲存到磁碟，為避免遺失你的訊息而停止。磁碟可能已滿：請釋放一些空間（或修正 {home}/state.db 的權限），然後再傳送一次訊息。"
-    default: "Hermes 無法儲存此對話，為避免遺失你的訊息而停止。可能原因：磁碟空間不足，或另一個 Minerva 程序正佔用資料庫。請關閉其他 Minerva 視窗，執行 `minerva {profile_arg}doctor` 檢查儲存狀態，然後再傳送一次訊息。"
+    fts_index: "這一輪已停止，因為工作階段搜尋索引（FTS5）已損毀且無法卸離，因此這則訊息未儲存。訊息儲存區本身未受損：不要執行復原工具或還原備份。請執行 `minerva {profile_arg}doctor --fix`（或重新啟動 Minerva，開啟時會修復索引），然後再傳送一次訊息。"
+    disk: "Minerva 無法將此對話儲存到磁碟，為避免遺失你的訊息而停止。磁碟可能已滿：請釋放一些空間（或修正 {home}/state.db 的權限），然後再傳送一次訊息。"
+    default: "Minerva 無法儲存此對話，為避免遺失你的訊息而停止。可能原因：磁碟空間不足，或另一個 Minerva 程序正佔用資料庫。請關閉其他 Minerva 視窗，執行 `minerva {profile_arg}doctor` 檢查儲存狀態，然後再傳送一次訊息。"
   file_mutation:
     header: "⚠️ 檔案變更驗證器：本輪有 {count} 個檔案編輯失敗，無論上方文字如何描述皆以此為準。請執行 `git status` 或 `read_file` 確認實際寫入的內容。"
     entry: "  • `{path}` — [{tool}] {preview}"
@@ -3608,7 +3608,7 @@ tips:
   t130: "如果兩個設定檔不小心共用同一個 bot token，第二個閘道會被阻擋並顯示明確的錯誤。"
   t131: "工作階段會在第一次交流後自動產生描述性標題 — 無需手動命名。"
   t132: "工作階段標題支援系譜：\"my project\" → \"my project #2\" → \"my project #3\"。"
-  t133: "結束時，Hermes 會印出包含工作階段 ID 與統計資料的恢復指令。"
+  t133: "結束時，Minerva 會印出包含工作階段 ID 與統計資料的恢復指令。"
   t134: "hermes sessions export backup.jsonl 會匯出所有工作階段，供備份或分析。"
   t135: "hermes -r SESSION_ID 可依 ID 恢復任何特定的過去工作階段。"
   t136: "記憶是凍結的快照 — 變更只會在下次工作階段開始時出現在系統提示詞中。"
@@ -3632,10 +3632,10 @@ tips:
   t154: "/voice on 會在 CLI 中啟用語音模式。Ctrl+B 可切換按住說話錄音。"
   t155: "串流 TTS 會在句子生成的同時播放 — 不必等完整回覆結束。"
   t156: "Telegram、Discord、WhatsApp 與 Slack 上的語音訊息會自動轉錄。"
-  t157: "Hermes 可在 21 個訊息平台上運作：Telegram、Discord、Slack、WhatsApp、Signal、Matrix、IRC、Microsoft Teams、電子郵件等。"
+  t157: "Minerva 可在 21 個訊息平台上運作：Telegram、Discord、Slack、WhatsApp、Signal、Matrix、IRC、Microsoft Teams、電子郵件等。"
   t158: "hermes gateway install 會將閘道設定為開機自動啟動的系統服務。"
   t159: "DingTalk 使用 Stream Mode — 不需要 webhook 或公開網址。"
-  t160: "BlueBubbles 透過本機 macOS 伺服器把 iMessage 帶進 Hermes。"
+  t160: "BlueBubbles 透過本機 macOS 伺服器把 iMessage 帶進 Minerva。"
   t161: "Webhook 路由支援 HMAC 驗證、速率限制與事件過濾。"
   t162: "API 伺服器提供與 OpenAI 相容的端點，可搭配 Open WebUI 和 LibreChat 使用。"
   t163: "Discord 語音頻道模式：bot 會加入語音頻道、轉錄語音並以語音回應。"
@@ -3652,7 +3652,7 @@ tips:
   t174: "上下文達到門檻時會自動壓縮 — 記憶會先寫入，歷史則會被摘要。"
   t175: "隨著上下文逐漸填滿，狀態列會依序變成黃色、橘色、紅色。"
   t176: "SOUL.md 是代理的主要身分檔案 — 自訂它即可塑造代理的行為。"
-  t177: "Hermes 會從 .hermes.md、AGENTS.md、CLAUDE.md 或 .cursorrules 載入專案上下文（取第一個符合者）。"
+  t177: "Minerva 會從 .hermes.md、AGENTS.md、CLAUDE.md 或 .cursorrules 載入專案上下文（取第一個符合者）。"
   t178: "當代理進入子資料夾時，會逐步發現其中的 AGENTS.md 檔案。"
   t179: "上下文檔案上限為 20,000 字元，超出時會智慧保留頭尾並截斷中間。"
   t180: "五種瀏覽器提供方：本機 Chromium、Browserbase、Browser Use、Camofox 與 Firecrawl。"
@@ -3683,7 +3683,7 @@ tips:
   t205: "指令支援前綴比對：/h 會解析為 /help，/mod 解析為 /model。"
   t206: "把檔案路徑拖進終端機會自動附加圖片，或作為上下文送出。"
   t207: "在儲存庫根目錄放 .worktreeinclude，列出要複製到工作樹中的 gitignore 檔案。"
-  t208: "hermes acp 會以 ACP 伺服器模式執行 Hermes，可整合 VS Code、Zed 與 JetBrains。"
+  t208: "hermes acp 會以 ACP 伺服器模式執行 Minerva，可整合 VS Code、Zed 與 JetBrains。"
   t209: "自訂提供方：在 config.yaml 的 custom_providers 下儲存具名端點。"
   t210: "HERMES_EPHEMERAL_SYSTEM_PROMPT 會注入一段絕不會寫入歷史的系統提示詞。"
   t211: "credential_pool_strategies 支援 fill_first、round_robin、least_used 與 random 輪替。"
@@ -3698,7 +3698,7 @@ tips:
   t220: "SOUL.md 會在首次執行時自動填入預設人格。編輯它即可自訂。"
   t221: "/compress <focus topic> 會把 60-70% 的摘要預算分配給你的主題，並大幅精簡其餘部分。"
   t222: "第二次以後的壓縮，壓縮器會更新先前的摘要，而不是從頭開始。"
-  t223: "閘道工作階段重設之前，Hermes 會在背景自動把重要事實寫入記憶。"
+  t223: "閘道工作階段重設之前，Minerva 會在背景自動把重要事實寫入記憶。"
   t224: "在 config.yaml 中設定 network.force_ipv4: true 可修正 IPv6 故障的伺服器上的卡頓問題 — 會 monkey-patch socket。"
   t225: "terminal 工具會為常見的結束碼加上說明：grep 回傳 1 = 「找不到符合項目（不是錯誤）」。"
   t226: "失敗的前景終端機指令會以指數退避（2 秒、4 秒、8 秒）自動重試最多 3 次。"

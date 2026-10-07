@@ -717,7 +717,7 @@ class TestSyncManifest:
 
 
 # ---------------------------------------------------------------------------
-# Env-var configuration (Hermes Cloud "on by default" via environment)
+# Env-var configuration (Minerva Cloud "on by default" via environment)
 # ---------------------------------------------------------------------------
 
 class TestEnvConfig:

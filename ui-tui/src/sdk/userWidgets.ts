@@ -188,7 +188,7 @@ export function watchUserWidgets(dir = widgetsDir()): void {
   if (!attach()) {
     // Event-driven first-creation: watch the PARENT for the widgets dir to
     // appear, attach + scan the instant it does. The very first widget a
-    // user (or Hermes) ever writes must hot-load too — a 10s poll here read
+    // user (or Minerva) ever writes must hot-load too — a 10s poll here read
     // as "requires a restart" in live use.
     try {
       const parent = watch(dirname(dir), () => {

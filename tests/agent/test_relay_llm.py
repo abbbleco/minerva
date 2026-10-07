@@ -1169,7 +1169,7 @@ def test_anthropic_codec_preserves_tool_history_and_cached_system_blocks(relay_t
         "system": [
             {
                 "type": "text",
-                "text": "You are Hermes.",
+                "text": "You are Minerva.",
                 "cache_control": {"type": "ephemeral"},
             }
         ],

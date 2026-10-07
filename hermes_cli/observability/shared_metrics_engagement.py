@@ -42,7 +42,7 @@ _ACTIVE_THRESHOLDS = (
     (360 * _MINUTE_MS, "2h_to_6h"),
 )
 _SWITCH_THRESHOLDS = ((2, "1"), (4, "2_to_3"), (11, "4_to_10"), (31, "11_to_30"))
-# Task entrypoints that are a person using Hermes. Unattended cron runs (counted by hermes.cron.run),
+# Task entrypoints that are a person using Minerva. Unattended cron runs (counted by hermes.cron.run),
 # delegated children, background review forks, batch and API/python embedding are not engagement.
 _ENGAGED_ENTRYPOINTS = frozenset({"gateway_message", "interactive"})
 _INTERACTION_METRICS = frozenset({contract.TASK_STARTED_METRIC, contract.TASK_FINISHED_METRIC})

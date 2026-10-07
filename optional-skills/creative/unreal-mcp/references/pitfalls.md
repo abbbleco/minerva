@@ -8,7 +8,7 @@ delivery.
 
 ### 1. Start order: editor first, Minerva second
 
-Hermes probes MCP servers at session start. If the editor (and its server)
+Minerva probes MCP servers at session start. If the editor (and its server)
 isn't up yet, no `mcp_unreal_engine_*` tools exist in the session. Fix:
 launch the editor, confirm the server bound (Output Log shows
 `LogModelContextProtocol` with the address), then open a NEW Minerva session.
@@ -37,7 +37,7 @@ compiling shaders.
 ### 4. Port 8000 conflicts
 
 Common collisions: local dev servers, Jupyter, other MCP hosts. Symptom: the
-server fails to bind (Output Log) or Hermes' probe times out. Fix: change
+server fails to bind (Output Log) or Minerva' probe times out. Fix: change
 Server Port Number in Editor Preferences > Model Context Protocol AND the
 `url` in `~/.hermes/config.yaml` (`mcp_servers.unreal-engine`), then restart
 both sides. Verify: `curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8000/mcp`
@@ -51,10 +51,10 @@ The editor was closed, crashed, or the server was stopped
 the user, have them relaunch/restart the server, then reconnect (new session
 if tools were lost).
 
-### 5. GenerateClientConfig is not for Hermes
+### 5. GenerateClientConfig is not for Minerva
 
 `ModelContextProtocol.GenerateClientConfig` writes config files for Claude
-Code/Cursor/VSCode/Gemini/Codex into the project root. Hermes' connection
+Code/Cursor/VSCode/Gemini/Codex into the project root. Minerva' connection
 lives in `~/.hermes/config.yaml` via `minerva mcp install unreal-engine`.
 Running GenerateClientConfig neither helps nor harms Minerva — just don't
 mistake it for the Minerva setup step.

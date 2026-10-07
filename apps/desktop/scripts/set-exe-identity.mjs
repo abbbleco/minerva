@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // set-exe-identity.mjs — stamp the Minerva icon + version metadata onto the
-// built Hermes.exe using rcedit, completely decoupled from electron-builder's
+// built Minerva.exe using rcedit, completely decoupled from electron-builder's
 // signing path.
 //
 // WHY THIS EXISTS
@@ -13,7 +13,7 @@
 // try to extract winCodeSign.
 //
 // The cost of disabling signAndEditExecutable is that electron-builder also
-// skips rcedit, so the unpacked Hermes.exe keeps the stock Electron icon and
+// skips rcedit, so the unpacked Minerva.exe keeps the stock Electron icon and
 // "Electron" taskbar name. This script restores the icon + identity by calling
 // rcedit DIRECTLY. rcedit is a pure PE resource editor: no signing, no certs,
 // no winCodeSign, no symlinks.
@@ -86,8 +86,8 @@ async function stampExeIdentity(
   const options = {
     icon,
     'version-string': {
-      ProductName: 'Hermes',
-      FileDescription: 'Hermes',
+      ProductName: 'Minerva',
+      FileDescription: 'Minerva',
       CompanyName: 'ABBBLE CO',
       LegalCopyright: 'Copyright (c) 2026 ABBBLE CO'
     }

@@ -342,7 +342,7 @@ def _validate_ollama_native(req: _Request) -> Optional[dict[str, Any]]:
     if models is None:
         return _soft_accept(
             f"Note: could not reach this Ollama endpoint's `/api/tags` model listing to validate `{req.requested}`. "
-            "Hermes will save the model name, but local Ollama model discovery could not verify it."
+            "Minerva will save the model name, but local Ollama model discovery could not verify it."
         )
     match = _match_in_catalog(req.lookup, models, suggest_label="Similar local Ollama models")
     if match.exact:

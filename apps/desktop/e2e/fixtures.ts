@@ -461,7 +461,7 @@ function resolvePackagedBinaryPath(): string {
   if (process.platform === 'darwin') {
     const arch = process.arch === 'arm64' ? 'arm64' : 'x64'
 
-    return path.join(RELEASE_ROOT, `mac-${arch}`, 'Hermes.app', 'Contents', 'MacOS', 'Hermes')
+    return path.join(RELEASE_ROOT, `mac-${arch}`, 'Hermes.app', 'Contents', 'MacOS', 'Minerva')
   }
 
   return path.join(RELEASE_ROOT, 'linux-unpacked', 'hermes')

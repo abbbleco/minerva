@@ -449,7 +449,7 @@ def _install_provider_deps(llm_id: str, embedder_id: str, vector_id: str) -> Non
     if missing:
         print("\n  The selected backends need extra packages:")
         print(f"    Missing: {', '.join(missing)}")
-        print("  Declare these requirements in the plugin's pyproject.toml, then run `minerva pm install` and restart Hermes.")
+        print("  Declare these requirements in the plugin's pyproject.toml, then run `minerva pm install` and restart Minerva.")
 
 
 def _probe(fn, ok: str, fail: str, exc=Exception) -> tuple[bool, str]:
@@ -510,7 +510,7 @@ def post_setup(hermes_home: str, config: dict) -> None:
         import mem0
         installed_ver = getattr(mem0, "__version__", None)
         if installed_ver and tuple(int(x) for x in installed_ver.split(".")[:3]) < (2, 0, 7):
-            print(f"\n  ⚠ mem0ai {installed_ver} installed but >=2.0.7 required.\n  Run `minerva pm repair`, then restart Hermes.")
+            print(f"\n  ⚠ mem0ai {installed_ver} installed but >=2.0.7 required.\n  Run `minerva pm repair`, then restart Minerva.")
     flags = parse_flags(sys.argv[1:])
     handler = _MODE_HANDLERS.get(flags["mode"])
     flags["_mode_from_flag"] = handler is not None

@@ -46,7 +46,7 @@ $P -m evals.postmortem.forensics.rework     --repo . --base <merge-base> --open 
 Each writes `postmortem_out/<lane>.json` and prints a summary. `--root` defaults to the top-level
 session with the most descendants; compression-rollover children are excluded from the population so
 cost buckets are disjoint. Pricing is fitted from `estimated_cost_usd`, so dollars match what that
-Hermes recorded (an estimator, not an invoice).
+Minerva recorded (an estimator, not an invoice).
 
 ### Reference output (the #102117 run, `state_copy.db` of 2026-09-04)
 

@@ -101,7 +101,7 @@ def offer_consent(config: dict | None = None) -> bool:
     from hermes_cli.curses_ui import curses_radiolist
 
     idx = curses_radiolist(
-        "Help improve Hermes?", [label for label, _, _ in OFFER_CHOICES], selected=_NO_THANKS, cancel_returns=-1,
+        "Help improve Minerva?", [label for label, _, _ in OFFER_CHOICES], selected=_NO_THANKS, cancel_returns=-1,
         description=_OFFER_DESCRIPTION,
     )
     if idx < 0:

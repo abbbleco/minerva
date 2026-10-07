@@ -11,7 +11,7 @@ import {
  * resolution logic without loading React or the UI kit.
  *
  * Values come from @hermes/shared (hermes_constants.VALID_REASONING_EFFORTS
- * plus `none`, thinking-off). An empty/unset config value means the Hermes
+ * plus `none`, thinking-off). An empty/unset config value means the Minerva
  * default.
  */
 

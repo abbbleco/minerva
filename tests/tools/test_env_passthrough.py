@@ -373,7 +373,7 @@ class TestTerminalIntegration:
         assert child_env["PATH"] == "/usr/bin"
 
     def test_passthrough_cannot_override_internal_dynamic_secret(self):
-        """A skill must NOT be able to register dynamically-named Hermes
+        """A skill must NOT be able to register dynamically-named Minerva
         secrets (AUXILIARY_*_API_KEY / _BASE_URL, GATEWAY_RELAY_* auth) as
         passthrough — they aren't in the static blocklist, so this is the
         defense-in-depth layer that keeps env_passthrough consistent with the
@@ -475,7 +475,7 @@ class TestTerminalIntegration:
 
         Verifies the full path: _is_hermes_provider_credential returns True,
         register_env_passthrough refuses the var, and _scrub_child_env keeps
-        it out of the child env. A non-Hermes key is also rejected here (the
+        it out of the child env. A non-Minerva key is also rejected here (the
         fallback is conservative: when we can't tell, we fail closed), which
         is the safe direction.
         """

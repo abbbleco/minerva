@@ -241,7 +241,7 @@ CLI、gateway、cron、ACP 及辅助调用共用的运行时解析器。将 `(pr
 
 ### ACP 集成
 
-通过 stdio/JSON-RPC 将 Hermes 作为编辑器原生 agent 暴露给 VS Code、Zed 和 JetBrains。
+通过 stdio/JSON-RPC 将 Minerva 作为编辑器原生 agent 暴露给 VS Code、Zed 和 JetBrains。
 
 → [ACP 内部机制](./acp-internals.md)
 

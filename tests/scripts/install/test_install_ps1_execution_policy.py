@@ -36,7 +36,7 @@ def test_installed_hermes_runs_under_restricted_policy(tmp_path):
     command = (f". '{str(INSTALLER).replace(chr(39), chr(39) * 2)}'; "
                "Set-ExecutionPolicy -Scope Process Restricted -Force; "
                f"$InstallDir = '{install_dir}'; "
-               "Invoke-InstalledHermes @('setup')")
+               "Invoke-InstalledMinerva @('setup')")
     result = subprocess.run([powershell, "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass",
                              "-Command", command],
                             cwd=tmp_path, stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=60)
@@ -70,7 +70,7 @@ def test_installer_runs_runtime_command_from_apostrophe_account_path(tmp_path):
     quoted_root = str(install_root).replace("'", "''")
     command = (f". '{quoted_installer}'; "
                f"$InstallDir = '{quoted_root}'; "
-               "Invoke-InstalledHermes @('setup')")
+               "Invoke-InstalledMinerva @('setup')")
     result = subprocess.run(
         [powershell, "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-Command", command],
         cwd=tmp_path, env=env, stdin=subprocess.DEVNULL,

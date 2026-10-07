@@ -31,7 +31,7 @@ Frontmatter:
   environment — the OS/login username (e.g. the `user=` line in your
   environment hints), git config, or any identity you can probe must not be
   written. Skills get shared and published, so an environment-derived name is
-  a privacy leak the user never opted into; the skill names itself as Hermes.
+  a privacy leak the user never opted into; the skill names itself as Minerva.
 - platforms: declare `[macos]`, `[linux]`, and/or `[windows]` IF the skill
   uses OS-bound primitives (osascript/apt/systemctl => the matching OS; /proc,
   os.setsid, signal.SIGKILL => linux; fcntl/termios => POSIX). Prefer fixing it

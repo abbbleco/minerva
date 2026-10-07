@@ -8,7 +8,7 @@ CR-LF-stripping gates that ``save_env_value`` enforces for every other
 between the write and a later ``chmod`` (a TOCTOU permission window).
 
 A memory provider plugin schema declaring ``env_var: "LD_PRELOAD"`` (or any
-other subprocess-influencing or Hermes-runtime-location name) could
+other subprocess-influencing or Minerva-runtime-location name) could
 otherwise plant a value into ``.env`` via the interactive memory-setup
 wizard. The next Minerva process would load it through the
 ``env_loader.py`` ``.env -> os.environ`` chain and execute attacker code

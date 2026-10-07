@@ -67,10 +67,10 @@ meaningful:
    can break both. `minerva plugins validate` refuses these at admission (`no
    core override` check). If the hook you need does not exist, open an issue
    describing it: we would rather add the seam than list a patch.
-10. **Dependency security policy is the plugin's.** Hermes's 14-day
-   `exclude-newer` quarantine covers Hermes's own dependencies only; a plugin's
+10. **Dependency security policy is the plugin's.** Minerva's 14-day
+   `exclude-newer` quarantine covers Minerva's own dependencies only; a plugin's
    `python_dependencies` / `pyproject.toml` install under the plugin's policy
-   (no quarantine, still inside Hermes's core constraints). Reviewers read the
+   (no quarantine, still inside Minerva's core constraints). Reviewers read the
    dependency list at the pinned SHA: bare floors (`>=X` with no upper bound)
    and floors on the newest release get a request for the oldest
    API-compatible floor plus an upper bound, and authors are strongly
@@ -86,7 +86,7 @@ meaningful:
    presenting itself as another vendor's client, is not admitted without an
    explicit maintainer ruling; a read-only build is the usual way through.
 12. **Approvals and unattended runs are respected.** A plugin never routes around
-   Hermes's approval system: no auto-approving, no disabling guards, and no
+   Minerva's approval system: no auto-approving, no disabling guards, and no
    spawning Minerva or shell children that inherit YOLO or non-interactive mode
    to run commands nobody approved. Anything that waits for a person (a prompt,
    an OAuth browser flow) fails cleanly or times out under cron, the messaging
@@ -100,7 +100,7 @@ meaningful:
 14. **Compatibility metadata is truthful.** `requires_hermes` is a SemVer floor
    (`">=0.21.5"`), never a CalVer date, and never newer than the current release
    (the loader skips the plugin otherwise). `version` matches the pinned code,
-   and Python dependencies resolve under Hermes's core constraints
+   and Python dependencies resolve under Minerva's core constraints
    (`minerva plugins validate --install-deps` is what CI runs).
 15. **No skins or forks of bundled plugins.** A change to a bundled plugin is a
    PR against `hermes-agent`, not a competing listing, and vendor-lookalike skins

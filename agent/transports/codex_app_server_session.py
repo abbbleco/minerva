@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 
 _STDERR_TAIL_LINES = 12  # stderr tail on generic errors: legible, yet enough for a config/auth diagnostic
 
-# Hermes' tools.terminal.security_mode -> Codex permissions profile id.
+# Minerva' tools.terminal.security_mode -> Codex permissions profile id.
 # Missing config -> workspace-write (Codex's own default).
 _HERMES_TO_CODEX_PERMISSION_PROFILE = {
     "auto": "workspace-write", "approval-required": "read-only-with-approval",
@@ -225,17 +225,17 @@ class CodexAppServerSession:
         # A codex thread id persisted by an earlier process for this Minerva session: the first
         # ``ensure_started`` issues ``thread/resume`` for it instead of ``thread/start``.
         self._resume_thread_id = resume_thread_id
-        # ``thread/start.model``: the Hermes-selected slug, for every provider. ``.modelProvider``: a named
+        # ``thread/start.model``: the Minerva-selected slug, for every provider. ``.modelProvider``: a named
         # custom provider's id in codex's own ``[model_providers.<id>]`` table; only the id travels, codex
         # reads base_url/env_key itself.
         self._model = (model or "").strip() or None
         self._model_provider = (model_provider or "").strip() or None
-        # Hermes' composed system prompt (SOUL.md, memory, channel overrides). Sent ONCE per thread as
+        # Minerva' composed system prompt (SOUL.md, memory, channel overrides). Sent ONCE per thread as
         # ``thread/start.developerInstructions``: codex keeps its own base instructions (tool guidance) and
         # inserts this as the first developer message of every model request. ``baseInstructions`` would
         # REPLACE codex's base and ``instructions`` is accepted but ignored (verified against codex 0.147).
         self._developer_instructions = developer_instructions
-        # Hermes' prior transcript, appended to developerInstructions ONLY when a thread is started from
+        # Minerva' prior transcript, appended to developerInstructions ONLY when a thread is started from
         # scratch: a resumed thread already holds the conversation (agent/codex_runtime_history_seed.py).
         self._history_seed = history_seed
         self._permission_profile = permission_profile or _HERMES_TO_CODEX_PERMISSION_PROFILE.get(
@@ -682,7 +682,7 @@ class CodexAppServerSession:
             logger.warning("turn/interrupt timed out")
 
     def _handle_server_request(self, req: dict) -> None:
-        """Answer a codex server request (approval / elicitation) via Hermes' approval flow.
+        """Answer a codex server request (approval / elicitation) via Minerva' approval flow.
 
         Permission escalations are always declined (the user chose their profile in
         ~/.codex/config.toml); unknown methods get a JSON-RPC error so codex doesn't hang.

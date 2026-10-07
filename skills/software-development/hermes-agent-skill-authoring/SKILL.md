@@ -11,7 +11,7 @@ metadata:
     related_skills: [requesting-code-review]
 ---
 
-# Authoring Hermes-Agent Skills (in-repo)
+# Authoring Minerva-Agent Skills (in-repo)
 
 ## Overview
 

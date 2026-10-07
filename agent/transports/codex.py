@@ -248,7 +248,7 @@ def _alias_wire_tools(
         response_tools, _oc_aliases = _alias_reserved_tools(response_tools, _OPENCODE_RESERVED_TOOL_NAMES)
         wire_aliases.update(_oc_aliases)
     # Perplexity's Agent API reserves the same names as server-side tools.
-    # Keep Hermes's client-side functions available under wire aliases.
+    # Keep Minerva's client-side functions available under wire aliases.
     if response_tools and _is_perplexity_responses_backend(params):
         response_tools, _pplx_aliases = _alias_reserved_tools(response_tools, _PERPLEXITY_RESERVED_TOOL_NAMES)
         wire_aliases.update(_pplx_aliases)
@@ -710,7 +710,7 @@ class ResponsesApiTransport(ProviderTransport):
         # An override may rewrite the wire model; provenance must be stamped with what actually goes out.
         wire_model = _strip_ctx_variant(request_overrides.get("model", model))
         kwargs = {
-            # ``-900k`` picker variants are Hermes-side aliases; the backend knows only the base slug.
+            # ``-900k`` picker variants are Minerva-side aliases; the backend knows only the base slug.
             "model": wire_model,
             "instructions": instructions,
             "input": self.convert_messages(

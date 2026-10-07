@@ -55,7 +55,7 @@ Copy the `https://...` URL — you'll set it as the webhook URL below. **Leave t
 
 ---
 
-## Step 3: Configure Hermes
+## Step 3: Configure Minerva
 
 Add to `~/.hermes/.env`:
 
@@ -189,7 +189,7 @@ Cron jobs with `deliver: line` route to `LINE_HOME_CHANNEL`. The adapter ships a
 
 **Postback button never appears.** Either the LLM responded faster than `LINE_SLOW_RESPONSE_THRESHOLD`, or another bubble (tool-progress, streaming) consumed the reply token first. See the suppression block under "Slow LLM responses".
 
-**"already in use by another profile".** The same channel access token is bound to another running Hermes profile. Stop the other gateway or use a separate channel.
+**"already in use by another profile".** The same channel access token is bound to another running Minerva profile. Stop the other gateway or use a separate channel.
 
 ---
 

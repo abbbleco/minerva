@@ -639,11 +639,11 @@ class TestAdapterBehavior(unittest.TestCase):
         # Case 1: bot has only a name (open_id not hydrated / not configured).
         # Name fallback is the only available signal for any mention.
         adapter = FeishuAdapter(PlatformConfig())
-        adapter._bot_name = "Hermes Bot"
+        adapter._bot_name = "Minerva Bot"
         sender_id = SimpleNamespace(open_id="ou_any", user_id=None)
 
         name_only_mention = SimpleNamespace(
-            name="Hermes Bot",
+            name="Minerva Bot",
             id=SimpleNamespace(open_id=None, user_id=None),
         )
         different_mention = SimpleNamespace(
@@ -662,14 +662,14 @@ class TestAdapterBehavior(unittest.TestCase):
         # open_id must NOT admit (IDs override names).
         adapter2 = FeishuAdapter(PlatformConfig())
         adapter2._bot_open_id = "ou_bot"
-        adapter2._bot_name = "Hermes Bot"
+        adapter2._bot_name = "Minerva Bot"
 
         same_name_other_id_mention = SimpleNamespace(
-            name="Hermes Bot",
+            name="Minerva Bot",
             id=SimpleNamespace(open_id="ou_other", user_id="u_other"),
         )
         bot_mention = SimpleNamespace(
-            name="Hermes Bot",
+            name="Minerva Bot",
             id=SimpleNamespace(open_id="ou_bot", user_id=None),
         )
 
@@ -1740,11 +1740,11 @@ class TestFeishuMentionMap(unittest.TestCase):
         human_with_same_name = SimpleNamespace(
             key="@_user_1",
             id=SimpleNamespace(open_id="ou_human", user_id=""),
-            name="Hermes Bot",
+            name="Minerva Bot",
         )
         result = _build_mentions_map(
             [human_with_same_name],
-            _FeishuBotIdentity(open_id="ou_bot", name="Hermes Bot"),
+            _FeishuBotIdentity(open_id="ou_bot", name="Minerva Bot"),
         )
         self.assertFalse(result["@_user_1"].is_self)
 
@@ -1758,12 +1758,12 @@ class TestFeishuMentionMap(unittest.TestCase):
         bot_mention = SimpleNamespace(
             key="@_user_1",
             id=SimpleNamespace(open_id="ou_bot_actual", user_id=""),
-            name="Hermes Bot",
+            name="Minerva Bot",
         )
         # Bot identity has name but no open_id yet (hydration pending).
         result = _build_mentions_map(
             [bot_mention],
-            _FeishuBotIdentity(open_id="", name="Hermes Bot"),
+            _FeishuBotIdentity(open_id="", name="Minerva Bot"),
         )
         self.assertTrue(result["@_user_1"].is_self)
 
@@ -1807,7 +1807,7 @@ class TestFeishuStripLeadingSelf(unittest.TestCase):
         from plugins.platforms.feishu.adapter import _strip_edge_self_mentions
 
         result = _strip_edge_self_mentions(
-            "@Hermes @Alice make a group", self._make_refs(other_name="Alice")
+            "@Minerva @Alice make a group", self._make_refs(other_name="Alice")
         )
         self.assertEqual(result, "@Alice make a group")
 
@@ -1823,9 +1823,9 @@ class TestFeishuStripLeadingSelf(unittest.TestCase):
 
         # Non-terminal char (here a Chinese particle) follows — preserve.
         result = _strip_edge_self_mentions(
-            "please don't @Hermes anymore", self._make_refs()
+            "please don't @Minerva anymore", self._make_refs()
         )
-        self.assertEqual(result, "please don't @Hermes anymore")
+        self.assertEqual(result, "please don't @Minerva anymore")
 
     def test_returns_input_when_no_self_refs(self):
         from plugins.platforms.feishu.adapter import _strip_edge_self_mentions, FeishuMentionRef
@@ -1841,7 +1841,7 @@ class TestFeishuNormalizeText(unittest.TestCase):
         refs = {"@_user_1": FeishuMentionRef(name="Hermes", open_id="ou_bot", is_self=True)}
         self.assertEqual(
             _normalize_feishu_text("stop pinging @_user_1 please", refs),
-            "stop pinging @Hermes please",
+            "stop pinging @Minerva please",
         )
 
     def test_at_all_rendered_as_english_literal(self):
@@ -2245,7 +2245,7 @@ class TestFeishuFetchMessageText(unittest.TestCase):
 
         # The rendered text should still have the bot name substituted.
         result = asyncio.run(adapter._fetch_message_text("m_parent"))
-        self.assertEqual(result, "@Hermes hi")
+        self.assertEqual(result, "@Minerva hi")
 
 class TestFeishuMentionEndToEnd(unittest.TestCase):
     """High-level scenarios from the design spec — verify the full pipeline."""
@@ -2343,10 +2343,10 @@ class TestFeishuMentionEndToEnd(unittest.TestCase):
         event = adapter._dispatch_inbound_event.call_args.args[0]
         # Hint surfaces Alice; bot excluded because is_self=True.
         self.assertIn("[Mentioned: Alice (open_id=ou_alice)]", event.text)
-        self.assertNotIn("Hermes (open_id=", event.text)
-        # Body: leading @Hermes stripped, Alice preserved, trailing text intact.
+        self.assertNotIn("Minerva (open_id=", event.text)
+        # Body: leading @Minerva stripped, Alice preserved, trailing text intact.
         self.assertIn("@Alice review the spec with Alice", event.text)
-        self.assertNotIn("@Hermes @Alice", event.text)
+        self.assertNotIn("@Minerva @Alice", event.text)
 
 
 # ---------------------------------------------------------------------------
@@ -2422,14 +2422,14 @@ def test_hydrated_bot_identity_wins_over_stale_env_values(fake_lark_requests, mo
     """#16993: /bot/v3/info runs even when FEISHU_BOT_* are configured, and the hydrated identity
     replaces the env values so a stale id from an old app registration can't break @mention gating."""
     monkeypatch.setenv("FEISHU_BOT_OPEN_ID", "ou_env")
-    monkeypatch.setenv("FEISHU_BOT_NAME", "Env Hermes")
+    monkeypatch.setenv("FEISHU_BOT_NAME", "Env Minerva")
     adapter = _plain_feishu_adapter()
     assert adapter._bot_open_id == "ou_env"
     requests = []
 
     def _request(req):
         requests.append(req)
-        return _bot_info_response("ou_hydrated", "Hydrated Hermes")
+        return _bot_info_response("ou_hydrated", "Hydrated Minerva")
 
     adapter._client = SimpleNamespace(request=_request)
 
@@ -2437,7 +2437,7 @@ def test_hydrated_bot_identity_wins_over_stale_env_values(fake_lark_requests, mo
 
     assert [r.uri for r in requests] == ["/open-apis/bot/v3/info"]
     assert adapter._bot_open_id == "ou_hydrated"
-    assert adapter._bot_name == "Hydrated Hermes"
+    assert adapter._bot_name == "Hydrated Minerva"
 
 
 def test_bot_sender_name_is_fetched_via_basic_batch_and_cached(fake_lark_requests):

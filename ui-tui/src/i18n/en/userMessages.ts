@@ -12,24 +12,24 @@ export const userMessagesEn = {
     details: (text: string) => `Details: ${text}`,
 
     backend: {
-      restarting: 'Hermes stopped unexpectedly — restarting and reopening your chat (the reply in progress was lost).',
-      restartingActivity: 'Hermes stopped unexpectedly · restarting…',
+      restarting: 'Minerva stopped unexpectedly — restarting and reopening your chat (the reply in progress was lost).',
+      restartingActivity: 'Minerva stopped unexpectedly · restarting…',
       connectionLost: 'Connection to Minerva lost — reconnecting and reopening your chat…',
       connectionLostActivity: 'connection lost · reconnecting…',
-      gaveUpTitle: 'Hermes stopped and could not be restarted. Your chat is saved.',
+      gaveUpTitle: 'Minerva stopped and could not be restarted. Your chat is saved.',
       /** `{0}` = process exit code. */
       gaveUpTitleWithCode: (code: string) =>
-        `Hermes stopped (exit code ${code}) and could not be restarted. Your chat is saved.`,
+        `Minerva stopped (exit code ${code}) and could not be restarted. Your chat is saved.`,
       gaveUpReconnect:
-        'Hermes keeps trying to reconnect in the background and reopens this chat when it succeeds; if it does not, type /resume.',
+        'Minerva keeps trying to reconnect in the background and reopens this chat when it succeeds; if it does not, type /resume.',
       gaveUpLogs: 'Type /logs for the full log, or /quit and run `minerva doctor` to check the install.',
-      gaveUpActivity: 'Hermes stopped · /logs for details',
+      gaveUpActivity: 'Minerva stopped · /logs for details',
       /** `{0}` = seconds until the next attempt. */
       reconnecting: (secs: string) => `retrying in ${secs}s`,
       /** `{0}` = seconds until the next attempt, `{1}` = attempt number. */
       reconnectingAttempt: (secs: string, attempt: string) => `retrying in ${secs}s (attempt ${attempt})`,
       slowStart:
-        'Hermes is taking longer than usual to start. Still waiting… If it never connects: /logs shows the last backend output; /quit and run `minerva doctor`.',
+        'Minerva is taking longer than usual to start. Still waiting… If it never connects: /logs shows the last backend output; /quit and run `minerva doctor`.',
       slowStartStatus: 'still starting…',
       stderrProblem: 'Something went wrong inside Minerva · /logs for details',
       /** `{0}` = the Python exception class name (e.g. `ValueError`). */
@@ -42,10 +42,10 @@ export const userMessagesEn = {
       sessionNotFound:
         'This chat is no longer attached to the backend (it was idle or the backend restarted). Your history is saved: type /resume to reopen it.',
       notConnected:
-        'Hermes is not connected right now, so that was not sent. It reconnects automatically; wait a moment and try again, or type /logs if this persists.',
+        'Minerva is not connected right now, so that was not sent. It reconnects automatically; wait a moment and try again, or type /logs if this persists.',
       /** `{0}` = timeout in seconds. */
       timedOut: (secs: string) =>
-        `Hermes did not answer within ${secs}s. Try again; if it keeps happening, type /logs and report the last lines.`,
+        `Minerva did not answer within ${secs}s. Try again; if it keeps happening, type /logs and report the last lines.`,
       /** `{0}` = slash command name without the slash. */
       slashTimedOut: (command: string) =>
         `/${command} did not finish: the command helper timed out. Try again; if it keeps happening, type /logs and report the last lines.`,
@@ -127,7 +127,7 @@ export const userMessagesEn = {
           hint: 'Check the endpoint is running, then /retry.'
         },
         gateway: {
-          title: 'Hermes hit an internal error while running this turn',
+          title: 'Minerva hit an internal error while running this turn',
           hint: 'Send /retry; type /logs for the trace.',
           hintNoRetry: 'Pick another model with /model; type /logs for the trace.'
         },

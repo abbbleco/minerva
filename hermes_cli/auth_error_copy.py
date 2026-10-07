@@ -26,7 +26,7 @@ DEVICE_FLOW_ERROR_COPY = {
     "invalid_grant": (
         "The sign-in code was not accepted by the server. Run `{retry}` to get a new code."),
     "invalid_client": (
-        "The server did not recognize this copy of Hermes. Run `minerva update`, then `{retry}` again."),
+        "The server did not recognize this copy of Minerva. Run `minerva update`, then `{retry}` again."),
 }
 
 

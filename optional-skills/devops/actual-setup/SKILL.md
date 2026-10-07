@@ -1,6 +1,6 @@
 ---
 name: actual-setup
-description: Set up Actual Computer (actual.inc) inference in Hermes.
+description: Set up Actual Computer (actual.inc) inference in Minerva.
 version: 2.0.0
 author: shl0ms + Minerva Agent
 license: MIT
@@ -107,9 +107,9 @@ a human in a browser.
    `xhigh`/`ultra` used to fail with a cryptic
    `Expecting value: line 1 column 1 (char 0)` (a wrapped HTTP 400). The
    built-in provider clamps `xhigh→high` and `ultra→max` on the wire. If a
-   request still 400s this way on an old Hermes, set a per-model cap:
+   request still 400s this way on an old Minerva, set a per-model cap:
    `agent.reasoning_overrides.<model>: high` in config.yaml.
-2. **Context-window overflow on small local models.** Hermes' default toolset
+2. **Context-window overflow on small local models.** Minerva' default toolset
    is ~26k tokens of schemas plus a ~9k-token system prompt. A model loaded
    with a 32k context overflows before the first turn, and llama.cpp-family
    servers emit a bare `data: [DONE]` — Minerva reports

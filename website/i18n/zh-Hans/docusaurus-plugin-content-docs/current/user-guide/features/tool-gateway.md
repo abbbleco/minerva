@@ -40,7 +40,7 @@ hermes status
 
 ### 在模型配置流程中
 
-运行 `minerva model` 并选择 ABBBLE Portal 作为提供商时，Hermes 会主动询问是否启用 Tool Gateway：
+运行 `minerva model` 并选择 ABBBLE Portal 作为提供商时，Minerva 会主动询问是否启用 Tool Gateway：
 
 ```
 Your Nous subscription includes the Tool Gateway.

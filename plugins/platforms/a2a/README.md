@@ -1,8 +1,8 @@
-# A2A — Agent-to-Agent protocol for Hermes
+# A2A — Agent-to-Agent protocol for Minerva
 
 Talk to other agents, and let other agents talk to you, over the open
 [A2A protocol](https://a2a-protocol.org) **v1.0**. Works with any A2A-compliant
-peer (another Hermes, LangChain, CrewAI, Google ADK, OpenClaw, …). Stdlib only —
+peer (another Minerva, LangChain, CrewAI, Google ADK, OpenClaw, …). Stdlib only —
 no `a2a-sdk` dependency.
 
 ## Enable

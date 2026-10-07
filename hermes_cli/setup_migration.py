@@ -158,7 +158,7 @@ def _load_openclaw_migration_module():
 
 
 # Item kinds that warrant explicit warnings: gateway tokens/channels hijack the old agent's
-# platforms; config values and instruction/context .md files may not map 1:1 to Hermes.
+# platforms; config values and instruction/context .md files may not map 1:1 to Minerva.
 _HIGH_IMPACT_KIND_KEYWORDS = {
     "gateway": "⚠ Gateway/messaging — this will configure Minerva to use your OpenClaw messaging channels",
     "telegram": "⚠ Telegram — this will point Minerva at your OpenClaw Telegram bot",
@@ -172,8 +172,8 @@ _HIGH_IMPACT_KIND_KEYWORDS = {
 }
 
 _MIGRATION_WARNING_NOTES = (
-    "  Note: OpenClaw config values may have different semantics in Hermes.",
-    "  For example, OpenClaw's tool_call_execution: \"auto\" ≠ Hermes's yolo mode.",
+    "  Note: OpenClaw config values may have different semantics in Minerva.",
+    "  For example, OpenClaw's tool_call_execution: \"auto\" ≠ Minerva's yolo mode.",
     "  Instruction files (.md) from OpenClaw may contain incompatible procedures.",
 )
 
@@ -263,7 +263,7 @@ def _offer_openclaw_migration(hermes_home: Path) -> bool:
         return False
     print_header("OpenClaw Installation Detected", gap=True)
     _info(f"Found OpenClaw data at {openclaw_dir}",
-          "Hermes can preview what would be imported before making any changes.", None)
+          "Minerva can preview what would be imported before making any changes.", None)
     if not prompt_yes_no("Would you like to see what can be imported?", default=True):
         print_info("Skipping migration. You can run it later with: hermes claw migrate --dry-run")
         return False

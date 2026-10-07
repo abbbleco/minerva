@@ -12,6 +12,11 @@
 type WaitUntil = (promise: Promise<unknown>) => void;
 
 function platformWaitUntil(): WaitUntil | null {
+  // Workers entry wires the request-scoped hook here (AsyncLocalStorage, so
+  // concurrent requests never steal each other's lifetime). Vercel wires the
+  // legacy `waitUntil` name once at module scope; both are read at call time.
+  const scoped = (globalThis as { __minervaWaitUntil?: unknown }).__minervaWaitUntil;
+  if (typeof scoped === 'function') return scoped as WaitUntil;
   const candidate = (globalThis as { waitUntil?: unknown }).waitUntil;
   return typeof candidate === 'function' ? (candidate as WaitUntil) : null;
 }

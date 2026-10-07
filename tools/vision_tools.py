@@ -202,7 +202,7 @@ def _secure_cache_dir(new_subpath: str, old_name: str) -> Path:
 
     Running it unconditionally also heals a directory an older Minerva left at
     0755. That retroactive tighten is safe *here* because this is
-    Hermes-private scratch that the same user re-reads in the same call —
+    Minerva-private scratch that the same user re-reads in the same call —
     there is no user-shared content to strand. Note ``parents=True`` applies
     the mode to the leaf only, so an intermediate ``cache/`` keeps its default
     mode; it is shared with other subsystems and holds only directory names.

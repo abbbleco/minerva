@@ -70,7 +70,7 @@ nous = NousProfile(
     name="nous", aliases=("nous-portal", "nousresearch", "abbble", "minerva"), env_vars=("NOUS_API_KEY",),
     display_name="Minerva", description="Minerva — ABBBLE model family",
     signup_url="https://portal.abbble.co.za/", fallback_models=("hermes-3-405b", "hermes-3-70b"),
-    base_url="https://minrouter.abbble.co.za/v1", auth_type="oauth_device_code",
+    base_url="https://minrouter.abbbleco.workers.dev/v1", auth_type="oauth_device_code",
 )
 
 register_provider(nous)

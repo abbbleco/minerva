@@ -60,7 +60,7 @@ def test_ollama_strict_endpoint_always_receives_the_user_turn(tmp_path) -> None:
     overrun: HarnessError | None = None
     with FakeChatVariantServer(script, strict_user_turn=True) as srv:
         cfg = custom_chat_config(srv.base_url, model="qwen3:27b")
-        # The strict 500 is retryable to Hermes; no minutes-long auto-recovery on a regression.
+        # The strict 500 is retryable to Minerva; no minutes-long auto-recovery on a regression.
         cfg["agent"] = {"auto_recovery_cycles": 0}
         h.write(cfg, dotenv={"OPENAI_API_KEY": "ollama"})
         (h.project / "a.txt").write_text("CANARY-A\n", encoding="utf-8")

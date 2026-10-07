@@ -41,7 +41,7 @@
 
 .EXAMPLE
   ./hermes-update-rehearsal.ps1 pre -Source <git-url>
-  # ... run `minerva update`, use Hermes, test ...
+  # ... run `minerva update`, use Minerva, test ...
   ./hermes-update-rehearsal.ps1 post
 
 .NOTES
@@ -310,9 +310,9 @@ function Invoke-Pre {
   $volumes = @($volumes | Select-Object -Unique)
 
   Step 'before we start (nothing here is pass/fail, just read it)'
-  $procs = @(Get-Process -Name 'Hermes', 'hermes' -ErrorAction SilentlyContinue)
+  $procs = @(Get-Process -Name 'Minerva', 'hermes' -ErrorAction SilentlyContinue)
   if ($procs.Count) {
-    Warn 'Hermes looks like it is running -- close the desktop app and the gateway'
+    Warn 'Minerva looks like it is running -- close the desktop app and the gateway'
     Warn "before you run 'hermes update', or the dependency sync may fail:"
     $procs | ForEach-Object { Write-Host "    $($_.ProcessName) (pid $($_.Id))" }
   }
@@ -514,8 +514,8 @@ function Invoke-Post {
   Say "  to how they were at $($script:Snap)"
   Confirm-Action "Put everything back from $($script:Snap)?"
 
-  Step 'stopping Hermes'
-  foreach ($name in @('Hermes', 'hermes')) {
+  Step 'stopping Minerva'
+  foreach ($name in @('Minerva', 'hermes')) {
     Get-Process -Name $name -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
   }
   Ok 'asked Minerva to stop (if anything was running)'

@@ -15,9 +15,16 @@ const DEFAULT_OPENROUTER_URL = "https://openrouter.ai/api/v1";
 
 // Read env lazily, never at module scope — a module-scope `const` freezes the value at import
 // time, which breaks when env is injected afterwards (dotenv, container secrets, tests).
-function apiKey(): string {
-  return process.env.OPENROUTER_API_KEY ?? "";
-}
+// Upstream credentials come from the key pool (`./upstream-keys.js`): `OPENROUTER_API_KEYS`
+// (comma-separated) wins, the singular `OPENROUTER_API_KEY` is the one-key pool.
+import {
+  cooldownMsFor,
+  failoverClass,
+  keyLabel,
+  sharedKeyPool,
+  upstreamKeys,
+} from "./upstream-keys.js";
+
 function openRouterUrl(): string {
   return process.env.OPENROUTER_URL ?? DEFAULT_OPENROUTER_URL;
 }
@@ -28,12 +35,12 @@ export interface ChatUsage {
 }
 
 export function upstreamConfigured(): boolean {
-  return apiKey().length > 0;
+  return upstreamKeys().length > 0;
 }
 
-function upstreamHeaders(): Record<string, string> {
+function upstreamHeaders(key: string): Record<string, string> {
   const headers: Record<string, string> = {
-    authorization: `Bearer ${apiKey()}`,
+    authorization: `Bearer ${key}`,
     "content-type": "application/json",
   };
   // Optional OpenRouter attribution headers — harmless when unset.
@@ -61,18 +68,64 @@ function usageFrom(payload: unknown): ChatUsage | null {
 
 /**
  * Non-streaming chat. Returns the parsed body and the usage it reported.
+ *
+ * Round-robins the key pool with same-request failover: a 429/broke/dead key
+ * parks for its cooldown and the identical body is retried on the next key
+ * (each key at most once). Terminal statuses (400/404/…) return as-is —
+ * retrying them cannot help. With no keys configured the single legacy
+ * attempt goes out unauthenticated, exactly as before.
  */
 export async function chatOnce(
   upstreamId: string,
   body: Record<string, unknown>
 ): Promise<{ status: number; payload: unknown; usage: ChatUsage | null }> {
-  const res = await fetch(`${openRouterUrl()}/chat/completions`, {
-    method: "POST",
-    headers: upstreamHeaders(),
-    body: JSON.stringify({ ...body, model: upstreamId, stream: false }),
-  });
-  const payload = (await res.json().catch(() => ({}))) as unknown;
-  return { status: res.status, payload, usage: usageFrom(payload) };
+  const keys = upstreamKeys();
+  const url = `${openRouterUrl()}/chat/completions`;
+  const requestBody = JSON.stringify({ ...body, model: upstreamId, stream: false });
+  if (keys.length === 0) {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: upstreamHeaders(""),
+      body: requestBody,
+    });
+    const payload = (await res.json().catch(() => ({}))) as unknown;
+    return { status: res.status, payload, usage: usageFrom(payload) };
+  }
+  const pool = sharedKeyPool();
+  const tried = new Set<number>();
+  let last: { status: number; payload: unknown; usage: ChatUsage | null } | null = null;
+  while (tried.size < keys.length) {
+    const index = pool.pick(keys.length);
+    if (tried.has(index)) break;
+    tried.add(index);
+    let res: Response;
+    try {
+      res = await fetch(url, {
+        method: "POST",
+        headers: upstreamHeaders(keys[index] as string),
+        body: requestBody,
+      });
+    } catch {
+      pool.report(index, cooldownMsFor("transport"));
+      continue;
+    }
+    const payload = (await res.json().catch(() => ({}))) as unknown;
+    const result = { status: res.status, payload, usage: usageFrom(payload) };
+    if (failoverClass(res.status) === "terminal" || tried.size >= keys.length) {
+      pool.report(index, null);
+      return result;
+    }
+    pool.report(index, cooldownMsFor(res.status));
+    console.warn(
+      `[router] upstream ${keyLabel(index, keys.length)} HTTP ${res.status} — failing over`
+    );
+    last = result;
+  }
+  // Every key failed over: surface the last upstream answer, never a
+  // synthesized error — callers already map status codes. (If every attempt
+  // died in transport with no HTTP answer at all, there is nothing to relay,
+  // so that alone falls back to a 502.)
+  return last ?? { status: 502, payload: {}, usage: null };
 }
 
 /**
@@ -92,17 +145,66 @@ export function chatStream(
   body: Record<string, unknown>,
   onUsage: (usage: ChatUsage | null) => void
 ): Promise<Response> {
-  return fetch(`${openRouterUrl()}/chat/completions`, {
-    method: "POST",
-    headers: upstreamHeaders(),
-    body: JSON.stringify({
-      ...body,
-      model: upstreamId,
-      stream: true,
-      stream_options: { include_usage: true },
-    }),
-  }).then((res) => {
-    if (!res.ok || !res.body) return res;
+  const keys = upstreamKeys();
+  const url = `${openRouterUrl()}/chat/completions`;
+  const requestBody = JSON.stringify({
+    ...body,
+    model: upstreamId,
+    stream: true,
+    stream_options: { include_usage: true },
+  });
+  const headersFor = (index: number) => upstreamHeaders(keys[index] as string);
+  const run = async (): Promise<Response> => {
+    // No keys: one legacy attempt, exactly as before (callers map the 401).
+    if (keys.length === 0) {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: upstreamHeaders(""),
+        body: requestBody,
+      });
+      return instrumentStream(res, onUsage);
+    }
+    const pool = sharedKeyPool();
+    const tried = new Set<number>();
+    while (tried.size < keys.length) {
+      const index = pool.pick(keys.length);
+      if (tried.has(index)) break;
+      tried.add(index);
+      let res: Response;
+      try {
+        res = await fetch(url, { method: "POST", headers: headersFor(index), body: requestBody });
+      } catch {
+        pool.report(index, cooldownMsFor("transport"));
+        continue;
+      }
+      if (failoverClass(res.status) === "terminal" || tried.size >= keys.length) {
+        pool.report(index, null);
+        return instrumentStream(res, onUsage);
+      }
+      pool.report(index, cooldownMsFor(res.status));
+      console.warn(
+        `[router] upstream ${keyLabel(index, keys.length)} HTTP ${res.status} — failing over`
+      );
+      try {
+        await res.arrayBuffer();
+      } catch {
+        // Body already gone; the socket releases either way.
+      }
+    }
+    // Unreachable in practice (loop exits only via return), kept for the type
+    // checker: every key failed over means the last branch above returned.
+    throw new Error("upstream key pool exhausted without a response");
+  };
+  return run();
+}
+
+/** Instrument an upstream SSE response for usage (extracted unchanged from
+ *  the pre-pool implementation so streaming behavior is identical). */
+function instrumentStream(
+  res: Response,
+  onUsage: (usage: ChatUsage | null) => void
+): Response {
+  if (!res.ok || !res.body) return res;
 
     const upstream = res.body;
     const decoder = new TextDecoder();
@@ -185,5 +287,4 @@ export function chatStream(
         connection: "keep-alive",
       },
     });
-  });
 }

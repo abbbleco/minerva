@@ -141,7 +141,7 @@ def test_passwordless_sudo_runs_the_install_without_asking_for_a_password(monkey
 
 @pytest.mark.platforms("linux")
 def test_timeout_returns_and_frees_the_slot_even_when_a_descendant_survives(monkeypatch):
-    """From an unprivileged Hermes, killpg reaches the sudo leader but not a root-owned apt child; that
+    """From an unprivileged Minerva, killpg reaches the sudo leader but not a root-owned apt child; that
     child keeps the pipe's write end open, so draining stdout never sees EOF and the profile slot stays
     taken forever. The timeout must end the drain and release the slot regardless of what survived.
     Stand-in for the unkillable root child: a grandchild in its own session holding our stdout."""

@@ -87,7 +87,7 @@ from `config.yaml` via the catalog entry.
 ## The Tool Surface: Discovery, Not a Fixed List
 
 By default the plugin runs in **tool-search mode**: `tools/list` returns only
-three meta-tools, and every real tool is reached through them. Through Hermes
+three meta-tools, and every real tool is reached through them. Through Minerva
 they appear as:
 
 | Minerva tool | Purpose |
@@ -215,7 +215,7 @@ Load on demand; keep SKILL.md-level rules in mind throughout.
 
 ## Pitfalls (top of mind — full list in references/pitfalls.md)
 
-- **Start order matters.** Editor + server up first, then the Hermes
+- **Start order matters.** Editor + server up first, then the Minerva
   session. Missing `mcp_unreal_engine_*` tools = wrong order.
 - **One call at a time.** Serial game thread; no batching, no overlap.
 - **The editor UI freezes during each call.** That's by design (game-thread
@@ -223,7 +223,7 @@ Load on demand; keep SKILL.md-level rules in mind throughout.
 - **Modal dialogs block everything.** A tool call that opens (or collides
   with) a modal editor dialog stalls until a human dismisses it. If a call
   hangs indefinitely, tell the user to check the editor for a dialog.
-- **Timeouts on long operations.** Hermes' per-call default is 120 s; asset
+- **Timeouts on long operations.** Minerva' per-call default is 120 s; asset
   imports, big level saves, and renders can exceed it. Raise
   `mcp_servers.unreal-engine.timeout` in `~/.hermes/config.yaml` for
   render/import-heavy sessions.

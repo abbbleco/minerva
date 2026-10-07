@@ -5,7 +5,7 @@ credentials (`OPENROUTER_API_KEY`). Minerva Desktop and the portal authenticate 
 per-agency `qkt_sec_*` key; the router resolves the tenant, gates on subscription +
 credits, relays to OpenRouter, meters usage, and debits the ledger.
 
-Production: `https://minrouter.abbble.co.za` · Portal: `https://portal.abbble.co.za`
+Production: `https://minrouter.abbbleco.workers.dev` · Portal: `https://portal.abbble.co.za`
 (Desktop key minting lives at `/console/hermes`.)
 
 ## Endpoints
@@ -30,12 +30,12 @@ debits twice.
    Shown once — store it in the OS keychain, never in a repo.
 2. Minerva provider config:
    ```yaml
-   base_url: https://minrouter.abbble.co.za/v1
+   base_url: https://minrouter.abbbleco.workers.dev/v1
    api_key: <qkt_sec_-key-from-portal>
    # omit model for the free router, or: minerva/openrouter-free
    # paid plans: any id listed by GET /v1/models with your key
    ```
-3. Test: `curl -s https://minrouter.abbble.co.za/v1/models -H "Authorization: Bearer <key>"`.
+3. Test: `curl -s https://minrouter.abbbleco.workers.dev/v1/models -H "Authorization: Bearer <key>"`.
    One key per machine; revoke a lost key under Console → API keys and that machine stops
    authenticating immediately.
 
@@ -71,7 +71,7 @@ grants ≠ gates.
 |---|---|---|
 | `PORT` | – | default `8090` |
 | `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` | live | tenant resolution + ledger (service key, never browser) |
-| `OPENROUTER_API_KEY` | live | upstream inference — **router only**, never the portal |
+| `OPENROUTER_API_KEY` | live | upstream inference — **router only**, never the portal. The one-key pool; `OPENROUTER_API_KEYS` (comma-separated, wins when set) spreads load round-robin with same-request failover (429 → next key, each key at most once) |
 | `OPENROUTER_SITE_URL` / `OPENROUTER_APP_NAME` | – | upstream attribution headers |
 | `MINERVA_EMBEDDING_MODEL` | – | embeddings model override |
 | `MINERVA_ROUTER_STUB` | – | `1` = canned bytes + scriptable 402s, no DB/upstream. Must be `0`/unset in prod |
@@ -79,7 +79,7 @@ grants ≠ gates.
 | `BILLING_CURRENCY` / `BILLING_*` / `MINERVA_FREE_*` | – | must match portal or the two sides disagree on price |
 
 ```bash
-docker build -f apps/router/Dockerfile -t minerva-router .  # context MUST be the monorepo root (workspace:* deps)
+docker build -f apps/router/Dockerfile -t minrouter .  # context MUST be the monorepo root (workspace:* deps)
 pnpm --filter @minerva/router test    # contract suite: catalog, gates, pricing, CORS, upstream, vercel entry
 ```
 
@@ -96,8 +96,9 @@ Docker/Node behaviour is unchanged.
 1. Vercel project → Root Directory `apps/router`. Enable **Include source files outside
    of the Root Directory** (needed for the `workspace:*` packages above the root).
 2. Set env vars from the table above (`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`,
-   `OPENROUTER_API_KEY`, plus the `BILLING_*` / `MINERVA_FREE_*` values matching the
-   portal). `PORT` is ignored; `MINERVA_ROUTER_STUB` must be unset/`0` in prod.
+   `OPENROUTER_API_KEY` (or the plural `OPENROUTER_API_KEYS`), plus the `BILLING_*` /
+   `MINERVA_FREE_*` values matching the portal). `PORT` is ignored;
+   `MINERVA_ROUTER_STUB` must be unset/`0` in prod.
 3. Deploy. `/health`, `/v1/models`, `/v1/credits`, `/v1/chat/completions`,
    `/v1/embeddings` are all served by the one function.
 
@@ -110,3 +111,27 @@ catches the drift instead.
 CORS is allowlist-only (`hono/cors`, no credentials); `/api/internal/*` on the portal
 stays loopback + shared-secret (`apps/web/lib/internal-auth.ts`) — portal and router
 coordinate through the DB, not HTTP.
+
+## Cloudflare Workers deploy
+
+Same app, third target (`src/worker.ts` + `wrangler.toml`; Docker and Vercel
+entries untouched). `nodejs_compat` provides `process.env` and `node:crypto`,
+so no app code changes were needed; per-request `ctx.waitUntil` reaches the
+ledger drain through an AsyncLocalStorage bridge in the entry. The raw-TCP
+`postgres` driver (`@minerva/database/health.ts`, scripts-only) imports
+lazily so it never enters the Worker bundle.
+
+```bash
+npm i -g wrangler
+wrangler login
+wrangler secret put SUPABASE_URL
+wrangler secret put SUPABASE_SERVICE_ROLE_KEY
+wrangler secret put OPENROUTER_API_KEY   # or OPENROUTER_API_KEYS="k1,k2" for the pool
+pnpm --filter @minerva/router run deploy   # `run` is load-bearing: bare `pnpm deploy` is pnpm's own built-in, not the script
+```
+
+Verify `/health` then `/v1/models` with a `qkt_sec_*` bearer on the
+workers.dev URL first; attach `minrouter.abbbleco.workers.dev` as a Custom Domain
+only after that. Free tier fits this workload (streaming is I/O-wait
+dominated, not CPU); the `postgres` driver and local filesystem are the only
+hard Workers incompatibilities and neither is in the request path.

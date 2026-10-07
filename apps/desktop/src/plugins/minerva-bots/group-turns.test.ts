@@ -337,7 +337,7 @@ describe('session-gone classification', () => {
     }
   })
 
-  // The core loop closes a failed turn with a Hermes-authored assistant row
+  // The core loop closes a failed turn with a Minerva-authored assistant row
   // typed `display_kind: failed_turn` (agent/turn_failure_copy.py). That row is
   // a transcript boundary, not the member speaking: read as the reply, the
   // room posted it as the bot's answer, re-drove the member and hid the error.

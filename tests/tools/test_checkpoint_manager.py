@@ -350,7 +350,7 @@ class TestRestore:
 
 
 class TestSafeRestore:
-    """Safe restore: preserve user hand-edits, revert only Hermes-authored changes.
+    """Safe restore: preserve user hand-edits, revert only Minerva-authored changes.
 
     Inspired by Copilot CLI's /rewind, which "restores only the files Copilot
     changed, skipping any file whose contents no longer match what Copilot
@@ -371,12 +371,12 @@ class TestSafeRestore:
         (work_dir / "main.py").write_text("agent version\n")
         mgr.record_agent_write(str(work_dir / "main.py"))
 
-        # The user then hand-edits README.md (Hermes never wrote it).
+        # The user then hand-edits README.md (Minerva never wrote it).
         (work_dir / "README.md").write_text("user hand edit\n")
 
         result = mgr.restore(str(work_dir), base, safe=True)
         assert result["success"] is True
-        # Hermes-authored change reverted...
+        # Minerva-authored change reverted...
         assert (work_dir / "main.py").read_text() == "print('hello')\n"
         # ...user's hand edit preserved.
         assert (work_dir / "README.md").read_text() == "user hand edit\n"
@@ -451,7 +451,7 @@ class TestSafeRestore:
 
         result = mgr.restore(str(work_dir), base, safe=True)
         assert result["success"] is True
-        # User edit preserved; Hermes-created file removed (not in checkpoint).
+        # User edit preserved; Minerva-created file removed (not in checkpoint).
         assert (work_dir / "README.md").read_text() == "user edit\n"
         assert not (work_dir / "agent.txt").exists()
         assert "README.md" in result["skipped_user_edits"]

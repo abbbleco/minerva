@@ -186,7 +186,7 @@ def build_sessions_parser(subparsers, *, cmd_sessions: Callable) -> None:
         help="Convert another Minerva SQLite store (e.g. kanban.db) instead of the profile's state.db")
     _flag(sessions_set_journal_mode, "--force",
         help="Proceed when the holder scan itself fails (cannot prove the store is quiet) after stopping every "
-            "Hermes process yourself; a process the scan does find is still refused")
+            "Minerva process yourself; a process the scan does find is still refused")
 
     sessions_repair_routing = sessions_subparsers.add_parser(
         "repair-routing", help="Re-stamp gateway sessions that lost their routing identity",
@@ -303,7 +303,7 @@ def build_sessions_parser(subparsers, *, cmd_sessions: Callable) -> None:
         "--limit", type=int, default=500, help="Max sessions to load (default: 500)")
 
     sessions_import = sessions_subparsers.add_parser(
-        "import", help="Import a Claude Code or Codex CLI session into Hermes",
+        "import", help="Import a Claude Code or Codex CLI session into Minerva",
         description="Pull a conversation started in Claude Code (~/.claude/projects) "
             "or Codex CLI (~/.codex/sessions) into the Minerva session store "
             "so it can be resumed with 'hermes --resume <id>'. The foreign "

@@ -206,7 +206,7 @@ gateway:
     set: "⊙ Cél beállítva ({budget} körös keret): {goal}\nDolgozni fogok rajta, amíg a cél el nem készül, te nem szünetelteted/törlöd, vagy a keret ki nem merül.\nVezérlés: /goal status · /goal pause · /goal resume · /goal clear"
     gate_add_admin_only: "⛔ A /goal gate add parancshoz kifejezetten beállított átjáró-admin kell (allow_admin_from a DM-ekhez, group_allow_admin_from a csoportokhoz)."
   help:
-    header: "📖 **Hermes parancsok**\n"
+    header: "📖 **Minerva parancsok**\n"
     skill_header: "\n⚡ **Készségparancsok** ({count} aktív):"
     more_use_commands: "\n... és még {count}. Használd a `/commands` parancsot a teljes, lapozható listához."
   insights:
@@ -425,7 +425,7 @@ gateway:
     source_line: "Forrás: {source}; a kategóriánkénti számok helyi becslések."
     hint_all: "A /context all parancs skillenkénti és eszközkészletenkénti költségeket is mutat."
   status:
-    header: "📊 **Hermes Gateway állapot**"
+    header: "📊 **Minerva Gateway állapot**"
     matrix_scope_header: "**Matrix-hatókör:**"
     matrix_scope_room: "  szoba: {room}"
     matrix_scope_room_id: "  room_id: {room_id}"
@@ -469,24 +469,24 @@ gateway:
     topics_user_disallowed: "A Telegram topicok engedélyezve vannak, de a felhasználók nem hozhatnak létre topicokat.\n\nNyisd meg a @BotFather → válaszd ki a botod → Bot Settings → Threads Settings menüt, majd kapcsold ki a 'Disallow users to create new threads' opciót.\n\nEzután küldd újra a /topic parancsot."
     enable_failed: "Nem sikerült engedélyezni a Telegram topic módot: {error}"
     bound_status: "Ez a topic ehhez van kapcsolva:\nMunkamenet: {label}\nID: {session_id}\n\nHasználd a /new parancsot, hogy lecseréld ezt a topicot új munkamenetre.\nPárhuzamos munkához nyisd meg az All Messagest, és küldj oda egy üzenetet egy másik topic létrehozásához."
-    thread_ready: "A többmunkamenetes Telegram topicok engedélyezve vannak.\n\nEz a topic független Hermes-munkamenetként szolgál. Használd a /new parancsot, hogy lecseréld a topic jelenlegi munkamenetét. Párhuzamos munkához nyisd meg az All Messagest, és küldj oda egy üzenetet egy másik topic létrehozásához."
+    thread_ready: "A többmunkamenetes Telegram topicok engedélyezve vannak.\n\nEz a topic független Minerva-munkamenetként szolgál. Használd a /new parancsot, hogy lecseréld a topic jelenlegi munkamenetét. Párhuzamos munkához nyisd meg az All Messagest, és küldj oda egy üzenetet egy másik topic létrehozásához."
     untitled_session: "Cím nélküli munkamenet"
     restore_step_1: "1. Hozz létre vagy nyiss meg egy topicot. Újat úgy hozhatsz létre, hogy megnyitod az All Messages részt, és küldesz oda egy tetszőleges üzenetet."
     restore_step_2: "2. Küldd el a /topic <session-id> parancsot abban a topicban."
-    default_title: "Hermes Chat"
-    root_lobby: "Ez a fő csevegés a rendszerparancsoknak van fenntartva.\n\nÚj Hermes-csevegéshez nyisd meg az All Messages topicot a bot felületének tetején, és küldj oda egy tetszőleges üzenetet. A Telegram új topicot hoz létre az üzenethez; minden topic önálló Hermes-munkamenetként működik."
-    root_new: "Új párhuzamos Hermes-csevegéshez nyisd meg az All Messages topicot a bot felületének tetején, és küldj oda egy tetszőleges üzenetet. A Telegram új topicot hoz létre hozzá.\n\nMinden topic önálló Hermes-munkamenet. A /new parancsot csak akkor használd egy meglévő topicban, ha le akarod cserélni annak a topicnak a jelenlegi munkamenetét."
-    new_header: "Új Hermes-munkamenet indult ebben a topicban.\n\nTipp: párhuzamos munkához nyisd meg az All Messages részt, és küldj oda egy üzenetet — így külön topic jön létre, nem kell itt a /new. A /new az aktuális topichoz kötött munkamenetet cseréli le."
-    help: "/topic — többmunkamenetes DM-mód bekapcsolása (egy bot, sok párhuzamos csevegés)\n\nHasználat:\n  /topic             Topicmód bekapcsolása, vagy az állapot megjelenítése, ha már be van kapcsolva\n  /topic help        Ennek az üzenetnek a megjelenítése\n  /topic off         Topicmód kikapcsolása és a topic-hozzárendelések törlése\n  /topic <id>        Topicon belül: korábbi munkamenet visszaállítása azonosító alapján\n\nHogyan működik:\n1. Futtasd egyszer a /topic parancsot ebben a DM-ben — a Minerva ellenőrzi,\n   hogy a BotFather Threads Settings be van-e kapcsolva, és bekapcsolja a többmunkamenetes módot.\n2. Koppints az All Messages részre a bot tetején, és küldj egy tetszőleges üzenetet.\n   A Telegram új topicot hoz létre az üzenethez; minden topic\n   önálló Hermes-munkamenet (friss előzmények, friss kontextus).\n3. A gyökér DM rendszerelőtérré válik — oda küldd a /topic, /status,\n   /help, /usage parancsokat. A normál promptok topicba valók.\n4. A /new egy topicon belül csak annak a topicnak a munkamenetét állítja alaphelyzetbe.\n5. A /topic <id> egy topicon belül egy régi munkamenetet állít vissza oda."
+    default_title: "Minerva Chat"
+    root_lobby: "Ez a fő csevegés a rendszerparancsoknak van fenntartva.\n\nÚj Minerva-csevegéshez nyisd meg az All Messages topicot a bot felületének tetején, és küldj oda egy tetszőleges üzenetet. A Telegram új topicot hoz létre az üzenethez; minden topic önálló Minerva-munkamenetként működik."
+    root_new: "Új párhuzamos Minerva-csevegéshez nyisd meg az All Messages topicot a bot felületének tetején, és küldj oda egy tetszőleges üzenetet. A Telegram új topicot hoz létre hozzá.\n\nMinden topic önálló Minerva-munkamenet. A /new parancsot csak akkor használd egy meglévő topicban, ha le akarod cserélni annak a topicnak a jelenlegi munkamenetét."
+    new_header: "Új Minerva-munkamenet indult ebben a topicban.\n\nTipp: párhuzamos munkához nyisd meg az All Messages részt, és küldj oda egy üzenetet — így külön topic jön létre, nem kell itt a /new. A /new az aktuális topichoz kötött munkamenetet cseréli le."
+    help: "/topic — többmunkamenetes DM-mód bekapcsolása (egy bot, sok párhuzamos csevegés)\n\nHasználat:\n  /topic             Topicmód bekapcsolása, vagy az állapot megjelenítése, ha már be van kapcsolva\n  /topic help        Ennek az üzenetnek a megjelenítése\n  /topic off         Topicmód kikapcsolása és a topic-hozzárendelések törlése\n  /topic <id>        Topicon belül: korábbi munkamenet visszaállítása azonosító alapján\n\nHogyan működik:\n1. Futtasd egyszer a /topic parancsot ebben a DM-ben — a Minerva ellenőrzi,\n   hogy a BotFather Threads Settings be van-e kapcsolva, és bekapcsolja a többmunkamenetes módot.\n2. Koppints az All Messages részre a bot tetején, és küldj egy tetszőleges üzenetet.\n   A Telegram új topicot hoz létre az üzenethez; minden topic\n   önálló Minerva-munkamenet (friss előzmények, friss kontextus).\n3. A gyökér DM rendszerelőtérré válik — oda küldd a /topic, /status,\n   /help, /usage parancsokat. A normál promptok topicba valók.\n4. A /new egy topicon belül csak annak a topicnak a munkamenetét állítja alaphelyzetbe.\n5. A /topic <id> egy topicon belül egy régi munkamenetet állít vissza oda."
     system_topic_name: "Rendszer"
-    system_topic_intro: "Rendszertopic a Hermes-parancsokhoz és az állapothoz."
+    system_topic_intro: "Rendszertopic a Minerva-parancsokhoz és az állapothoz."
     setup_image_caption: "BotFather → Bot Settings → Threads Settings"
     no_chat_id: "A csevegésazonosító nem állapítható meg."
     mode_not_enabled: "A többmunkamenetes topicmód jelenleg nincs bekapcsolva ebben a csevegésben."
     disable_failed: "A topicmód kikapcsolása nem sikerült: {error}"
-    mode_disabled: "A többmunkamenetes topicmód mostantól KI van kapcsolva ebben a csevegésben.\n\nA meglévő Telegram-topicok nem tűnnek el — csak nem számítanak többé önálló munkamenetnek. A gyökér DM újra normál Hermes-csevegésként működik. Később a /topic paranccsal kapcsolhatod vissza."
+    mode_disabled: "A többmunkamenetes topicmód mostantól KI van kapcsolva ebben a csevegésben.\n\nA meglévő Telegram-topicok nem tűnnek el — csak nem számítanak többé önálló munkamenetnek. A gyökér DM újra normál Minerva-csevegésként működik. Később a /topic paranccsal kapcsolhatod vissza."
     status_enabled: "A Telegram többmunkamenetes topicok be vannak kapcsolva."
-    status_how_to: "Új Hermes-csevegéshez nyisd meg az All Messages részt a bot felületének tetején, és küldj oda egy tetszőleges üzenetet. A Telegram új topicot hoz létre hozzá."
+    status_how_to: "Új Minerva-csevegéshez nyisd meg az All Messages részt a bot felületének tetején, és küldj oda egy tetszőleges üzenetet. A Telegram új topicot hoz létre hozzá."
     previous_unlinked: "Korábbi, nem hozzárendelt munkamenetek:"
     restore_one: "Visszaállításhoz:"
     restore_example: "Példa: küldd el a /topic {session_id} parancsot egy topicban."
@@ -497,7 +497,7 @@ gateway:
     not_your_session: "Az a munkamenet nem ehhez a Telegram-felhasználóhoz tartozik."
     already_linked: "Az a munkamenet már egy másik Telegram-topichoz van rendelve."
     restored: "Munkamenet visszaállítva: {title}"
-    restored_last_message: "\n\nUtolsó Hermes-üzenet:\n{text}"
+    restored_last_message: "\n\nUtolsó Minerva-üzenet:\n{text}"
   undo:
     nothing: "Nincs mit visszavonni."
     removed: "↩️ {turns} fordulat visszavonva ({count} üzenet).\nBiztonsági mentés ide: \"{preview}\"\nMásold/szerkeszd a fenti szöveget, és küldd el, hogy innen újra kérdezz."
@@ -851,7 +851,7 @@ gateway:
     notice_shutdown: "⚠️ A Minerva leáll — a jelenlegi feladatod megszakad. Amikor újra elérhető, küldj egy tetszőleges üzenetet, és megpróbálom onnan folytatni, ahol abbahagytuk."
     notice_restart: "⚠️ A Minerva újraindul — a jelenlegi feladatod megszakad. Az újraindítás után küldj egy tetszőleges üzenetet, és megpróbálom onnan folytatni, ahol abbahagytad."
   startup:
-    handoff_thread_title: "Hermes — {title}"
+    handoff_thread_title: "Minerva — {title}"
     restarted: "♻ Az átjáró sikeresen újraindult. A munkameneted folytatódik."
     free_tier_line: "Inferencia: Nous ingyenes szint (nous/welcome). Többért jelentkezz be: /login"
     online: "♻️ Az átjáró elérhető — a Minerva visszatért, és készen áll."
@@ -1091,7 +1091,7 @@ platform:
         description: "Munkamenet állapotának mutatása"
         followup: "Állapot elküldve~"
       stop:
-        description: "A futó Hermes-ügynök leállítása"
+        description: "A futó Minerva-ügynök leállítása"
         followup: "Leállítás kérve~"
       steer:
         description: "Üzenet beszúrása a következő eszközhívás után (megszakítás nélkül)"
@@ -1127,7 +1127,7 @@ platform:
       update:
         followup: "Frissítés elindítva~"
       restart:
-        description: "A Hermes-átjáró kíméletes újraindítása"
+        description: "A Minerva-átjáró kíméletes újraindítása"
         followup: "Újraindítás kérve~"
       approve:
         arg_scope: "Opcionális: 'all', 'session', 'always', 'all session', 'all always'"
@@ -1135,7 +1135,7 @@ platform:
         description: "Függőben lévő veszélyes parancs elutasítása"
         arg_scope: "Opcionális: 'all' az összes függő parancs elutasításához"
       thread:
-        description: "Új szál létrehozása és Hermes-munkamenet indítása benne"
+        description: "Új szál létrehozása és Minerva-munkamenet indítása benne"
         arg_name: "Szál neve"
         arg_message: "Opcionális első üzenet a Hermesnek a szálban"
         arg_auto_archive: "Automatikus archiválás percben (60, 1440, 4320, 10080)"
@@ -1182,7 +1182,7 @@ platform:
     thread:
       seed_message: "🧵 A Minerva által létrehozott szál: **{name}**"
       default_name: "Hermes"
-      handoff_seed: "🧵 Hermes-átadás: **{name}**"
+      handoff_seed: "🧵 Minerva-átadás: **{name}**"
       auto_create_failed: "⚠️ A Minerva nem tudott Discord-szálat létrehozni ehhez az üzenethez, ezért a kérés nem lett feldolgozva. Próbáld újra."
       auto_create_failed_generic: "A kérés nem lett feldolgozva. Próbáld újra."
     media:
@@ -1330,7 +1330,7 @@ platform:
       thinking: "gondolkodik..."
       still_working: "még dolgozik… ({elapsed})"
     task_card:
-      title: "Hermes dolgozik"
+      title: "Minerva dolgozik"
     slash:
       reply_truncated: "\n\n_[A válasz csonkolva: még {count} rész túllépte a Slack ideiglenes válaszainak korlátját.]_"
       running: "`/{command}` futtatása…"
@@ -1396,7 +1396,7 @@ platform:
       header: "Kérdés"
       question: "❓ {question}"
     typing:
-      thinking: "Hermes gondolkodik…"
+      thinking: "Minerva gondolkodik…"
       interrupted: "(megszakítva)"
       no_reply: "(nincs válasz)"
     attachment_fallback:
@@ -1625,7 +1625,7 @@ slash:
   voice:
     description: "Hangmód be-/kikapcsolása"
   wake:
-    description: "A 'Hey Hermes' ébresztőszó-figyelő be-/kikapcsolása"
+    description: "A 'Hey Minerva' ébresztőszó-figyelő be-/kikapcsolása"
   busy:
     description: "Az üzenetek viselkedésének beállítása, amíg a Minerva dolgozik"
   tools:
@@ -1981,7 +1981,7 @@ cli:
     usage_switch_provider: "szolgáltató váltása"
     usage_refresh: "élő modellisták újratöltése"
     choice_switch_anyway: "Váltás mindenképp"
-    desc_switch_anyway: "Ennek a modellnek a használata a jelenlegi Hermes-munkamenetben."
+    desc_switch_anyway: "Ennek a modellnek a használata a jelenlegi Minerva-munkamenetben."
     choice_cancel: "Mégse"
     desc_keep_current_model: "A jelenlegi modell megtartása."
     switch_cancelled: "Modellváltás megszakítva."
@@ -2490,7 +2490,7 @@ cli:
     yolo_bypass_suffix: " (YOLO-megkerülés aktív)"
     ctx_left_prefix: "{percent}% szabad · "
     ctx_tokens_used: "{left}{used} / {max} token felhasználva"
-    status_title: "Hermes CLI állapot"
+    status_title: "Minerva CLI állapot"
     label_reasoning: "Gondolkodás"
     label_approvals: "Jóváhagyások"
     label_context: "Kontextus"
@@ -3161,7 +3161,7 @@ cli:
     with_details: "{lead}\nRészletek: {details}"
     agent_init_failed: "A Minerva nem tudta felépíteni a modellkapcsolatot: {error}. Az üzeneted nem ment el. Ellenőrizd a beállítást a `minerva doctor` paranccsal, vagy válassz másik szolgáltatót a /model paranccsal."
   gateway:
-    starting: "Hermes átjáró indítása (üzenetküldő platformok)..."
+    starting: "Minerva átjáró indítása (üzenetküldő platformok)..."
   gateway_status:
     header: "(✿◠‿◠) Átjáró állapota"
     platform_config_header: "Üzenetküldő platformok konfigurációja:"
@@ -3476,15 +3476,15 @@ explainer:
   persistence:
     compression: "a kör leállt, mert egy másik folyamat éppen tömörítette ezt a munkamenetet. Az üzeneted valószínűleg már mentve van — kérlek, küldd el újra, amint a tömörítés befejeződött."
     compression_closed: "a kör leállt, mert a kontextustömörítés lecserélte ezt a munkamenetet, és az élő folytatását nem lehetett átvenni. A tároló maga rendben van — frissítsd a klienst (vagy kezdj új kört), hogy felvegye az új munkamenet-azonosítót, majd küldd el újra az üzenetedet."
-    turn_lease: "a kör leállt, mert egy másik Hermes-folyamat átvette ezt a munkamenetet. A válaszod nem lett mentve — várd meg, amíg a másik folyamat befejezi, majd küldd el újra az üzenetedet."
+    turn_lease: "a kör leállt, mert egy másik Minerva-folyamat átvette ezt a munkamenetet. A válaszod nem lett mentve — várd meg, amíg a másik folyamat befejezi, majd küldd el újra az üzenetedet."
     session_row_missing: "ezt a munkamenetet a tárolóból törölték, miközben a csevegés még nyitva volt, és a Minerva nem tudta újra létrehozni, így ez az üzenet nem lett mentve. Küldd el újra az üzenetedet; ha továbbra sem sikerül, futtasd a `minerva {profile_arg}doctor` parancsot."
-    locked: "a kör leállt, mert a munkamenet-tároló foglalt volt (egy másik Hermes-folyamat írt az állapot-adatbázisba). Az üzeneted valószínűleg már mentve van — kérlek, küldd el újra egy pillanat múlva."
+    locked: "a kör leállt, mert a munkamenet-tároló foglalt volt (egy másik Minerva-folyamat írt az állapot-adatbázisba). Az üzeneted valószínűleg már mentve van — kérlek, küldd el újra egy pillanat múlva."
     replaced: "a munkamenet-adatbázis fájlját lecserélték, miközben a Minerva futott, így ez az üzenet nem lett mentve (egy másolat itt található: {home}/sessions/). Állítsd le a Hermest (`minerva {profile_arg}gateway stop`), futtasd a `minerva {profile_arg}doctor` parancsot — de NE a `minerva {profile_arg}doctor --fix` parancsot, mert az a rossz fájlt javítaná helyben —, majd indítsd újra, és küldd el még egyszer az üzenetedet. A haladó helyreállítási lépéseket a napló tartalmazza."
-    deleted_wal: "egy másik Hermes-folyamat még a munkamenet-adatbázis írásnaplójának (WAL) egy régi példányát tartja fogva, ezért a Minerva a fájl védelmében leállította az írást, és ez az üzenet nem lett mentve (egy másolat itt található: {home}/sessions/). Semmi nem veszett el. Lépj ki minden Hermes-folyamatból ezen a profilon (Desktop app, `minerva {profile_arg}gateway stop`, dashboard, cron), futtasd a `minerva {profile_arg}doctor` parancsot — ez megnevezi a naplót még fogva tartó folyamatokat —, majd indítsd újra a Hermest, és küldd el még egyszer az üzenetedet. Amíg futnak, ne futtasd a `doctor --fix` parancsot, és ne törölj state.db fájlokat. Útmutató: {recovery_docs}"
+    deleted_wal: "egy másik Minerva-folyamat még a munkamenet-adatbázis írásnaplójának (WAL) egy régi példányát tartja fogva, ezért a Minerva a fájl védelmében leállította az írást, és ez az üzenet nem lett mentve (egy másolat itt található: {home}/sessions/). Semmi nem veszett el. Lépj ki minden Minerva-folyamatból ezen a profilon (Desktop app, `minerva {profile_arg}gateway stop`, dashboard, cron), futtasd a `minerva {profile_arg}doctor` parancsot — ez megnevezi a naplót még fogva tartó folyamatokat —, majd indítsd újra a Hermest, és küldd el még egyszer az üzenetedet. Amíg futnak, ne futtasd a `doctor --fix` parancsot, és ne törölj state.db fájlokat. Útmutató: {recovery_docs}"
     corrupt: "a kör leállt, mert az állapot-adatbázis szerkezeti sérülést jelzett (az átirat újraindításkor elveszett volna). A lemezhely felszabadítása nem segít. Helyreállítási lehetőségek:\n1. Futtasd a `minerva {profile_arg}doctor --fix` parancsot\n2. Állítsd le az átjárót, majd állítsd helyre így:\n   hermes {profile_arg}sessions recover --source {db_path} --inspect-only\n   (ha helyreállíthatónak jelzi) hermes {profile_arg}sessions recover --source {db_path} --output recovered-state.db\n   — a helyreállítás először pillanatképet készít a sérült fájlról; NE futtass `sqlite3 ... \".recover\"` parancsot az élő state.db fájlon, egy sebezhető sqlite3 CLI tovább ronthatja\n3. Állítsd vissza egy biztonsági mentésből innen: {backups_dir}/\nEzután küldd el újra az üzenetedet."
     fts_index: "a kör leállt, mert a munkamenet-keresési index (FTS5) sérült, és nem lehetett leválasztani, így ez az üzenet nem lett mentve. Az üzenettároló maga nem sérült: ne futtass helyreállító eszközöket, és ne állíts vissza biztonsági mentést. Futtasd a `minerva {profile_arg}doctor --fix` parancsot (vagy indítsd újra a Hermest, ami megnyitáskor megjavítja az indexet), majd küldd el újra az üzenetedet."
     disk: "A Minerva nem tudta lemezre menteni ezt a beszélgetést, ezért inkább leállt, mint hogy elvesszenek az üzeneteid. A lemez valószínűleg megtelt: szabadíts fel helyet (vagy javítsd a {home}/state.db jogosultságait), majd küldd el újra az üzenetedet."
-    default: "A Minerva nem tudta menteni ezt a beszélgetést, ezért inkább leállt, mint hogy elvesszenek az üzeneteid. Lehetséges okok: megtelt a meghajtó, vagy egy másik Hermes-folyamat tartja fogva az adatbázist. Zárd be a többi Hermes-ablakot, futtasd a `minerva {profile_arg}doctor` parancsot a tároló ellenőrzéséhez, majd küldd el újra az üzenetedet."
+    default: "A Minerva nem tudta menteni ezt a beszélgetést, ezért inkább leállt, mint hogy elvesszenek az üzeneteid. Lehetséges okok: megtelt a meghajtó, vagy egy másik Minerva-folyamat tartja fogva az adatbázist. Zárd be a többi Minerva-ablakot, futtasd a `minerva {profile_arg}doctor` parancsot a tároló ellenőrzéséhez, majd küldd el újra az üzenetedet."
   file_mutation:
     header: "⚠️ Fájlmódosítás-ellenőrző: {count} fájlszerkesztés SIKERTELEN volt ebben a körben, bármit is sugall a fenti szöveg. Futtasd a `git status` vagy a `read_file` parancsot, hogy lásd, mi került be valójában."
     entry: "  • `{path}` — [{tool}] {preview}"
@@ -3599,7 +3599,7 @@ tips:
   t104: "A config.yaml gyorsparancsai azonnal futtatnak shell-parancsokat, nulla tokenhasználattal."
   t105: "Egyedi személyiségeket a config.yaml agent.personalities szekciójában definiálhatsz."
   t106: "A provider_routing szabályozza az OpenRouter-szolgáltatók sorrendjét, engedélyezését és tiltását."
-  t107: "Az execute_code Python-szkripteket futtat, amelyek programozottan hívják a Hermes-eszközöket — az eredmények nem terhelik a kontextust."
+  t107: "Az execute_code Python-szkripteket futtat, amelyek programozottan hívják a Minerva-eszközöket — az eredmények nem terhelik a kontextust."
   t108: "A delegate_task alapértelmezés szerint legfeljebb 10 párhuzamos alügynököt indít (delegation.max_concurrent_children), elkülönített kontextussal a párhuzamos munkához."
   t109: "A web_extract PDF-URL-ekkel is működik — adj meg bármilyen PDF-linket, és markdownná alakítja."
   t110: "A search_files ripgrep-alapú és gyorsabb a grepnél — használd a terminálos grep helyett."

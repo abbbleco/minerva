@@ -201,7 +201,7 @@ def _print_loopback_ssh_hint(redirect_uri: str, *, docs_url: str | None = None) 
     divider = "-" * 60
     print(
         f"\n{divider}\nRemote session detected — SSH tunnel required\n{divider}\n"
-        f"Hermes is waiting for the OAuth callback on {redirect_uri}\n"
+        f"Minerva is waiting for the OAuth callback on {redirect_uri}\n"
         "but your browser is on a different machine. Run this command\n"
         "in a NEW terminal on your local machine BEFORE opening the URL:\n\n"
         f"  ssh -N -L {port}:127.0.0.1:{port} {_ssh_user_at_host()}\n\n"

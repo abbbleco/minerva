@@ -1,4 +1,4 @@
-"""A Hermes-authored systemd ``--replace`` drop-in must not survive unit refresh.
+"""A Minerva-authored systemd ``--replace`` drop-in must not survive unit refresh.
 
 An older Minerva wrote ``<unit>.d/20-replace.conf`` to end a respawn storm; it overrides ExecStart
 with ``gateway run --replace``. Combined with the cross-profile ownership guard, that override turns

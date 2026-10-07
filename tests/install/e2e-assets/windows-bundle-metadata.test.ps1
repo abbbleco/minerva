@@ -5,7 +5,7 @@ Set-StrictMode -Version Latest
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 $temp = Join-Path ([IO.Path]::GetTempPath()) ('bundle-metadata-' + [Guid]::NewGuid())
 New-Item -ItemType Directory -Path $temp | Out-Null
-$expected = [pscustomobject]@{ msixIdentity='Fixture.Hermes'; publisher='CN=Fixture'; applicationId='Hermes' }
+$expected = [pscustomobject]@{ msixIdentity='Fixture.Hermes'; publisher='CN=Fixture'; applicationId='Minerva' }
 function Archive([string]$Name, [string]$Entry, [string]$Xml, [string[]]$Extra = @()) {
     $file = Join-Path $temp $Name
     $zip = [IO.Compression.ZipFile]::Open($file, [IO.Compression.ZipArchiveMode]::Create)

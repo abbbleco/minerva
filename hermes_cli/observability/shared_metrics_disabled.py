@@ -10,7 +10,7 @@ each (kind, name, event) at most once per day.
 The surface is the entry point that is running: ``set_process_surface`` from the ``hermes`` command
 dispatch (``tools`` / ``config`` / ``skills`` / ``plugins`` / chat slash commands / the web server) and
 the TUI gateway. A process with no surface (setup wizard, updates) records nothing, nor does a write
-Hermes makes itself inside a surfaced process (migrations, under :func:`hermes_applied_write`): those
+Minerva makes itself inside a surfaced process (migrations, under :func:`hermes_applied_write`): those
 are Minerva applying choices, not a user turning something off.
 
 ``save_config``'s callers may hold their own write lock (the dashboard's ``_CONFIG_MUTATION_LOCK``), so

@@ -23,14 +23,14 @@ def _info_lines(*lines: str) -> None:
 
 def _ensure_browser_use_cli(*, verbose_hints: bool = False) -> None:
     """Confirm the Browser Use CLI engine is runnable. It is browser-harness, a core dependency of
-    Hermes's own venv, so there is nothing to download; a miss means the venv needs a re-sync.
+    Minerva's own venv, so there is nothing to download; a miss means the venv needs a re-sync.
     Primary driver engine for EVERY browser backend except Camofox (Firefox-based, no CDP surface)."""
     from tools.browser_use_cli import _find_cli
 
     if _find_cli() is not None:
-        _print_success("    Browser Use CLI ready (browser-harness, bundled with Hermes)")
+        _print_success("    Browser Use CLI ready (browser-harness, bundled with Minerva)")
     else:
-        _print_warning("    browser-harness is missing from Hermes's Python environment")
+        _print_warning("    browser-harness is missing from Minerva's Python environment")
         _print_info("    Re-sync it with: hermes update")
     if verbose_hints:
         _info_lines("Local Chrome needs remote debugging: chrome://inspect/#remote-debugging",

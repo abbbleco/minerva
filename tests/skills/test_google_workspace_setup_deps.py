@@ -42,7 +42,7 @@ def test_oauth_stops_at_pm_restart_boundary(command, monkeypatch, tmp_path, caps
 
     assert failure.value.code == 1
     ensure.assert_called_once_with("google")
-    assert "restart Hermes" in capsys.readouterr().out
+    assert "restart Minerva" in capsys.readouterr().out
     assert {path: path.read_bytes() for path in tmp_path.glob("*.json")} == before
 
 
@@ -59,7 +59,7 @@ def test_standalone_without_hermes_reports_setup_not_ambient_installs(command, t
         timeout=15,
     )
     assert result.returncode == 1
-    assert "Hermes environment" in result.stdout
+    assert "Minerva environment" in result.stdout
     assert "hermes setup" in result.stdout
     assert "pip" not in result.stdout + result.stderr
     assert "Traceback" not in result.stderr

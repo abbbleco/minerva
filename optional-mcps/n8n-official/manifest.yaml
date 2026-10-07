@@ -25,7 +25,7 @@ post_install: |
 
   Run `minerva mcp login n8n-official`, or use Authorize in the desktop app
   or dashboard, and approve access in n8n. No n8n API key is required.
-  If your instance restricts OAuth callback URLs, allow the callback used by Hermes.
+  If your instance restricts OAuth callback URLs, allow the callback used by Minerva.
 
   n8n controls access through your account permissions and MCP settings.
   Search can show previews of workflows you can view; enable Available in MCP

@@ -472,7 +472,7 @@ def _is_under(path: Path, root: Path) -> bool:
     return True
 
 
-# Desktop persists a large plain-text paste as a `.txt` under this Hermes-managed
+# Desktop persists a large plain-text paste as a `.txt` under this Minerva-managed
 # directory (apps/desktop/electron/composer-paste.ts) and attaches it as `@file:`.
 # The chat's cwd is rarely an ancestor of it, so it is the one anchored root the
 # workspace guard admits besides `allowed_root` itself.

@@ -26,7 +26,7 @@ description: "使用 qmd 在本地搜索个人知识库、笔记、文档和会�
 ## 参考：完整 SKILL.md
 
 :::info
-以下是 Hermes 在触发此 skill 时加载的完整 skill 定义。这是 agent 在 skill 激活时所看到的指令内容。
+以下是 Minerva 在触发此 skill 时加载的完整 skill 定义。这是 agent 在 skill 激活时所看到的指令内容。
 :::
 
 # QMD — Query Markup Documents

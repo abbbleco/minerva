@@ -16,13 +16,13 @@ trips agents up.
 
 | Surface | What it actually is | Auth path |
 |---|---|---|
-| **OpenViking memory plugin** (`plugins/memory/openviking/`) | Code that runs **inside the Minerva process**. Its LLM calls go through Hermes's already-configured provider. | Already uses Portal if user's Minerva is configured for Portal. Nothing extra needed. `OPENVIKING_API_KEY` is the OpenViking *server's* own auth, not LLM auth. |
+| **OpenViking memory plugin** (`plugins/memory/openviking/`) | Code that runs **inside the Minerva process**. Its LLM calls go through Minerva's already-configured provider. | Already uses Portal if user's Minerva is configured for Portal. Nothing extra needed. `OPENVIKING_API_KEY` is the OpenViking *server's* own auth, not LLM auth. |
 | **OpenViking the standalone server** (separate container) | A separate context-DB service. If it ever calls an LLM on its own, that's a separate HTTP client. | Same as any external app — Layer 2/3 below. |
 | **Karakeep, n8n, LibreChat, OpenWebUI, any self-hosted app** | Different process, often different machine. Makes its own HTTPS calls to `inference-api.nousresearch.com`. | Layer 2/3 below. |
 
 **Pitfall to avoid**: do not pitch "OAuth into Portal" as the solution for a
-plugin that already runs inside Hermes. That LLM call is already authenticated
-via Hermes's provider config. The plugin's own server auth (e.g.
+plugin that already runs inside Minerva. That LLM call is already authenticated
+via Minerva's provider config. The plugin's own server auth (e.g.
 `OPENVIKING_API_KEY` for talking to the OpenViking REST API) is unrelated to
 Portal.
 
@@ -44,7 +44,7 @@ extends to other apps on the same machine.
 What Minerva Agent has that *feels* like OAuth — `minerva login --provider nous`
 opening a browser, user signs in, token lands in `~/.hermes/auth.json` — is a
 **Hermes-specific browser flow**. Under the hood it produces a credential
-Hermes uses as a bearer. It is not a public OAuth provider that Karakeep et al.
+Minerva uses as a bearer. It is not a public OAuth provider that Karakeep et al.
 can implement a client for, because it isn't an OAuth provider at all from the
 outside.
 
@@ -55,7 +55,7 @@ outside.
 Yes. The pattern is a **local credential-broker proxy**. Even without a public
 OAuth flow, an app on the user's machine can:
 
-1. Read Hermes's existing Portal credential out of `~/.hermes/auth.json`.
+1. Read Minerva's existing Portal credential out of `~/.hermes/auth.json`.
 2. Expose a local OpenAI-compatible endpoint at `http://localhost:NNNN/v1`.
 3. Forward incoming requests to `inference-api.nousresearch.com/v1` with that
    bearer attached.
@@ -64,7 +64,7 @@ Karakeep/OpenWebUI/etc. then point at `http://localhost:NNNN/v1` with any
 placeholder key. The user never copies their Portal key around — the proxy
 rides on the credential Minerva already holds.
 
-Where this could live in Hermes:
+Where this could live in Minerva:
 
 - `gateway/platforms/api_server.py` is the precedent — it exposes the agent
   over a local OpenAI-compatible endpoint, but routes through the full agent
@@ -108,8 +108,8 @@ without depending on third-party app changes:
 
 When the user asks "can $APP use my Portal subscription":
 
-1. First decide: Minerva plugin (runs inside Hermes) or separate app? If plugin,
-   it already uses Portal via Hermes's provider config — done.
+1. First decide: Minerva plugin (runs inside Minerva) or separate app? If plugin,
+   it already uses Portal via Minerva's provider config — done.
 2. If separate app: today, paste the static API key from Portal → API Keys.
    Base URL `https://inference-api.nousresearch.com/v1`. Rate limits are
    subscription-tier based, applied per-key.

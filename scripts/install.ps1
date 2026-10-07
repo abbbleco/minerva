@@ -1,6 +1,6 @@
 # Minerva Agent bootstrap: git checkout + venv + hermes command on PATH.
 # Heavy dependencies (tool binaries, browsers, node) are pm's job after
-# this: `minerva pm install`. Stage protocol kept for Hermes-Setup:
+# this: `minerva pm install`. Stage protocol kept for Minerva-Setup:
 #   -Manifest             print the stage list as JSON
 #   -Stage NAME [-Json]   run one stage
 #   -NonInteractive       skip stages that need input
@@ -621,7 +621,7 @@ function Invoke-Native([scriptblock]$Command) {
 
 # Interactive runs collapse child-process output (git, uv, pm, the builds)
 # into one status line. CI, -Verbose and redirected output -- the
-# Hermes-Setup -Json driver, E2E transcripts -- keep the full stream those
+# Minerva-Setup -Json driver, E2E transcripts -- keep the full stream those
 # readers parse.
 function Test-QuietOutput {
     if ($env:CI -or $env:GITHUB_ACTIONS -or $env:HERMES_INSTALL_VERBOSE) { return $false }
@@ -821,7 +821,7 @@ function Stage-Repository {
         }
         if ($LASTEXITCODE) { Fail "git checkout failed" }
         # --no-stat: across a large gap (v2026.7.1 -> today is ~27k lines) the
-        # diffstat arrives as one burst. Hermes-Setup.exe forwards every line
+        # diffstat arrives as one burst. Minerva-Setup.exe forwards every line
         # to its window as a separate event; the burst overflows the Windows
         # posted-message queue (10k), events drop, and the installer's Launch
         # button can then hang on "Launching" forever.
@@ -1096,13 +1096,13 @@ function Invoke-InstalledHermes([string[]]$CommandArgs) {
 
 function Stage-Setup {
     if ($NonInteractive) { return }
-    Invoke-InstalledHermes @('setup')
+    Invoke-InstalledMinerva @('setup')
 }
 
 function Stage-Gateway {
     if ($NonInteractive) { return }
     # Setup installs the service when it handles the gateway; ask only if it did not.
-    Invoke-InstalledHermes @('gateway', 'install', '--if-missing')
+    Invoke-InstalledMinerva @('gateway', 'install', '--if-missing')
 }
 
 function Stage-Desktop {
@@ -1131,7 +1131,7 @@ function Confirm-DesktopArtifact {
             if (Test-Path $cand) { $desktopExe = $cand; break }
         }
         if (-not $desktopExe) {
-            Fail "desktop build produced no Hermes.exe under $desktopDir\release\*-unpacked"
+            Fail "desktop build produced no Minerva.exe under $desktopDir\release\*-unpacked"
         }
         Write-Ok "Desktop ready: $desktopExe"
 

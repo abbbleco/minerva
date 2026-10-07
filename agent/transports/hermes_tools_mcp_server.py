@@ -120,7 +120,7 @@ def _build_server() -> Any:
         if spec is None:
             logger.debug("skipping %s — not registered in this Minerva process", name)
             continue
-        description = spec.get("description") or f"Hermes {name} tool"
+        description = spec.get("description") or f"Minerva {name} tool"
         params_schema = spec.get("parameters") or {"type": "object", "properties": {}}
         try:
             mcp.add_tool(_make_handler(name, params_schema, description), name=name, description=description)
@@ -142,7 +142,7 @@ def main(argv: Optional[list[str]] = None) -> int:
         stream=sys.stderr,  # MCP uses stdio for protocol — logs MUST go to stderr
         format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
     )
-    # Keep Hermes' own banners off stdout (the MCP wire).
+    # Keep Minerva' own banners off stdout (the MCP wire).
     os.environ.setdefault("HERMES_QUIET", "1")
     os.environ.setdefault("HERMES_REDACT_SECRETS", "true")
 

@@ -53,7 +53,7 @@ devtunnel host hermes-line
 
 ---
 
-## 第三步：配置 Hermes
+## 第三步：配置 Minerva
 
 在 `~/.hermes/.env` 中添加：
 
@@ -187,7 +187,7 @@ LINE_HOME_CHANNEL=Uxxxxxxxxxxxxxxxxxxxx     # 默认推送目标
 
 **postback 按钮始终不出现。** 要么 LLM 的响应速度快于 `LINE_SLOW_RESPONSE_THRESHOLD`，要么其他气泡（工具进度、流式输出）已提前消耗了 reply token。参见"LLM 响应缓慢"中的抑制配置。
 
-**"already in use by another profile"。** 同一个频道访问 token 已被另一个运行中的 Hermes profile 占用。请停止另一个 gateway，或使用独立的频道。
+**"already in use by another profile"。** 同一个频道访问 token 已被另一个运行中的 Minerva profile 占用。请停止另一个 gateway，或使用独立的频道。
 
 ---
 

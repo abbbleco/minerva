@@ -609,7 +609,7 @@ export function RoutineRow({ job, onOpen, owner }: RoutineRowProps) {
 
 // Structured schedule picker: frequency first, then only the detail that
 // frequency needs (time of day, weekday, day of month, interval). Emits a
-// Hermes-native schedule string; Advanced exposes it raw.
+// Minerva-native schedule string; Advanced exposes it raw.
 type ScheduleFreq = 'once' | 'hourly' | 'daily' | 'weekdays' | 'weekly' | 'monthly' | 'interval' | 'advanced'
 
 /** Picker form state. Every detail field stays a string: they are edited as

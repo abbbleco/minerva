@@ -250,7 +250,7 @@ class TestRuntimeFtsRebuild:
             (proc_root / str(pid) / "fd").mkdir(parents=True)
         # PID 222's fd dir is unreadable (PermissionError)
         os.chmod(proc_root / "222" / "fd", 0o000)
-        # PID 222's cmdline is world-readable and looks like Hermes
+        # PID 222's cmdline is world-readable and looks like Minerva
         cmdline_path = proc_root / "222" / "cmdline"
         cmdline_path.write_bytes(
             b"python3\x00-m\x00hermes_cli.main\x00chat\x00"

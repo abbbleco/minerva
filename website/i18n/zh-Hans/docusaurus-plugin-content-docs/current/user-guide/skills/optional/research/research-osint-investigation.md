@@ -25,7 +25,7 @@ description: "公开记录 OSINT 调查框架 — SEC EDGAR 文件、USAspending
 ## 参考：完整 SKILL.md
 
 :::info
-以下是 Hermes 在触发该 skill 时加载的完整 skill 定义。这是 agent 在 skill 激活时看到的指令内容。
+以下是 Minerva 在触发该 skill 时加载的完整 skill 定义。这是 agent 在 skill 激活时看到的指令内容。
 :::
 
 # OSINT 调查 — 公开记录交叉核查

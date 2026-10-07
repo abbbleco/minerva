@@ -1,4 +1,4 @@
-"""hermes import-agent — import Claude Code / Codex CLI setups into Hermes.
+"""hermes import-agent — import Claude Code / Codex CLI setups into Minerva.
 
 Secrets are NEVER imported: credential files are never read, and MCP env vars with secret-looking
 names (KEY, TOKEN, SECRET, PASSWORD, ...) are stripped and reported so the user re-adds them via

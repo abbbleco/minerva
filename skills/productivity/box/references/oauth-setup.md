@@ -1,6 +1,6 @@
 # OAuth setup
 
-Use OAuth for every Hermes-to-Box connection. OAuth follows the signed-in Box user's permissions and the app's scopes; it does not grant enterprise-wide access.
+Use OAuth for every Minerva-to-Box connection. OAuth follows the signed-in Box user's permissions and the app's scopes; it does not grant enterprise-wide access.
 
 ## Choose the OAuth account
 
@@ -21,7 +21,7 @@ box login --default-box-app --name <ENVIRONMENT_NAME>
 box users:get me --json --fields id,name,login
 ```
 
-The browser flow creates and selects the named environment. Run the action through Hermes's terminal rather than asking the user to copy a runner command. Announce the pending authorization, wait for the CLI process to finish, then continue with the actor check. Let the CLI open the authorization page and receive the local callback. Do not use browser tools, inspect browser tabs, request the resulting URL, navigate to Box, or ask the user to paste a code.
+The browser flow creates and selects the named environment. Run the action through Minerva's terminal rather than asking the user to copy a runner command. Announce the pending authorization, wait for the CLI process to finish, then continue with the actor check. Let the CLI open the authorization page and receive the local callback. Do not use browser tools, inspect browser tabs, request the resulting URL, navigate to Box, or ask the user to paste a code.
 
 If the callback server cannot bind port 3000, the browser opens an unusable authorization result, or the callback never reaches the waiting CLI, stop that login process before retrying. Retry the official app on the supported ports `3001`, `4000`, `5000`, and `8080`, one at a time, and verify the actor after each successful completion:
 
@@ -51,7 +51,7 @@ box configure:environments:set-current <ENVIRONMENT_NAME>
 box users:get me --json --fields id,name,login
 ```
 
-Request approval before switching the current environment, especially on a shared or background installation. Switch it only after approval and verify the resulting actor. If the returned identity is API-only or has no normal Box login, do not use it for Hermes; connect a normal Box account through OAuth instead.
+Request approval before switching the current environment, especially on a shared or background installation. Switch it only after approval and verify the resulting actor. If the returned identity is API-only or has no normal Box login, do not use it for Minerva; connect a normal Box account through OAuth instead.
 
 ## Custom OAuth Platform App
 

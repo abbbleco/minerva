@@ -1,9 +1,9 @@
 """Anthropic credential sources, OAuth flows, and token resolution.
 
 ``resolve_anthropic_token()`` order: ``ANTHROPIC_TOKEN`` / ``CLAUDE_CODE_OAUTH_TOKEN``,
-``ANTHROPIC_API_KEY``, Hermes-owned OAuth grants in the ``auth.json`` credential
+``ANTHROPIC_API_KEY``, Minerva-owned OAuth grants in the ``auth.json`` credential
 pool, then ``~/.claude/.credentials.json`` / macOS Keychain as a borrowed fallback.
-``~/.hermes/.anthropic_oauth.json`` (Hermes PKCE) and
+``~/.hermes/.anthropic_oauth.json`` (Minerva PKCE) and
 the Claude Code file are *singletons*: ``credential_pool._seed_from_singletons()``
 re-reads them on every ``load_pool()``, so a failed write here is a failed refresh
 (``CredentialPersistError``), not a cache miss.
@@ -726,7 +726,7 @@ def run_oauth_setup_token() -> Optional[str]:
     return _first_env("CLAUDE_CODE_OAUTH_TOKEN", "ANTHROPIC_TOKEN") or None
 
 
-# ── Hermes-native PKCE OAuth flow (~/.hermes/.anthropic_oauth.json); mirrors Claude Code / pi-ai / OpenCode ──
+# ── Minerva-native PKCE OAuth flow (~/.hermes/.anthropic_oauth.json); mirrors Claude Code / pi-ai / OpenCode ──
 
 
 def _get_hermes_oauth_file() -> Path:
@@ -752,7 +752,7 @@ def _generate_pkce() -> tuple:
 
 
 def run_hermes_oauth_login_pure() -> Optional[Dict[str, Any]]:
-    """Run Hermes-native OAuth PKCE flow and return credential state."""
+    """Run Minerva-native OAuth PKCE flow and return credential state."""
     import webbrowser
     from urllib.parse import urlencode
     verifier, challenge = _generate_pkce()
@@ -807,8 +807,8 @@ def run_hermes_oauth_login_pure() -> Optional[Dict[str, Any]]:
 
 
 def read_hermes_oauth_credentials() -> Optional[Dict[str, Any]]:
-    """Read Hermes-managed OAuth credentials from ~/.hermes/.anthropic_oauth.json."""
-    data = _load_json_if_exists(_get_hermes_oauth_file(), "Hermes OAuth credentials")
+    """Read Minerva-managed OAuth credentials from ~/.hermes/.anthropic_oauth.json."""
+    data = _load_json_if_exists(_get_hermes_oauth_file(), "Minerva OAuth credentials")
     return data if data is not None and data.get("accessToken") else None
 
 
@@ -822,5 +822,5 @@ def _write_hermes_oauth_credentials(
     _commit_private_json(
         target if target is not None else _get_hermes_oauth_file(),
         {"accessToken": access_token, "refreshToken": refresh_token, "expiresAt": expires_at_ms},
-        "Hermes OAuth credentials",
+        "Minerva OAuth credentials",
     )

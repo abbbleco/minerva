@@ -28,7 +28,7 @@ export function within(root, candidate) {
 export function smokeEnvironment(inherited, home, userData) {
   /** @type {Record<string, string>} */
   const clean = {};
-  const keepHermes = new Set(['HERMES_TEST_INSTALL_REF', 'HERMES_TEST_INSTALL_REPO']);
+  const keepMinerva = new Set(['HERMES_TEST_INSTALL_REF', 'HERMES_TEST_INSTALL_REPO']);
   for (const [key, value] of Object.entries(inherited)) {
     const name = key.toUpperCase();
     if (!value || /(?:KEY|TOKEN|SECRET|PASSWORD|CREDENTIAL)/.test(name)
@@ -62,7 +62,7 @@ const UPDATE_WINDOW_STATE = ['connection.json', 'connections.json'];
 
 /**
  * Give the independently driven update window its own Electron instance route.
- * Copy only Hermes-owned connection contracts. Cloning Chromium's profile
+ * Copy only Minerva-owned connection contracts. Cloning Chromium's profile
  * carries browser locks and process state from the prior app into a supposedly
  * isolated launch. HERMES_HOME remains shared so the app updates the actual
  * installed runtime.

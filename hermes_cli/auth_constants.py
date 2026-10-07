@@ -56,7 +56,7 @@ AUTH_LOCK_TIMEOUT_SECONDS = 15.0
 # stays while everything it resolves to is ABBBLE. There is no separate Nous
 # provider; the single device-code row below IS the ABBBLE/router provider.
 DEFAULT_NOUS_PORTAL_URL = "https://portal.abbble.co.za"
-DEFAULT_NOUS_INFERENCE_URL = "https://minrouter.abbble.co.za/v1"
+DEFAULT_NOUS_INFERENCE_URL = "https://minrouter.abbbleco.workers.dev/v1"
 # The free tier's (anonymous account) inference host. NAS hands it to the client on every token
 # exchange (``inference_base_url``); this literal is the fallback when that field is absent or fails
 # the host allowlist, because the paid host cross-refuses an anonymous JWT with a 400.

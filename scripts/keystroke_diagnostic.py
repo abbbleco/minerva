@@ -28,7 +28,7 @@ Common questions this answers:
 Example output for Ctrl+Enter on Windows Terminal + PowerShell:
     key=<Keys.ControlJ: 'c-j'> data='\\n'
 
-Then in Hermes, bind the newline behaviour to that key:
+Then in Minerva, bind the newline behaviour to that key:
     @kb.add('c-j')
     def handle_ctrl_enter(event):
         event.current_buffer.insert_text('\\n')

@@ -425,7 +425,7 @@ class FakeVertex:
         return f"/v1beta1/projects/{self.project}/locations/{self.region}/endpoints/openapi/chat/completions"
 
     def child_env(self) -> dict[str, str]:
-        """Standard proxy + CA-trust env for the Minerva child (no Hermes-specific knobs)."""
+        """Standard proxy + CA-trust env for the Minerva child (no Minerva-specific knobs)."""
         return {"HTTPS_PROXY": f"http://127.0.0.1:{self.port}", "NO_PROXY": "127.0.0.1,localhost",
                 "SSL_CERT_FILE": str(self.ca_pem)}
 

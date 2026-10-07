@@ -1,7 +1,7 @@
 # Minerva Router — the only image that holds upstream inference credentials.
 #
 # BUILD CONTEXT IS THE MONOREPO ROOT, not this directory:
-#   docker build -f apps/router/Dockerfile -t minerva-router .
+#   docker build -f apps/router/Dockerfile -t minrouter .
 #
 # The router depends on `@minerva/billing` and `@minerva/database` via `workspace:*`, so a context
 # scoped to this folder cannot resolve them. An earlier version of this file used npm against a
@@ -30,7 +30,7 @@
 #   MINERVA_CORS_ORIGINS                      — comma-separated browser origins, e.g.
 #                                             `https://portal.abbble.co.za`. Defaults to the portal
 #                                             plus localhost:3000/3001 for dev. Native clients
-#                                             (Hermes desktop) ignore CORS; this only gates browsers.
+#                                             (Minerva desktop) ignore CORS; this only gates browsers.
 #   BILLING_* / MINERVA_FREE_*                — must match the portal's values or grants ≠ gates.
 
 FROM node:22-bookworm-slim AS base

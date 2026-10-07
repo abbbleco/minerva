@@ -2,7 +2,7 @@ import { type OwnerScope, ownerScoped, profileScoped } from '@/api/client'
 import { hermesApi } from '@/minerva'
 
 /**
- * GPT-Live voice chat: the full-duplex voice frontend that DELEGATES to Hermes.
+ * GPT-Live voice chat: the full-duplex voice frontend that DELEGATES to Minerva.
  *
  * `voice.voice_chat_mode: gpt-live` swaps the chained mic → STT → turn → TTS
  * loop for one OpenAI voice model (`gpt-live-1`) that listens and speaks at
@@ -231,7 +231,7 @@ export class VoiceLiveSession {
   private audioContext: null | AudioContext = null
   private lastSpeaking = false
   sessionId: null | string = null
-  /** The delegation currently being answered by Hermes; late results for an
+  /** The delegation currently being answered by Minerva; late results for an
    *  older id are dropped by the conversation hook. */
   activeDelegationId: null | string = null
 

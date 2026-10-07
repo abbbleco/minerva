@@ -32,7 +32,7 @@ open.
 
 ```bash
 hermes plugins list                 # observability/langfuse should show "enabled"
-hermes chat -q "hello"              # then check Langfuse for a "Hermes turn" trace
+hermes chat -q "hello"              # then check Langfuse for a "Minerva turn" trace
 ```
 
 Generation observations include the Minerva system prompt when the provider
@@ -55,7 +55,7 @@ HERMES_LANGFUSE_DEBUG=true           # verbose plugin logging
 and `full` modes, including tool arguments and JSON tool results. The root is
 depth 0; each dictionary value or array element adds one level. Values beyond
 the limit become `<max-depth>`, including scalars. For deeper MCP responses,
-set it to a higher non-negative integer (for example, `10`) in the Hermes
+set it to a higher non-negative integer (for example, `10`) in the Minerva
 process environment. Unset or blank values default to `4`; invalid or negative
 values log a warning and fall back to `4`. `0` keeps only the root level.
 Increasing the depth exports more content and may produce larger traces;

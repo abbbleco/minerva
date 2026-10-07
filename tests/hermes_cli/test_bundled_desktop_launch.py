@@ -79,7 +79,7 @@ def _windows_bundle(tmp_path: Path) -> Path:
     app = tmp_path / "Hermes"
     repo = _payload(app)
     _exe(app / "Hermes.exe")
-    _exe(app / "Uninstall Hermes.exe")
+    _exe(app / "Uninstall Minerva.exe")
     return repo
 
 

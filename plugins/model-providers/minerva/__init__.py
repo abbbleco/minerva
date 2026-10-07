@@ -1,7 +1,7 @@
 """Minerva Router provider profile — OpenAI-compatible credits gateway.
 
 The Minerva Router (``minerva-monorepo/apps/router``, live at
-``https://minrouter.abbble.co.za``) is the ONLY component that holds upstream
+``https://minrouter.abbbleco.workers.dev``) is the ONLY component that holds upstream
 inference credentials. The engine never does: it authenticates with a
 per-agency ``qkt_sec_*`` key (minted at portal.abbble.co.za/console/hermes),
 and the router meters the call and debits the agency ledger.
@@ -24,7 +24,7 @@ from providers.base import ProviderProfile
 
 #: Router origin when ``MINERVA_ROUTER_URL`` is unset. Production default is the
 #: hosted router; local dev points the env var at http://127.0.0.1:8090.
-DEFAULT_ROUTER_URL = "https://minrouter.abbble.co.za"
+DEFAULT_ROUTER_URL = "https://minrouter.abbbleco.workers.dev"
 
 #: Curated picker list used only when ``GET /v1/models`` fails. Keep in sync
 #: with ``apps/router/src/catalog.ts``. Free-tier keys never see paid models —

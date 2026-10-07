@@ -203,7 +203,7 @@ gateway:
     set: "⊙ Sprioc socraithe (buiséad {budget} seal): {goal}\nLeanfaidh mé ag obair go dtí go bhfuil an sprioc críochnaithe, go gcuirfidh tú ar sos / go nglanfaidh tú í, nó go n-úsáidfear an buiséad.\nSmacht: /goal status · /goal pause · /goal resume · /goal clear"
     gate_add_admin_only: "⛔ Teastaíonn riarthóir gateway atá cumraithe go sainráite le /goal gate add (allow_admin_from do DMs, group_allow_admin_from do ghrúpaí)."
   help:
-    header: "📖 **Orduithe Hermes**\n"
+    header: "📖 **Orduithe Minerva**\n"
     skill_header: "\n⚡ **Orduithe Scileanna** ({count} gníomhach):"
     more_use_commands: "\n... agus {count} eile. Úsáid `/commands` don liosta iomlán uimhrithe."
   insights:
@@ -470,13 +470,13 @@ gateway:
     untitled_session: "Seisiún gan teideal"
     restore_step_1: "1. Cruthaigh nó oscail topaic. Chun ceann nua a chruthú, oscail All Messages agus seol teachtaireacht ar bith ann."
     restore_step_2: "2. Seol /topic <session-id> taobh istigh den topaic sin."
-    default_title: "Comhrá Hermes"
+    default_title: "Comhrá Minerva"
     root_lobby: "Tá an príomhchomhrá seo curtha in áirithe d'orduithe córais.\n\nChun comhrá Minerva nua a thosú, oscail an topaic All Messages ag barr chomhéadan an bhota seo agus seol teachtaireacht ar bith ann. Cruthóidh Telegram topaic nua don teachtaireacht sin; oibríonn gach topaic mar sheisiún Minerva neamhspleách."
     root_new: "Chun comhrá Minerva comhthreomhar nua a thosú, oscail an topaic All Messages ag barr chomhéadan an bhota seo agus seol teachtaireacht ar bith ann. Cruthóidh Telegram topaic nua dó.\n\nIs seisiún Minerva neamhspleách gach topaic. Ná húsáid /new taobh istigh de thopaic atá ann cheana ach amháin más mian leat seisiún reatha na topaice sin a athsholáthar."
     new_header: "Tosaíodh seisiún Minerva nua sa topaic seo.\n\nLeid: le haghaidh oibre comhthreomhaire, oscail All Messages agus seol teachtaireacht ann chun topaic ar leith a chruthú in ionad /new a úsáid anseo. Athsholáthraíonn /new an seisiún atá ceangailte leis an topaic reatha."
-    help: "/topic — cumasaigh mód DM il-seisiúin (bot amháin, go leor comhráite comhthreomhara)\n\nÚsáid:\n  /topic             Cumasaigh mód topaice, nó taispeáin an stádas má tá sé ar siúl cheana\n  /topic help        Taispeáin an teachtaireacht seo\n  /topic off         Díchumasaigh mód topaice agus glan na ceangail topaice\n  /topic <id>        Taobh istigh de thopaic: athchóirigh seisiún roimhe seo de réir ID\n\nConas a oibríonn sé:\n1. Rith /topic uair amháin sa DM seo — seiceálann Minerva go bhfuil BotFather Threads\n   Settings cumasaithe agus casann sé mód il-seisiúin air.\n2. Tapáil All Messages ag barr an bhota agus seol teachtaireacht ar bith.\n   Cruthaíonn Telegram topaic nua don teachtaireacht sin; is seisiún Hermes\n   neamhspleách gach topaic (stair úr, comhthéacs úr).\n3. Éiríonn an DM fréimhe ina fhorhalla córais — seol /topic, /status,\n   /help, /usage ansin. Téann gnáthleideanna i dtopaic.\n4. Athshocraíonn /new taobh istigh de thopaic seisiún na topaice sin amháin.\n5. Athchóiríonn /topic <id> taobh istigh de thopaic seanseisiún isteach ann."
+    help: "/topic — cumasaigh mód DM il-seisiúin (bot amháin, go leor comhráite comhthreomhara)\n\nÚsáid:\n  /topic             Cumasaigh mód topaice, nó taispeáin an stádas má tá sé ar siúl cheana\n  /topic help        Taispeáin an teachtaireacht seo\n  /topic off         Díchumasaigh mód topaice agus glan na ceangail topaice\n  /topic <id>        Taobh istigh de thopaic: athchóirigh seisiún roimhe seo de réir ID\n\nConas a oibríonn sé:\n1. Rith /topic uair amháin sa DM seo — seiceálann Minerva go bhfuil BotFather Threads\n   Settings cumasaithe agus casann sé mód il-seisiúin air.\n2. Tapáil All Messages ag barr an bhota agus seol teachtaireacht ar bith.\n   Cruthaíonn Telegram topaic nua don teachtaireacht sin; is seisiún Minerva\n   neamhspleách gach topaic (stair úr, comhthéacs úr).\n3. Éiríonn an DM fréimhe ina fhorhalla córais — seol /topic, /status,\n   /help, /usage ansin. Téann gnáthleideanna i dtopaic.\n4. Athshocraíonn /new taobh istigh de thopaic seisiún na topaice sin amháin.\n5. Athchóiríonn /topic <id> taobh istigh de thopaic seanseisiún isteach ann."
     system_topic_name: "Córas"
-    system_topic_intro: "Topaic chórais d'orduithe agus do stádas Hermes."
+    system_topic_intro: "Topaic chórais d'orduithe agus do stádas Minerva."
     setup_image_caption: "BotFather → Bot Settings → Threads Settings"
     no_chat_id: "Níorbh fhéidir ID an chomhrá a dhéanamh amach."
     mode_not_enabled: "Níl mód topaice il-seisiúin cumasaithe don chomhrá seo faoi láthair."
@@ -504,10 +504,10 @@ gateway:
     not_git_repo: "✗ Ní stór git é seo — ní féidir nuashonrú."
     hermes_cmd_not_found: "✗ Níorbh fhéidir an t-ordú `hermes` a aimsiú. Tá Minerva ag rith, ach níorbh fhéidir leis an ordú nuashonraithe an inrite a aimsiú ar PATH ná tríd an léirmhínitheoir Python reatha. Bain triail as `minerva update` a rith de láimh i do theirminéal."
     start_failed: "✗ Theip ar nuashonrú a thosú: {error}"
-    starting: "☤ Ag tosú nuashonrú Hermes… Cuirfidh mé an dul chun cinn ar shruth anseo."
+    starting: "☤ Ag tosú nuashonrú Minerva… Cuirfidh mé an dul chun cinn ar shruth anseo."
     reply_failed: "✗ Theip ar fhreagra a sheoladh chuig an bpróiseas nuashonraithe: {error}"
     reply_sent: "✓ Seoladh `{label}` chuig an bpróiseas nuashonraithe."
-    failed_notice: "❌ Theip ar nuashonrú Hermes; tá an leagan roimhe seo fós ag rith. Rith `minerva update` ar an óstach chun an earráid iomlán a fheiceáil, nó bain triail as /update arís níos déanaí."
+    failed_notice: "❌ Theip ar nuashonrú Minerva; tá an leagan roimhe seo fós ag rith. Rith `minerva update` ar an óstach chun an earráid iomlán a fheiceáil, nó bain triail as /update arís níos déanaí."
     prompt_default: " (réamhshocrú: {default})"
     prompt: "☤ **Teastaíonn d'ionchur ón nuashonrú:**\n\n{prompt}{default_hint}\n\nFreagair `{prefix}approve` (tá) nó `{prefix}deny` (níl), nó clóscríobh do fhreagra go díreach."
     finished: "✅ Nuashonrú Minerva críochnaithe."
@@ -839,7 +839,7 @@ gateway:
     notice_shutdown: "⚠️ Tá Minerva ag múchadh — cuirfear isteach ar do thasc reatha. Nuair a bheidh sé ar líne arís, seol teachtaireacht ar bith agus déanfaidh mé iarracht leanúint ar aghaidh ón áit ar stopamar."
     notice_restart: "⚠️ Tá Minerva ag atosú — cuirfear isteach ar do thasc reatha. Seol teachtaireacht ar bith tar éis an atosaithe agus déanfaidh mé iarracht leanúint ar aghaidh ón áit ar stop tú."
   startup:
-    handoff_thread_title: "Hermes — {title}"
+    handoff_thread_title: "Minerva — {title}"
     restarted: "♻ Atosaíodh an gateway go rathúil. Leanann do sheisiún ar aghaidh."
     free_tier_line: "Tátal: plean saor in aisce Nous (nous/welcome). Sínigh isteach le haghaidh tuilleadh: /login"
     online: "♻️ Gateway ar líne — tá Minerva ar ais agus réidh."
@@ -1006,7 +1006,7 @@ platform:
       resolved_cancel: "Cealaithe"
     prompt:
       truncated_marker: "... [giorraithe]"
-      clarify_title: "Tá d'ionchur de dhíth ar Hermes"
+      clarify_title: "Tá d'ionchur de dhíth ar Minerva"
       clarify_hint_buttons: "Roghnaigh ceann thíos, nó cliceáil ✏️ Eile chun freagra saincheaptha a chlóscríobh."
       clarify_hint_text: "Freagair sa chainéal seo le do fhreagra."
       default_hint: " (réamhshocrú: {default})"
@@ -1049,7 +1049,7 @@ platform:
         description: "Tosaigh comhrá nua"
         followup: "Comhrá nua tosaithe~"
       reset:
-        description: "Athshocraigh do sheisiún Hermes"
+        description: "Athshocraigh do sheisiún Minerva"
         followup: "Seisiún athshocraithe~"
       model:
         description: "Taispeáin nó athraigh an tsamhail"
@@ -1071,7 +1071,7 @@ platform:
       undo:
         description: "Bain an malartú deireanach"
       status:
-        description: "Taispeáin stádas an tseisiúin Hermes"
+        description: "Taispeáin stádas an tseisiúin Minerva"
         followup: "Stádas seolta~"
       stop:
         description: "Stop an gníomhaire Minerva atá ag rith"
@@ -1143,7 +1143,7 @@ platform:
         arg_question: "An cheist thaobhach le freagairt gan bhriseadh isteach"
         followup: "Ceist thaobhach seolta~"
       skill:
-        description: "Rith scil Hermes"
+        description: "Rith scil Minerva"
         arg_name: "Cén scil atá le rith"
         arg_args: "Argóintí roghnacha don scil"
         unknown: "Scil anaithnid: `{name}`. Tosaigh ag clóscríobh le haghaidh moltaí uathchríochnaithe."
@@ -1163,9 +1163,9 @@ platform:
     security:
       unauthorized_slash_alert: "⚠️ Iarracht slais Discord gan údarú\nÚsáideoir: {user_name} ({user_id})\nCainéal: {chan_id} (guild {guild_id})\nOrdú: {command_text}\nCúis: {reason}"
     thread:
-      seed_message: "🧵 Snáithe cruthaithe ag Hermes: **{name}**"
+      seed_message: "🧵 Snáithe cruthaithe ag Minerva: **{name}**"
       default_name: "Hermes"
-      handoff_seed: "🧵 Aistriú Hermes: **{name}**"
+      handoff_seed: "🧵 Aistriú Minerva: **{name}**"
       auto_create_failed: "⚠️ Níorbh fhéidir le Minerva snáithe Discord a chruthú don teachtaireacht seo, mar sin níor próiseáladh an t-iarratas. Bain triail eile as le do thoil."
       auto_create_failed_generic: "Níor próiseáladh an t-iarratas. Bain triail eile as le do thoil."
     media:
@@ -1321,7 +1321,7 @@ platform:
       seed: ":thread: Aistriú Minerva — *{name}*"
   matrix:
     handoff:
-      default_name: "Seisiún Hermes"
+      default_name: "Seisiún Minerva"
     media:
       image_download_failed: "Níorbh fhéidir liom an íomhá a íoslódáil agus a uaslódáil go Matrix. Níor taispeánadh an URL foinseach mar go bhféadfadh tokens príobháideacha a bheith ann."
     approval:
@@ -1522,7 +1522,7 @@ slash:
   rollback:
     description: "Liostáil nó aischuir seicphointí an chórais comhad (coinníonn aischur d'athruithe láimhe; sáraíonn --all iad)"
   snapshot:
-    description: "Cruthaigh nó aischuir roghchóipeanna de chumraíocht/staid Hermes"
+    description: "Cruthaigh nó aischuir roghchóipeanna de chumraíocht/staid Minerva"
   export:
     description: "Easpórtáil próifíl (cumraíocht, scileanna, téama) go cartlann in-roinnte"
   import:
@@ -1608,7 +1608,7 @@ slash:
   voice:
     description: "Scoránaigh mód gutha"
   wake:
-    description: "Scoránaigh éisteoir an fhocail dúisithe 'Hey Hermes'"
+    description: "Scoránaigh éisteoir an fhocail dúisithe 'Hey Minerva'"
   busy:
     description: "Rialaigh conas a iompraíonn teachtaireachtaí fad atá Minerva ag obair"
   tools:
@@ -2124,7 +2124,7 @@ cli:
     err_termux_app_missing: "Braitheadh pacáiste ordaithe Termux:API, ach tá an aip Android in easnamh.\nSuiteáil/nuashonraigh an aip Android Termux:API, ansin bain triail as /voice on arís."
     err_mic_access: "Teastaíonn rochtain ar an micreafón ón mód gutha.\nRith pkg install termux-api agus suiteáil an aip Android Termux:API, ansin bain triail as /voice on arís."
     err_audio_capture: "Teastaíonn gabháil fuaime ón mód gutha."
-    err_stt_provider: "Teastaíonn soláthraí STT le haghaidh tras-scríofa ón mód gutha.\nRith hermes tools agus cumraigh Speech-to-Text, ansin atosaigh Hermes."
+    err_stt_provider: "Teastaíonn soláthraí STT le haghaidh tras-scríofa ón mód gutha.\nRith hermes tools agus cumraigh Speech-to-Text, ansin atosaigh Minerva."
     silence_autostop: "Braitheadh ciúnas, ag stopadh go huathoibríoch..."
     hint_continuous: "stopann go huathoibríoch le ciúnas | {shortcut} le stopadh agus an mód leanúnach a fhágáil"
     hint_termux: "Gabháil Termux:API | {shortcut} le stopadh"
@@ -3087,7 +3087,7 @@ cli:
   tip_line: "✦ Leid: {tip}"
   banner:
     context_too_low: "⚠️  Níl fad an chomhthéacs ach {tokens} comhartha — is dócha go bhfuil sé sin ró-íseal d'úsáid ghníomhaire le huirlisí."
-    context_minimum: "Teastaíonn {tokens} comhartha ar a laghad ó Hermes. Úsáideann scéimrí uirlisí + leid an chórais réimír sheasta mhór."
+    context_minimum: "Teastaíonn {tokens} comhartha ar a laghad ó Minerva. Úsáideann scéimrí uirlisí + leid an chórais réimír sheasta mhór."
     fix_ollama: "Leigheas Ollama: OLLAMA_CONTEXT_LENGTH={tokens} ollama serve"
     fix_lm_studio: "Leigheas LM Studio: Socraigh fad an chomhthéacs i socruithe na samhla → athlódáil an tsamhail"
     fix_local_server: "Leigheas: tosaigh do fhreastalaí le comhthéacs {tokens_k}K ar a laghad (llama.cpp: -c {tokens}), nó socraigh model.ollama_num_ctx in config.yaml don fhuinneog a fhreastalaíonn sé i ndáiríre"
@@ -3465,7 +3465,7 @@ explainer:
     replaced: "cuireadh comhad eile in ionad chomhad bhunachar sonraí na seisiún fad a bhí Minerva ag rith, mar sin níor sábháladh an teachtaireacht seo (coinnítear cóip in {home}/sessions/). Stop Minerva (`minerva {profile_arg}gateway stop`), rith `minerva {profile_arg}doctor` — ní `minerva {profile_arg}doctor --fix`, a dheiseodh an comhad mícheart san áit — ansin tosaigh é arís agus seol do theachtaireacht arís. Tá céimeanna athshlánaithe ardleibhéil sa loga."
     deleted_wal: "tá seanchóip de loga réamhscríofa an bhunachair sonraí seisiún fós i seilbh próisis Minerva eile, mar sin stop Minerva ag scríobh chun an comhad a choinneáil slán agus níor sábháladh an teachtaireacht seo (coinnítear cóip in {home}/sessions/). Níl aon rud caillte. Scoir gach próiseas Minerva ar an bpróifíl seo (aip Desktop, `minerva {profile_arg}gateway stop`, deais, cron), rith `minerva {profile_arg}doctor` — ainmníonn sé aon phróiseas a bhfuil an loga fós ina sheilbh — ansin tosaigh Minerva arís agus seol do theachtaireacht arís. Ná rith `doctor --fix` agus ná scrios aon chomhad state.db fad a bhíonn siad ag rith. Treoir: {recovery_docs}"
     corrupt: "stopadh an seal mar gur thuairiscigh an bunachar sonraí staide truailliú struchtúrach (chaillfí an traschríbhinn ar atosú). Ní chabhróidh spás diosca a scaoileadh. Roghanna athshlánaithe:\n1. Rith `minerva {profile_arg}doctor --fix`\n2. Stop an gateway, ansin athshlánaigh le:\n   hermes {profile_arg}sessions recover --source {db_path} --inspect-only\n   (má thuairiscíonn sé gur féidir athshlánú) hermes {profile_arg}sessions recover --source {db_path} --output recovered-state.db\n   — glacann an t-athshlánú roghchóip den chomhad damáistithe ar dtús; NÁ rith `sqlite3 ... \\\".recover\\\"` in aghaidh an state.db bheo, is féidir le CLI sqlite3 leochaileach é a thruailliú níos mó\n3. Aischuir ó chúltaca in {backups_dir}/\nAnsin seol do theachtaireacht arís."
-    fts_index: "stopadh an seal mar go bhfuil innéacs cuardaigh na seisiún (FTS5) truaillithe agus níorbh fhéidir é a dhícheangal, mar sin níor sábháladh an teachtaireacht seo. Níl stór na dteachtaireachtaí féin damáistithe: ná rith uirlisí athshlánaithe agus ná haischuir cúltaca. Rith `minerva {profile_arg}doctor --fix` (nó atosaigh Hermes, a dheisíonn an t-innéacs ag am oscailte), ansin seol do theachtaireacht arís."
+    fts_index: "stopadh an seal mar go bhfuil innéacs cuardaigh na seisiún (FTS5) truaillithe agus níorbh fhéidir é a dhícheangal, mar sin níor sábháladh an teachtaireacht seo. Níl stór na dteachtaireachtaí féin damáistithe: ná rith uirlisí athshlánaithe agus ná haischuir cúltaca. Rith `minerva {profile_arg}doctor --fix` (nó atosaigh Minerva, a dheisíonn an t-innéacs ag am oscailte), ansin seol do theachtaireacht arís."
     disk: "Níorbh fhéidir le Minerva an comhrá seo a shábháil ar an diosca, mar sin stop sé seachas do theachtaireachtaí a chailleadh. Is dócha go bhfuil an diosca lán: scaoil roinnt spáis (nó ceartaigh na ceadanna ar {home}/state.db), ansin seol do theachtaireacht arís."
     default: "Níorbh fhéidir le Minerva an comhrá seo a shábháil, mar sin stop sé seachas do theachtaireachtaí a chailleadh. Cúiseanna féideartha: níl spás fágtha ar an tiomántán, nó tá próiseas Minerva eile ag coinneáil an bhunachair sonraí. Dún fuinneoga Minerva eile, rith `minerva {profile_arg}doctor` chun an stóras a sheiceáil, ansin seol do theachtaireacht arís."
   file_mutation:
@@ -3761,7 +3761,7 @@ tips:
   t283: "Coinníonn coraintín na scileanna ag ~/.hermes/skills/.hub/quarantine/ scileanna atá ag fanacht le hathbhreithniú slándála."
   t284: "Instealann /steer <leid> nóta tar éis an chéad ghlao uirlise eile — tabhair sá sa treo i lár taisc gan cur isteach."
   t285: "Socraíonn /goal <text> cuspóir seasta lúb Ralph — leanann Minerva ar aghaidh go huathoibríoch seal i ndiaidh seala go dtí go ndeir moltóir go bhfuil sé déanta."
-  t286: "Sábhálann /snapshot create [label] roghchóip iomlán de staid chumraíocht Hermes; filleann /snapshot restore <id> uirthi níos déanaí."
+  t286: "Sábhálann /snapshot create [label] roghchóip iomlán de staid chumraíocht Minerva; filleann /snapshot restore <id> uirthi níos déanaí."
   t287: "Cóipeálann /copy [N] freagra is déanaí an chúntóra chuig do ghearrthaisce, nó an Nú ceann ón deireadh le huimhir."
   t288: "Forchuireann /redraw athphéinteáil iomlán ar an UI, rud a réitíonn síobadh teirminéil tar éis athrú méide tmux nó iarsmaí roghnaithe luiche."
   t289: "Taispeánann /agents (ailias /tasks) gníomhairí gníomhacha agus tascanna cúlra atá ag rith ar fud an tseisiúin reatha."
@@ -3829,7 +3829,7 @@ tips:
   t351: "Clibeálann hermes chat --source tool comhráite ríomhchláraithe ionas nach dtruaillíonn siad hermes sessions list."
   t352: "Cuireann hermes dump --show-keys méarloirg eochracha API atá folaithe san áireamh le haghaidh dífhabhtaithe tacaíochta níos doimhne."
   t353: "Athainmníonn hermes sessions rename <ID> \"new title\" seanseisiún ar bith; baineann hermes sessions delete <ID> ceann amháin."
-  t354: "Aischuireann hermes import cúltaca zip iomlán Hermes; iompórtáiltear easpórtálacha seisiúin JSON/JSONL ó leathanach Sessions na deaise."
+  t354: "Aischuireann hermes import cúltaca zip iomlán Minerva; iompórtáiltear easpórtálacha seisiúin JSON/JSONL ó leathanach Sessions na deaise."
   t355: "Bainistíonn hermes fallback slabhra fallback_model go hidirghníomhach — gan aon eagarthóireacht láimhe ar config.yaml."
   t356: "Rothlaíonn hermes pairing token péireála DM — éilíonn an chéad duine a sheolann teachtaireacht tar éis an rothlaithe rochtain ar an mbot."
   t357: "Treoraíonn hermes setup úsáideoirí nua trí shocrú an tsoláthraí, na n-eochracha, agus na n-ardán in aon sreabhadh idirghníomhach amháin."

@@ -116,7 +116,7 @@ The ONLY import surface is `@hermes/plugin-sdk` (plus `react` /
 - `ctx.storage.get/set/remove` — persistence namespaced to your plugin.
 - `ctx.os` — the curated OS door, attributed to your plugin:
   `ctx.os.notify({ title, body?, silent?, icon?, activate?, onActivate?, actions? })`
-  posts a native OS notification. Fires only while the user is away from Hermes
+  posts a native OS notification. Fires only while the user is away from Minerva
   (use `host.notify` for the in-app toast); gated by Settings ▸ Notifications ▸
   "Plugin notifications" and throttled per plugin — reserve it for genuinely
   notable events. `activate` accepts a plugin deep link

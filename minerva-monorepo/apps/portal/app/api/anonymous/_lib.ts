@@ -34,6 +34,6 @@ export function routerBaseUrl(): string {
   const raw =
     process.env.MINERVA_ROUTER_URL ??
     process.env.NEXT_PUBLIC_MINERVA_ROUTER_URL ??
-    "https://minrouter.abbble.co.za";
+    "https://minrouter.abbbleco.workers.dev";
   return raw.trim().replace(/\/+$/, "");
 }

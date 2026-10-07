@@ -203,7 +203,7 @@ gateway:
     set: "⊙ Objetivo definido (orçamento de {budget} turnos): {goal}\nVou continuar a trabalhar até o objetivo estar concluído, pausares/limpares ou o orçamento esgotar.\nControlos: /goal status · /goal pause · /goal resume · /goal clear"
     gate_add_admin_only: "⛔ /goal gate add exige um administrador do gateway configurado explicitamente (allow_admin_from para DMs, group_allow_admin_from para grupos)."
   help:
-    header: "📖 **Comandos do Hermes**\n"
+    header: "📖 **Comandos do Minerva**\n"
     skill_header: "\n⚡ **Comandos de skill** ({count} ativos):"
     more_use_commands: "\n... e mais {count}. Usa `/commands` para a lista paginada completa."
   insights:
@@ -466,24 +466,24 @@ gateway:
     topics_user_disallowed: "Os topics do Telegram estão ativados, mas os utilizadores não podem criá-los.\n\nAbre @BotFather → escolhe o teu bot → Bot Settings → Threads Settings, depois desativa 'Disallow users to create new threads'.\n\nDepois envia /topic novamente."
     enable_failed: "Falha ao ativar o modo topic do Telegram: {error}"
     bound_status: "Este topic está associado a:\nSessão: {label}\nID: {session_id}\n\nUsa /new para substituir este topic por uma sessão nova.\nPara trabalho paralelo, abre All Messages e envia uma mensagem aí para criar outro topic."
-    thread_ready: "Os topics multi-sessão do Telegram estão ativados.\n\nEste topic será usado como uma sessão independente do Hermes. Usa /new para substituir a sessão atual deste topic. Para trabalho paralelo, abre All Messages e envia uma mensagem aí para criar outro topic."
+    thread_ready: "Os topics multi-sessão do Telegram estão ativados.\n\nEste topic será usado como uma sessão independente do Minerva. Usa /new para substituir a sessão atual deste topic. Para trabalho paralelo, abre All Messages e envia uma mensagem aí para criar outro topic."
     untitled_session: "Sessão sem título"
     restore_step_1: "1. Crie ou abra um tópico. Para criar um novo, abra All Messages e envie qualquer mensagem lá."
     restore_step_2: "2. Envie /topic <session-id> dentro desse tópico."
-    default_title: "Hermes Chat"
-    root_lobby: "Este chat principal é reservado para comandos do sistema.\n\nPara iniciar um novo chat do Hermes, abra o tópico All Messages no topo desta interface do bot e envie qualquer mensagem lá. O Telegram criará um novo tópico para essa mensagem; cada tópico funciona como uma sessão independente do Hermes."
-    root_new: "Para iniciar um novo chat paralelo do Hermes, abra o tópico All Messages no topo desta interface do bot e envie qualquer mensagem lá. O Telegram criará um novo tópico para ela.\n\nCada tópico é uma sessão independente do Hermes. Use /new dentro de um tópico existente apenas se quiser substituir a sessão atual daquele tópico."
+    default_title: "Minerva Chat"
+    root_lobby: "Este chat principal é reservado para comandos do sistema.\n\nPara iniciar um novo chat do Minerva, abra o tópico All Messages no topo desta interface do bot e envie qualquer mensagem lá. O Telegram criará um novo tópico para essa mensagem; cada tópico funciona como uma sessão independente do Minerva."
+    root_new: "Para iniciar um novo chat paralelo do Minerva, abra o tópico All Messages no topo desta interface do bot e envie qualquer mensagem lá. O Telegram criará um novo tópico para ela.\n\nCada tópico é uma sessão independente do Minerva. Use /new dentro de um tópico existente apenas se quiser substituir a sessão atual daquele tópico."
     new_header: "Nova sessão do Minerva iniciada neste tópico.\n\nDica: para trabalho paralelo, abra All Messages e envie uma mensagem lá para criar um tópico separado, em vez de usar /new aqui. /new substitui a sessão vinculada ao tópico atual."
     help: "/topic — ativa o modo DM multissessão (um bot, vários chats paralelos)\n\nUso:\n  /topic             Ativa o modo de tópicos ou mostra o status se já estiver ativo\n  /topic help        Mostra esta mensagem\n  /topic off         Desativa o modo de tópicos e limpa os vínculos de tópicos\n  /topic <id>        Dentro de um tópico: restaura uma sessão anterior pelo ID\n\nComo funciona:\n1. Execute /topic uma vez nesta DM — o Minerva verifica se Threads\n   Settings está ativado no BotFather e liga o modo multissessão.\n2. Toque em All Messages no topo do bot e envie qualquer mensagem.\n   O Telegram cria um novo tópico para essa mensagem; cada tópico é\n   uma sessão independente do Minerva (histórico e contexto novos).\n3. A DM raiz vira um lobby do sistema — envie /topic, /status,\n   /help, /usage lá. Prompts normais vão em um tópico.\n4. /new dentro de um tópico reinicia apenas a sessão daquele tópico.\n5. /topic <id> dentro de um tópico restaura uma sessão antiga nele."
     system_topic_name: "Sistema"
-    system_topic_intro: "Tópico do sistema para comandos e status do Hermes."
+    system_topic_intro: "Tópico do sistema para comandos e status do Minerva."
     setup_image_caption: "BotFather → Bot Settings → Threads Settings"
     no_chat_id: "Não foi possível determinar o ID do chat."
     mode_not_enabled: "O modo de tópicos multissessão não está ativado para este chat no momento."
     disable_failed: "Falha ao desativar o modo de tópicos: {error}"
-    mode_disabled: "O modo de tópicos multissessão agora está OFF para este chat.\n\nOs tópicos existentes no Telegram não são removidos — eles apenas deixam de ser tratados como sessões independentes. A DM raiz volta a funcionar como um chat normal do Hermes. Execute /topic para reativar depois."
+    mode_disabled: "O modo de tópicos multissessão agora está OFF para este chat.\n\nOs tópicos existentes no Telegram não são removidos — eles apenas deixam de ser tratados como sessões independentes. A DM raiz volta a funcionar como um chat normal do Minerva. Execute /topic para reativar depois."
     status_enabled: "Os tópicos multissessão do Telegram estão ativados."
-    status_how_to: "Para criar um novo chat do Hermes, abra All Messages no topo desta interface do bot e envie qualquer mensagem lá. O Telegram criará um novo tópico para ela."
+    status_how_to: "Para criar um novo chat do Minerva, abra All Messages no topo desta interface do bot e envie qualquer mensagem lá. O Telegram criará um novo tópico para ela."
     previous_unlinked: "Sessões anteriores sem vínculo:"
     restore_one: "Para restaurar uma:"
     restore_example: "Exemplo: envie /topic {session_id} dentro de um tópico."
@@ -494,7 +494,7 @@ gateway:
     not_your_session: "Essa sessão não pertence a este usuário do Telegram."
     already_linked: "Essa sessão já está vinculada a outro tópico do Telegram."
     restored: "Sessão restaurada: {title}"
-    restored_last_message: "\n\nÚltima mensagem do Hermes:\n{text}"
+    restored_last_message: "\n\nÚltima mensagem do Minerva:\n{text}"
   undo:
     nothing: "Nada para anular."
     removed: "↩️ {turns} turno(s) anulado(s) ({count} mensagem(ns)).\nGuardado em: \"{preview}\"\nCopia/edita o texto acima e envia-o para voltar a perguntar a partir daqui."
@@ -504,7 +504,7 @@ gateway:
     not_git_repo: "✗ Não é um repositório git — não é possível atualizar."
     hermes_cmd_not_found: "✗ Não foi possível localizar o comando `hermes`. O Minerva está em execução, mas o comando de atualização não conseguiu encontrar o executável no PATH nem através do interpretador Python atual. Tenta executar `minerva update` manualmente no teu terminal."
     start_failed: "✗ Falha ao iniciar a atualização: {error}"
-    starting: "☤ A iniciar a atualização do Hermes… Vou transmitir o progresso aqui."
+    starting: "☤ A iniciar a atualização do Minerva… Vou transmitir o progresso aqui."
     reply_failed: "✗ Falha ao enviar a resposta ao processo de atualização: {error}"
     reply_sent: "✓ `{label}` enviado ao processo de atualização."
     failed_notice: "❌ A atualização do Minerva falhou; a versão anterior continua em execução. Execute `minerva update` no host para ver o erro completo, ou tente /update novamente mais tarde."
@@ -826,7 +826,7 @@ gateway:
     task_status_complete: "concluída"
     task_status_error: "erro"
     task_line: "- {title} - {status}"
-    task_card_title: "Hermes está trabalhando"
+    task_card_title: "Minerva está trabalhando"
   pairing:
     validity_hour: "{hours} hora"
     validity_hours: "{hours} horas"
@@ -839,7 +839,7 @@ gateway:
     notice_shutdown: "⚠️ O Minerva está sendo encerrado — sua tarefa atual será interrompida. Quando ele voltar a ficar online, envie qualquer mensagem e tentarei continuar de onde paramos."
     notice_restart: "⚠️ O Minerva está sendo reiniciado — sua tarefa atual será interrompida. Envie qualquer mensagem após o reinício e tentarei retomar de onde você parou."
   startup:
-    handoff_thread_title: "Hermes — {title}"
+    handoff_thread_title: "Minerva — {title}"
     restarted: "♻ Gateway reiniciado com sucesso. Sua sessão continua."
     free_tier_line: "Inferência: nível gratuito da Nous (nous/welcome). Entre para obter mais: /login"
     online: "♻️ Gateway online — o Minerva voltou e está pronto."
@@ -1049,7 +1049,7 @@ platform:
         description: "Iniciar uma nova conversa"
         followup: "Nova conversa iniciada~"
       reset:
-        description: "Redefinir sua sessão do Hermes"
+        description: "Redefinir sua sessão do Minerva"
         followup: "Sessão redefinida~"
       model:
         description: "Mostrar ou trocar o modelo"
@@ -1071,7 +1071,7 @@ platform:
       undo:
         description: "Remover a última troca de mensagens"
       status:
-        description: "Mostrar o status da sessão do Hermes"
+        description: "Mostrar o status da sessão do Minerva"
         followup: "Status enviado~"
       stop:
         description: "Parar o agente Minerva em execução"
@@ -1118,7 +1118,7 @@ platform:
         description: "Negar um comando perigoso pendente"
         arg_scope: "Opcional: 'all' para negar todos os comandos pendentes"
       thread:
-        description: "Criar um novo tópico e iniciar nele uma sessão do Hermes"
+        description: "Criar um novo tópico e iniciar nele uma sessão do Minerva"
         arg_name: "Nome do tópico"
         arg_message: "Primeira mensagem opcional a enviar ao Minerva no tópico"
         arg_auto_archive: "Arquivar automaticamente em minutos (60, 1440, 4320, 10080)"
@@ -1143,7 +1143,7 @@ platform:
         arg_question: "A pergunta paralela a responder sem interromper"
         followup: "Pergunta paralela despachada~"
       skill:
-        description: "Executar uma skill do Hermes"
+        description: "Executar uma skill do Minerva"
         arg_name: "Qual skill executar"
         arg_args: "Argumentos opcionais para a skill"
         unknown: "Skill desconhecida: `{name}`. Comece a digitar para ver sugestões de preenchimento automático."
@@ -1163,9 +1163,9 @@ platform:
     security:
       unauthorized_slash_alert: "⚠️ Tentativa não autorizada de comando slash no Discord\nUsuário: {user_name} ({user_id})\nCanal: {chan_id} (guild {guild_id})\nComando: {command_text}\nMotivo: {reason}"
     thread:
-      seed_message: "🧵 Tópico criado pelo Hermes: **{name}**"
+      seed_message: "🧵 Tópico criado pelo Minerva: **{name}**"
       default_name: "Hermes"
-      handoff_seed: "🧵 Transferência do Hermes: **{name}**"
+      handoff_seed: "🧵 Transferência do Minerva: **{name}**"
       auto_create_failed: "⚠️ O Minerva não conseguiu criar um tópico do Discord para esta mensagem, então a solicitação não foi processada. Tente novamente."
       auto_create_failed_generic: "A solicitação não foi processada. Tente novamente."
     media:
@@ -1321,7 +1321,7 @@ platform:
       seed: ":thread: Transferência do Minerva — *{name}*"
   matrix:
     handoff:
-      default_name: "Sessão do Hermes"
+      default_name: "Sessão do Minerva"
     media:
       image_download_failed: "Não consegui baixar e enviar a imagem para o Matrix. A URL de origem não foi exibida porque pode conter tokens privados."
     approval:
@@ -1379,7 +1379,7 @@ platform:
       header: "Pergunta"
       question: "❓ {question}"
     typing:
-      thinking: "Hermes está pensando…"
+      thinking: "Minerva está pensando…"
       interrupted: "(interrompido)"
       no_reply: "(sem resposta)"
     attachment_fallback:
@@ -1522,7 +1522,7 @@ slash:
   rollback:
     description: "Listar ou restaurar pontos de verificação do sistema de arquivos (as restaurações preservam suas edições manuais; --all sobrescreve)"
   snapshot:
-    description: "Criar ou restaurar instantâneos da configuração/estado do Hermes"
+    description: "Criar ou restaurar instantâneos da configuração/estado do Minerva"
   export:
     description: "Exportar um perfil (configuração, skills, tema) para um arquivo compartilhável"
   import:
@@ -1608,7 +1608,7 @@ slash:
   voice:
     description: "Alternar o modo de voz"
   wake:
-    description: "Alternar a escuta da palavra de ativação 'Hey Hermes'"
+    description: "Alternar a escuta da palavra de ativação 'Hey Minerva'"
   busy:
     description: "Controlar como as mensagens se comportam enquanto o Minerva está trabalhando"
   tools:
@@ -1964,7 +1964,7 @@ cli:
     usage_switch_provider: "trocar fornecedor"
     usage_refresh: "buscar novamente as listas de modelos"
     choice_switch_anyway: "Trocar mesmo assim"
-    desc_switch_anyway: "Usar este modelo na sessão atual do Hermes."
+    desc_switch_anyway: "Usar este modelo na sessão atual do Minerva."
     choice_cancel: "Cancelar"
     desc_keep_current_model: "Manter o modelo atual."
     switch_cancelled: "Troca de modelo cancelada."
@@ -2124,7 +2124,7 @@ cli:
     err_termux_app_missing: "Pacote de comandos Termux:API detectado, mas o aplicativo Android está ausente.\nInstale/atualize o aplicativo Android Termux:API e tente /voice on novamente."
     err_mic_access: "O modo de voz precisa de acesso ao microfone.\nExecute pkg install termux-api e instale o aplicativo Android Termux:API; depois tente /voice on novamente."
     err_audio_capture: "O modo de voz requer captura de áudio."
-    err_stt_provider: "O modo de voz requer um fornecedor de STT para transcrição.\nExecute hermes tools e configure Speech-to-Text; depois reinicie o Hermes."
+    err_stt_provider: "O modo de voz requer um fornecedor de STT para transcrição.\nExecute hermes tools e configure Speech-to-Text; depois reinicie o Minerva."
     silence_autostop: "Silêncio detectado, parando automaticamente..."
     hint_continuous: "para automaticamente no silêncio | {shortcut} para parar e sair do modo contínuo"
     hint_termux: "Captura Termux:API | {shortcut} para parar"
@@ -2178,7 +2178,7 @@ cli:
     label_surface: "  Superfície:  {surface}"
     label_new_session: "  Nova sessão: {value}"
     mic_silent_warning: "⚠ O microfone só entrega silêncio — o ouvinte não consegue ouvir nada."
-    mic_silent_macos_hint: "No macOS: Ajustes do Sistema > Privacidade e Segurança > Microfone — permita seu terminal/Hermes e depois /wake off + /wake on."
+    mic_silent_macos_hint: "No macOS: Ajustes do Sistema > Privacidade e Segurança > Microfone — permita seu terminal/Minerva e depois /wake off + /wake on."
     wake_enable_hint: "Ative com /wake on"
     enable_first_hint: "Ative o modo de voz primeiro: /voice on"
     tts_no_provider: "Aviso: nenhum fornecedor de TTS disponível. Instale edge-tts ou defina chaves de API."
@@ -3465,9 +3465,9 @@ explainer:
     replaced: "o arquivo do banco de dados de sessões foi substituído enquanto o Minerva estava em execução, então esta mensagem não foi salva (uma cópia fica guardada em {home}/sessions/). Pare o Minerva (`minerva {profile_arg}gateway stop`), execute `minerva {profile_arg}doctor` — não `minerva {profile_arg}doctor --fix`, que repararia o arquivo errado no lugar — depois inicie-o de novo e envie sua mensagem mais uma vez. Os passos avançados de recuperação estão no log."
     deleted_wal: "outro processo do Minerva ainda mantém uma cópia antiga do write-ahead log do banco de dados de sessões, então o Minerva parou de gravar para manter o arquivo seguro e esta mensagem não foi salva (uma cópia fica guardada em {home}/sessions/). Nada foi perdido. Encerre todos os processos do Minerva neste perfil (app Desktop, `minerva {profile_arg}gateway stop`, painel, cron), execute `minerva {profile_arg}doctor` — ele indica qualquer processo que ainda esteja segurando o log — depois inicie o Minerva de novo e envie sua mensagem mais uma vez. Não execute `doctor --fix` nem exclua arquivos state.db enquanto eles estiverem em execução. Guia: {recovery_docs}"
     corrupt: "o turno foi encerrado porque o banco de dados de estado relatou corrupção estrutural (a transcrição teria sido perdida na reinicialização). Liberar espaço em disco não vai ajudar. Opções de recuperação:\n1. Execute `minerva {profile_arg}doctor --fix`\n2. Pare o gateway e então recupere com:\n   hermes {profile_arg}sessions recover --source {db_path} --inspect-only\n   (se indicar que é recuperável) hermes {profile_arg}sessions recover --source {db_path} --output recovered-state.db\n   — a recuperação cria um instantâneo do arquivo danificado antes; NÃO execute `sqlite3 ... \".recover\"` contra o state.db ativo, pois um CLI sqlite3 vulnerável pode corrompê-lo ainda mais\n3. Restaure a partir de um backup em {backups_dir}/\nDepois envie sua mensagem novamente."
-    fts_index: "o turno foi encerrado porque o índice de busca de sessões (FTS5) está corrompido e não pôde ser desanexado, então esta mensagem não foi salva. O armazenamento de mensagens em si não está danificado: não execute ferramentas de recuperação nem restaure um backup. Execute `minerva {profile_arg}doctor --fix` (ou reinicie o Hermes, que repara o índice ao abrir) e então envie sua mensagem novamente."
+    fts_index: "o turno foi encerrado porque o índice de busca de sessões (FTS5) está corrompido e não pôde ser desanexado, então esta mensagem não foi salva. O armazenamento de mensagens em si não está danificado: não execute ferramentas de recuperação nem restaure um backup. Execute `minerva {profile_arg}doctor --fix` (ou reinicie o Minerva, que repara o índice ao abrir) e então envie sua mensagem novamente."
     disk: "o Minerva não conseguiu salvar esta conversa em disco, então parou em vez de perder suas mensagens. O disco provavelmente está cheio: libere espaço (ou corrija as permissões de {home}/state.db) e então envie sua mensagem novamente."
-    default: "o Minerva não conseguiu salvar esta conversa, então parou em vez de perder suas mensagens. Causas possíveis: o disco está sem espaço ou outro processo do Minerva está segurando o banco de dados. Feche outras janelas do Hermes, execute `minerva {profile_arg}doctor` para verificar o armazenamento e então envie sua mensagem novamente."
+    default: "o Minerva não conseguiu salvar esta conversa, então parou em vez de perder suas mensagens. Causas possíveis: o disco está sem espaço ou outro processo do Minerva está segurando o banco de dados. Feche outras janelas do Minerva, execute `minerva {profile_arg}doctor` para verificar o armazenamento e então envie sua mensagem novamente."
   file_mutation:
     header: "⚠️ Verificador de mutação de arquivos: {count} edição(ões) de arquivo FALHOU(ARAM) neste turno, apesar de qualquer redação acima que sugira o contrário. Execute `git status` ou `read_file` para confirmar o que realmente foi aplicado."
     entry: "  • `{path}` — [{tool}] {preview}"
@@ -3551,7 +3551,7 @@ tips:
   t073: "hermes auth add permite adicionar várias chaves de API para rotação do pool de credenciais."
   t074: "hermes completion bash >> ~/.bashrc ativa o preenchimento com Tab para todos os comandos e perfis."
   t075: "hermes logs -f acompanha o agent.log em tempo real. --level WARNING --since 1h filtra a saída."
-  t076: "hermes backup cria um backup em zip de todo o seu diretório inicial do Hermes."
+  t076: "hermes backup cria um backup em zip de todo o seu diretório inicial do Minerva."
   t077: "hermes profile create coder cria um perfil isolado que se torna um comando próprio."
   t078: "hermes profile create work --clone copia sua configuração e chaves atuais para um novo perfil."
   t079: "hermes update sincroniza as novas skills incluídas com TODOS os perfis automaticamente."
@@ -3761,7 +3761,7 @@ tips:
   t283: "A quarentena de skills em ~/.hermes/skills/.hub/quarantine/ guarda skills aguardando revisão de segurança."
   t284: "/steer <prompt> injeta uma nota após a próxima chamada de ferramenta — ajuste a direção no meio da tarefa sem interromper."
   t285: "/goal <text> define um objetivo permanente em loop Ralph — o Minerva continua turno após turno até um juiz declarar concluído."
-  t286: "/snapshot create [label] salva um instantâneo completo da configuração do Hermes; /snapshot restore <id> reverte depois."
+  t286: "/snapshot create [label] salva um instantâneo completo da configuração do Minerva; /snapshot restore <id> reverte depois."
   t287: "/copy [N] copia a última resposta do assistente para a área de transferência, ou a N-ésima a partir do fim com um número."
   t288: "/redraw força um redesenho completo da interface, corrigindo desvios do terminal após redimensionar o tmux ou artefatos de seleção com o mouse."
   t289: "/agents (alias /tasks) mostra os agentes ativos e as tarefas em segundo plano em execução na sessão atual."
@@ -3829,7 +3829,7 @@ tips:
   t351: "hermes chat --source tool marca chats programáticos para que eles não poluam hermes sessions list."
   t352: "hermes dump --show-keys inclui impressões digitais ocultadas das chaves de API para uma depuração de suporte mais profunda."
   t353: "hermes sessions rename <ID> \"new title\" renomeia qualquer sessão passada; hermes sessions delete <ID> remove uma."
-  t354: "hermes import restaura um zip de backup completo do Hermes; exportações de sessão em JSON/JSONL são importadas pela página Sessões do painel."
+  t354: "hermes import restaura um zip de backup completo do Minerva; exportações de sessão em JSON/JSONL são importadas pela página Sessões do painel."
   t355: "hermes fallback gerencia a cadeia fallback_model de forma interativa — sem editar config.yaml à mão."
   t356: "hermes pairing rotaciona o token de pareamento por DM — a primeira pessoa a enviar mensagem após a rotação obtém acesso ao bot."
   t357: "hermes setup guia usuários iniciantes pela configuração de fornecedor, chaves e plataformas em um único fluxo interativo."

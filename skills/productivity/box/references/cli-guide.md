@@ -1,6 +1,6 @@
 # Box CLI guide
 
-Run Box commands through Hermes' `terminal` tool. Prefer the documented command in this skill over exploratory help calls. Use help only when a required option is absent here or the installed CLI rejects the syntax.
+Run Box commands through Minerva' `terminal` tool. Prefer the documented command in this skill over exploratory help calls. Use help only when a required option is absent here or the installed CLI rejects the syntax.
 
 ## Use one command runner
 
@@ -8,7 +8,7 @@ Resolve one command runner before any Box operation:
 
 1. Check whether `box` already resolves in the runtime shell (`command -v box` on macOS/Linux or `Get-Command box` in PowerShell). If it does, use that command as-is, regardless of where Minerva or Box CLI was installed.
 2. If it does not resolve, install and verify an isolated CLI under a writable, persistent Minerva runtime directory. Prefer the current Minerva home at `tools/box-cli`; `HERMES_HOME` is optional, and Minerva uses its platform default when it is unset (`~/.hermes` on macOS/Linux and `%LOCALAPPDATA%\hermes` on Windows).
-3. If that directory is not writable, ask for a writable persistent directory in the runtime. Do not assume Hermes's source checkout, a global npm prefix, or a user home is writable. If a nonstandard existing CLI is not on `PATH`, ask for its executable path instead of scanning the machine.
+3. If that directory is not writable, ask for a writable persistent directory in the runtime. Do not assume Minerva's source checkout, a global npm prefix, or a user home is writable. If a nonstandard existing CLI is not on `PATH`, ask for its executable path instead of scanning the machine.
 
 Only use `npm exec --prefix` after Minerva installed and verified that exact local copy. Run each installation block below as one terminal call, record the verified absolute prefix it prints, and use that literal path in later calls. Never depend on a shell variable surviving a separate Minerva terminal call, and never give the user an unverified `npm exec --prefix` command to run.
 

@@ -6,7 +6,7 @@ API reference. It runs on a private asyncio loop in a daemon thread so a synchro
 drive it, records every call it serves (method + decoded params + the response it returned), and
 lets a test queue faults per method (an API error body, an HTTP status) that are consumed in order.
 
-Nothing here knows about Hermes: the adapter under test talks to it through its own SDK
+Nothing here knows about Minerva: the adapter under test talks to it through its own SDK
 (python-telegram-bot, discord.py, slack_sdk) exactly as it would talk to the real platform.
 """
 

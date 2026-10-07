@@ -366,7 +366,7 @@ async def mcp_oauth_callback(
         )
     if error:
         return HTMLResponse("<h1>Authorization failed</h1><p>Return to Minerva for details.</p>", status_code=400)
-    return HTMLResponse("<h1>Authorization received</h1><p>You can close this tab and return to Hermes.</p>")
+    return HTMLResponse("<h1>Authorization received</h1><p>You can close this tab and return to Minerva.</p>")
 
 
 @router.put("/api/mcp/servers/{name}/enabled")

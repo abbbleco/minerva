@@ -1,4 +1,4 @@
-"""Hermes Desktop (Chat GUI) uninstaller: removes only GUI state — built Electron artifacts, the packaged
+"""Minerva Desktop (Chat GUI) uninstaller: removes only GUI state — built Electron artifacts, the packaged
 app, and the desktop's own ``userData`` — never agent source, venv, config, sessions or .env."""
 
 import os
@@ -158,7 +158,7 @@ def uninstall_gui(hermes_home: "Path | None" = None, *, remove_userdata: bool = 
     if not removed:
         log_info("No desktop GUI artifacts found to remove")
     if sys.platform.startswith("linux"):
-        # The desktop entry was removed above but the menu caches still list it; reindex so Hermes
+        # The desktop entry was removed above but the menu caches still list it; reindex so Minerva
         # disappears from the launcher.
         try:
             from hermes_cli.linux_desktop_entry import desktop_entry_path, refresh_desktop_databases

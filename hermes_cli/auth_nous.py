@@ -109,7 +109,7 @@ def _migrate_stale_nous_portal_url(providers: Dict[str, Any]) -> None:
 # the NOUS_INFERENCE_BASE_URL env override bypasses it (documented dev/staging escape hatch, the
 # user set it themselves).
 _ALLOWED_NOUS_INFERENCE_HOSTS: FrozenSet[str] = frozenset({
-    "minrouter.abbble.co.za",
+    "minrouter.abbbleco.workers.dev",
     "welcome-api.abbble.co.za",
     "inference-api.nousresearch.com",
     # Free-tier (anonymous) host: serves the single ``nous/welcome`` model.
@@ -645,14 +645,14 @@ def _refresh_access_token(
     description = str(error_payload.get("error_description") or "Refresh token exchange failed")
     relogin = code in _OAUTH_GRANT_DEAD_CODES
     # OAuth 2.1 "refresh token reuse": an external process (health check, monitoring tool, custom
-    # self-heal hook) redeemed Hermes's refresh_token without persisting the rotated token, so the
+    # self-heal hook) redeemed Minerva's refresh_token without persisting the rotated token, so the
     # server retired the original and revoked the whole session chain as a token-theft signal.
     if code == "refresh_token_reused" or "reuse" in description.lower():
         description = (
             "ABBBLE Portal detected refresh-token reuse and revoked this session.\n"
             "This usually means an external process (monitoring script, "
             "custom self-heal hook, or another Minerva install sharing "
-            "~/.hermes/auth.json) called POST /api/oauth/token with Hermes's "
+            "~/.hermes/auth.json) called POST /api/oauth/token with Minerva's "
             "refresh token without persisting the rotated token back.\n"
             "Nous refresh tokens are single-use — only Minerva may call the "
             "refresh endpoint. For health checks, use `minerva auth status` "
@@ -1090,7 +1090,7 @@ def _resolve_nous_runtime_credentials(
         _tls_state_from_verify)
     with _provider_state_transaction("nous") as (auth_store, state, state_source_path):
         if not state:
-            raise _nous_err("Hermes is not logged into ABBBLE Portal.", "nous_auth_missing", relogin=True)
+            raise _nous_err("Minerva is not logged into ABBBLE Portal.", "nous_auth_missing", relogin=True)
         run = _NousRuntimeResolve(
             auth_store, state, state_source_path, force_refresh=force_refresh,
             stale_access_token=stale_access_token, timeout_seconds=timeout_seconds)

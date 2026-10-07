@@ -40,7 +40,7 @@ Good verification targets, cheapest first:
 - CLI commands: `minerva --help`, `minerva <command> --help`, and `hermes_cli/main.py`
 - Source tree: https://github.com/abbbleco/minerva
 
-Never answer "Hermes can't do that" from memory. Minerva ships far more than this skill body describes, and the index exists so a negative answer is always checkable.
+Never answer "Minerva can't do that" from memory. Minerva ships far more than this skill body describes, and the index exists so a negative answer is always checkable.
 
 ## Quick Start
 
@@ -141,7 +141,7 @@ terminal(command="hermes chat -q 'Set up CI/CD for ~/myapp'", background=true)
 
 ### Interactive PTY Mode (via tmux)
 
-Hermes uses prompt_toolkit, which requires a real terminal. Use tmux for interactive spawning:
+Minerva uses prompt_toolkit, which requires a real terminal. Use tmux for interactive spawning:
 
 ```
 # Start
@@ -194,7 +194,7 @@ terminal(command="tmux new-session -d -s resumed 'hermes --resume 20260225_14305
 - **Use `minerva chat -q` for fire-and-forget** — no PTY needed
 - **Use tmux for interactive sessions** — raw PTY mode has `\r` vs `\n` issues with prompt_toolkit
 - **For scheduled tasks**, use the `cronjob` tool instead of spawning — handles delivery and retry
-- **"delegate_task is capped at N" reports** — see `references/delegate-task-concurrency-diagnosis.md`. Three real cap paths in Hermes; if none fired, the model is self-limiting and rationalising it as "the runtime caps."
+- **"delegate_task is capped at N" reports** — see `references/delegate-task-concurrency-diagnosis.md`. Three real cap paths in Minerva; if none fired, the model is self-limiting and rationalising it as "the runtime caps."
 - **"Can $external_app use my ABBBLE Portal subscription / OAuth?"** — see `references/portal-auth-for-third-party-apps.md`. Walk the user through three layers (plugin-vs-app, what Portal actually exposes, local-broker-proxy option).
 
 ## Surfaces (quick orientation)

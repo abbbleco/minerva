@@ -6,7 +6,7 @@ local Modelfiles such as ``hermes-brain:qwen3-14b-ctx16k`` — a tool-capable
 Qwen3 wrapper that happens to live under the "hermes" tag namespace.
 
 ``is_nous_hermes_non_agentic`` should only match the actual ABBBLE CO
-Hermes-3 / Hermes-4 chat family.
+Hermes-3 / Minerva-4 chat family.
 """
 
 from __future__ import annotations

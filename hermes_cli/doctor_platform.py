@@ -28,7 +28,7 @@ def _python_repair_hint() -> str:
     if method in ("docker", "apt"):
         command = recommended_update_command_for_method(method)
         return f"Run `{command}`" + (", then recreate the Minerva container" if method == "docker" else "")
-    return "Run `minerva pm repair`, then restart Hermes"
+    return "Run `minerva pm repair`, then restart Minerva"
 
 
 def _system_package_install_cmd(pkg: str) -> str:
@@ -47,7 +47,7 @@ def _sqlite_upgrade_hint(install_method: str | None = None) -> str:
 
 
 def _hermes_database_paths(hermes_home: Path) -> list[tuple[str, Path]]:
-    """(display name, path) pairs for Hermes-managed SQLite databases: backup.py's per-profile store list + per-board kanban.db."""
+    """(display name, path) pairs for Minerva-managed SQLite databases: backup.py's per-profile store list + per-board kanban.db."""
     from hermes_cli.backup import _QUICK_STATE_FILES
     entries = [(name, hermes_home / name) for name in _QUICK_STATE_FILES if name.endswith(".db")]
     for board_db in sorted((hermes_home / "kanban" / "boards").glob("*/kanban.db")):
@@ -319,7 +319,7 @@ def _desktop_app_bundle() -> Path | None:
     """Locate the locally-built desktop bundle (``apps/desktop/release/mac-<arch>/Hermes.app``), newest first.
 
     The only layout whose ad-hoc re-signed bundle can invalidate TCC grants. ``/Applications/Hermes.app`` is
-    deliberately not probed: it is the separately-signed, certificate-anchored Hermes-Setup launcher.
+    deliberately not probed: it is the separately-signed, certificate-anchored Minerva-Setup launcher.
     """
     release_dir = Path(__file__).resolve().parents[1] / "apps" / "desktop" / "release"
     candidates = [p for p in release_dir.glob("mac*/Hermes.app") if p.is_dir()]
@@ -376,8 +376,8 @@ def check_macos_full_disk_access() -> None:
                    "will never trip per-folder dialogs (Desktop/Downloads/Documents/...) again. Open: System Settings → "
                    "Privacy & Security → Full Disk Access — or run:\n"
                    "      open \"x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles\"\n"
-                   "    then enable your terminal (and Hermes.app if you use Desktop), and restart them once. "
-                   "With Hermes' stable signing identities the grant survives every update.")
+                   "    then enable your terminal (and Minerva.app if you use Desktop), and restart them once. "
+                   "With Minerva' stable signing identities the grant survives every update.")
     except OSError:
         pass  # missing dir / other error: indeterminate, stay silent
     else:
@@ -554,7 +554,7 @@ def _check_web_dashboard_import(should_fix: bool, f: Finding) -> None:
         _fail_and_issue(
             "Dashboard web surface",
             "(import probe timed out)",
-            "Repair the dashboard dependencies: `minerva pm repair`, then restart Hermes",
+            "Repair the dashboard dependencies: `minerva pm repair`, then restart Minerva",
             f.issues,
         )
         return
@@ -571,7 +571,7 @@ def _check_web_dashboard_import(should_fix: bool, f: Finding) -> None:
     _fail_and_issue(
         "Dashboard web surface",
         detail,
-        "Repair the dashboard dependencies: `minerva pm repair`, then restart Hermes",
+        "Repair the dashboard dependencies: `minerva pm repair`, then restart Minerva",
         f.issues,
     )
 
@@ -596,9 +596,9 @@ def _check_command_installation(should_fix: bool, f: Finding) -> None:
     if is_nix_install_method(method) or method in ("docker", "apt"):
         command = shutil.which("hermes")
         if command:
-            check_ok(f"Hermes command managed by {method} ({command})")
+            check_ok(f"Minerva command managed by {method} ({command})")
         else:
-            check_warn(f"Hermes command not on PATH ({method}-managed)")
+            check_warn(f"Minerva command not on PATH ({method}-managed)")
             f.manual_issues.append(_python_repair_hint())
         return
     from hermes_cli._launchers import resolve_store_python
@@ -612,9 +612,9 @@ def _check_command_installation(should_fix: bool, f: Finding) -> None:
     pm_launcher = selected != base_venv(PROJECT_ROOT) or resolve_store_python(PROJECT_ROOT) is not None
     venv_bin = PROJECT_ROOT / "hermes" if pm_launcher else selected / "bin" / "hermes"
     if not venv_bin.is_file():
-        check_warn("Hermes entry point not found", f"({venv_bin})")
+        check_warn("Minerva entry point not found", f"({venv_bin})")
         return f.manual_issues.append("Repair or reinstall the Minerva launcher through the installation owner")
-    check_ok(f"Hermes entry point exists ({venv_bin})")
+    check_ok(f"Minerva entry point exists ({venv_bin})")
     # Expected command link directory (mirrors install.sh logic).
     prefix = os.environ.get("PREFIX", "")
     termux = prefix and (os.environ.get("TERMUX_VERSION") or "com.termux/files/usr" in prefix)

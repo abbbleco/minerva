@@ -55,7 +55,7 @@ Minerva Agent 功能丰富——CLI 助手、Telegram/Discord 机器人、任务
 4. [Telegram 配置](../user-guide/messaging/telegram.md)
 5. [Discord 配置](../user-guide/messaging/discord.md)
 6. [语音模式](../user-guide/features/voice-mode.md)
-7. [在 Hermes 中使用语音模式](../guides/use-voice-mode-with-hermes.md)
+7. [在 Minerva 中使用语音模式](../guides/use-voice-mode-with-hermes.md)
 8. [安全](../user-guide/security.md)
 
 完整项目示例请参阅：
@@ -81,7 +81,7 @@ Cron 任务让 Minerva Agent 按计划执行任务——每日摘要、定期检
 通过自定义工具和可复用技能包扩展 Minerva Agent。
 
 1. [插件](../user-guide/features/plugins.md)
-2. [构建 Hermes 插件](../developer-guide/plugins/index.md)
+2. [构建 Minerva 插件](../developer-guide/plugins/index.md)
 3. [工具概览](../user-guide/features/tools.md)
 4. [技能概览](../user-guide/features/skills.md)
 5. [MCP（模型上下文协议）](../user-guide/features/mcp.md)
@@ -90,7 +90,7 @@ Cron 任务让 Minerva Agent 按计划执行任务——每日摘要、定期检
 8. [创建技能](../developer-guide/creating-skills.md)
 
 :::tip
-对于大多数自定义工具的创建，建议从插件开始。[添加工具](../developer-guide/adding-tools.md)页面面向 Hermes 核心内置开发，而非常规用户/自定义工具路径。
+对于大多数自定义工具的创建，建议从插件开始。[添加工具](../developer-guide/adding-tools.md)页面面向 Minerva 核心内置开发，而非常规用户/自定义工具路径。
 :::
 
 ### "我想训练模型"
@@ -131,7 +131,7 @@ Cron 任务让 Minerva Agent 按计划执行任务——每日摘要、定期检
 | **MCP** | 通过模型上下文协议连接外部工具服务器 | [MCP](../user-guide/features/mcp.md) |
 | **Cron** | 调度周期性 agent 任务 | [Cron](../user-guide/features/cron.md) |
 | **委派** | 生成子 agent 以并行处理工作 | [委派](../user-guide/features/delegation.md) |
-| **代码执行** | 运行以编程方式调用 Hermes 工具的 Python 脚本 | [代码执行](../user-guide/features/code-execution.md) |
+| **代码执行** | 运行以编程方式调用 Minerva 工具的 Python 脚本 | [代码执行](../user-guide/features/code-execution.md) |
 | **浏览器** | 网页浏览与抓取 | [浏览器](../user-guide/features/browser.md) |
 | **Hooks** | 事件驱动的回调与中间件 | [Hooks](../user-guide/features/hooks.md) |
 | **批处理** | 批量处理多个输入 | [批处理](../user-guide/features/batch-processing.md) |

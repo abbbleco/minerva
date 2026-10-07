@@ -43,7 +43,7 @@ the fallback's contract narrow and its failure modes obvious.
 Long-lived (`tsx src/index.ts`, Docker) or serverless (`api/[[...route]].ts` on
 Vercel, mirroring the router). Needs `SUPABASE_URL` +
 `SUPABASE_SERVICE_ROLE_KEY` (key verification reads tables anon cannot) and
-`MINERVA_ROUTER_URL` (default `https://minrouter.abbble.co.za`).
+`MINERVA_ROUTER_URL` (default `https://minrouter.abbbleco.workers.dev`).
 
 ```bash
 MINERVA_FREE_MODELS="minerva/qwen-qwen3.8-27b:free" PORT=8091 \

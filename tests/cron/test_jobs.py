@@ -241,7 +241,7 @@ class TestParseSchedule:
 
 
     def test_naive_iso_anchors_to_configured_tz_not_server_local(self, monkeypatch):
-        """A naive ISO timestamp must be interpreted in the CONFIGURED Hermes
+        """A naive ISO timestamp must be interpreted in the CONFIGURED Minerva
         timezone, NOT the server's local timezone (#51021).
 
         Regression: when the configured zone differs from the server's local
@@ -1642,7 +1642,7 @@ class TestJobsJsonIdKeyedMap:
     """load_jobs() must flatten an ID-keyed ``jobs`` map to the list contract.
 
     A store written as ``{"jobs": {"<job_id>": {...}, ...}}`` (external tool
-    or hand edit — Hermes' own save_jobs() only ever writes a list) made
+    or hand edit — Minerva' own save_jobs() only ever writes a list) made
     load_jobs() return a dict. Every consumer iterates it as a list, so
     ``list_jobs()`` → ``_normalize_job_record`` → ``dict(<id-string>)`` raised
     ``ValueError: dictionary update sequence element #0 has length 1; 2 is

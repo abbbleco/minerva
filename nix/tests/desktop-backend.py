@@ -41,7 +41,7 @@ with tempfile.TemporaryDirectory(prefix="hermes-desktop-backend-") as temporary:
         f"#!{sys.executable}\n"
         "import sys\n"
         "if '--version' in sys.argv:\n"
-        "    print('Hermes legacy fixture')\n"
+        "    print('Minerva legacy fixture')\n"
         "    sys.exit(0)\n"
         "print('WRONG_BACKEND_SELECTED', flush=True)\n"
         "sys.exit(73)\n"

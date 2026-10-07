@@ -128,7 +128,7 @@ def test_native_busy_image_reports_the_process_holding_its_file(tmp_path):
     image, mount = tmp_path.resolve() / "held.dmg", tmp_path.resolve() / "mount"
     mount.mkdir()
     subprocess.run(["/usr/bin/hdiutil", "create", "-size", "16m", "-fs", "HFS+",
-                    "-volname", "Hermes diagnostic fixture", str(image)],
+                    "-volname", "Minerva diagnostic fixture", str(image)],
                    check=True, capture_output=True, timeout=60)
 
     def native(command, *args, plist=True):

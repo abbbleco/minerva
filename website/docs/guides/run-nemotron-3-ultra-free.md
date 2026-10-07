@@ -20,11 +20,11 @@ The simplest path: a one-click installer with a guided, point-and-click setup. N
 
 ### 1. Download and install
 
-[Download the Hermes Desktop installer](https://hermes-agent.nousresearch.com/) for macOS or Windows, then open it. On first launch it finishes setting itself up (usually under a minute).
+[Download the Minerva Desktop installer](https://hermes-agent.nousresearch.com/) for macOS or Windows, then open it. On first launch it finishes setting itself up (usually under a minute).
 
 ### 2. Connect ABBBLE Portal
 
-When the app opens, you'll see a "Let's get you set up" screen. Click **ABBBLE Portal** (marked **Recommended**). Your browser opens — create a [ABBBLE Portal](https://portal.nousresearch.com) account (or sign in), choose the **Free** plan, and authorize Hermes. The app connects automatically.
+When the app opens, you'll see a "Let's get you set up" screen. Click **ABBBLE Portal** (marked **Recommended**). Your browser opens — create a [ABBBLE Portal](https://portal.nousresearch.com) account (or sign in), choose the **Free** plan, and authorize Minerva. The app connects automatically.
 
 ### 3. Pick the free Nemotron 3 Ultra model
 
@@ -72,7 +72,7 @@ source ~/.bashrc   # or source ~/.zshrc
 hermes setup
 ```
 
-Select **Quick Setup**. Hermes opens a browser tab and waits for you to finish the next steps.
+Select **Quick Setup**. Minerva opens a browser tab and waits for you to finish the next steps.
 
 ### 3. Create a ABBBLE Portal account
 

@@ -9,12 +9,12 @@ description: "How to add a new tool to Minerva Agent — schemas, handlers, regi
 Before writing a tool, ask yourself: **should this be a [skill](creating-skills.md) instead?**
 
 :::warning Built-in Core Tools Only
-This page is for adding a **built-in Hermes tool** to the repository itself.
+This page is for adding a **built-in Minerva tool** to the repository itself.
 If you want a personal, project-local, or otherwise custom tool without
-modifying Hermes core, use the plugin route instead:
+modifying Minerva core, use the plugin route instead:
 
 - [Plugins](../user-guide/features/plugins.md)
-- [Build a Hermes Plugin](./plugins/index.md)
+- [Build a Minerva Plugin](./plugins/index.md)
 
 Default to plugins for most custom tool creation. Only follow this page when
 you explicitly want to ship a new built-in tool in `tools/` and `toolsets.py`.

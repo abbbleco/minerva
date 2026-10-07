@@ -176,7 +176,7 @@ export default function UserStoriesCollage(): React.JSX.Element {
         <p>
           What the Minerva Agent community is actually building. Every tile
           below links to a real post, issue, video, or gist where someone
-          describes how they use Hermes &mdash; scraped from X, GitHub, Reddit,
+          describes how they use Minerva &mdash; scraped from X, GitHub, Reddit,
           Hacker News, YouTube, blogs, and podcasts.
         </p>
         <div className={styles.meta}>
@@ -293,7 +293,7 @@ export default function UserStoriesCollage(): React.JSX.Element {
       )}
 
       <div className={styles.footer}>
-        Built something with Hermes?{' '}
+        Built something with Minerva?{' '}
         <a
           href="https://github.com/abbbleco/minerva/edit/main/website/src/data/userStories.json"
           target="_blank"

@@ -5,7 +5,7 @@ Why this exists
 ---------------
 When Minerva dies without running its cleanup path (SIGKILL, OOM killer, a hard
 crash), stdio MCP servers it spawned are reparented to init and keep running
-forever.  macOS has no ``PR_SET_PDEATHSIG``, so something has to outlive Hermes
+forever.  macOS has no ``PR_SET_PDEATHSIG``, so something has to outlive Minerva
 and reap them.
 
 This module is deliberately standard-library-only and must not import anything
@@ -36,7 +36,7 @@ Protocol (line-based, on stdin)
 
 On EOF the supervisor SIGTERMs every still-registered process group, waits a
 short grace period, SIGKILLs the survivors, and exits.  A registered group that
-Hermes never unregistered *is* the orphan set, so a clean Minerva shutdown --
+Minerva never unregistered *is* the orphan set, so a clean Minerva shutdown --
 which unregisters as it tears each server down -- ends with nothing to kill.
 
 Unparseable lines are ignored rather than fatal: a corrupted byte on the control
@@ -63,7 +63,7 @@ MCP children with a boot-unique env marker and checking that some member still
 carries it before signalling.  That was judged not worth putting a ``ps`` parse
 into the one process whose job is to stay simple enough to always work; it is
 the obvious next step if this class of bug ever actually bites.  Note the same
-exposure already exists in Hermes's own killpg-based orphan cleanup, which this
+exposure already exists in Minerva's own killpg-based orphan cleanup, which this
 module did not introduce (see upstream issue #88350).
 """
 

@@ -312,9 +312,9 @@ def test_start_local_openviking_server_uses_endpoint_host_and_port(monkeypatch):
 
 
 def test_start_local_openviking_server_strips_pythonpath_from_child_env(monkeypatch):
-    """The spawned server must not inherit Hermes's PYTHONPATH (#78153).
+    """The spawned server must not inherit Minerva's PYTHONPATH (#78153).
 
-    Inheriting it makes openviking-server import packages from the Hermes
+    Inheriting it makes openviking-server import packages from the Minerva
     venv instead of its own, and on Windows locks Minerva venv DLLs so the
     venv cannot be rebuilt during `minerva update`.
     """

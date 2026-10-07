@@ -29,6 +29,7 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { DEFAULT_FREE_MODEL, FREE_MODELS, modelsForTier, resolveModel, type CatalogEntry } from './catalog.js';
 import { evaluateGates } from './gates.js';
+import { checkVelocity } from './velocity.js';
 import { chatCostUsd, embeddingCostUsd } from './pricing.js';
 import { debitInference, ledgerHealth, readCreditSummary } from './ledger.js';
 import { resolveTenant, type RouterTenant } from './tenant.js';
@@ -52,7 +53,7 @@ const STUB = process.env.MINERVA_ROUTER_STUB === '1';
 export const app = new Hono();
 
 // CORS — the router is called from browsers (portal console, key-test buttons) as well as
-// from native clients (Hermes desktop, which ignores CORS). Only the portal origin may call
+// from native clients (Minerva desktop, which ignores CORS). Only the portal origin may call
 // it from a browser; everything else gets no `Access-Control-Allow-Origin` and the browser
 // blocks the read. Native clients are unaffected either way.
 //
@@ -173,6 +174,15 @@ app.post('/v1/embeddings', async (c) => {
   const denied = evaluateGates(gateInput(tenant.tenant, null), FREE_MODELS);
   if (denied) return c.json({ error: { code: denied.code, message: denied.message } }, denied.status);
 
+  const paced = checkVelocity(tenant.tenant.agencyId, tenant.tenant.plan !== 'free');
+  if (!paced.allowed) {
+    return c.json(
+      { error: { code: 'rate_limited', message: 'Too many requests — slow down and retry.' } },
+      429,
+      { 'retry-after': String(paced.retryAfterSeconds) },
+    );
+  }
+
   try {
     const { vectors, promptTokens } = await embed(texts);
     const cost = embeddingCostUsd(promptTokens);
@@ -263,6 +273,17 @@ app.post('/v1/chat/completions', async (c) => {
     return c.json(
       { error: { code: denied.code, message: denied.message, allowed_models: denied.allowedModels } },
       denied.status
+    );
+  }
+
+  // Velocity AFTER billing gates: denied requests never consume budget, and
+  // one tenant's burst cannot saturate the shared upstream key for everyone.
+  const paced = checkVelocity(tenant.tenant.agencyId, tenant.tenant.plan !== 'free');
+  if (!paced.allowed) {
+    return c.json(
+      { error: { code: 'rate_limited', message: 'Too many requests — slow down and retry.' } },
+      429,
+      { 'retry-after': String(paced.retryAfterSeconds) },
     );
   }
 

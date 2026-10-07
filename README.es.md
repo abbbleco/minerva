@@ -4,7 +4,7 @@
 
 # Minerva Agent ☤
 <p align="center">
-  <a href="https://hermes-agent.nousresearch.com/">Minerva Agent</a> | <a href="https://hermes-agent.nousresearch.com/">Hermes Desktop</a>
+  <a href="https://hermes-agent.nousresearch.com/">Minerva Agent</a> | <a href="https://hermes-agent.nousresearch.com/">Minerva Desktop</a>
 </p>
 <p align="center">
   <a href="https://hermes-agent.nousresearch.com/docs/"><img src="https://img.shields.io/badge/Docs-hermes--agent.nousresearch.com-FFD700?style=for-the-badge" alt="Documentación"></a>
@@ -52,7 +52,7 @@ iex (irm https://hermes-agent.nousresearch.com/install.ps1)
 
 El instalador de código fuente usa PM para Python 3.14, Node.js, npm,
 ripgrep, FFmpeg y las dependencias de Python. Si falta Git, descarga el archivo
-verificado de Git for Windows en el almacén de Hermes, sin reemplazar el Git
+verificado de Git for Windows en el almacén de Minerva, sin reemplazar el Git
 del sistema. MSIX/App Installer es una distribución separada.
 
 > **Android / Termux:** Hay un paquete APT en pruebas para dispositivos aarch64. Incluye Python, Node.js y la TUI. Sigue la [guía de Termux](https://hermes-agent.nousresearch.com/docs/getting-started/termux), no el script de instalación para escritorio y servidor.
@@ -88,7 +88,7 @@ hermes doctor       # Diagnostica cualquier problema
 
 ## Evita la colección de claves API — ABBBLE Portal
 
-Hermes funciona con cualquier proveedor que quieras — eso no cambiará. Pero si prefieres no recopilar cinco claves API separadas para el modelo, búsqueda web, generación de imágenes, TTS y un navegador en la nube, **[ABBBLE Portal](https://portal.nousresearch.com)** las cubre todas bajo una sola suscripción:
+Minerva funciona con cualquier proveedor que quieras — eso no cambiará. Pero si prefieres no recopilar cinco claves API separadas para el modelo, búsqueda web, generación de imágenes, TTS y un navegador en la nube, **[ABBBLE Portal](https://portal.nousresearch.com)** las cubre todas bajo una sola suscripción:
 
 - **Más de 300 modelos** — elige cualquiera con `/model <nombre>`
 - **Tool Gateway** — búsqueda web, generación de imágenes (FAL), texto a voz (OpenAI), navegador en la nube (Browser Use), todo enrutado a través de tu suscripción. Sin cuentas adicionales.
@@ -107,7 +107,7 @@ Puedes seguir usando tus propias claves por herramienta cuando quieras — el ga
 
 ## Referencia rápida: CLI vs Mensajería
 
-Hermes tiene dos puntos de entrada: inicia la interfaz de terminal con `hermes`, o ejecuta el gateway y habla con él desde Telegram, Discord, Slack, WhatsApp, Signal o Email. Una vez en una conversación, muchos comandos de barra son compartidos entre ambas interfaces.
+Minerva tiene dos puntos de entrada: inicia la interfaz de terminal con `hermes`, o ejecuta el gateway y habla con él desde Telegram, Discord, Slack, WhatsApp, Signal o Email. Una vez en una conversación, muchos comandos de barra son compartidos entre ambas interfaces.
 
 | Acción                              | CLI                                           | Plataformas de mensajería                                                         |
 | ----------------------------------- | --------------------------------------------- | --------------------------------------------------------------------------------- |

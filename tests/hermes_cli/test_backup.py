@@ -2053,7 +2053,7 @@ class TestPreMigrationBackup:
 
 
     def test_restorable_with_hermes_import(self, hermes_home, tmp_path):
-        """The zip produced by pre-migration backup must be a valid Hermes
+        """The zip produced by pre-migration backup must be a valid Minerva
         backup — `minerva import` should accept it."""
         from hermes_cli.backup import create_pre_migration_backup, _validate_backup_zip
         out = create_pre_migration_backup(hermes_home=hermes_home)
@@ -2670,7 +2670,7 @@ class TestImportHonorsHermesHomeOverride:
 # ---------------------------------------------------------------------------
 
 def _write_session_db(path: Path, sessions: int, messages_per_session: int) -> None:
-    """Create a minimal Hermes-shaped session database at *path*."""
+    """Create a minimal Minerva-shaped session database at *path*."""
     conn = sqlite3.connect(str(path))
     try:
         conn.execute(

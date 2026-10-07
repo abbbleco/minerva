@@ -115,7 +115,7 @@ pub fn run() {
     // Minerva is already installed, so users can re-run setup to repair a broken
     // install instead of the launcher fast path silently relaunching the app.
     let force_setup = force_setup_from_args(std::env::args().skip(1));
-    tracing::info!(?mode, force_setup, "Hermes installer starting");
+    tracing::info!(?mode, force_setup, "Minerva installer starting");
 
     // Hand off before constructing Tauri/AppKit. The setup callback is too
     // late: by then the process has already been registered as a regular

@@ -820,7 +820,7 @@ class OpenAICompatRoutesMixin:
             response_headers["X-Hermes-Completed"] = "false"
             response_headers["X-Hermes-Partial"] = "true" if is_partial else "false"
             return web.json_response(err_body, status=502, headers=response_headers)
-        # Soft partial (some text, run incomplete): 200 + finish_reason="length"/Hermes extras.
+        # Soft partial (some text, run incomplete): 200 + finish_reason="length"/Minerva extras.
         response_data = {
             "id": completion_id, "object": "chat.completion", "created": created,
             "model": model_name,

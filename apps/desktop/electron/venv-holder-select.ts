@@ -3,7 +3,7 @@
  *
  * Pure Windows venv-holder selection logic (testable without Electron).
  *
- * The pre-update handoff kills Hermes-OWNED venv daemons (the memory plugin's
+ * The pre-update handoff kills Minerva-OWNED venv daemons (the memory plugin's
  * hindsight daemon) so the updater never races a mapped shim. External
  * holders (a user terminal running `hermes`, unrelated scripts) must NOT be
  * killed — current design reports them via scanVenvBlockers and ABORTS the
@@ -18,7 +18,7 @@ export function hasWindowsPathPrefix(exePath: string, venvScriptsDir: string): b
 }
 
 /**
- * True when a process is a Hermes-owned venv daemon: its exe lives under
+ * True when a process is a Minerva-owned venv daemon: its exe lives under
  * `<venv>\Scripts\` (ordinal case-insensitive prefix) AND its cmdline
  * references `hindsight_api.main` (the memory daemon the memory plugin
  * spawns DETACHED — it outlives Minerva and holds venv shims mapped).

@@ -144,7 +144,7 @@ def _manifest_contract_reason(manifest: Optional[Dict[str, Any]]) -> str:
     if not match:
         return "driver manifest does not report a semantic version"
     if tuple(int(part) for part in match.groups()) < _CUA_DRIVER_RUNTIME_CONTRACT_MIN:
-        return "Hermes computer use requires cua-driver 0.20.0 or newer"
+        return "Minerva computer use requires cua-driver 0.20.0 or newer"
     if not _valid_mcp_args(manifest.get("mcp_invocation")):
         return "driver manifest does not provide an MCP launch command"
     advertised: Dict[str, set[str]] = {
@@ -158,7 +158,7 @@ def _manifest_contract_reason(manifest: Optional[Dict[str, Any]]) -> str:
     return "driver manifest is missing: " + ", ".join(missing) if missing else ""
 
 def cua_driver_runtime_contract_status(binary: Optional[str] = None) -> Dict[str, Any]:
-    """Report whether a local driver can host Hermes' 0.20 integration."""
+    """Report whether a local driver can host Minerva' 0.20 integration."""
     resolved = binary or resolve_cua_driver_cmd()
     version: Optional[str] = None
     reason = "cua-driver is not installed"

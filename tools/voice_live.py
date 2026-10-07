@@ -1,4 +1,4 @@
-"""GPT-Live voice chat mode: the full-duplex voice frontend that delegates to Hermes.
+"""GPT-Live voice chat mode: the full-duplex voice frontend that delegates to Minerva.
 
 ``voice.voice_chat_mode: gpt-live`` replaces the chained STT → turn → TTS loop with ONE
 full-duplex voice model (OpenAI ``gpt-live-1``) that owns the microphone and the speaker and
@@ -13,11 +13,11 @@ Division of labour (the Live API has no tools of its own in client mode):
   (``POST /v1/live/sessions``), so the key never reaches the client;
 * the renderer turns each ``session.delegation.created`` into a normal ``prompt.submit`` on the
   active session (surface ``voice-live``) and streams the reply back as
-  ``session.commentary.append`` — Hermes' answer is what the voice speaks.
+  ``session.commentary.append`` — Minerva' answer is what the voice speaks.
 
 Vendor contract: https://developers.openai.com/api/docs/guides/live (+ live-delegation,
 voice-webrtc). Billing is $0.05/min of session time on the OpenAI key, separate from the
-Hermes turn.
+Minerva turn.
 """
 
 from __future__ import annotations
@@ -46,7 +46,7 @@ GPT_LIVE_VOICES = (
 # the vendor guide asks for role + style + a labelled delegation policy, nothing more. The
 # backend (Hermes) carries the real instructions, tools and memory.
 LIVE_PERSONA = (
-    "You are Hermes, a calm and friendly voice assistant. Speak naturally at an unhurried pace. "
+    "You are Minerva, a calm and friendly voice assistant. Speak naturally at an unhurried pace. "
     "Be clear and direct, not overly cheerful. If the user is frustrated, acknowledge it briefly "
     "and focus on the next helpful step.\n\n"
     "Backchannel policy: Use moderate backchannels. Acknowledge naturally without competing with "

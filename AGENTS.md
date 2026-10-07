@@ -17,7 +17,7 @@ past that); see the **routing table** at the end and read the area file before e
 
 ## What Minerva Is
 
-Hermes is a personal AI agent that runs the same agent core across a CLI, a messaging
+Minerva is a personal AI agent that runs the same agent core across a CLI, a messaging
 gateway (Telegram, Discord, Slack, ~20 platforms), a TUI, and an Electron desktop app. It
 learns across sessions (memory + skills), delegates to subagents, runs scheduled jobs, and
 drives a real terminal and browser. It is extended primarily through **plugins and skills**,

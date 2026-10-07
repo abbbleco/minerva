@@ -139,7 +139,7 @@ All env vars are documented in `plugin.yaml`. The most important:
   Media larger than `PHOTON_MAX_INLINE_ATTACHMENT_BYTES` (default 20 MB), or
   any byte read that fails, falls back to a text marker (`[Photon attachment
   received: …]` or `[Photon voice received: …]`) so the agent still knows
-  something arrived. If Spectrum emits a `richlink` content object, Hermes
+  something arrived. If Spectrum emits a `richlink` content object, Minerva
   preserves its URL plus any title/summary metadata Spectrum already exposed;
   current Spectrum versions may still deliver ordinary inbound links as plain
   `text`. iMessage may also emit rich-link preview artwork as
@@ -164,8 +164,8 @@ All env vars are documented in `plugin.yaml`. The most important:
   tapback heals when the next reaction replaces it. Group spaces stay
   reachable across restarts via spectrum-ts' `space.get` rehydration.
 - **Read receipts are supported.** The sidecar marks an inbound iMessage read
-  after forwarding it to Hermes, so the sender sees `Read` without waiting for
-  a model/tool turn. Inbound receipts for Hermes-sent messages are consumed as
+  after forwarding it to Minerva, so the sender sees `Read` without waiting for
+  a model/tool turn. Inbound receipts for Minerva-sent messages are consumed as
   presence telemetry and never create an agent turn. Set
   `PHOTON_READ_RECEIPTS=false` to keep messages at `Delivered`.
 - **Native polls are supported.** Minerva posts poll content through

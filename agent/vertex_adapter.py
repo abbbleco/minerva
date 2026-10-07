@@ -206,7 +206,7 @@ def has_explicit_vertex_config() -> bool:
     """True only when the user deliberately pointed Minerva at Vertex.
 
     Stricter than :func:`has_vertex_credentials`: an ambient ``GOOGLE_APPLICATION_CREDENTIALS``
-    must NOT gate the model picker open (unknowing spend). Only Hermes-scoped signals count.
+    must NOT gate the model picker open (unknowing spend). Only Minerva-scoped signals count.
     """
     if _resolve_project_override():
         return True

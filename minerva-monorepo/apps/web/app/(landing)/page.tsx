@@ -9,11 +9,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Minerva OS — Agent-Orchestrated, Human-Verified Delivery",
+  title: "Minerva Agent — Agent-Orchestrated, Human-Verified Delivery",
   description:
-    "Minerva OS: agent-orchestrated, human-verified product delivery. An interactive mechanical study.",
+    "Minerva Agent: agent-orchestrated, human-verified product delivery. An interactive mechanical study.",
   openGraph: {
-    title: "Minerva OS",
+    title: "Minerva Agent",
     description: "Agent-orchestrated, human-verified product delivery.",
     images: ["/img/landing/og.png"],
   },

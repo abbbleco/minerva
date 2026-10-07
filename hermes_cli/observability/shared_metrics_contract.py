@@ -1568,7 +1568,7 @@ _TOOL_ERROR_TYPES = {
 
 
 def tool_error_class(kwargs: dict[str, Any], outcome: str | None = None) -> str:
-    """Closed failure class from Hermes's own error_type; exception class names become
+    """Closed failure class from Minerva's own error_type; exception class names become
     ``exception`` so plugin-defined identifiers never leave the machine."""
     outcome = outcome or tool_outcome(kwargs)
     if outcome in _TOOL_STATUS_ERROR_CLASSES:
@@ -1607,7 +1607,7 @@ def _non_negative_number(value: Any) -> float | None:
 
 
 def model_call_fields(kwargs: dict[str, Any]) -> dict[str, str]:
-    """Return the terminal model identity and provider route known to Hermes."""
+    """Return the terminal model identity and provider route known to Minerva."""
     from .shared_metrics_catalog import model_metric_name, provider_metric_name
 
     provider = provider_metric_name(kwargs.get("provider"))

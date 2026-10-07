@@ -216,7 +216,7 @@ def _check_manifest_version(manifest: dict, plugin_name: str) -> None:
     reason = manifest_version_error(manifest, plugin_name)
     if reason:
         from hermes_cli.config import recommended_update_command
-        raise _pc().PluginOperationError(f"{reason} Run {recommended_update_command()} to update Hermes.")
+        raise _pc().PluginOperationError(f"{reason} Run {recommended_update_command()} to update Minerva.")
 
 
 def _read_manifest_for_install(plugin_dir: Path) -> dict:

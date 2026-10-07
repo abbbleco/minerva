@@ -27,7 +27,7 @@ class TestMinervaProfile:
         monkeypatch.delenv("MINERVA_ROUTER_URL", raising=False)
         import plugins.model_providers.minerva as plugin
 
-        assert plugin.router_base_url() == "https://minrouter.abbble.co.za/v1"
+        assert plugin.router_base_url() == "https://minrouter.abbbleco.workers.dev/v1"
 
     def test_base_url_env_override_no_double_v1(self, monkeypatch):
         import plugins.model_providers.minerva as plugin

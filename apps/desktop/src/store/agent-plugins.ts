@@ -40,7 +40,7 @@ export interface AgentPluginRow {
   /** 'bundled' | 'user' | 'git' | 'project' | 'entrypoint' */
   source: string
   status: 'enabled' | 'disabled' | 'not enabled'
-  /** Agent Plugins v1 package (portable skills/MCP format) vs native Hermes. */
+  /** Agent Plugins v1 package (portable skills/MCP format) vs native Minerva. */
   portable?: boolean
   /** Curated-catalog provenance (from the install sidecar), when present. */
   catalog_name?: string

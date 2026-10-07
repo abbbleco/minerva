@@ -116,7 +116,7 @@ def _hermes_home() -> Path:
 
 
 def hermes_service_roots() -> tuple[str, ...]:
-    """Directories a Hermes-owned SCM service binary lives under: the checkout (its ``venv`` included),
+    """Directories a Minerva-owned SCM service binary lives under: the checkout (its ``venv`` included),
     the running interpreter's ``Scripts`` dir (``hermes.exe`` shim) and the ``gateway-service`` launcher dir."""
     project_root = Path(__file__).resolve().parent.parent
     return (str(project_root), str(Path(sys.executable).parent), str(_hermes_home() / "gateway-service"))
@@ -127,7 +127,7 @@ def _normalize_windows_path(value: str) -> str:
 
 
 def hermes_owns_windows_service(name: str, binpath: str, hermes_roots: tuple[str, ...]) -> bool:
-    """Positive ownership of an SCM service: Hermes-named (``hermes*``) or its binary path starts under a
+    """Positive ownership of an SCM service: Minerva-named (``hermes*``) or its binary path starts under a
     Minerva root. Pure so it is testable off-Windows. A Scheduled-Task-launched gateway descends from
     ``svchost.exe`` hosting ``Schedule``; without this gate the updater took Task Scheduler for the
     gateway's supervisor and ``sc.exe stop Schedule`` aborted every update (#97208)."""
@@ -139,7 +139,7 @@ def hermes_owns_windows_service(name: str, binpath: str, hermes_roots: tuple[str
 
 
 def _preserve_hermes_home_path(path: str | Path) -> str:
-    r"""Render Hermes-owned paths under the configured HERMES_HOME spelling.
+    r"""Render Minerva-owned paths under the configured HERMES_HOME spelling.
 
     ``%LOCALAPPDATA%\hermes`` may be a symlink/junction to another drive; launcher files must not
     bake in the resolved target for paths under HERMES_HOME.

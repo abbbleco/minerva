@@ -1,7 +1,7 @@
 """A stdio MCP server whose native addon was built by another Node.js (#124264).
 
-Hermes runs stdio servers on its own Node only. When such a server dies at startup with a
-``NODE_MODULE_VERSION`` mismatch, the user must be told, with the rebuild under Hermes's Node,
+Minerva runs stdio servers on its own Node only. When such a server dies at startup with a
+``NODE_MODULE_VERSION`` mismatch, the user must be told, with the rebuild under Minerva's Node,
 instead of an opaque "Connection closed" and a silent park.
 """
 
@@ -53,7 +53,7 @@ def test_stdio_server_dying_on_a_node_abi_mismatch_names_the_rebuild_under_herme
                                         "connect_timeout": 20})
 
     reason = _probe_failure_reason(caught.value)
-    assert "NODE_MODULE_VERSION 127; Hermes's Node 26.7.0 needs 147" in reason
+    assert "NODE_MODULE_VERSION 127; Minerva's Node 26.7.0 needs 147" in reason
     assert f"rm -rf {entry}" in reason
     assert f"PATH={node.parent}:\"$PATH\" {npm} rebuild better-sqlite3 --prefix {entry}" in reason
     # Every retry loads the same binary: parked at once, not walked through the retry ladder.
@@ -63,7 +63,7 @@ def test_stdio_server_dying_on_a_node_abi_mismatch_names_the_rebuild_under_herme
 
 
 def test_the_remedy_never_points_the_server_at_another_node(managed_node):
-    """A module outside an npx cache gets the rebuild alone, still with Hermes's npm under Hermes's node,
+    """A module outside an npx cache gets the rebuild alone, still with Minerva's npm under Minerva's node,
     and nothing suggests pinning ``command:`` to the user's Node."""
     from tools.mcp_tool_node_abi import node_abi_error
 

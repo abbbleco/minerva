@@ -18,7 +18,7 @@ _ARG_SYNONYMS = {
     "off": "auto", "default": "auto", "disable": "auto", "hermes": "auto"}
 
 _HERMES_TOOLS_CALLBACK_NOTE = (
-    "Hermes tool callback registered: codex can now use "
+    "Minerva tool callback registered: codex can now use "
     "web_search, web_extract, browser_*, vision_analyze, "
     "image_generate, skill_view, skills_list, text_to_speech, "
     "kanban_* (worker + orchestrator) via MCP.",
@@ -185,13 +185,13 @@ def apply(
         ok, ver = _check_binary_cached(codex_bin)
         if ok:
             msg_lines.append(f"codex CLI: {ver}")
-        # Migrate Hermes' MCP servers + Codex's curated plugins into ~/.codex/config.toml so the
-        # spawned codex subprocess sees the same tool surface AND can call back into Hermes.
+        # Migrate Minerva' MCP servers + Codex's curated plugins into ~/.codex/config.toml so the
+        # spawned codex subprocess sees the same tool surface AND can call back into Minerva.
         msg_lines.extend(_migration_lines(config))
         msg_lines.append(
             "OpenAI/Codex turns now run through `codex app-server` "
             "(terminal/file ops/patching inside Codex; "
-            "Hermes tools available via MCP callback).")
+            "Minerva tools available via MCP callback).")
         msg_lines.append(
             "Effective on next session — current cached agent keeps "
             "the prior runtime to preserve prompt cache.")

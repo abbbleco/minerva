@@ -151,7 +151,7 @@ hermes skills install official/productivity/telephony
 Sign up at:
 - https://www.twilio.com/try-twilio
 
-Then save credentials into Hermes:
+Then save credentials into Minerva:
 
 ```bash
 python "$SCRIPT" save-twilio ACXXXXXXXXXXXXXXXXXXXXXXXXXXXX your_auth_token_here
@@ -288,10 +288,10 @@ python "$SCRIPT" twilio-call "+15551230000" --message "Hello! This is Minerva ca
 
 ### E. Call with a prerecorded / custom voice message
 
-This is the main path for reusing Hermes's existing `text_to_speech` support.
+This is the main path for reusing Minerva's existing `text_to_speech` support.
 
 Use this when:
-- you want the call to use Hermes's configured TTS voice rather than Twilio `<Say>`
+- you want the call to use Minerva's configured TTS voice rather than Twilio `<Say>`
 - you want a one-way voice delivery (briefing, alert, joke, reminder, status update)
 - you do **not** need a live conversational phone call
 

@@ -6,7 +6,7 @@ before any byte leaves the process. #93650 documents that walk wedging for 12+
 hours on a ~1.4 MB conversation — starving the TTFB/stale watchdogs whose job is
 to rescue this exact call; the hang is pre-network, so no socket kill helps.
 
-Hermes assembles these payloads from JSON round-trips, so they are already wire
+Minerva assembles these payloads from JSON round-trips, so they are already wire
 format and the walk has nothing to convert. The SDK merges ``extra_body`` into
 the JSON body *after* the transform (``_base_client._build_request``), so moving
 the bulk fields there skips the walk and yields the same request bytes.

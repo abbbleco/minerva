@@ -1,9 +1,9 @@
 """
-Hermes MCP Server — expose messaging conversations as MCP tools (`minerva mcp serve`).
+Minerva MCP Server — expose messaging conversations as MCP tools (`minerva mcp serve`).
 
 A stdio MCP server letting any MCP client (Claude Code, Cursor, Codex, ...) list
 conversations, read history, send messages, poll live events, and manage approvals.
-Matches OpenClaw's 9-tool channel bridge surface plus the Hermes-specific
+Matches OpenClaw's 9-tool channel bridge surface plus the Minerva-specific
 channels_list. Client config: {"mcpServers": {"hermes": {"command": "hermes", "args": ["mcp", "serve"]}}}
 """
 

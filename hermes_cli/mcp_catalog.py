@@ -329,7 +329,7 @@ def list_catalog() -> List[CatalogEntry]:
     """Return all valid catalog entries, sorted by name.
 
     Invalid manifests are skipped silently (CI catches them); future ``manifest_version`` ones are
-    skipped too but surfaced via :func:`catalog_diagnostics` so UIs can say "update Hermes".
+    skipped too but surfaced via :func:`catalog_diagnostics` so UIs can say "update Minerva".
     """
     root = _catalog_root()
     if not root.exists():
@@ -351,7 +351,7 @@ def list_catalog() -> List[CatalogEntry]:
 
 def catalog_diagnostics() -> List[tuple]:
     """``(entry_name, kind, message)`` tuples from the most recent :func:`list_catalog` call;
-    ``kind`` is ``future_manifest`` (newer than this Hermes) or ``invalid`` (malformed)."""
+    ``kind`` is ``future_manifest`` (newer than this Minerva) or ``invalid`` (malformed)."""
     return list(_CATALOG_DIAGNOSTICS)
 
 

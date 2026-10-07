@@ -63,12 +63,12 @@ def _tool(*names: str, prefix: str = "") -> Callable[[dict[str, str]], bool]:
 
 
 def user_created_skill(d: dict[str, str]) -> bool:
-    """A skill created at the user's request (``agent_created`` is Hermes' own background review)."""
+    """A skill created at the user's request (``agent_created`` is Minerva' own background review)."""
     return d.get("action") == "created" and d.get("provenance") != "agent_created"
 
 
 _TASK_SURFACE = {"desktop": "desktop", "tui": "tui"}
-# metric -> [(feature, predicate over the recorded dimensions)]. Unattended Hermes-owned work only
+# metric -> [(feature, predicate over the recorded dimensions)]. Unattended Minerva-owned work only
 # counts where the user set it up (a cron job, a curator run the user started).
 _FEATURE_RULES: dict[str, tuple[tuple[str, Callable[[dict[str, str]], bool]], ...]] = {
     contract.MEMORY_OP_METRIC: (("memory", lambda d: _success(d) and d.get("origin") == "foreground"),),

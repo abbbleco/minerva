@@ -1,9 +1,9 @@
 """File tools keep the documented write sandbox, write denylist and read denylist under ../ and symlink spellings.
 
-Hermes documents three file-tool boundaries (website/docs/user-guide/security.md, "File write safety"):
+Minerva documents three file-tool boundaries (website/docs/user-guide/security.md, "File write safety"):
 
 * ``HERMES_WRITE_SAFE_ROOT``: ``write_file`` / ``patch`` may only land inside the listed roots.
-* Protected paths: the Hermes-home ``.env`` / OAuth stores, ``~/.ssh`` keys and ``authorized_keys`` are
+* Protected paths: the Minerva-home ``.env`` / OAuth stores, ``~/.ssh`` keys and ``authorized_keys`` are
   never written; ``~/.ssh/config`` is approval-gated (a ``-q`` run has no approver, so it is blocked).
 * Read denylist: ``auth.json`` / ``.env`` under the Minerva home and project-local ``.env`` files are never
   returned by ``read_file`` / ``search_files``.
@@ -89,7 +89,7 @@ class Layout:
 @dataclass
 class Step:
     """One tool call. Each spelling gets its own subject where the layout allows it; the protected rows
-    that cannot (there is one Hermes-home ``.env`` and one ``authorized_keys``) share it, and a breach of a
+    that cannot (there is one Minerva-home ``.env`` and one ``authorized_keys``) share it, and a breach of a
     shared subject is charged to the spellings whose tool result was not a refusal (see ``_culprits``).
     ``expect``: ``absent`` (subject must not exist after), ``unchanged`` (subject bytes identical), ``hidden``
     (the protected file's canary never appears in the tool result), ``setup`` (no check)."""

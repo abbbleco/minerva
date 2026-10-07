@@ -74,7 +74,7 @@ export const SYNTHETIC_USER_ROW_PREFIXES = [
   'Cronjob Response:'
 ]
 
-/** The Hermes-authored assistant row that closes a turn which failed before
+/** The Minerva-authored assistant row that closes a turn which failed before
  *  the model answered (a provider 401, retry exhaustion, a refusal), typed
  *  `display_kind: failed_turn` by `agent/turn_failure_copy.py`. A transcript
  *  boundary, never the member's reply: read as one, the room posts it as the

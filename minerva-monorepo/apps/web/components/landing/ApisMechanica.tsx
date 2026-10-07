@@ -1093,23 +1093,23 @@ frame();
   return (
     <div ref={rootRef} className="apis-mechanica">
       <canvas id="scene" />
-      <div id="loader">MINERVA OS / PREPARING THE STUDY</div>
+      <div id="loader">MINERVA AGENT / PREPARING THE HIVE</div>
       <div className="ui corner tl" />
       <div className="ui corner tr" />
       <div className="ui corner bl" />
       <div className="ui corner br" />
       <header className="ui">
-        <div className="eyebrow">MINERVA OS — AGENT-ORCHESTRATED DELIVERY</div>
+        <div className="eyebrow">MINERVA AGENT — AGENT-ORCHESTRATED DELIVERY</div>
         <h1>
-          <em>Minerva</em> OS
+          <em>Minerva</em> AGENT
         </h1>
         <div className="caption">
-          HUMAN-VERIFIED · STUDY Nº 08 · PRODUCTION 1 : 1
+          HUMAN-VERIFIED · STUDY Nº 03 · PRODUCTION 1 : 1
         </div>
       </header>
       <nav className="ui minerva-nav" aria-label="Minerva">
-        <a className="primary" href="https://portal.abbble.co.za/console">
-          ENTER CONSOLE →
+        <a className="primary" href="https://portal.abbble.co.za">
+          ENTER PORTAL →
         </a>
         <a href="https://portal.abbble.co.za/plans">PRICING</a>
         <a href="https://portal.abbble.co.za/login">LOGIN</a>
@@ -1121,7 +1121,7 @@ frame();
       <div className="topright ui">
         <div className="themes" id="themes" />
         <div className="status">
-          <span className="dot">●</span>
+          {/* <span className="dot">●</span> */}
           <span id="status">ASSEMBLING · 0%</span>
         </div>
       </div>
@@ -1177,8 +1177,8 @@ frame();
         <button id="flight" type="button">
           TAKE FLIGHT
         </button>
-        <a id="consoleLink" href="https://portal.abbble.co.za/console">
-          ENTER CONSOLE →
+        <a id="consoleLink" href="https://portal.abbble.co.za">
+          ENTER PORTAL →
         </a>
         <div className="divider" />
         <div className="group" id="views">

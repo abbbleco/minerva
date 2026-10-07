@@ -4,7 +4,7 @@
 // client is the one module with internals: profileScoped / connectionScoped /
 // capabilityScoped are shared across api/ but must not reach call sites, or
 // request scoping stops having a single owner.
-export {
+  export {
   getApiRequestConnection,
   getApiRequestProfile,
   hermesApi,

@@ -64,21 +64,21 @@ def test_vertex_adc_counts_as_explicit_when_config_present(tmp_path, monkeypatch
 
     from hermes_cli.auth import is_provider_explicitly_configured
 
-    # vertex.project_id in config.yaml is a deliberate, Hermes-scoped signal.
+    # vertex.project_id in config.yaml is a deliberate, Minerva-scoped signal.
     _write_config(tmp_path, {
         "model": {"provider": "anthropic", "default": "claude-opus-4-8"},
         "vertex": {"project_id": "my-gcp-project"},
     })
     assert is_provider_explicitly_configured("vertex") is True
 
-    # No Hermes-scoped Vertex config at all → stays hidden.
+    # No Minerva-scoped Vertex config at all → stays hidden.
     _write_config(tmp_path, {"model": {"provider": "anthropic", "default": "claude-opus-4-8"}})
     assert is_provider_explicitly_configured("vertex") is False
 
 
 def test_vertex_ambient_google_creds_env_does_not_count_as_explicit(tmp_path, monkeypatch):
     """An ambient GOOGLE_APPLICATION_CREDENTIALS path (commonly set globally for
-    unrelated GCP work) must NOT mark Vertex explicit — only Hermes-scoped
+    unrelated GCP work) must NOT mark Vertex explicit — only Minerva-scoped
     signals do. Regression guard for the picker gate (PR review feedback)."""
     monkeypatch.setenv("HERMES_HOME", str(tmp_path / "hermes"))
     monkeypatch.delenv("VERTEX_PROJECT_ID", raising=False)

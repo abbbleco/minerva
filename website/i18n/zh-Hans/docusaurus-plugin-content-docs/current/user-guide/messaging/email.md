@@ -6,7 +6,7 @@ description: "通过 IMAP/SMTP 将 Minerva Agent 设置为电子邮件助手"
 
 # 电子邮件设置
 
-Hermes 可以使用标准 IMAP 和 SMTP 协议接收并回复电子邮件。向 Agent 的邮箱地址发送邮件，它会在同一线程中回复——无需特殊客户端或 bot API。支持 Gmail、Outlook、Yahoo、Fastmail，以及任何支持 IMAP/SMTP 的邮件服务商。
+Minerva 可以使用标准 IMAP 和 SMTP 协议接收并回复电子邮件。向 Agent 的邮箱地址发送邮件，它会在同一线程中回复——无需特殊客户端或 bot API。支持 Gmail、Outlook、Yahoo、Fastmail，以及任何支持 IMAP/SMTP 的邮件服务商。
 
 :::info 无外部依赖
 Email 适配器使用 Python 内置的 `imaplib`、`smtplib` 和 `email` 模块，无需额外安装软件包或外部服务。
@@ -43,7 +43,7 @@ Email 适配器使用 Python 内置的 `imaplib`、`smtplib` 和 `email` 模块�
 
 ---
 
-## 第一步：配置 Hermes
+## 第一步：配置 Minerva
 
 最简便的方式：
 
@@ -135,7 +135,7 @@ platforms:
 
 ## 访问控制
 
-电子邮件访问遵循与所有其他 Hermes 平台相同的模式：
+电子邮件访问遵循与所有其他 Minerva 平台相同的模式：
 
 1. **设置了 `EMAIL_ALLOWED_USERS`** → 仅处理来自这些地址的邮件
 2. **未设置白名单** → 未知发件人会收到配对码

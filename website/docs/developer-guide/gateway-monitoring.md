@@ -6,7 +6,7 @@ description: "Health export, structured diagnostics, fleet queries and how to ex
 # Gateway Monitoring
 
 Service health monitoring plus structured operational diagnostics for the
-Hermes gateway daemon, exported over OTLP/HTTP to an operator-configured
+Minerva gateway daemon, exported over OTLP/HTTP to an operator-configured
 endpoint (OpenTelemetry Collector, DataDog, or any OTLP receiver).
 
 This plane is content-free by construction. It exports gateway and cron
@@ -14,7 +14,7 @@ lifecycle state, platform connector health, and content-free warning/error
 diagnostics. It never exports prompts, messages, tool arguments or results,
 job names, destinations, schedules, raw errors, session history, usage
 analytics, audit logs, or detailed execution traces. Run/model/tool trajectory
-capture is a separate plane served by Hermes's native NeMo Relay SDK
+capture is a separate plane served by Minerva's native NeMo Relay SDK
 integration and explicitly configured Relay subscribers or exporters.
 
 ## What gets exported

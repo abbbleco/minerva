@@ -1,4 +1,4 @@
-// drive-update.cjs — launch the INSTALLED Hermes.exe (real Electron desktop
+// drive-update.cjs — launch the INSTALLED Minerva.exe (real Electron desktop
 // app) under Playwright's Electron driver and perform the update the way a
 // user does: Settings -> About -> "Update now". Screenshots at every step.
 //
@@ -81,7 +81,7 @@ async function main() {
   const child = app.process()
 
   const waitForProcessClose = observeProcessClose(child)
-  // On Windows Playwright's child is a shell wrapper, not Hermes.exe.
+  // On Windows Playwright's child is a shell wrapper, not Minerva.exe.
   const appPid = await app.evaluate(() => process.pid)
   log(`launched Electron pid=${appPid}`)
 

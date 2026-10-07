@@ -3,7 +3,7 @@ repo: https://github.com/mojomast/orbitdesktop
 sha: 98b9a5ee13cb1841e819d7a9c873d7de427ba347
 subdir: hermes-plugin
 description: >-
-  Your workspace, shaped by your agent: a bundled browser desktop powered by Hermes. Describe the
+  Your workspace, shaped by your agent: a bundled browser desktop powered by Minerva. Describe the
   workflow you need; the agent can rearrange windows and panes, customize appearance, build versioned
   sandboxed web apps, and refine your workspace with scoped control, previews and checkpoints.
   Illustrated examples show a project-specific COCS 3D asset viewer and OmniVoice experiment bench;

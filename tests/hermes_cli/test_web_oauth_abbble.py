@@ -84,7 +84,7 @@ def _approved_poll_client(*, consumed=False, key="qkt_sec_device1234"):
             return {
                 "status": "approved",
                 "api_key": key,
-                "router_url": "https://minrouter.abbble.co.za/v1",
+                "router_url": "https://minrouter.abbbleco.workers.dev/v1",
                 "agency": {"slug": "acme", "name": "Acme"},
             }
 

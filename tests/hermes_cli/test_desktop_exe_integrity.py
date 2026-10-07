@@ -305,7 +305,7 @@ def _ns(**kw):
 
 @pytest.mark.platforms("windows")
 def test_build_only_fails_when_pack_produces_corrupt_exe(tmp_path, monkeypatch, capsys):
-    """The updater chain's contract: a rebuild whose Hermes.exe cannot launch
+    """The updater chain's contract: a rebuild whose Minerva.exe cannot launch
     must exit nonzero (so hermes-setup's retry-once kicks in) and must leave
     the previous working build in place instead of installing the corrupt one.
 

@@ -182,7 +182,7 @@ phase_install() {
   # shellcheck disable=SC1090
   . "$STATE"
   arm_redirect
-  step "installing OLD ($OLD_REF) via the published Hermes-Setup.dmg"
+  step "installing OLD ($OLD_REF) via the published Minerva-Setup.dmg"
 
   # Pair both historical inputs. Today's downloaded install.sh can call helpers
   # absent from OLD (e.g. ensure-rolldown-binding.mjs). Use the published
@@ -218,7 +218,7 @@ phase_install() {
   # attach never works, and run bare it waits forever on its setup-choice
   # screen. Launch it in the background with our env (direct exec, not
   # `open`: launchd inherits NONE of the redirect env) and drive the
-  # "Install Hermes" button with native input.
+  # "Install Minerva" button with native input.
   local rc=0
   HERMES_SETUP_DEV_REPO_ROOT="$bootstrap_root" source_build_env bash "$ASSETS/drive-dmg-install.sh" \
     --app-bin "$app_bin" \
@@ -246,7 +246,7 @@ phase_install() {
     || fail "read-only verification failed after install"
   HERMES_DISABLE_LAZY_INSTALLS=1 PYTHONDONTWRITEBYTECODE=1 source_build_env "$hermes" --version 2>&1 | ts_prefix > "$LOG_DIR/version-old.log" || fail "hermes --version failed after install"
   ok "hermes --version works: $(head -c 120 "$LOG_DIR/version-old.log" | tr -d '\n')"
-  find_installed_app >/dev/null || fail "no installed Hermes.app after the dmg bootstrap"
+  find_installed_app >/dev/null || fail "no installed Minerva.app after the dmg bootstrap"
   ok "installed app: $(find_installed_app)"
   # The bootstrap can leave its launched app running. Preserve that handoff,
   # then request normal Quit of only this installed binary before smoke owns it.
@@ -336,7 +336,7 @@ phase_update() {
         "$INSTALL_DIR/apps/desktop/release/mac/Hermes.app"; do
         [ -d "$cand" ] && { head_app="$cand"; break; }
       done
-      [ -n "$head_app" ] || fail "no built Hermes.app under the checkout after the +desktop update"
+      [ -n "$head_app" ] || fail "no built Minerva.app under the checkout after the +desktop update"
       ok "rebuilt app present: $head_app"
       ;;
     open-app-update)

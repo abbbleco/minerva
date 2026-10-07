@@ -1,14 +1,14 @@
 ---
-title: "Hermes S6 Container Supervision — Modify or debug s6 services in the Hermes Docker image"
-sidebar_label: "Hermes S6 Container Supervision"
-description: "Modify or debug s6 services in the Hermes Docker image"
+title: "Minerva S6 Container Supervision — Modify or debug s6 services in the Minerva Docker image"
+sidebar_label: "Minerva S6 Container Supervision"
+description: "Modify or debug s6 services in the Minerva Docker image"
 ---
 
 {/* This page is auto-generated from the skill's SKILL.md by website/scripts/generate-skill-docs.py. Edit the source SKILL.md, not this page. */}
 
-# Hermes S6 Container Supervision
+# Minerva S6 Container Supervision
 
-Modify or debug s6 services in the Hermes Docker image.
+Modify or debug s6 services in the Minerva Docker image.
 
 ## Skill metadata
 
@@ -26,15 +26,15 @@ Modify or debug s6 services in the Hermes Docker image.
 ## Reference: full SKILL.md
 
 :::info
-The following is the complete skill definition that Hermes loads when this skill is triggered. This is what the agent sees as instructions when the skill is active.
+The following is the complete skill definition that Minerva loads when this skill is triggered. This is what the agent sees as instructions when the skill is active.
 :::
 
-# Hermes s6-overlay Container Supervision
+# Minerva s6-overlay Container Supervision
 
 ## When to use this skill
 
 Load this skill when you're working on:
-- Adding or removing a static service in the Hermes Docker image (something that should be supervised at every container start, like the dashboard)
+- Adding or removing a static service in the Minerva Docker image (something that should be supervised at every container start, like the dashboard)
 - Diagnosing why a per-profile gateway isn't starting, restarting, or surviving `docker restart`
 - Understanding why the container's CMD is `/opt/hermes/docker/main-wrapper.sh` and how leading-dash args reach the user's program
 - Modifying `cont-init.d` boot scripts (UID remap, volume seeding, profile reconciliation)
@@ -195,4 +195,4 @@ Check whether something is invoking `s6-svscanctl -t` or `/run/s6/basedir/bin/ha
 ## Related skills
 
 - `hermes-agent-dev`: General hermes-agent codebase navigation
-- `hermes-tool-quirks`: Specific Hermes-tool workarounds (sed/grep/etc.) — load when debugging the s6 stack's interaction with hermes built-in tools.
+- `hermes-tool-quirks`: Specific Minerva-tool workarounds (sed/grep/etc.) — load when debugging the s6 stack's interaction with hermes built-in tools.

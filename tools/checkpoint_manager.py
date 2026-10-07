@@ -121,7 +121,7 @@ DEFAULT_EXCLUDES = [
     ".git/",
     ".hg/",
     ".svn/",
-    # Worktrees (Hermes convention — don't recursively snapshot siblings)
+    # Worktrees (Minerva convention — don't recursively snapshot siblings)
     ".worktrees/",
     # Native / compiled binaries
     "*.so",
@@ -253,7 +253,7 @@ def _load_ledger(store: Path, dir_hash: str) -> Dict[str, Dict]:
     """Load the agent-write ledger: {relpath: {"sha256": ..., "ts": ...}}.
 
     The ledger records the content hash of every file the last successful
-    ``write_file`` / ``patch`` produced, so restores can tell "Hermes wrote
+    ``write_file`` / ``patch`` produced, so restores can tell "Minerva wrote
     this" apart from "the user hand-edited this afterwards".
     """
     try:
@@ -563,7 +563,7 @@ def _init_store(store: Path, working_dir: str) -> Optional[str]:
     # exists since we just created the store inside it.
     cfg_wd = str(base)
     _run_git(["config", "user.email", "hermes@local"], store, cfg_wd)
-    _run_git(["config", "user.name", "Hermes Checkpoint"], store, cfg_wd)
+    _run_git(["config", "user.name", "Minerva Checkpoint"], store, cfg_wd)
     _run_git(["config", "commit.gpgsign", "false"], store, cfg_wd)
     _run_git(["config", "tag.gpgSign", "false"], store, cfg_wd)
     _run_git(["config", "gc.auto", "0"], store, cfg_wd)
@@ -856,7 +856,7 @@ class CheckpointManager:
         Returns ``{"success", "restore": [rel...], "skipped": [rel...],
         "error"?}`` where ``restore`` lists files whose current content
         still matches what Minerva last wrote (per the agent-write ledger)
-        and ``skipped`` lists files the user hand-edited after Hermes'
+        and ``skipped`` lists files the user hand-edited after Minerva'
         last write or that Minerva never wrote at all.
         """
         hash_err = _validate_commit_hash(commit_hash)
@@ -907,7 +907,7 @@ class CheckpointManager:
             current = _hash_file(abs_path)
             if current is None:
                 # File deleted since Minerva wrote it: restoring it back is
-                # safe — its last content was Hermes-authored.
+                # safe — its last content was Minerva-authored.
                 restore.append(rel)
             elif current == recorded:
                 restore.append(rel)
@@ -1123,8 +1123,8 @@ class CheckpointManager:
         """Restore files to a checkpoint state.
 
         With ``safe=True`` (full-directory restores only), files the user
-        hand-edited after Hermes' last write — per the agent-write ledger —
-        are left untouched, and only Hermes-authored changes are reverted.
+        hand-edited after Minerva' last write — per the agent-write ledger —
+        are left untouched, and only Minerva-authored changes are reverted.
         The result gains ``skipped_user_edits`` listing the preserved paths,
         ``skipped_oversize`` listing paths kept because the size cap excluded
         them from every checkpoint, and — only when a delete failed —
@@ -1280,7 +1280,7 @@ class CheckpointManager:
 
         if restore_paths is not None:
             # Split into files present in the checkpoint (checkout) and
-            # Hermes-created files absent from it (delete to restore state).
+            # Minerva-created files absent from it (delete to restore state).
             checkout_targets: List[str] = []
             delete_targets: List[str] = []
             for rel in restore_paths:

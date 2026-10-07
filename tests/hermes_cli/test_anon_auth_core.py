@@ -179,7 +179,7 @@ class TestRouteFallback:
         _portal, stored, effective, _client = _nous_effective_routing(guest)
         assert stored.rstrip("/") == WELCOME and effective.rstrip("/") == WELCOME
         _portal, stored, _effective, _client = _nous_effective_routing({"refresh_token": "r"})
-        assert stored.rstrip("/") == "https://minrouter.abbble.co.za/v1"
+        assert stored.rstrip("/") == "https://minrouter.abbbleco.workers.dev/v1"
 
     def test_shared_store_shape_keeps_a_guest_on_the_welcome_host(self, portal):
         from hermes_cli.auth_nous import _nous_shared_shape

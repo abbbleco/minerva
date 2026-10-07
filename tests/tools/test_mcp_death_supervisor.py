@@ -213,7 +213,7 @@ def test_reaps_a_registered_group_when_the_control_pipe_reaches_eof():
 
 
 def test_leaves_an_unregistered_group_alone_at_eof():
-    # The other failure direction, and the more damaging one: a clean Hermes
+    # The other failure direction, and the more damaging one: a clean Minerva
     # shutdown unregisters as it tears each server down, so EOF must not become
     # a kill-everything event for servers that were handed back.
     survivor = subprocess.Popen(_VICTIM, start_new_session=True)
@@ -238,7 +238,7 @@ def test_leaves_an_unregistered_group_alone_at_eof():
         supervisor.wait(timeout=10)
 
 
-# A stand-in for Hermes: registers a real child, then blocks forever holding the
+# A stand-in for Minerva: registers a real child, then blocks forever holding the
 # only write end of the control pipe. SIGKILLing it is the scenario the whole
 # module exists for -- no cleanup code of ours gets to run.
 _FAKE_PARENT = """

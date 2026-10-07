@@ -16,7 +16,7 @@ const SHORT_LABELS: Record<string, string> = {
 }
 
 /**
- * A pick the route does not send verbatim: `ultra` is a Hermes-internal step
+ * A pick the route does not send verbatim: `ultra` is a Minerva-internal step
  * that every route clamps to its strongest level (`max` on OpenAI-compatible wires), and the
  * CLI's `/reasoning` says so ("ultra (sends max on this route)"). The wire
  * level comes from the gateway's `session.info.reasoning_effort_wire`; nothing

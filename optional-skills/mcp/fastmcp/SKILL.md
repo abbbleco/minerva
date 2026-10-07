@@ -29,7 +29,7 @@ Use this skill when the task is to:
 - install a server into Claude Code, Claude Desktop, Cursor, or a similar MCP client
 - prepare a FastMCP server repo for HTTP deployment
 
-Use `native-mcp` when the server already exists and only needs to be connected to Hermes. Use `mcporter` when the goal is ad-hoc CLI access to an existing MCP server instead of building one.
+Use `native-mcp` when the server already exists and only needs to be connected to Minerva. Use `mcporter` when the goal is ad-hoc CLI access to an existing MCP server instead of building one.
 
 ## Prerequisites
 
@@ -293,7 +293,7 @@ This usually exposes naming mismatches, missing required arguments, or non-seria
 
 ### Minerva cannot see the deployed server
 
-The server-building part may be correct while the Minerva config is not. Load the `native-mcp` skill and configure the server in `~/.hermes/config.yaml`, then restart Hermes.
+The server-building part may be correct while the Minerva config is not. Load the `native-mcp` skill and configure the server in `~/.hermes/config.yaml`, then restart Minerva.
 
 ## References
 

@@ -292,7 +292,7 @@ def _resolve_openrouter_api_key() -> str:
     return os.getenv("OPENROUTER_API_KEY", "").strip()
 
 
-_DEFAULT_NOUS_INFERENCE_BASE = "https://minrouter.abbble.co.za"
+_DEFAULT_NOUS_INFERENCE_BASE = "https://minrouter.abbbleco.workers.dev"
 
 
 def _resolve_nous_pricing_credentials() -> tuple[str, str]:

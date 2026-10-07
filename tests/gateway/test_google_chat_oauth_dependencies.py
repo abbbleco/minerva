@@ -59,7 +59,7 @@ def test_ensure_deps_surfaces_install_reason(monkeypatch):
 
 
 def test_ensure_deps_requests_every_extra_before_reporting_a_restart(monkeypatch):
-    """A successful install of the FIRST extra raises InstallError("restart Hermes…"); stopping
+    """A successful install of the FIRST extra raises InstallError("restart Minerva…"); stopping
     there left the second extra uninstalled, so the restart landed right back here. Both are
     requested in one pass and the first failure is what the registry sees."""
     from plugins.platforms.google_chat import adapter

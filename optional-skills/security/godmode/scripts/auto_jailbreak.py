@@ -185,7 +185,7 @@ MODEL_STRATEGIES = {
             ),
         },
     },
-    # Nous/Hermes models — already uncensored, just needs clean prompt
+    # Nous/Minerva models — already uncensored, just needs clean prompt
     "hermes": {
         "order": ["prefill_only"],
         "system_templates": {},

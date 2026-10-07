@@ -1,4 +1,4 @@
-"""Resolve logical working directories for Hermes-owned Relay scopes."""
+"""Resolve logical working directories for Minerva-owned Relay scopes."""
 
 from __future__ import annotations
 

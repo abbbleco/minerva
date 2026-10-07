@@ -51,10 +51,10 @@ export default function ProgressScreen({ bootstrap }: ProgressProps) {
   }, [bootstrap.status])
 
   const isUpdate = mode === 'update'
-  const title = bootstrap.status === 'completed' ? 'Done' : isUpdate ? 'Updating Hermes' : 'Setting up Minerva Agent'
+  const title = bootstrap.status === 'completed' ? 'Done' : isUpdate ? 'Updating Minerva' : 'Setting up Minerva Agent'
 
   const description = isUpdate
-    ? 'Hermes is updating to the latest version — this only takes a moment.'
+    ? 'Minerva is updating to the latest version — this only takes a moment.'
     : 'This is a one-time setup. The Minerva installer is downloading dependencies and configuring your machine. Subsequent launches will skip this step.'
 
   const pct = Math.round(progress.fraction * 100)

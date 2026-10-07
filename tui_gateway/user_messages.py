@@ -41,7 +41,7 @@ _TURN_ERROR_LAYER_COPY: dict[str, tuple[str, str]] = {
     "endpoint": ("Your custom model endpoint did not answer", "Check the endpoint is running, then /retry."),
     "streaming": ("The connection to the model provider dropped mid-reply", "Send /retry."),
     "disk": ("The disk is full, so Minerva could not save the turn", "Free some space, then /retry."),
-    "gateway": ("Hermes hit an internal error while running this turn", "Send /retry; type /logs for the trace."),
+    "gateway": ("Minerva hit an internal error while running this turn", "Send /retry; type /logs for the trace."),
     "provider": ("The model provider returned an error", "Send /retry, or switch with /model."),
 }
 
@@ -105,15 +105,15 @@ _AUTH_LOCK_TIMEOUT_PREFIXES = (
 
 def agent_init_failed_message(exc: Any) -> str:
     if any(prefix in str(exc) for prefix in _AUTH_LOCK_TIMEOUT_PREFIXES):
-        return (f"Hermes could not start the assistant for this session. Details: {exc}. "
+        return (f"Minerva could not start the assistant for this session. Details: {exc}. "
                 "Wait for the other process to release the lock (or exit it — check for a running "
                 "dashboard or background hermes process), then retry.")
-    return (f"Hermes could not start the assistant for this session. Details: {exc}. "
+    return (f"Minerva could not start the assistant for this session. Details: {exc}. "
             "Check the model and provider with /model, or run `minerva setup` in a terminal to reconfigure.")
 
 
 AGENT_STILL_STARTING = (
-    "Hermes is still starting this session (loading tools), so this command could not run yet. "
+    "Minerva is still starting this session (loading tools), so this command could not run yet. "
     "Wait for the status bar to show ready and try again.")
 
 # A deferred build that finished WITHOUT attaching an agent (its session record was replaced or
@@ -121,7 +121,7 @@ AGENT_STILL_STARTING = (
 AGENT_BUILD_ABANDONED = "agent build aborted: the session was closed or replaced before the build finished"
 # Turn refusal when the record still has no agent at admission time (reason unknown).
 AGENT_MISSING_FOR_TURN = (
-    "Hermes could not start the assistant for this session, so your message was not run. "
+    "Minerva could not start the assistant for this session, so your message was not run. "
     "Reopen the session (or start a new one with /new) and send it again.")
 
 

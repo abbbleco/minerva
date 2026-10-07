@@ -1,4 +1,4 @@
-"""Hermes CLI - Unified command-line interface for Minerva Agent."""
+"""Minerva CLI - Unified command-line interface for Minerva Agent."""
 
 import sys
 

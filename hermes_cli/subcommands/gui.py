@@ -51,7 +51,7 @@ def build_gui_parser(subparsers, *, cmd_gui: Callable) -> None:
             "rebuilds with a certificate-anchored identity. Idempotent — safe "
             "to re-run after updates.")
     gui_parser.add_argument(
-        "--identity", default="Hermes Local Signing",
+        "--identity", default="Minerva Local Signing",
         help="Certificate name to create/use for --setup-tcc-identity (default: Minerva Local Signing)",
     )
     gui_parser.add_argument(

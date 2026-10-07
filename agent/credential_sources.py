@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 EXTERNAL_LOGINS_NOT_ADOPTED_NOTICE = (
     "External CLI logins (Codex CLI, Claude Code) are not adopted: auth.adopt_external_logins is false. "
-    "Hermes uses only its own logins; run `minerva auth add <provider>` to add one."
+    "Minerva uses only its own logins; run `minerva auth add <provider>` to add one."
 )
 _notice_logged = False
 
@@ -124,7 +124,7 @@ def _remove_env_source(provider: str, removed) -> RemovalResult:
             f"Note: {env_var} is still set in your shell environment "
             f"(not in ~/.hermes/.env).",
             "  Unset it there (shell profile, systemd EnvironmentFile, "
-            "launchd plist, etc.) or it will keep being visible to Hermes.",
+            "launchd plist, etc.) or it will keep being visible to Minerva.",
             f"  The pool entry is now suppressed — Minerva will ignore "
             f"{env_var} until you run `minerva auth add {provider}`.",
         ])

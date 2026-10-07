@@ -60,7 +60,7 @@ def _extract_inherited_flags(argv: Sequence[str]) -> list[str]:
 
 
 def resolve_hermes_bin() -> Optional[str]:
-    """Hermes entry point: ``sys.argv[0]`` if a real executable, else the same-family binary
+    """Minerva entry point: ``sys.argv[0]`` if a real executable, else the same-family binary
     off PATH (``minerva`` when invoked as ``minerva``, else ``hermes`` — each falls back to
     the other), else ``None`` (caller falls back to ``python -m hermes_cli.main``).
 
@@ -140,7 +140,7 @@ def relaunch(
             # Raw ``[Errno 8] Exec format error`` is cryptic; usual causes are ``hermes`` not on
             # PATH yet (install hasn't propagated User PATH into this shell) or a stale shim.
             print(
-                f"\nHermes relaunch failed: {exc}\n"
+                f"\nMinerva relaunch failed: {exc}\n"
                 f"Command: {' '.join(new_argv)}\n"
                 f"Fix: open a new terminal so PATH picks up, then re-run hermes.",
                 file=sys.stderr,

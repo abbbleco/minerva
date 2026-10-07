@@ -80,7 +80,7 @@ def print_qr_code(url: str, *, include_link: bool = True) -> None:
     print(render_qr_terminal(url) or (
         "  (QR code unavailable. From the Minerva environment, run: "
         f"{install_hint('messaging')}. "
-        "Then restart Hermes.)"))
+        "Then restart Minerva.)"))
     if include_link:
         print(f"  Link: {url}")
 

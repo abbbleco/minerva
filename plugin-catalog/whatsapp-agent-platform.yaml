@@ -15,7 +15,7 @@ description: >-
   Files go only to the creator; Meta keeps uploads up to 30 days. Received files are cached under
   HERMES_HOME (deleted after ~24 h while the gateway runs) and may reach the configured model, vision
   or speech-to-text provider. WHATSAPP_AGENT_PLATFORM_MEDIA_ENABLED=false disables media. By default
-  only the agent's creator (verified through Meta's API) can message Hermes;
+  only the agent's creator (verified through Meta's API) can message Minerva;
   WHATSAPP_AGENT_PLATFORM_ALLOWED_USERS or WHATSAPP_AGENT_PLATFORM_ALLOW_ALL_USERS widens that
   explicitly. The agent API key is saved to the Minerva .env; the state file under HERMES_HOME is 0600
   and never contains the key.

@@ -3,7 +3,7 @@
 Strava's MCP connector advertises ``authorization_servers: ["https://www.strava.com/mcp-issuer"]`` and
 serves ``/.well-known/oauth-authorization-server/mcp-issuer`` with ``issuer: "https://www.strava.com"``.
 The SDK's exact-string issuer check (RFC 8414 §3.3) rejected that document and discovery never completed.
-Hermes accepts exactly this shape — the document fetched from the well-known URL derived from the advertised
+Minerva accepts exactly this shape — the document fetched from the well-known URL derived from the advertised
 identifier, naming that identifier's origin — through the real provider flow; every other mismatch is still
 rejected.
 """

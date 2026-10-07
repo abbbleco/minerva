@@ -56,7 +56,7 @@ export function createCoreSandbox(label: string): CoreSandbox {
   // token` for GitHub credentials; with a sandbox HOME a real gh can block on
   // the desktop keyring for ~60 s, and a probe in flight at quit outlives the
   // backend (reported as a finding) — which would make the orphan census
-  // depend on the runner's keyring rather than on Hermes.
+  // depend on the runner's keyring rather than on Minerva.
   const bin = path.join(root, 'bin')
   fs.mkdirSync(bin, { recursive: true })
   fs.writeFileSync(path.join(bin, 'gh'), '#!/bin/sh\necho "no oauth token found for github.com" >&2\nexit 1\n', {
@@ -82,7 +82,7 @@ export function createCoreSandbox(label: string): CoreSandbox {
  * off: with none on PATH the backend downloads it from GitHub on the first
  * terminal command (network in a required lane), and with one on PATH it
  * fetched a 12 MB threat DB that was still being written after quit. The
- * approval prompts under test come from Hermes's own detector.
+ * approval prompts under test come from Minerva's own detector.
  */
 export function providerConfigYaml(providerUrl: string, extra = '', approvals: 'manual' | 'off' = 'off'): string {
   return `model:

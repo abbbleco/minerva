@@ -29,7 +29,7 @@ def _hermes_home_path() -> Path:
 
 
 def _hermes_root_path() -> Path:
-    """Hermes root dir (parent of any profile, never per-profile)."""
+    """Minerva root dir (parent of any profile, never per-profile)."""
     return _constants_path("get_default_hermes_root")
 
 

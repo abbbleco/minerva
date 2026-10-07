@@ -476,7 +476,7 @@ class TestVoiceChannelCommands:
         mock_adapter._voice_input_callback = None
         event = self._make_discord_event()
         event.source.chat_type = "group"
-        event.source.chat_name = "Hermes Server / #general"
+        event.source.chat_name = "Minerva Server / #general"
         runner.adapters[event.source.platform] = mock_adapter
         result = await runner._handle_voice_channel_join(event)
         assert "General" in result
@@ -604,7 +604,7 @@ class TestVoiceChannelCommands:
 
         bound_source = SessionSource(
             chat_id="123",
-            chat_name="Hermes Server / #general",
+            chat_name="Minerva Server / #general",
             chat_type="group",
             user_id="user1",
             user_name="user1",
@@ -626,7 +626,7 @@ class TestVoiceChannelCommands:
         event = mock_adapter.handle_message.call_args[0][0]
         assert event.source.chat_id == "123"
         assert event.source.chat_type == "group"
-        assert event.source.chat_name == "Hermes Server / #general"
+        assert event.source.chat_name == "Minerva Server / #general"
         assert event.source.user_id == "42"
 
 

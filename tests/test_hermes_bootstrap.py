@@ -336,7 +336,7 @@ except ModuleNotFoundError as exc:
 
 class TestHardenImportPath:
     """harden_import_path() must keep a same-named package in the launch
-    directory from shadowing Hermes's own top-level modules — covering both
+    directory from shadowing Minerva's own top-level modules — covering both
     the relative ('' / '.') and absolute-path forms the cwd can take on
     sys.path (issue #51286)."""
 
@@ -400,7 +400,7 @@ class TestHardenImportPath:
 
 
 class TestEnableWindowsVt:
-    """Hermes prints raw SGR codes; a conhost console renders them only with VT on."""
+    """Minerva prints raw SGR codes; a conhost console renders them only with VT on."""
 
     @pytest.mark.platforms("windows")
     def test_turns_vt_on_for_a_console_that_has_it_off(self):

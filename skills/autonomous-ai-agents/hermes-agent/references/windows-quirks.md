@@ -1,6 +1,6 @@
 # Windows-Specific Quirks
 
-Hermes runs natively on Windows (PowerShell, cmd, Windows Terminal, git-bash
+Minerva runs natively on Windows (PowerShell, cmd, Windows Terminal, git-bash
 mintty, VS Code integrated terminal). Most of it just works, but a handful
 of differences between Win32 and POSIX have bitten us — document new ones
 here as you hit them so the next person (or the next session) doesn't
@@ -23,7 +23,7 @@ a UTF-8 BOM (Notepad does this). Re-save as UTF-8 without BOM;
 ### `execute_code` / Sandbox
 
 **WinError 10106** from the sandbox child process — it can't create an
-`AF_INET` socket. Root cause is usually Hermes's env scrubber dropping
+`AF_INET` socket. Root cause is usually Minerva's env scrubber dropping
 `SYSTEMROOT`/`WINDIR`/`COMSPEC` (Python's `socket` needs `SYSTEMROOT` to find
 `mswsock.dll`), not a broken Winsock LSP. The `_WINDOWS_ESSENTIAL_ENV_VARS`
 allowlist in `tools/code_execution_env.py` covers it; if you still hit it,

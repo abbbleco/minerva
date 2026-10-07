@@ -6,7 +6,7 @@
 
 Achievement system for the Minerva Dashboard: collectible, tiered badges generated from real local Minerva session history.
 
-![Hermes Achievements dashboard](docs/assets/achievements-dashboard-hd.png)
+![Minerva Achievements dashboard](docs/assets/achievements-dashboard-hd.png)
 
 The screenshots use temporary demo tier data to show the full visual range. The plugin itself reads real local Minerva session history by default.
 
@@ -16,12 +16,12 @@ The screenshots use temporary demo tier data to show the full visual range. The 
 
 ## What it does
 
-Hermes Achievements scans local Minerva sessions and unlocks badges based on real agent behavior:
+Minerva Achievements scans local Minerva sessions and unlocks badges based on real agent behavior:
 
 - autonomous tool chains
 - debugging and recovery patterns
 - vibe-coding file edits
-- Hermes-native skills, memory, cron, and plugin usage
+- Minerva-native skills, memory, cron, and plugin usage
 - web research and browser automation
 - model/provider workflows
 - lifestyle patterns such as weekend or night sessions

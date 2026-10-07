@@ -59,7 +59,7 @@ Deploy Minerva Agent as a bot on your favorite messaging platform.
 4. [Telegram Setup](../user-guide/messaging/telegram.md)
 5. [Discord Setup](../user-guide/messaging/discord.md)
 6. [Voice Mode](../user-guide/features/voice-mode.md)
-7. [Use Voice Mode with Hermes](../guides/use-voice-mode-with-hermes.md)
+7. [Use Voice Mode with Minerva](../guides/use-voice-mode-with-hermes.md)
 8. [Security](../user-guide/security.md)
 
 For full project examples, see:
@@ -95,7 +95,7 @@ Create named Bots with their own model, memory, skills, routines, and chats, the
 Extend Minerva Agent with your own tools and reusable skill packages.
 
 1. [Plugins](../user-guide/features/plugins.md)
-2. [Build a Hermes Plugin](../developer-guide/plugins/index.md)
+2. [Build a Minerva Plugin](../developer-guide/plugins/index.md)
 3. [Tools Overview](../user-guide/features/tools.md)
 4. [Skills Overview](../user-guide/features/skills.md)
 5. [MCP (Model Context Protocol)](../user-guide/features/mcp.md)
@@ -105,7 +105,7 @@ Extend Minerva Agent with your own tools and reusable skill packages.
 
 :::tip
 For most custom tool creation, start with plugins. The [Adding Tools](../developer-guide/adding-tools.md)
-page is for built-in Hermes core development, not the usual user/custom-tool path.
+page is for built-in Minerva core development, not the usual user/custom-tool path.
 :::
 
 ### "I want to train models"
@@ -147,7 +147,7 @@ Not sure what's available? Here's a quick directory of major features:
 | **MCP** | Connect to external tool servers via Model Context Protocol | [MCP](../user-guide/features/mcp.md) |
 | **Cron** | Schedule recurring agent tasks | [Cron](../user-guide/features/cron.md) |
 | **Delegation** | Spawn sub-agents for parallel work | [Delegation](../user-guide/features/delegation.md) |
-| **Code Execution** | Run Python scripts that call Hermes tools programmatically | [Code Execution](../user-guide/features/code-execution.md) |
+| **Code Execution** | Run Python scripts that call Minerva tools programmatically | [Code Execution](../user-guide/features/code-execution.md) |
 | **Browser** | Web browsing and scraping | [Browser](../user-guide/features/browser.md) |
 | **Hooks** | Event-driven callbacks and middleware | [Hooks](../user-guide/features/hooks.md) |
 | **Batch Processing** | Process multiple inputs in bulk | [Batch Processing](../user-guide/features/batch-processing.md) |

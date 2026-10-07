@@ -274,7 +274,7 @@ bundled Python checker. Its OS-registered App Installer source still owns
 automatic updates.
 
 Store builds use `Windows.Services.Store.StoreContext` to check, download,
-and request installation inside Hermes. The native consent UI attaches to the
+and request installation inside Minerva. The native consent UI attaches to the
 current desktop window. Download finishes before backend shutdown; the existing
 relaunch waiter is registered before the install request. Unknown checks,
 cancellation and request failures do not count as successful updates. Native

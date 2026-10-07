@@ -756,7 +756,7 @@ class TestSyncManifest:
         assert "Deploy v2." in (imports / "deploy-helper" / "SKILL.md").read_text(encoding="utf-8")
         assert (user_skill / "SKILL.md").read_text(encoding="utf-8") == "user content"
 
-        # An imported skill the user then EDITED locally is no longer Hermes-owned: the next sync
+        # An imported skill the user then EDITED locally is no longer Minerva-owned: the next sync
         # records a conflict for it instead of overwriting the edit (the docs promise this).
         (imports / "deploy-helper" / "SKILL.md").write_text("my local tweaks", encoding="utf-8")
         (claude_tree / "skills" / "deploy-helper" / "SKILL.md").write_text(

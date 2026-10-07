@@ -383,7 +383,7 @@ def cmd_disable(args: argparse.Namespace) -> int:
     return disable_secret_source(
         "bitwarden",
         "[green]Disabled.[/green]  Bitwarden secrets will NOT be pulled on the next "
-        "Hermes invocation.\n"
+        "Minerva invocation.\n"
         "  Your access token is left in .env — remove it manually if you also want "
         "to revoke the credential.")
 

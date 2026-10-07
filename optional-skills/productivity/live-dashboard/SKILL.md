@@ -35,7 +35,7 @@ Don't use for: one-off status questions (answer directly), price/availability th
 
 - At least one source connector the dashboard will read from: email/calendar via `himalaya` or `google-workspace`, websites via `web_extract` or `browser_navigate`, local files via `read_file`. If none is configured, renegotiate the sources in step 1 before writing any artifact.
 - `cronjob` for the recurring tick.
-- Optional: the `desktop_preview` tool (Hermes desktop app sessions). When it is in the toolset, dashboards render in the in-app preview pane; otherwise the user is given the file path.
+- Optional: the `desktop_preview` tool (Minerva desktop app sessions). When it is in the toolset, dashboards render in the in-app preview pane; otherwise the user is given the file path.
 
 ## Procedure — Setup (foreground, once)
 

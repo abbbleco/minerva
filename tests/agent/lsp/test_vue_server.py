@@ -1,7 +1,7 @@
 """Tests for the Vue server registration.
 
 ``@vue/language-server`` 3.x only works behind a client-hosted tsserver tunnel
-(``tsserver/request`` notifications) that Hermes's generic client does not
+(``tsserver/request`` notifications) that Minerva's generic client does not
 run, so it never publishes diagnostics.  Minerva pins the self-hosting 2.x line
 and starts it with ``vue.hybridMode`` off plus an explicit JS TypeScript SDK.
 """

@@ -206,7 +206,7 @@ gateway:
     set: "⊙ Goal set ({budget}-turn budget): {goal}\nI'll keep working until the goal is done, you pause/clear it, or the budget is exhausted.\nControls: /goal status · /goal pause · /goal resume · /goal clear"
     gate_add_admin_only: "⛔ /goal gate add requires an explicitly configured gateway admin (allow_admin_from for DMs, group_allow_admin_from for groups)."
   help:
-    header: "📖 **Hermes Commands**\n"
+    header: "📖 **Minerva Commands**\n"
     skill_header: "\n⚡ **Skill Commands** ({count} active):"
     more_use_commands: "\n... and {count} more. Use `/commands` for the full paginated list."
   insights:
@@ -426,7 +426,7 @@ gateway:
     source_line: "Source: {source}; category counts are local estimates."
     hint_all: "Use /context all for per-skill and per-toolset costs."
   status:
-    header: "📊 **Hermes Gateway Status**"
+    header: "📊 **Minerva Gateway Status**"
     matrix_scope_header: "**Matrix scope:**"
     matrix_scope_room: "  room: {room}"
     matrix_scope_room_id: "  room_id: {room_id}"
@@ -474,7 +474,7 @@ gateway:
     untitled_session: "Untitled session"
     restore_step_1: "1. Create or open a topic. To create a new one, open All Messages and send any message there."
     restore_step_2: "2. Send /topic <session-id> inside that topic."
-    default_title: "Hermes Chat"
+    default_title: "Minerva Chat"
     root_lobby: "This main chat is reserved for system commands.\n\nTo start a new Minerva chat, open the All Messages topic at the top of this bot interface and send any message there. Telegram will create a new topic for that message; each topic works as an independent Minerva session."
     root_new: "To start a new parallel Minerva chat, open the All Messages topic at the top of this bot interface and send any message there. Telegram will create a new topic for it.\n\nEach topic is an independent Minerva session. Use /new inside an existing topic only if you want to replace that topic's current session."
     new_header: "Started a new Minerva session in this topic.\n\nTip: for parallel work, open All Messages and send a message there to create a separate topic instead of using /new here. /new replaces the session attached to the current topic."
@@ -605,7 +605,7 @@ gateway:
     none_value: "none"
     unknown_value: "unknown"
   exec_approval:
-    header: "Hermes wants to run a command that needs your OK"
+    header: "Minerva wants to run a command that needs your OK"
     reason_label: "Why it was flagged"
     default_reason: "dangerous command"
     smart_deny_line: "Smart DENY: owner override applies to this one operation only."
@@ -748,7 +748,7 @@ gateway:
     set: "Busy input mode set to **`{mode}`** (saved).\n_{behavior}_"
   pause:
     resumed: "▶️ Resumed — new work is accepted again."
-    not_paused: "Hermes wasn't paused."
+    not_paused: "Minerva wasn't paused."
     reason_suffix: " (reason: {reason})"
     already_paused: "⏸️ Minerva is already paused{suffix}. Use `/pause off` to resume."
     paused: "⏸️ Paused{suffix}. New cron/kanban/gateway work is on hold; in-flight work finishes normally. Use `/pause off` to resume."
@@ -849,7 +849,7 @@ gateway:
     task_status_complete: "complete"
     task_status_error: "error"
     task_line: "- {title} - {status}"
-    task_card_title: "Hermes is working"
+    task_card_title: "Minerva is working"
 
   pairing:
     validity_hour: "{hours} hour"
@@ -865,7 +865,7 @@ gateway:
     notice_restart: "⚠️ Minerva is restarting — your current task will be interrupted. Send any message after the restart and I'll try to resume where you left off."
 
   startup:
-    handoff_thread_title: "Hermes — {title}"
+    handoff_thread_title: "Minerva — {title}"
     restarted: "♻ Gateway restarted successfully. Your session continues."
     free_tier_line: "Inference: Nous free tier (nous/welcome). Sign in for more: /login"
     online: "♻️ Gateway online — Minerva is back and ready."
@@ -1053,7 +1053,7 @@ platform:
     # Clarify / update prompts (embed titles + content headers + button labels + footers).
     prompt:
       truncated_marker: "... [truncated]"
-      clarify_title: "Hermes needs your input"
+      clarify_title: "Minerva needs your input"
       clarify_hint_buttons: "Pick one below, or click ✏️ Other to type a custom answer."
       clarify_hint_text: "Reply in this channel with your answer."
       default_hint: " (default: {default})"
@@ -1213,7 +1213,7 @@ platform:
     security:
       unauthorized_slash_alert: "⚠️ Unauthorized Discord slash attempt\nUser: {user_name} ({user_id})\nChannel: {chan_id} (guild {guild_id})\nCommand: {command_text}\nReason: {reason}"
     thread:
-      seed_message: "🧵 Thread created by Hermes: **{name}**"
+      seed_message: "🧵 Thread created by Minerva: **{name}**"
       default_name: "Hermes"
       handoff_seed: "🧵 Minerva handoff: **{name}**"
       auto_create_failed: "⚠️ Minerva could not create a Discord thread for this message, so the request was not processed. Please retry."
@@ -1371,7 +1371,7 @@ platform:
       thinking: "is thinking..."
       still_working: "still working… ({elapsed})"
     task_card:
-      title: "Hermes is working"
+      title: "Minerva is working"
     slash:
       reply_truncated: "\n\n_[Reply truncated: {count} more part(s) exceeded Slack's ephemeral reply limit.]_"
       running: "Running `/{command}`…"
@@ -1380,7 +1380,7 @@ platform:
 
   matrix:
     handoff:
-      default_name: "Hermes session"
+      default_name: "Minerva session"
     media:
       image_download_failed: "I couldn't download and upload the image to Matrix. The source URL was not shown because it may contain private tokens."
     approval:
@@ -1441,7 +1441,7 @@ platform:
       header: "Question"
       question: "❓ {question}"
     typing:
-      thinking: "Hermes is thinking…"
+      thinking: "Minerva is thinking…"
       interrupted: "(interrupted)"
       no_reply: "(no reply)"
     attachment_fallback:
@@ -1679,7 +1679,7 @@ slash:
   voice:
     description: "Toggle voice mode"
   wake:
-    description: "Toggle the 'Hey Hermes' wake word listener"
+    description: "Toggle the 'Hey Minerva' wake word listener"
   busy:
     description: "Control how messages behave while Minerva is working"
   tools:
@@ -2221,7 +2221,7 @@ cli:
     err_termux_app_missing: "Termux:API command package detected, but the Android app is missing.\nInstall/update the Termux:API Android app, then retry /voice on."
     err_mic_access: "Voice mode needs microphone access.\nRun pkg install termux-api and install the Termux:API Android app, then retry /voice on."
     err_audio_capture: "Voice mode requires audio capture."
-    err_stt_provider: "Voice mode requires an STT provider for transcription.\nRun hermes tools and configure Speech-to-Text, then restart Hermes."
+    err_stt_provider: "Voice mode requires an STT provider for transcription.\nRun hermes tools and configure Speech-to-Text, then restart Minerva."
     silence_autostop: "Silence detected, auto-stopping..."
     hint_continuous: "auto-stops on silence | {shortcut} to stop & exit continuous"
     hint_termux: "Termux:API capture | {shortcut} to stop"
@@ -2573,7 +2573,7 @@ cli:
     yolo_bypass_suffix: " (YOLO bypass active)"
     ctx_left_prefix: "{percent}% left · "
     ctx_tokens_used: "{left}{used} / {max} tokens used"
-    status_title: "Hermes CLI Status"
+    status_title: "Minerva CLI Status"
     label_reasoning: "Reasoning"
     label_approvals: "Approvals"
     label_context: "Context"
@@ -3187,7 +3187,7 @@ cli:
   tip_line: "✦ Tip: {tip}"
   banner:
     context_too_low: "⚠️  Context length is only {tokens} tokens — this is likely too low for agent use with tools."
-    context_minimum: "Hermes needs at least {tokens} tokens. Tool schemas + system prompt use a large fixed prefix."
+    context_minimum: "Minerva needs at least {tokens} tokens. Tool schemas + system prompt use a large fixed prefix."
     fix_ollama: "Ollama fix: OLLAMA_CONTEXT_LENGTH={tokens} ollama serve"
     fix_lm_studio: "LM Studio fix: Set context length in model settings → reload model"
     fix_local_server: "Fix: start your server with at least {tokens_k}K context (llama.cpp: -c {tokens}), or set model.ollama_num_ctx in config.yaml to the window it really serves"
@@ -3243,7 +3243,7 @@ cli:
     the_provider: "the provider"
     the_current_model: "the current model"
     with_details: "{lead}\nDetails: {details}"
-    agent_init_failed: "Hermes couldn't start the model connection: {error}. Your message was not sent. Run `minerva doctor` to check the setup, or /model to pick a different provider."
+    agent_init_failed: "Minerva couldn't start the model connection: {error}. Your message was not sent. Run `minerva doctor` to check the setup, or /model to pick a different provider."
   gateway:
     starting: "Starting Minerva Gateway (messaging platforms)..."
   gateway_status:
@@ -3576,9 +3576,9 @@ explainer:
     replaced: "the session database file was replaced while Minerva was running, so this message was not saved (a copy is kept in {home}/sessions/). Stop Minerva (`minerva {profile_arg}gateway stop`), run `minerva {profile_arg}doctor` — not `minerva {profile_arg}doctor --fix`, which would repair the wrong file in place — then start it again and send your message once more. Advanced recovery steps are in the log."
     deleted_wal: "another Minerva process still holds an old copy of the session database's write-ahead log, so Minerva stopped writing to keep the file safe and this message was not saved (a copy is kept in {home}/sessions/). Nothing is lost. Quit every Minerva process on this profile (Desktop app, `minerva {profile_arg}gateway stop`, dashboard, cron), run `minerva {profile_arg}doctor` — it names any process still holding the log — then start Minerva again and send your message once more. Do not run `doctor --fix` or delete any state.db files while they run. Guide: {recovery_docs}"
     corrupt: "the turn was stopped because the state database reported structural corruption (the transcript would have been lost on restart). Freeing disk space will not help. Recovery options:\n1. Run `minerva {profile_arg}doctor --fix`\n2. Stop the gateway, then recover with:\n   hermes {profile_arg}sessions recover --source {db_path} --inspect-only\n   (if it reports recoverable) hermes {profile_arg}sessions recover --source {db_path} --output recovered-state.db\n   — recovery snapshots the damaged file first; do NOT run `sqlite3 ... \".recover\"` against the live state.db, a vulnerable sqlite3 CLI can corrupt it further\n3. Restore from a backup in {backups_dir}/\nThen send your message again."
-    fts_index: "the turn was stopped because the session search index (FTS5) is corrupt and could not be detached, so this message was not saved. The message store itself is not damaged: do not run recovery tools or restore a backup. Run `minerva {profile_arg}doctor --fix` (or restart Hermes, which repairs the index on open), then send your message again."
-    disk: "Hermes couldn't save this conversation to disk, so it stopped rather than lose your messages. The disk is probably full: free some space (or fix the permissions on {home}/state.db), then send your message again."
-    default: "Hermes couldn't save this conversation, so it stopped rather than lose your messages. Possible causes: the drive is out of room, or another Minerva process is holding the database. Close other Minerva windows, run `minerva {profile_arg}doctor` to check storage, then send your message again."
+    fts_index: "the turn was stopped because the session search index (FTS5) is corrupt and could not be detached, so this message was not saved. The message store itself is not damaged: do not run recovery tools or restore a backup. Run `minerva {profile_arg}doctor --fix` (or restart Minerva, which repairs the index on open), then send your message again."
+    disk: "Minerva couldn't save this conversation to disk, so it stopped rather than lose your messages. The disk is probably full: free some space (or fix the permissions on {home}/state.db), then send your message again."
+    default: "Minerva couldn't save this conversation, so it stopped rather than lose your messages. Possible causes: the drive is out of room, or another Minerva process is holding the database. Close other Minerva windows, run `minerva {profile_arg}doctor` to check storage, then send your message again."
   file_mutation:
     header: "⚠️ File-mutation verifier: {count} file edit(s) FAILED this turn despite any wording above that may suggest otherwise. Run `git status` or `read_file` to confirm what actually landed."
     entry: "  • `{path}` — [{tool}] {preview}"
@@ -3746,7 +3746,7 @@ tips:
   t154: "/voice on enables voice mode in the CLI. Ctrl+B toggles push-to-talk recording."
   t155: "Streaming TTS plays sentences as they generate — you don't wait for the full response."
   t156: "Voice messages on Telegram, Discord, WhatsApp, and Slack are auto-transcribed."
-  t157: "Hermes runs on 21 messaging platforms: Telegram, Discord, Slack, WhatsApp, Signal, Matrix, IRC, Microsoft Teams, email, and more."
+  t157: "Minerva runs on 21 messaging platforms: Telegram, Discord, Slack, WhatsApp, Signal, Matrix, IRC, Microsoft Teams, email, and more."
   t158: "hermes gateway install sets it up as a system service that starts on boot."
   t159: "DingTalk uses Stream Mode — no webhooks or public URL needed."
   t160: "BlueBubbles brings iMessage to Minerva via a local macOS server."
@@ -3766,7 +3766,7 @@ tips:
   t174: "Context auto-compresses when it reaches the threshold — memories are flushed and history summarized."
   t175: "The status bar turns yellow, then orange, then red as context fills up."
   t176: "SOUL.md is the agent's primary identity file — customize it to shape behavior."
-  t177: "Hermes loads project context from .hermes.md, AGENTS.md, CLAUDE.md, or .cursorrules (first match)."
+  t177: "Minerva loads project context from .hermes.md, AGENTS.md, CLAUDE.md, or .cursorrules (first match)."
   t178: "Subdirectory AGENTS.md files are discovered progressively as the agent navigates into folders."
   t179: "Context files are capped at 20,000 characters with smart head/tail truncation."
   t180: "Five browser providers: local Chromium, Browserbase, Browser Use, Camofox, and Firecrawl."

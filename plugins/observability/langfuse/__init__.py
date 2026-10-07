@@ -517,7 +517,7 @@ def _canonical_usage_and_cost(canonical: Any, *, provider: str, model: str,
         return usage_details, cost_details
 
     # Langfuse only derives totals from input/output keys, so cache/custom keys
-    # need an explicit total (Hermes estimate also includes request pricing).
+    # need an explicit total (Minerva estimate also includes request pricing).
     # A zero total is not exported: Langfuse would treat it as authoritative.
     if cost.status != "included" and float(cost.amount_usd) > 0:
         cost_details["total"] = float(cost.amount_usd)
@@ -578,14 +578,14 @@ def _start_root_trace(task_key: str, *, task_id: str, session_id: str, platform:
     trace_ctx: Dict[str, Any] = {"trace_id": trace_id, **({"session_id": session_id} if session_id else {})}
 
     def open_root():
-        ctx = client.start_as_current_observation(trace_context=trace_ctx, name="Hermes turn", as_type="chain",
+        ctx = client.start_as_current_observation(trace_context=trace_ctx, name="Minerva turn", as_type="chain",
                                                   input=trace_input, metadata=metadata, end_on_exit=False)
         return ctx, ctx.__enter__()
 
     root_ctx = root_span = None
     if propagate_attributes is not None:
         try:
-            with propagate_attributes(session_id=session_id or task_key, trace_name="Hermes turn",
+            with propagate_attributes(session_id=session_id or task_key, trace_name="Minerva turn",
                                       tags=["hermes", "langfuse"]):
                 root_ctx, root_span = open_root()
         except Exception:

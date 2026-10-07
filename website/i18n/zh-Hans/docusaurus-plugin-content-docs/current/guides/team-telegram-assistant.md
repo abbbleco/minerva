@@ -29,7 +29,7 @@ description: "逐步指南：为整个团队搭建一个 Telegram 机器人，�
 - **已配置 LLM 提供商**——至少在 `~/.hermes/.env` 中配置了 OpenAI、Anthropic 或其他受支持提供商的 API 密钥
 
 :::tip
-一台 $5/月的 VPS 足以运行 gateway（网关）。Hermes 本身很轻量——花钱的是 LLM API 调用，而那些调用发生在远端。
+一台 $5/月的 VPS 足以运行 gateway（网关）。Minerva 本身很轻量——花钱的是 LLM API 调用，而那些调用发生在远端。
 :::
 
 ---
@@ -41,7 +41,7 @@ description: "逐步指南：为整个团队搭建一个 Telegram 机器人，�
 1. **打开 Telegram**，搜索 `@BotFather`，或访问 [t.me/BotFather](https://t.me/BotFather)
 
 2. **发送 `/newbot`**——BotFather 会询问两件事：
-   - **显示名称**——用户看到的名字（例如 `Team Hermes Assistant`）
+   - **显示名称**——用户看到的名字（例如 `Team Minerva Assistant`）
    - **用户名**——必须以 `bot` 结尾（例如 `myteam_hermes_bot`）
 
 3. **复制机器人 token**——BotFather 会回复类似内容：
@@ -130,7 +130,7 @@ hermes gateway
 你应该看到类似输出：
 
 ```
-[Gateway] Starting Hermes Gateway...
+[Gateway] Starting Minerva Gateway...
 [Gateway] Telegram adapter connected
 [Gateway] Cron scheduler started (tick every 60s)
 ```
@@ -291,7 +291,7 @@ display:
 
 通过编辑 `~/.hermes/SOUL.md` 自定义机器人的沟通方式：
 
-完整指南请参阅[在 Hermes 中使用 SOUL.md](./use-soul-with-hermes.md)。
+完整指南请参阅[在 Minerva 中使用 SOUL.md](./use-soul-with-hermes.md)。
 
 ```markdown
 # Soul
@@ -403,7 +403,7 @@ journalctl --user -u hermes-gateway -f
 tail -f ~/.hermes/logs/gateway.log
 ```
 
-### 保持 Hermes 更新
+### 保持 Minerva 更新
 
 在 Telegram 中向机器人发送 `/update`——它会拉取最新版本并重启。或在服务器上执行：
 

@@ -32,7 +32,7 @@ Requires the codex CLI and a git repository.
 - **Must run inside a git repository** — Codex refuses to run outside one
 - Use `pty=true` in terminal calls — Codex is an interactive terminal app
 
-For Minerva itself, `model.provider: openai-codex` uses Hermes-managed Codex
+For Minerva itself, `model.provider: openai-codex` uses Minerva-managed Codex
 OAuth from `~/.hermes/auth.json` after `minerva auth add openai-codex`. For the
 standalone Codex CLI, a valid CLI OAuth session may live under
 `~/.codex/auth.json`; do not treat a missing `OPENAI_API_KEY` alone as proof

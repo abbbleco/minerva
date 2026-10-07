@@ -873,7 +873,7 @@ function WhatsAppOnboardingPanel({
   const linkedAccountDetail =
     setup?.account_phone || setup?.account_id
       ? "This is the WhatsApp account Minerva is now logged into."
-      : "Hermes is logged into the WhatsApp account that scanned the QR code.";
+      : "Minerva is logged into the WhatsApp account that scanned the QR code.";
   const linkedAccountChatUrl = setup?.account_phone
     ? `https://wa.me/${setup.account_phone}`
     : "";
@@ -885,10 +885,10 @@ function WhatsAppOnboardingPanel({
   const pairingInstruction =
     mode === "self-chat" && !allowedUsers.trim()
       ? hasSavedAllowedUsers
-        ? "Hermes will keep the saved WhatsApp allowlist."
+        ? "Minerva will keep the saved WhatsApp allowlist."
         : "Self-chat mode will allow the linked account automatically when you save."
       : !allowedUsers.trim() && hasSavedAllowedUsers
-        ? "Hermes will keep the saved WhatsApp allowlist."
+        ? "Minerva will keep the saved WhatsApp allowlist."
         : "If no allowed numbers were entered, Minerva replies with a pairing code. Approve it from the dashboard Pairing page.";
 
   return (

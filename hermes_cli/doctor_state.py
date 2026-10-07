@@ -212,7 +212,7 @@ def _check_directory_structure(should_fix: bool, f: Finding) -> None:
         if should_fix:
             soul_path.parent.mkdir(parents=True, exist_ok=True)
             soul_path.write_text("# Minerva Agent Persona\n\n<!-- Edit this file to customize how Minerva communicates. -->\n\n"
-                                 "You are Hermes, a helpful AI assistant.\n", encoding="utf-8")
+                                 "You are Minerva, a helpful AI assistant.\n", encoding="utf-8")
             check_ok(f"Created {_DHH}/SOUL.md with basic template")
             f.fixed += 1
     # Only enabled built-in stores: users can disable either legacy file target, and stale migration files
@@ -593,7 +593,7 @@ def _memory_provider_mem0(issues: list) -> None:
 # provider -> (checker, ImportError row, ImportError issue, label for "check failed")
 _MEMORY_PROVIDER_CHECKS = {
     "mem0": (_memory_provider_mem0, ("Mem0 plugin not loadable", "run hermes memory setup"),
-             "Mem0 dependencies missing — run hermes memory setup, then restart Hermes", "Mem0"),
+             "Mem0 dependencies missing — run hermes memory setup, then restart Minerva", "Mem0"),
 }
 
 

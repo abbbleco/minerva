@@ -1,6 +1,6 @@
 ---
 name: honcho
-description: Configure and troubleshoot Honcho memory for Hermes.
+description: Configure and troubleshoot Honcho memory for Minerva.
 version: 2.0.0
 author: Minerva Agent
 license: MIT
@@ -14,7 +14,7 @@ prerequisites:
   pip: [honcho-ai]
 ---
 
-# Honcho Memory for Hermes
+# Honcho Memory for Minerva
 
 Honcho provides AI-native cross-session user modeling. It learns who the user is across conversations and gives every Minerva profile its own peer identity while sharing a unified view of the user.
 

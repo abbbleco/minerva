@@ -107,8 +107,8 @@
   <div class="wrap">
     <div id="loader" role="status" aria-label="Updating"></div>
     <div id="glyph"></div>
-    <h2 id="title">Updating Hermes</h2>
-    <p id="line">Hermes will open once done.</p>
+    <h2 id="title">Updating Minerva</h2>
+    <p id="line">Minerva will open once done.</p>
   </div>
 <script>
   /* ── Fourier Flow loader, ported verbatim from loader.tsx ─────────────── */
@@ -228,7 +228,7 @@
       settle('done')
       glyphEl.textContent = '\u2713'
       titleEl.textContent = 'Update complete'
-      lineEl.textContent = 'Opening Hermes\u2026\nYou can close this window.'
+      lineEl.textContent = 'Opening Minerva\u2026\nYou can close this window.'
     } else if (state.status === 'manual') {
       // Update landed but Minerva will NOT reopen itself (package skew,
       // sandbox helper, launch rejected). The orchestrator leaves this

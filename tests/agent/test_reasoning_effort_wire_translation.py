@@ -1,4 +1,4 @@
-"""Wire translation for Hermes' extended reasoning-effort vocabulary (#89503).
+"""Wire translation for Minerva' extended reasoning-effort vocabulary (#89503).
 
 Hermes' internal effort set extends the wire vocabulary with ``ultra`` (the
 /reasoning command documents none..xhigh|max|ultra). OpenAI-compatible wires —

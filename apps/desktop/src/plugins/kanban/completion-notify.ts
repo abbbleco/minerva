@@ -14,7 +14,7 @@
  * Two delivery doors, complementary by design:
  *  - `host.notify` — the in-app toast, covers the foreground case;
  *  - `ctx.os.notify` (when bound) — the native OS notification, which the
- *    desktop shell fires only while the user is AWAY from Hermes. This is the
+ *    desktop shell fires only while the user is AWAY from Minerva. This is the
  *    door that covers "walked away and the worker hit a blocker".
  *
  * Cursor contract: first observation of a board baselines

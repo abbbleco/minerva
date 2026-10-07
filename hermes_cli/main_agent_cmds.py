@@ -86,7 +86,7 @@ def cmd_acp(args):
         print("The ACP server can't start: its protocol packages are missing from this install.", file=sys.stderr)
         print("From the Minerva environment, run: "
               f"{install_hint('acp')}", file=sys.stderr)
-        print("Then restart Hermes.", file=sys.stderr)
+        print("Then restart Minerva.", file=sys.stderr)
         print(f"Details: {e}", file=sys.stderr)
         sys.exit(1)
 

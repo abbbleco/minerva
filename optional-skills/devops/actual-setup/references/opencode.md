@@ -68,7 +68,7 @@ auth.json by id match.
 ```bash
 opencode run -m actual/glm-5.2-nvfp4 "Reply with exactly this text: OPENCODE_ACTUAL_OK"
 ```
-OpenCode DOES use the `provider/model` slash form on the CLI (unlike Hermes,
+OpenCode DOES use the `provider/model` slash form on the CLI (unlike Minerva,
 where the slash form 404s custom providers). Expect the exact reply. Run a second
 reasoning check (e.g. "What is 17 * 23?") since GLM-5.2 is a reasoning model.
 

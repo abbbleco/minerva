@@ -1401,3 +1401,66 @@ banner names the active package + credits. Pure rules in
 Verified: tsc 0; eslint clean on touched files (one pre-existing
 no-html-link error in layout.tsx mobile nav left alone); 3/3 new tsx tests.
 Needs portal redeploy to take effect.
+---
+
+# Session 29 — router Cloudflare Workers target (2026-10-07)
+
+Vercel output investigation (green builds, total 404s incl. branch URLs)
+closed in favor of porting: same Hono app, third target. New
+`apps/router/src/worker.ts` (ALS-bridged per-request `ctx.waitUntil` so
+concurrent streams never steal each other's debit lifetime; fail-open like
+Node) + `wrangler.toml` (nodejs_compat for process.env/node:crypto) +
+`deploy`/`dev:worker` scripts + README section. Shared-code changes kept
+minimal and behavior-neutral: `after.ts` prefers the scoped hook with the
+legacy global as fallback; `@minerva/database/health.ts` imports the TCP
+`postgres` driver lazily (was barrel-pulled into every bundler graph;
+caller is scripts-only). No app-logic, catalog, or tenant changes.
+
+Verified: router tsc 0 (worker entry compiles under strict config), 54/54
+suite green. NOT yet done (needs operator): wrangler login, 3 secrets,
+deploy, workers.dev verify, custom-domain cutover of minrouter.abbble.co.za.
+Vercel files left intact as fallback.
+---
+
+# Session 30 — router per-agency velocity limiting (2026-10-07)
+
+Adopted the rate-limit half of the gateway proposal, rejected the rest.
+Already existed (kept): agency client keys, tier-filtered catalog, credits +
+monthly quota gates, Supabase ledger billing — no D1, no second billing store.
+New `apps/router/src/velocity.ts`: sliding-window RPM per agencyId, free 20
+/ paid 100 per minute via MINERVA_RPM_FREE/_PAID, checked AFTER billing gates
+(denied requests never consume budget), 429 + retry-after on exceed,
+fail-open store, in-memory per-isolate with documented DO graduation path.
+Wired into chat + embeddings handlers. Key pool explicitly deferred: single
+OPENROUTER_API_KEY until upstream 429s appear in logs; seam is apiKey() in
+upstream.ts (round-robin + failure-skip when the day comes). Defaults leave
+headroom under a single paid upstream key on purpose.
+
+Verified: tsc 0, 62/62 (54 existing + 8 new). Upstream limits in the proposal
+treated as shape-correct, numbers to re-check against OpenRouter docs at
+implementation time of the pool.# Session 31 - upstream key pool: multi-key rotation + same-request failover (2026-10-07)
+
+Fridays fire arrived early: upstream 429s in the logs, so the deferred pool from
+Session 30 is now built. New apps/router/src/upstream-keys.ts: upstreamKeys() reads
+OPENROUTER_API_KEYS (comma-separated, wins) else the singular OPENROUTER_API_KEY as a
+one-key pool (fully backward compatible); UpstreamKeyPool round-robins with per-key
+cooldowns from the committed table (429: 60s, 401/403: 10min likely-dead, 402: 5min,
+502/503/504 + transport: 30s; unknown 4xx/5xx fail closed as terminal). Wired into
+upstream.ts (chatOnce/chatStream) and embeddings.ts (embed): same-request failover
+retries the IDENTICAL body on the next key, each key at most once; terminal statuses
+return as-is on the first key; all-keys-limited returns the LAST upstream answer
+(app.ts already maps 429 faithfully per the 2026-09-30 owner decision). Skipped
+streaming bodies are drained before moving on; failover lines log key#index/total
+only, never material. sharedKeyPool() singleton + reset() test seam. README deploy
+table + Vercel/Workers secret lines document the plural.
+
+Deliberately NOT changed: the failover table itself (kept the prior design; unknown
+5xx fail closed rather than spraying one bad request across the pool), velocity
+defaults, billing/ledger, catalog. No MINERVA_ var added (upstream creds stay
+OPENROUTER_*).
+
+Verified: router tsc --noEmit 0, 75/75 tests (62 pre-existing + 13 new in
+tests/upstream-keys.test.ts: env parsing x4, classification x2, pool mechanics x3,
+chatOnce failover/sad/terminal x3, chatStream failover x1). Operator still to do: set
+OPENROUTER_API_KEYS (Wrangler secret or host env) alongside the singular; no code
+deploy needed beyond this change.

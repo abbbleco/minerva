@@ -6809,7 +6809,7 @@ def _write_slack_manifest_and_instruct() -> None:
             "reinstall if scopes or slash commands changed.")
         print_info(
             "   Re-run `minerva slack manifest --write` anytime to refresh after "
-            "Hermes adds new commands.")
+            "Minerva adds new commands.")
     except Exception as e:
         print_warning(f"Could not write Slack manifest: {e}")
 

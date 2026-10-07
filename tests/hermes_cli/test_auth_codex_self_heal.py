@@ -1,6 +1,6 @@
 """Regression tests for Codex refresh_token self-heal (cross-store rotation).
 
-Hermes keeps its OWN copy of the Codex OAuth token (per profile + top-level),
+Minerva keeps its OWN copy of the Codex OAuth token (per profile + top-level),
 separate from the Codex CLI's ``~/.codex/auth.json``. OAuth refresh_tokens are
 single-use, so when the Codex CLI (or another Minerva process) rotates the shared
 token, the frozen copy's refresh_token goes stale and ``refresh_codex_oauth_pure``
@@ -102,7 +102,7 @@ def test_self_heals_missing_singleton_access_token_from_codex_cli(tmp_path, monk
 
 def test_opt_out_never_adopts_codex_cli_login(tmp_path, monkeypatch):
     """``auth.adopt_external_logins: false`` (#113023): the Codex CLI pair is a single-use refresh-token
-    family the user did not hand to Hermes. Both automatic recovery paths must leave it (and Hermes' own
+    family the user did not hand to Minerva. Both automatic recovery paths must leave it (and Minerva' own
     auth.json) untouched and surface the real error instead."""
     hermes_home = tmp_path / "hermes"
     codex_home = tmp_path / "codex"

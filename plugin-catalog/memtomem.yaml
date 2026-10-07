@@ -5,7 +5,7 @@ subdir: packages/memtomem-hermes-plugin
 version: "0.1.1"
 description: "Markdown-first long-term memory shared across your coding agents: a local memtomem MCP
   server plus six memory skills (index, recall, remember, search, setup, status). Notes live in
-  ~/.memtomem and are searchable from Hermes, Claude Code, Codex CLI and Kimi Code. Runs at user
+  ~/.memtomem and are searchable from Minerva, Claude Code, Codex CLI and Kimi Code. Runs at user
   scope. Disclosure — the server is launched with `uvx --python 3.12` and downloaded from PyPI
   (memtomem[onnx]==0.6.6) on first start, with Python 3.12 if uv cannot find one; it runs as a
   stdio MCP server for the session and reads the directories you ask it to index. With a fresh

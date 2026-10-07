@@ -206,7 +206,7 @@ describe('speaker labels', () => {
 
     expect(chat.groupSpeakerLabel('research')).toBe('Radar')
 
-    // Untitled rows keep today's behavior: default → Hermes, others verbatim.
+    // Untitled rows keep today's behavior: default → Minerva, others verbatim.
     data.$botMeta.set({})
 
     expect(chat.groupSpeakerLabel('default')).toBe('Minerva')

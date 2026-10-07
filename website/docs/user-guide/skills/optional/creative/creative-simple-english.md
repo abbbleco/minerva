@@ -26,7 +26,7 @@ Rewrite text to ASD-STE100 Simplified Technical English.
 ## Reference: full SKILL.md
 
 :::info
-The following is the complete skill definition that Hermes loads when this skill is triggered. This is what the agent sees as instructions when the skill is active.
+The following is the complete skill definition that Minerva loads when this skill is triggered. This is what the agent sees as instructions when the skill is active.
 :::
 
 # Simple English: Write Like an Aerospace Manual
@@ -35,7 +35,7 @@ Write technical text with the rules of ASD-STE100 Simplified Technical English. 
 
 Write for that tired reader. Each sentence must survive one read.
 
-## How to use it in Hermes
+## How to use it in Minerva
 
 The text usually arrives one of three ways:
 

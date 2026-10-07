@@ -199,7 +199,7 @@ def test_uninspectable_watched_descriptor_blocks_repair_before_sqlite(
 def test_uninspectable_unknown_descriptor_uses_hermes_identity_at_repair_boundary(
     tmp_path, monkeypatch, argv, should_block
 ):
-    """An unknown fd target blocks only when argv identifies Hermes."""
+    """An unknown fd target blocks only when argv identifies Minerva."""
     db = _make_wal_db(tmp_path)
 
     def _listdir(path):
@@ -302,7 +302,7 @@ def test_uninspectable_watched_identity_blocks_alias_before_sqlite(
 def test_uninspectable_alias_descriptor_for_hermes_blocks_before_sqlite(
     tmp_path, monkeypatch
 ):
-    """Hermes cannot make an aliased fd safe when its identity is unreadable."""
+    """Minerva cannot make an aliased fd safe when its identity is unreadable."""
     db = _make_wal_db(tmp_path)
     alias = tmp_path / "namespace-alias" / "state.db"
 

@@ -1,4 +1,4 @@
-"""Efficiency shared metrics: what one user turn costs, what users throw away, and where Hermes
+"""Efficiency shared metrics: what one user turn costs, what users throw away, and where Minerva
 spends tokens it did not have to (spilled tool output, idle tool schemas, prompt-cache breaks).
 
 Per-turn state lives on the relay runtime's task/session objects (see ``TurnCost`` and
@@ -97,7 +97,7 @@ def _route(route: dict[str, str] | None) -> dict[str, str]:
 @dataclass
 class TurnCost:
     """Token spend of one task; ``user_turn`` marks a turn a user message started (pre_llm_call),
-    which Hermes-owned forks sharing the session id never fire."""
+    which Minerva-owned forks sharing the session id never fire."""
 
     user_turn: bool = False
     tokens: int = 0
@@ -331,7 +331,7 @@ def _tool_names(tools: Iterable[Any]) -> Iterable[str]:
 
 
 def record_cache_break(agent: Any, cause: str) -> None:
-    """Hermes itself invalidated the conversation's cached prefix (compression, a rebuilt prompt)."""
+    """Minerva itself invalidated the conversation's cached prefix (compression, a rebuilt prompt)."""
     try:
         if cause not in contract.CACHE_BREAK_CAUSES or getattr(agent, "_persist_disabled", False):
             return

@@ -172,7 +172,7 @@ DELETED_WAL_DETAIL = {
 }
 STATE_DB_REPLACED_DETAIL = {
     "error": "state_db_replaced",
-    "message": "state.db was replaced while Minerva was running — stop Hermes, run `minerva doctor`, "
+    "message": "state.db was replaced while Minerva was running — stop Minerva, run `minerva doctor`, "
                "then start it again. Do not run `minerva doctor --fix`, which would repair the wrong file in place.",
 }
 # Every other bucket a malformed image can classify as ("corrupt", "fts_index") is the corrupt payload.

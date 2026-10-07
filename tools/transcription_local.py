@@ -75,7 +75,7 @@ def _try_lazy_install_stt() -> bool:
             "When the message names a restart, this process selected its dependency generation at "
             "boot and a new one cannot take effect in-flight; otherwise the Minerva process user "
             "may not be able to write to the dependency environment. Run `minerva tools` as the "
-            "Hermes installation owner and select Local Whisper under Speech-to-Text.",
+            "Minerva installation owner and select Local Whisper under Speech-to-Text.",
             exc)
     return False
 

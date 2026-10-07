@@ -76,7 +76,7 @@
   },
   {
    "q": "What error message does the Minerva terminal tool return when a git command is blocked to prevent rewriting the live source checkout?",
-   "gold": "Blocked: `git <op>` would rewrite Hermes's live source checkout",
+   "gold": "Blocked: `git <op>` would rewrite Minerva's live source checkout",
    "answer": "**UNKNOWN** \u2014 best guess: an error stating that the git command was blocked because it would rewrite the live source checkout.",
    "score": 2,
    "why": "The answer correctly identifies the core substance of the error message (blocked git command because it would rewrite the live source checkout) which matches the gold answer."

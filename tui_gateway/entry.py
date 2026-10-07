@@ -1,7 +1,7 @@
 import os
 import sys
 
-# Stop a ``utils/``-style package in the launch directory from shadowing Hermes's own
+# Stop a ``utils/``-style package in the launch directory from shadowing Minerva's own
 # top-level modules; ``hermes_bootstrap``'s name can't collide, so importing it first is safe.
 import hermes_bootstrap
 

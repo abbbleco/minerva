@@ -355,13 +355,13 @@ class TestPerResponseRunNonceIsolation:
 
     Minerva Studio group chat builds ``gc_run_<room>_<profile>_<name>_<uuid4hex>``
     for every reply and destroys it when the reply completes
-    (``groupRuntimeSessionId``), so every conversation-affinity hint Hermes
+    (``groupRuntimeSessionId``), so every conversation-affinity hint Minerva
     derives from that id is re-keyed on every reply. What is demonstrated here
     is the routing/affinity mechanism moving per response; no provider cache
     telemetry or billing outcome is measured or claimed.
 
     The normalizer cannot repair that from the id alone: a physical session id
-    is an identity, and Hermes' public session API lets a client choose one
+    is an identity, and Minerva' public session API lets a client choose one
     freely (``POST /v1/sessions`` honors ``body["id"]``/``body["session_id"]``).
     These tests pin the isolation invariant that any future scope rule has to
     keep — collapsing a trailing token because it *looks* like per-run noise

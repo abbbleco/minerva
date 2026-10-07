@@ -45,7 +45,7 @@ HAR recording works differently in each case (see How to Run).
   - (If a system Playwright already has browsers under `~/.cache/ms-playwright`, reuse it.)
 - `requests` or `httpx` for the replay step (stdlib `urllib` also works).
 - No API keys. Any keys/tokens the client needs are the ones the HAR captured.
-- For the CDP path (`har_capture_cdp.py`): a reachable CDP endpoint. On Hermes,
+- For the CDP path (`har_capture_cdp.py`): a reachable CDP endpoint. On Minerva,
   run `/browser connect` to print the active endpoint, or read `BROWSER_CDP_URL`
   / `browser.cdp_url` in config. Cloud backends expose it as `cdpUrl`/`connectUrl`.
 
@@ -75,7 +75,7 @@ Then, for either path:
 Resolve paths against this skill's directory. Canonical loop:
 
 ```bash
-# 1a. Capture, LOCAL browser (Hermes launched it)
+# 1a. Capture, LOCAL browser (Minerva launched it)
 python3 scripts/har_capture.py "https://SITE/" out.har \
   --action "fill:input[name=search]:my query" --action "sleep:3" --wait 2
 
@@ -112,7 +112,7 @@ har_to_client.py <in.har> [--host SUBSTR] [--include-static] [--max-body N]
 
 ## Procedure
 
-0. **Pick the capturer by pathway** (see How to Run table). Launched-locally → `har_capture.py`; reached over CDP → `har_capture_cdp.py`. On Hermes, `/browser connect` tells you the CDP endpoint when a cloud/remote backend is active.
+0. **Pick the capturer by pathway** (see How to Run table). Launched-locally → `har_capture.py`; reached over CDP → `har_capture_cdp.py`. On Minerva, `/browser connect` tells you the CDP endpoint when a cloud/remote backend is active.
 1. **Find the interaction.** Open the site with `browser_navigate` (or `--headed` capture) to see which selector to type into / click, and confirm a JSON XHR fires in devtools/network.
 2. **Capture the HAR** via the `terminal` tool. Order `--action` to reach the request: `fill` the box, then `sleep` long enough for the debounced XHR, and always leave `--wait` at the end so late responses flush. Both capturers embed response bodies, so the derived client sees real payload shapes.
 3. **Derive** with `har_to_client.py --host <domain>`. Read off: the method, the URL/path template (numeric/UUID segments collapse to `{id}`), query params, request-body JSON, and the `### Replay hints` block.

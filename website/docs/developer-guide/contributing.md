@@ -22,8 +22,8 @@ We value contributions in this order:
 
 ## Common contribution paths
 
-- Building a custom/local tool without modifying Hermes core? Start with [Build a Hermes Plugin](../developer-guide/plugins/index.md)
-- Building a new built-in core tool for Hermes itself? Start with [Adding Tools](./adding-tools.md)
+- Building a custom/local tool without modifying Minerva core? Start with [Build a Minerva Plugin](../developer-guide/plugins/index.md)
+- Building a new built-in core tool for Minerva itself? Start with [Adding Tools](./adding-tools.md)
 - Building a new skill? Start with [Creating Skills](./creating-skills.md)
 - Building a new inference provider? Start with [Adding Providers](./adding-providers.md)
 
@@ -120,7 +120,7 @@ Native desktop dependencies can also require the platform build toolchain.
 Logos and icons are rendered from the two master tiles in `assets/`
 (`icon-master.svg`, `icon-master-dark.svg`); `scripts/render_icons.py` draws
 every size behind a squircle mask, so the masters can come out of any drawing
-tool. `node scripts/generate-icons.mjs` runs it with the Hermes runtime Python
+tool. `node scripts/generate-icons.mjs` runs it with the Minerva runtime Python
 (`HERMES_PYTHON`, else `python` on PATH): Pillow and resvg-py are core
 dependencies. Pass `--check` to verify the committed outputs still match the
 masters; the desktop, website and installer outputs are committed because
@@ -198,7 +198,7 @@ Use `pathlib.Path` instead of string concatenation with `/`.
 
 ## Security Considerations
 
-Hermes has terminal access. Security matters.
+Minerva has terminal access. Security matters.
 
 ### Existing Protections
 
@@ -277,7 +277,7 @@ fix(security): prevent shell injection in sudo password piping
 
 ### Repo-local review checklists: `.agents/checks/*.md`
 
-Projects built on (or reviewed by) Hermes can keep reviewer checklists inside the repository under `.agents/checks/`. Each file is a focused, plain-markdown checklist that an agent loads before reviewing a change touching the matching area:
+Projects built on (or reviewed by) Minerva can keep reviewer checklists inside the repository under `.agents/checks/`. Each file is a focused, plain-markdown checklist that an agent loads before reviewing a change touching the matching area:
 
 ```
 .agents/
@@ -294,12 +294,12 @@ Conventions that make these work well:
 - **State the trigger at the top** — which paths or change types the checklist applies to — so an agent (or human) can skip irrelevant ones cheaply.
 - Keep them in version control next to the code they guard: they evolve with the codebase, and a PR that changes the rules changes the checklist in the same diff.
 
-When you ask Hermes to review a PR in a repository that has `.agents/checks/`, tell it (or teach it via a skill) to read the relevant checklists first and report against them. This gives review agents the project-specific bar that generic review prompts miss.
+When you ask Minerva to review a PR in a repository that has `.agents/checks/`, tell it (or teach it via a skill) to read the relevant checklists first and report against them. This gives review agents the project-specific bar that generic review prompts miss.
 
 ## Reporting Issues
 
 - Use [GitHub Issues](https://github.com/abbbleco/minerva/issues)
-- Include: OS, Python version, Hermes version (`minerva --version`), full error traceback
+- Include: OS, Python version, Minerva version (`minerva --version`), full error traceback
 - Include steps to reproduce
 - Check existing issues before creating duplicates
 - For security vulnerabilities, please report privately

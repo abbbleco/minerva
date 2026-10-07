@@ -1792,7 +1792,7 @@ def has_spawnable_review(conn: sqlite3.Connection) -> bool:
 
 
 def review_dispatch_enabled() -> bool:
-    """Whether review tasks dispatch automatically. Default true (Hermes ships
+    """Whether review tasks dispatch automatically. Default true (Minerva ships
     ``sdlc-review``); operators disable it for human-only review boards.
     """
     try:

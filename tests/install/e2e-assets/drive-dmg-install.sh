@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Drive the Hermes-Setup dmg bootstrap through its first-run GUI.
+# Drive the Minerva-Setup dmg bootstrap through its first-run GUI.
 #
 # The Setup app is Tauri (Rust + system webview), so Playwright/Electron
 # attach never works. Launch the binary bare in the background (it inherits
@@ -154,7 +154,7 @@ FIRST_SHOT=0
 CLICKS=0
 while :; do
   if install_complete; then
-    log "install landed: checkout + source launcher + Hermes.app present"
+    log "install landed: checkout + source launcher + Minerva.app present"
     shot "02-install-landed"
     break
   fi

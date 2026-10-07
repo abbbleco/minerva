@@ -1,6 +1,6 @@
 # Terminal-backend sandbox image WITH a desktop: the default sandbox base every
 # docker/modal/daytona/singularity user already runs (nikolaik/python-nodejs), plus
-# the tools that base was missing, plus the same display stack the -desktop Hermes
+# the tools that base was missing, plus the same display stack the -desktop Minerva
 # image carries (TigerVNC + Xfce components + headed Chromium) and cua-driver, so
 # Bot Screen, computer_use and the browser can live INSIDE the sandbox instead of
 # on the gateway host. No Minerva runtime in here; the gateway shells in.

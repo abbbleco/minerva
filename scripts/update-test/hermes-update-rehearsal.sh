@@ -16,7 +16,7 @@
 # when the backup dir is on the same disk. HERMES_HOME/cache is left as it is.
 #
 #   ./hermes-update-rehearsal.sh pre  --source <git-url>
-#   # ... run `minerva update`, use Hermes, test whatever you need ...
+#   # ... run `minerva update`, use Minerva, test whatever you need ...
 #   ./hermes-update-rehearsal.sh post
 #
 # Options:
@@ -253,7 +253,7 @@ cmd_pre() {
     local procs
     procs="$(pgrep -fl hermes 2>/dev/null | grep -v 'hermes-update-rehearsal' || true)"
     if [ -n "$procs" ]; then
-      warn "Hermes looks like it is running — close the desktop app and the gateway"
+      warn "Minerva looks like it is running — close the desktop app and the gateway"
       warn "before you run 'hermes update', or the dependency sync may fail:"
       printf '    %s\n' "$procs"
     else

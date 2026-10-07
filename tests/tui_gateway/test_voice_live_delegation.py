@@ -1,4 +1,4 @@
-"""GPT-Live voice chat mode: the full-duplex voice frontend that delegates to Hermes.
+"""GPT-Live voice chat mode: the full-duplex voice frontend that delegates to Minerva.
 
 The live voice model owns the microphone and speaker and has no tools; every real
 request is delegated to Minerva as a normal turn on the open session. Two contracts
@@ -39,7 +39,7 @@ def _session(**extra):
 class TestSessionCreation:
     def test_client_delegation_and_key_stay_server_side(self, monkeypatch):
         """Whatever the renderer sends, the vendor request pins ``delegation.type == client``
-        (Hermes is the backend) and authenticates with the resolved key; the client only ever
+        (Minerva is the backend) and authenticates with the resolved key; the client only ever
         sees the vendor answer."""
         captured = {}
 

@@ -4,7 +4,7 @@
 above the ``if self.provider in ("openai-codex", "xai-oauth", "anthropic"):`` branch in
 ``agent/credential_pool.py``) that single-use OAuth refresh tokens require
 the whole sync -> POST -> write-back sequence to be serialized across
-Hermes *processes* via the cross-process ``_auth_store_lock`` flock,
+Minerva *processes* via the cross-process ``_auth_store_lock`` flock,
 otherwise "two processes can both adopt the same on-disk token, both POST
 it, and the loser gets ``refresh_token_reused``".
 
@@ -120,7 +120,7 @@ class _SingleUseTokenServer:
 
 
 def test_concurrent_hermes_pkce_refresh_loses_credential_despite_valid_token_on_disk(monkeypatch):
-    """Two 'Hermes processes' race to refresh the same stale hermes_pkce
+    """Two 'Minerva processes' race to refresh the same stale hermes_pkce
     refresh token. The winner gets a valid new pair. The loser -- despite a
     fresh, valid credential now existing -- has no recovery path and is
     marked exhausted, because ``_sync_anthropic_entry_from_credentials_file``

@@ -4,7 +4,7 @@ title: "Android / Termux"
 description: "Install Minerva Agent on Android from its signed Termux APT repository"
 ---
 
-# Hermes on Android with Termux
+# Minerva on Android with Termux
 
 :::danger Termux is currently broken
 The Termux package does not work right now. A fix is in progress and will
@@ -12,7 +12,7 @@ ship soon. Until then, the steps below may fail or install a package that
 does not run.
 :::
 
-The Termux package runs Hermes on **aarch64 (arm64-v8a)** Android devices.
+The Termux package runs Minerva on **aarch64 (arm64-v8a)** Android devices.
 Two APT channels are published under
 `https://hermes-assets.nousresearch.com/releases/termux/<channel>`:
 
@@ -77,7 +77,7 @@ Do not use the desktop/server `install.sh` or a glibc Linux archive on this targ
      > "$PREFIX/etc/apt/sources.list.d/hermes-agent.list"
    ```
 
-5. Install Hermes:
+5. Install Minerva:
 
    ```bash
    pkg update

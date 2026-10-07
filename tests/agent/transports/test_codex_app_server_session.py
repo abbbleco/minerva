@@ -180,7 +180,7 @@ class TestLifecycle:
         assert len(method_calls) == 1
 
     def test_thread_start_carries_hermes_prompt_and_disables_codex_personality(self):
-        """thread/start carries cwd, Hermes' composed prompt as developerInstructions and
+        """thread/start carries cwd, Minerva' composed prompt as developerInstructions and
         personality "none" (#74712, #72104, #26035). We intentionally do NOT pass `permissions`
         (experimentalApi-gated + requires a matching config.toml [permissions] table)."""
         client = FakeClient()
@@ -227,7 +227,7 @@ class TestLifecycle:
         assert thread_start_params(provider="openai-codex", requested_provider="openai-codex", model="gpt-5.4") == {
             **base, "model": "gpt-5.4"}
         assert thread_start_params(provider="custom", requested_provider="custom", model="gpt-5.4") == {**base, "model": "gpt-5.4"}
-        # ``-900k`` is a Hermes-side alias the backend rejects; codex gets the base slug.
+        # ``-900k`` is a Minerva-side alias the backend rejects; codex gets the base slug.
         assert thread_start_params(provider="openai-codex", requested_provider="openai-codex",
                                    model="gpt-5.6-sol-900k")["model"] == "gpt-5.6-sol"
         # The OpenAI API-key rung arrives as provider=custom with no codex model_providers id: codex's own

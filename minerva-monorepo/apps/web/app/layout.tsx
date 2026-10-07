@@ -13,8 +13,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Minerva OS",
-  description: "Minerva — agent-orchestrated, human-verified product delivery.",
+  title: "Minerva Agent",
+  description: "Minerva Agent — agent-orchestrated, human-verified product delivery.",
 };
 
 export default function RootLayout({
