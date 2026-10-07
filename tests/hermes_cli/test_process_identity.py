@@ -296,7 +296,7 @@ def test_updater_ledger_rung_never_raises():
 
 
 def test_desktop_ssh_backend_spawn_shape_is_desktop_owned(monkeypatch):
-    """Desktop's SSH spawn is ``env HERMES_DESKTOP=1 hermes serve --isolated ... --ssh-session-token-file F``
+    """Desktop's SSH spawn is ``env HERMES_DESKTOP=1 minerva serve --isolated ... --ssh-session-token-file F``
     with NO token env var (its tests assert the var name never appears on the wire). Missing that
     shape made the SSH child claim ROLE_SERVE on the remote host (the #119824 shape there)."""
     monkeypatch.setenv("HERMES_DESKTOP", "1")

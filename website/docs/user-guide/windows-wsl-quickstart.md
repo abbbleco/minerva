@@ -70,7 +70,7 @@ Ubuntu (LTS) is what we test against. Debian works. Arch and NixOS work for peop
 
 ### Enable systemd (recommended)
 
-The hermes gateway (and anything else you want to keep running) is easier to manage with systemd. On modern WSL, enable it once inside your distro:
+The minerva gateway (and anything else you want to keep running) is easier to manage with systemd. On modern WSL, enable it once inside your distro:
 
 ```bash
 sudo tee /etc/wsl.conf >/dev/null <<'EOF'

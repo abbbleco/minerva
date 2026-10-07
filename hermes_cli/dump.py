@@ -1,4 +1,4 @@
-"""Dump command for hermes CLI."""
+"""Dump command for minerva CLI."""
 
 import json
 import os
@@ -292,7 +292,7 @@ def run_dump(args):
     toolsets = config.get("toolsets", ["hermes-cli"])
     platforms = [name for name, env in _PLATFORM_ENV_VARS.items() if os.getenv(env)]
     lines = [
-        "--- hermes dump ---",
+        "--- minerva dump ---",
         f"version:          {_version_line(project_root)}",
         f"os:               {platform.system()} {platform.release()} {platform.machine()}",
         f"python:           {sys.version.split()[0]}",

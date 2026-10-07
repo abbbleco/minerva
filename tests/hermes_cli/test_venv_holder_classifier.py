@@ -33,7 +33,7 @@ class TestHolderSubcommand:
             (r"C:\bin\minerva.exe dashboard", "dashboard"),
             (r"/usr/local/bin/minerva serve", "serve"),
             (r"/usr/local/bin/minerva gateway run", "gateway"),
-            # no hermes entry at all
+            # no minerva entry at all
             (r"python -c import time; time.sleep(3)", None),
             # entry but no subcommand
             (r"python -m hermes_cli.main", None),

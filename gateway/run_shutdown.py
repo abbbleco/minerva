@@ -1500,7 +1500,7 @@ class GatewayShutdownMixin:
         import subprocess
         hermes_cmd = _resolve_hermes_bin()
         if not hermes_cmd:
-            logger.error("Could not locate hermes binary for detached /restart")
+            logger.error("Could not locate minerva binary for detached /restart")
             return
         if self._detached_restart_helper_started:
             return

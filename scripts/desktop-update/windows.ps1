@@ -530,7 +530,7 @@ function Show-ErrorFinale([string]$Message) {
         if ($ui.Timer) { $ui.Timer.Stop() }
         $ui.Bar.Visible = $false
         $ui.Title.Text = "Failed to update"
-        $ui.Sub.Text = "Run `"hermes debug share`" in a terminal to send a report."
+        $ui.Sub.Text = "Run `"minerva debug share`" in a terminal to send a report."
         $close = New-Object System.Windows.Forms.Button
         $close.Text = "Close"
         $close.SetBounds(100, 252, 80, 28)
@@ -1649,7 +1649,7 @@ try {
         if ($updateHelp -match "--keep-stash") {
             $updateArgs += "--keep-stash"
         } else {
-            Write-HandoffLog "installed hermes predates --keep-stash; running without it"
+            Write-HandoffLog "installed minerva predates --keep-stash; running without it"
         }
     } catch {
         Write-HandoffLog "could not probe update --help; running without --keep-stash"
@@ -1657,7 +1657,7 @@ try {
     Write-HandoffLog ("running: python " + ($updateArgs -join " "))
     Publish-UiProgress "Updating code and dependencies"
     $res = Invoke-HermesStep $pythonExe $updateArgs "update"
-    Write-HandoffLog "hermes update exit code: $($res.Code)"
+    Write-HandoffLog "minerva update exit code: $($res.Code)"
     $res = Resolve-HermesUpdateOutcome $res
 
     # Retry only the identified pre-PM update-boundary transition. Current
@@ -1679,7 +1679,7 @@ try {
     # Keep that historical transition here only; current failures propagate.
     $desktopBuildFailed = $false
     if ($legacyInstall -and $res.Code -eq 0 -and $res.Output -match "Desktop build failed") {
-        Write-HandoffLog "hermes update reported a desktop build failure (non-fatal there, fatal here); retrying build"
+        Write-HandoffLog "minerva update reported a desktop build failure (non-fatal there, fatal here); retrying build"
         Publish-UiProgress "Rebuilding Desktop"
         $runtimeCommand = @(Get-HermesRuntimeCommand -InstallRoot $InstallRoot)
         $rebuildArgs = @($runtimeCommand | Select-Object -Skip 1) + @('desktop', '--force-build', '--build-only')
@@ -1695,7 +1695,7 @@ try {
         $verify = Invoke-HermesStep $verifyCommand[0] $verifyArgs 'verify'
         if ($verify.Code -ne 0) {
             $finalCode = 8
-            $finalMsg = "Minerva was updated, but the new Desktop build could not be verified. Nothing was removed. If Minerva does not start normally, run 'hermes desktop --force-build' in a terminal to rebuild it."
+            $finalMsg = "Minerva was updated, but the new Desktop build could not be verified. Nothing was removed. If Minerva does not start normally, run 'minerva desktop --force-build' in a terminal to rebuild it."
             Write-HandoffLog $finalMsg
             exit $finalCode
         }

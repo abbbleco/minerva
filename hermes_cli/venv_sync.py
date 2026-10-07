@@ -300,7 +300,7 @@ def _supervised_child() -> bool:
     """A launcher-marked child: booted by a manager, not a user's shell.
 
     Launcher markers only — not INVOCATION_ID, which systemd exports to every
-    descendant: an ordinary hermes command inside a CI runner still owes its repair.
+    descendant: an ordinary minerva command inside a CI runner still owes its repair.
     Parsed as a truthy flag, so an explicit ``0``/``false`` does not suppress the tail.
     """
     return any(

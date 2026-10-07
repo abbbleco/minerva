@@ -259,13 +259,13 @@ python -c "import pm; pm.sync_venv(['vercel'], explicit=True)"
 对于一次性本地开发，Minerva 也接受短期 Vercel OIDC token：
 
 ```bash
-VERCEL_OIDC_TOKEN="$(vc project token <project-name>)" hermes chat
+VERCEL_OIDC_TOKEN="$(vc project token <project-name>)" minerva chat
 ```
 
 在已链接的 Vercel 项目目录中，可以省略项目名称：
 
 ```bash
-VERCEL_OIDC_TOKEN="$(vc project token)" hermes chat
+VERCEL_OIDC_TOKEN="$(vc project token)" minerva chat
 ```
 
 OIDC token 是短期的，不应作为文档化的部署路径使用。
@@ -573,7 +573,7 @@ agent:
 启用隔离的 git worktree，以便在同一仓库上并行运行多个 agent：
 
 ```yaml
-worktree: true    # 始终创建 worktree（与 hermes -w 相同）
+worktree: true    # 始终创建 worktree（与 minerva -w 相同）
 # worktree: false # 默认 —— 仅在传递 -w 标志时
 ```
 
@@ -803,7 +803,7 @@ Minerva 使用"辅助"模型处理图像分析、浏览器截图分析、会话�
 无需手动编辑 YAML，运行 `minerva model` 并从菜单中选择**"配置辅助模型"**。您将获得交互式的每任务选择器：
 
 ```
-$ hermes model
+$ minerva model
 → Configure auxiliary models
 
 [ ] vision               currently: auto / main model
@@ -1458,7 +1458,7 @@ quick_commands:
     command: df -h /
   update:
     type: exec
-    command: hermes update
+    command: minerva update
   gpu:
     type: exec
     command: nvidia-smi --query-gpu=name,utilization.gpu,memory.used,memory.total --format=csv,noheader

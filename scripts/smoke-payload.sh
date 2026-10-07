@@ -19,7 +19,7 @@ try {
   relocated = true
   const manifest = JSON.parse(readFileSync(join(moved, 'manifest.json'), 'utf8'))
   const command = manifest.runtime.commands.hermes
-  if (!command) throw new Error('manifest has no hermes command')
+  if (!command) throw new Error('manifest has no minerva command')
   const executable = realpathSync(resolve(moved, command))
   const inside = relative(realpathSync(moved), executable)
   if (isAbsolute(command) || isAbsolute(inside) || inside === '..' || inside.startsWith(`..${sep}`)) {
@@ -37,7 +37,7 @@ try {
   // tools list crosses the real application/config/registry imports, unlike
   // version/help and PM's stdlib bootstrap fast paths.
   for (const args of [['--version'], ['--help'], ['tools', 'list'], ['pm', 'doctor']]) {
-    console.log(`— published hermes ${args.join(' ')} (relocated) —`)
+    console.log(`— published minerva ${args.join(' ')} (relocated) —`)
     const child = spawnSync(executable, args, {
       cwd: home, env, stdio: 'inherit', timeout: 120000,
     })

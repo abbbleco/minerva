@@ -477,7 +477,7 @@ echo "HINDSIGHT_API_KEY=your-key" >> ~/.hermes/.env
 
 The plugin lands in `~/.hermes/plugins/hindsight/` (per profile home) and is enabled under `plugins.enabled` in `config.yaml`. `minerva memory setup`, `minerva memory status`, `minerva plugins list` and the dashboard Memory settings all work with the catalog-installed plugin. In local embedded mode the plugin installs `hindsight-all` on first use through Minerva' lazy-install path, which honours `security.allow_lazy_installs`.
 
-**Local mode UI:** `hindsight-embed -p hermes ui start`
+**Local mode UI:** `hindsight-embed -p minerva ui start`
 
 **Config:** `$HERMES_HOME/hindsight/config.json`
 

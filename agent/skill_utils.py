@@ -646,8 +646,8 @@ def is_external_skill_path(path) -> bool:
 def _hermes_metadata(frontmatter: Dict[str, Any]) -> Dict[str, Any]:
     """``metadata.hermes`` mapping from frontmatter, or ``{}`` when malformed."""
     metadata = frontmatter.get("metadata")
-    hermes = metadata.get("hermes") if isinstance(metadata, dict) else None
-    return hermes if isinstance(hermes, dict) else {}
+    minerva = metadata.get("hermes") if isinstance(metadata, dict) else None
+    return minerva if isinstance (minerva, dict) else {}
 
 
 # ``session_platforms`` is the gateway-channel gate: session platforms the skill
@@ -657,7 +657,7 @@ _CONDITION_KEYS = ("fallback_for_toolsets", "requires_toolsets", "fallback_for_t
 
 def extract_skill_conditions(frontmatter: Dict[str, Any]) -> Dict[str, List]:
     """Extract conditional activation fields from parsed frontmatter (absent = ``[]``)."""
-    hermes = _hermes_metadata(frontmatter)
+    minerva = _hermes_metadata(frontmatter)
     return {key: hermes.get(key, []) for key in _CONDITION_KEYS}
 
 

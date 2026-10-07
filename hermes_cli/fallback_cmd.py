@@ -1,4 +1,4 @@
-"""hermes fallback — manage the fallback provider chain (tried in order when the primary fails).
+"""minerva fallback — manage the fallback provider chain (tried in order when the primary fails).
 
 Subcommands: ``list`` (default), ``add`` (same picker as `minerva model`), ``remove``, ``clear``.
 """
@@ -128,7 +128,7 @@ def cmd_fallback_list(args) -> None:  # noqa: ARG001
     """Print the current fallback chain."""
     config, chain = _load_chain("  No fallback providers configured.")
     if chain is None:
-        print("  Add one with:  hermes fallback add\n")
+        print("  Add one with:  minerva fallback add\n")
         return
     print()
     if primary := _describe_primary(config):

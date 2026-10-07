@@ -481,7 +481,7 @@ test('observeUpdaterHandoff settles ok for children without an event interface',
   assert.equal(outcome.ok, true)
 })
 
-test('resolveInstallationLauncher prefers the minerva launcher, hermes as fallback', () => {
+test('resolveInstallationLauncher prefers the minerva launcher, minerva as fallback', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'minerva-launcher-'))
   const bin = path.join(root, '.hermes', 'bin')
 

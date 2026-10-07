@@ -81,7 +81,7 @@ def _scan_dashboard_processes(*, exclude_pids: set[int] | None = None) -> list[t
     """
     skip = {os.getpid(), *(exclude_pids or ())}
     # Canonical token matcher, never argv substrings: ``minerva serve`` is a prefix of ``hermes
-    # server`` and this list decides a SIGTERM — ``herdr --session hermes server`` (a terminal
+    # server`` and this list decides a SIGTERM — ``herdr --session minerva server`` (a terminal
     # multiplexer) was killed and its unit restarted by ``minerva update`` (#121156).
     from hermes_cli.update_cmd_windows import _hermes_holder_subcommand
     try:
@@ -350,9 +350,9 @@ def _exclude_pids_from_env() -> set[int]:
     return out
 
 
-#: Executables that only *carry* a hermes command line. A process headed by one of these
+#: Executables that only *carry* a minerva command line. A process headed by one of these
 #: never serves traffic itself; when its argv matches the dashboard patterns it is a
-#: wrapper around the command (``bash -c 'hermes dashboard --stop'``), not a backend.
+#: wrapper around the command (``bash -c 'minerva dashboard --stop'``), not a backend.
 _WRAPPER_HEAD_COMMANDS = frozenset({
     "ash", "bash", "csh", "dash", "fish", "ksh", "sh", "tcsh", "zsh",
     "env", "nohup", "nice", "stdbuf", "timeout", "watch", "xargs",
@@ -414,7 +414,7 @@ def _is_caller_wrapper_shell(pid: int, ancestors: set[int]) -> bool:
     """True when *pid* is a caller ancestor headed by a wrapper executable.
 
     Root selection is a substring match, so the shell a ``--stop`` was typed into (or a
-    ``bash -c 'hermes dashboard --stop'`` wrapper) matches on its own argv. Ancestor alone
+    ``bash -c 'minerva dashboard --stop'`` wrapper) matches on its own argv. Ancestor alone
     is not a spare: the backend hosting a shell-escaped TUI is also the caller's ancestor
     and must stay stoppable — only a wrapper-headed ancestor is spared.
     """
@@ -453,7 +453,7 @@ def _kill_pids_windows(pids: list[int], killed: list[int], failed: list[tuple[in
 # hermes_cli/web_server.py::_lifespan: stop_hosted_room_service(timeout=5.0) + the startup-thread
 # join(1.0) + PTY_REGISTRY.close_all() (concurrent; ≤ ~4s per PTY, see pty_bridge._MAX_HELPER_SHUTDOWN_GRACE_S). A SIGKILL inside
 # that window skips close_all(), so the ui-tui / tui_gateway.entry children outlive the backend
-# and keep the deleted state.db-wal inode open — the next hermes start refuses with a FATAL
+# and keep the deleted state.db-wal inode open — the next minerva start refuses with a FATAL
 # DeletedWalGenerationError (#111912). The orphan reaper's 1.5s (`_reap_orphaned_desktop_local_serves`)
 # is deliberately shorter: it runs on the Desktop boot path under a 10s ready-probe.
 _POSIX_TERM_GRACE_SECONDS = 10.0
@@ -685,7 +685,7 @@ def _kill_stale_dashboard_processes(
             print(f"  ⚠ PID(s) supervised by launchd job {target}: a KeepAlive job restarts itself.\n"
                   f"    To keep it down: launchctl bootout {target}")
         if any(p not in pid_launchd for p in killed):
-            print("  Restart the dashboard when you're ready:\n    hermes dashboard --port <port>")
+            print("  Restart the dashboard when you're ready:\n    minerva dashboard --port <port>")
     return {"matched": list(pids), "killed": list(killed), "failed": list(failed),
             "unrecovered": list(unrecovered)}
 
@@ -747,7 +747,7 @@ def _restart_killed_backends(
     if failed_cmds:
         unrecovered.extend(p for p in killed if pid_cmdline.get(p) in failed_cmds)
     if failed_restarts or unrecovered:
-        print("  Restart anything not auto-restarted when you're ready:\n    hermes dashboard --port <port>")
+        print("  Restart anything not auto-restarted when you're ready:\n    minerva dashboard --port <port>")
     return unrecovered
 
 
@@ -778,7 +778,7 @@ def _is_desktop_local_serve_cmdline(command: str) -> bool:
     """
     from hermes_cli.update_cmd_windows import _hermes_holder_subcommand
     # Canonical token matcher, never argv substrings: ``kanban --preserve-cache`` contains "serve" and
-    # ``vim notes about hermes serve`` contains both markers — this predicate decides a kill.
+    # ``vim notes about minerva serve`` contains both markers — this predicate decides a kill.
     if _hermes_holder_subcommand(command) != "serve":
         return False
     tokens = command.lower().split()
@@ -924,7 +924,7 @@ def _process_age_seconds(pid: int) -> float:
 
 
 def _reap_orphaned_desktop_local_serves(
-    *, reason: str = "orphaned desktop-local hermes serve", signal_term=None, signal_kill=None,
+    *, reason: str = "orphaned desktop-local minerva serve", signal_term=None, signal_kill=None,
     sleep_fn=None, lock_owned_pids_fn=None, process_age_seconds_fn=None) -> dict[str, list]:
     """Kill leftover Desktop-local ``minerva serve`` backends with no parent. Never raises.
 

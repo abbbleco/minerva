@@ -67,10 +67,10 @@ while [ $# -gt 0 ]; do
             echo
             echo "  --skip-browser  Do not install the browser tools (agent-browser + Chromium)."
             echo "                  Alias: --no-playwright. Remembered by later"
-            echo "                  installs and 'hermes update'; undo with 'hermes pm install agent-browser'."
+            echo "                  installs and 'minerva update'; undo with 'minerva pm install agent-browser'."
             echo "  --skip-computer-use"
             echo "                  Do not install the computer-use driver (cua-driver). Remembered"
-            echo "                  the same way; undo with 'hermes pm install cua-driver'."
+            echo "                  the same way; undo with 'minerva pm install cua-driver'."
             exit 0 ;;
         *) echo "unknown option: $1" >&2; exit 1 ;;
     esac
@@ -747,11 +747,11 @@ stage_products() {
     if [ "$INCLUDE_DESKTOP" = true ] || desktop_product_present; then
         args+=(--desktop)
     fi
-    (cd "$INSTALL_DIR" && run_logged "Building the hermes command and apps" \
+    (cd "$INSTALL_DIR" && run_logged "Building the minerva command and apps" \
         "$boot_py" -I -B -X utf8 hermes_cli/source_completion.py "${args[@]}") \
         || fail "app products or command publication failed"
     wire_shell_path
-    log_success "app products and hermes command ready"
+    log_success "app products and minerva command ready"
 }
 
 stage_desktop() {
@@ -784,7 +784,7 @@ has_terminal() { (: </dev/tty) 2>/dev/null; }
 stage_setup() {
     if [ "$NON_INTERACTIVE" = true ]; then return 0; fi
     if ! has_terminal; then
-        log "setup skipped (no terminal); run 'hermes setup' after install"
+        log "setup skipped (no terminal); run 'minerva setup' after install"
         return 0
     fi
     "$INSTALL_DIR/.hermes/bin/hermes" setup </dev/tty || fail "setup failed"
@@ -793,7 +793,7 @@ stage_setup() {
 stage_gateway() {
     if [ "$NON_INTERACTIVE" = true ]; then return 0; fi
     if ! has_terminal; then
-        log "gateway setup skipped (no terminal); run 'hermes gateway install' after install"
+        log "gateway setup skipped (no terminal); run 'minerva gateway install' after install"
         return 0
     fi
     # Setup installs the service when it handles the gateway; ask only if it did not.

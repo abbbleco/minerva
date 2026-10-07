@@ -595,7 +595,7 @@ class GeminiFake:
                 if self.tunneled or host != GEMINI_HOST:
                     with fake._lock:
                         fake.refused_hosts.append(host)
-                    self.send_response(403, "Forbidden by hermes e2e fake proxy")
+                    self.send_response(403, "Forbidden by minerva e2e fake proxy")
                     self.send_header("Content-Length", "0")
                     self.end_headers()
                     self.close_connection = True

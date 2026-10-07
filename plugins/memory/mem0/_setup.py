@@ -432,8 +432,8 @@ def _install_provider_deps(llm_id: str, embedder_id: str, vector_id: str) -> Non
     """Point at the pip deps the selected OSS backends need.
 
     These are third-party backend SDKs (ollama, qdrant-client, ...), not
-    hermes dependencies — pm does not install arbitrary specs into the
-    hermes venv. Print the exact command instead."""
+    minerva dependencies — pm does not install arbitrary specs into the
+    minerva venv. Print the exact command instead."""
     deps: set[str] = set()
     for registry, pid in [(LLM_PROVIDERS, llm_id), (EMBEDDER_PROVIDERS, embedder_id),
                           (VECTOR_PROVIDERS, vector_id)]:

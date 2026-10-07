@@ -21,7 +21,7 @@ def _cu_status(args) -> int:
     override = _os.environ.get("HERMES_CUA_DRIVER_CMD", "").strip()
     if not path:
         print("cua-driver: not installed")
-        print("  Run: hermes computer-use install")
+        print("  Run: minerva computer-use install")
         return 1
     contract = _cua_driver_contract_status(path)
     version = _cua_version_summary(contract.get("version") or "")
@@ -35,9 +35,9 @@ def _cu_status(args) -> int:
         if override:
             print(
                 "    Update the binary selected by HERMES_CUA_DRIVER_CMD, or unset "
-                "the override and run: hermes computer-use install --upgrade")
+                "the override and run: minerva computer-use install --upgrade")
         else:
-            print("    Run: hermes computer-use install")
+            print("    Run: minerva computer-use install")
         return 1
     rc = 0
     if sys.platform == "linux":  # hand-written daemon units: dead `serve` is invisible to the binary contract (#114748)
@@ -72,7 +72,7 @@ def _cu_perms_status(args) -> None:
         print(f"Computer Use is not supported on {st['platform']}.")
         sys.exit(1)
     if not st["installed"]:
-        print("cua-driver: not installed. Run: hermes computer-use install")
+        print("cua-driver: not installed. Run: minerva computer-use install")
         sys.exit(1)
     glyph = lambda v: "✅" if v is True else ("❌" if v is False else "•")  # noqa: E731
     print(f"cua-driver: {st['version'] or 'installed'} ({st['platform']})")
@@ -80,7 +80,7 @@ def _cu_perms_status(args) -> None:
         print(f"  {glyph(st['accessibility'])} Accessibility")
         print(f"  {glyph(st['screen_recording'])} Screen Recording")
         if not st["ready"]:
-            print("  Grant: hermes computer-use permissions grant")
+            print("  Grant: minerva computer-use permissions grant")
             if hint := stale_tcc_grant_hint(*(f for f in TCC_FIELDS if st[f] is False)):
                 print(f"  {hint}")
     else:  # no TCC model — readiness is driver health

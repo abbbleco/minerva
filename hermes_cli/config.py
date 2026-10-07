@@ -338,7 +338,7 @@ def recommended_update_command_for_method(method: str) -> str:
     """Return the update command or guidance for a given install method."""
     if is_nix_install_method(method):
         return _NIX_UPDATE_MSG
-    return _UPDATE_COMMAND_BY_METHOD.get(method, "hermes update")
+    return _UPDATE_COMMAND_BY_METHOD.get(method, "minerva update")
 
 
 def recommended_update_command() -> str:
@@ -1180,7 +1180,7 @@ def _validate_web_backends(config: Dict[str, Any], issues: List[ConfigIssue]) ->
             _issue(issues, "warning",
                    f"web.{_key} is set to '{_val}', but {note} — "
                    "web_search/web_extract will fail until it is changed",
-                   "Run 'hermes tools' and pick a different Web Search & Extract provider")
+                   "Run 'minerva tools' and pick a different Web Search & Extract provider")
 
 
 def _container_slots() -> Dict[str, str]:
@@ -1221,7 +1221,7 @@ def _validate_quoted_containers(config: Dict[str, Any], issues: List[ConfigIssue
             _issue(issues, "warning",
                    f"{key} is the quoted string {value!r} — Minerva expects a YAML {kind} here "
                    "and every reader ignores the string",
-                   f"Run: hermes config set {key} {shlex.quote(value)}  (stores a real {kind}), "
+                   f"Run: minerva config set {key} {shlex.quote(value)}  (stores a real {kind}), "
                    "or remove the quotes in config.yaml")
 
 
@@ -1281,7 +1281,7 @@ def print_config_warnings(config: Optional[Dict[str, Any]] = None) -> None:
     for ci in issues:
         marker = "\033[31m✗\033[0m" if ci.severity == "error" else "\033[33m⚠\033[0m"
         lines.append(f"  {marker} {ci.message}")
-    lines.append("  \033[2mRun 'hermes doctor' for fix suggestions.\033[0m")
+    lines.append("  \033[2mRun 'minerva doctor' for fix suggestions.\033[0m")
     sys.stderr.write("\n".join(lines) + "\n\n")
 
 
@@ -1374,7 +1374,7 @@ def migrate_config(interactive: bool = True, quiet: bool = False) -> Dict[str, A
         msg = support_floor_message()
         results["warnings"].append(msg)
         # stderr so it is visible even on quiet startup paths.
-        sys.stderr.write(f"⚠ hermes config: {msg}\n")
+        sys.stderr.write(f"⚠ minerva config: {msg}\n")
         if not quiet:
             print(f"  ⚠ {msg}")
     else:
@@ -1471,7 +1471,7 @@ def _offer_list(heading: str, items: List[str], question: str) -> bool:
         print(f"    • {item}")
     print()
     if not _ask_yes_no(question):
-        print("  Set later with: hermes config set <key> <value>")
+        print("  Set later with: minerva config set <key> <value>")
         return False
     print()
     return True
@@ -2463,8 +2463,8 @@ _FALLBACK_COMMENT = """
 #
 # Supported providers:
 #   openrouter   (OPENROUTER_API_KEY)  — routes to any model
-#   openai-codex (OAuth — hermes auth) — OpenAI Codex
-#   nous         (OAuth — hermes auth) — ABBBLE Portal
+#   openai-codex (OAuth — minerva auth) — OpenAI Codex
+#   nous         (OAuth — minerva auth) — ABBBLE Portal
 #   zai          (ZAI_API_KEY)         — Z.AI / GLM
 #   kimi-coding  (KIMI_API_KEY)        — Kimi / Moonshot
 #   kimi-coding-cn (KIMI_CN_API_KEY)   — Kimi / Moonshot (China)
@@ -3010,7 +3010,7 @@ def _show_model_section(config: Dict[str, Any]) -> None:
         env_ghost = None
     if env_ghost is not None and str(env_ghost).strip() != str(cfg_max_turns).strip():
         print(color(f"                ⚠ .env has stale HERMES_MAX_ITERATIONS={env_ghost} "
-                    f"(run 'hermes doctor --fix' to remove)", Colors.YELLOW))
+                    f"(run 'minerva doctor --fix' to remove)", Colors.YELLOW))
 
 
 def _show_display_section(config: Dict[str, Any]) -> None:
@@ -3157,9 +3157,9 @@ def show_config():
 
     print()
     print(color("─" * 60, Colors.DIM))
-    print(color("  hermes config edit     # Edit config file", Colors.DIM))
-    print(color("  hermes config set <key> <value>", Colors.DIM))
-    print(color("  hermes setup           # Run setup wizard", Colors.DIM))
+    print(color("  minerva config edit     # Edit config file", Colors.DIM))
+    print(color("  minerva config set <key> <value>", Colors.DIM))
+    print(color("  minerva setup           # Run setup wizard", Colors.DIM))
     print()
 
 
@@ -3462,7 +3462,7 @@ def _refuse_container_type_mismatch(key: str, value: Any, user_config: Dict[str,
     literal = "[item, ...]" if expected == "list" else "{key: value}"
     _exit_invalid(
         f"✗ Cannot set '{key}': it must be a {expected}, got a {got} — nothing was written.\n"
-        f"  Pass a YAML/JSON literal, e.g.:\n    hermes config set {key} '{literal}'\n"
+        f"  Pass a YAML/JSON literal, e.g.:\n    minerva config set {key} '{literal}'\n"
         "  or edit config.yaml directly.")
 
 
@@ -3551,9 +3551,9 @@ def _guard_section_overwrite(key: str, value: Any, user_config: Dict[str, Any], 
             err.append(f"  ... and {len(sub) - 8} more")
     err += [
         "  Use a dotted path to set a specific leaf key:",
-        f"    hermes config set {key}.<sub-key> <value>",
+        f"    minerva config set {key}.<sub-key> <value>",
         "  Or use --force to replace the entire section:",
-        f"    hermes config set --force {key} {value!r}"]
+        f"    minerva config set --force {key} {value!r}"]
     print("\n".join(err), file=sys.stderr)
     sys.exit(1)
 
@@ -3876,17 +3876,17 @@ def _run_write_command(fn, *args) -> None:
         _exit_invalid(f"✗ {exc}")
 
 
-_USAGE_GET = ("Usage: hermes config get <key> [--json] [--raw]", [
-    "hermes config get model", "hermes config get terminal.backend",
-    "hermes config get skills.config --json"], None)
-_USAGE_SET = ("Usage: hermes config set [--force] <key> <value>", [
-    "hermes config set model anthropic/claude-sonnet-4", "hermes config set terminal.backend docker",
-    "hermes config set OPENROUTER_API_KEY sk-or-..."], [
+_USAGE_GET = ("Usage: minerva config get <key> [--json] [--raw]", [
+    "minerva config get model", "minerva config get terminal.backend",
+    "minerva config get skills.config --json"], None)
+_USAGE_SET = ("Usage: minerva config set [--force] <key> <value>", [
+    "minerva config set model anthropic/claude-sonnet-4", "minerva config set terminal.backend docker",
+    "minerva config set OPENROUTER_API_KEY sk-or-..."], [
     "", "  --force: skip the unknown-key notice for unrecognized keys,",
     "           and allow a scalar to replace a whole mapping section"])
-_USAGE_UNSET = ("Usage: hermes config unset <key>", [
-    "hermes config unset model", "hermes config unset terminal.backend",
-    "hermes config unset OPENROUTER_API_KEY"], None)
+_USAGE_UNSET = ("Usage: minerva config unset <key>", [
+    "minerva config unset model", "minerva config unset terminal.backend",
+    "minerva config unset OPENROUTER_API_KEY"], None)
 
 
 def _cmd_config_get(args):
@@ -3986,7 +3986,7 @@ def _cmd_config_check(args):
     if missing_config:
         print()
         print(color(f"  {len(missing_config)} new config option(s) available", Colors.YELLOW))
-        print("    Run 'hermes config migrate' to add them")
+        print("    Run 'minerva config migrate' to add them")
 
     from hermes_cli.config_check_diagnostics import config_check_diagnostics
 
@@ -4013,15 +4013,15 @@ _CONFIG_SUBCOMMANDS = {
     "check": _cmd_config_check}
 
 _CONFIG_USAGE = """Available commands:
-  hermes config           Show current configuration
-  hermes config edit      Open config in editor
-  hermes config get <key>          Print a resolved config value
-  hermes config set <key> <value>   Set a config value
-  hermes config unset <key>        Remove a config value
-  hermes config check     Check for missing, outdated, or inactive config
-  hermes config migrate   Update config with new options
-  hermes config path      Show config file path
-  hermes config env-path  Show .env file path"""
+  minerva config           Show current configuration
+  minerva config edit      Open config in editor
+  minerva config get <key>          Print a resolved config value
+  minerva config set <key> <value>   Set a config value
+  minerva config unset <key>        Remove a config value
+  minerva config check     Check for missing, outdated, or inactive config
+  minerva config migrate   Update config with new options
+  minerva config path      Show config file path
+  minerva config env-path  Show .env file path"""
 
 
 def config_command(args):

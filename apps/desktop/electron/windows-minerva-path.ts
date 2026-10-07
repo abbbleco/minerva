@@ -104,7 +104,7 @@ export interface ResolveVenvHermesCommandDeps {
  * Mirrors isActiveRuntimeUsable(): probes with the checkout on PYTHONPATH so
  * a healthy source-tree venv passes.
  *
- * Returns null when `command` is not a venv hermes shim, the underlying
+ * Returns null when `command` is not a venv minerva shim, the underlying
  * python doesn't exist, or the import probe fails. Otherwise returns the
  * resolved backend descriptor.
  */

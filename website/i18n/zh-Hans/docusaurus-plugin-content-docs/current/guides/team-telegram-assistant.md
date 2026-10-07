@@ -143,7 +143,7 @@ hermes gateway
 
 ```bash
 hermes gateway install
-sudo hermes gateway install --system   # 仅 Linux：开机启动的系统服务
+sudo minerva gateway install --system   # 仅 Linux：开机启动的系统服务
 ```
 
 这会创建一个后台服务：Linux 上默认为用户级 **systemd** 服务，macOS 上为 **launchd** 服务，传入 `--system` 则创建开机启动的 Linux 系统服务。
@@ -161,8 +161,8 @@ journalctl --user -u hermes-gateway -f
 sudo loginctl enable-linger $USER
 
 # Linux 服务器——显式系统服务命令
-sudo hermes gateway start --system
-sudo hermes gateway status --system
+sudo minerva gateway start --system
+sudo minerva gateway status --system
 journalctl -u hermes-gateway -f
 ```
 
@@ -203,7 +203,7 @@ TELEGRAM_ALLOWED_USERS=123456789,987654321,555555555
 修改后重启 gateway：
 
 ```bash
-hermes gateway stop && hermes gateway start
+hermes gateway stop && minerva gateway start
 ```
 
 ### 方式 B：私信配对（推荐用于团队）
@@ -220,7 +220,7 @@ hermes gateway stop && hermes gateway start
 
 3. **你在服务器上审批**：
    ```bash
-   hermes pairing approve telegram XKGH5N7P
+   minerva pairing approve telegram XKGH5N7P
    ```
 
 4. **他们即可使用**——机器人立即开始响应他们的消息
@@ -409,7 +409,7 @@ tail -f ~/.hermes/logs/gateway.log
 
 ```bash
 hermes update
-hermes gateway stop && hermes gateway start
+hermes gateway stop && minerva gateway start
 ```
 
 ### 日志位置

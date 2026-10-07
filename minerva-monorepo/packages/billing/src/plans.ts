@@ -12,8 +12,8 @@
 export type BillingState = "active" | "free" | "past_due" | "expired";
 
 /**
- * Canonical portal tiers (Nous pricing.png — the correct pricing), billed in USD:
- * FREE $0 / PLUS $20 / SUPER $100 / ULTRA $200.
+ * Canonical portal tiers, billed in ZAR (Paystack is the only gateway):
+ * FREE R0 / PLUS R350 / SUPER R1,650 / ULTRA R3,500.
  */
 export type PlanId = "free" | "plus" | "super" | "ultra" | "agency";
 /** Tiers new subscriptions are issued on. */
@@ -55,7 +55,7 @@ export interface PaidPlan {
   id: PaidPlanId;
   name: string;
   amountCents: number;
-  /** ISO currency of `amountCents`. Portal tiers bill in USD; legacy tiers in `planCurrency()`. */
+  /** ISO currency of `amountCents` — every tier is denominated in `planCurrency()`. */
   currency: string;
 }
 
@@ -69,29 +69,27 @@ export function envNumber(key: string, fallback: number): number {
 }
 
 /**
- * Tier prices.
+ * Tier prices, denominated in `planCurrency()` (ZAR by default).
  *
- * Portal tiers (canonical, USD — the correct pricing):
- *   PLUS $20 / SUPER $100 / ULTRA $200, each granting price x bonus (10% → $22/$110/$220).
+ * Portal tiers (canonical): PLUS R350 / SUPER R1,650 / ULTRA R3,500 — converted
+ * from the original USD list ($20/$100/$200 at 16.39 ZAR/USD, 2026-09-30) and
+ * ROUNDED UP to clean price points (owner decision, same precedent as the
+ * legacy R3,500 agency tier). Rounding up absorbs FX drift and gateway fees
+ * rather than silently eroding margin every time the rand weakens.
  *
- * Legacy tier (preserved for old rows, in the minor unit of `planCurrency()`):
- *   Converted from the USD list price at 16.39 ZAR/USD (2026-09-30) and then ROUNDED UP to a clean
- *   price point (owner decision):
- *   $200 x 16.39 = R3,278.00 -> R3,500
- * Rounding up is deliberate: it absorbs FX drift and payment-gateway fees rather than
- * silently eroding margin every time the rand weakens.
+ * Legacy tier (preserved for old rows): $200 x 16.39 = R3,278.00 -> R3,500.
  *
- * The legacy credit grant is unaffected by the currency: `creditsForPlan` converts back to USD, so the
- * granted inference stays ~$140.00.
+ * Credit grants are always USD (`creditsForPlan` converts), so a price in any
+ * billing currency buys the same inference.
  */
 export function paidPlan(id: PaidPlanId): PaidPlan {
   switch (id) {
     case "plus":
-      return { id, name: "Plus", amountCents: envNumber("BILLING_PLUS_AMOUNT_CENTS", 2000), currency: "usd" };
+      return { id, name: "Plus", amountCents: envNumber("BILLING_PLUS_AMOUNT_CENTS", 35000), currency: planCurrency() };
     case "super":
-      return { id, name: "Super", amountCents: envNumber("BILLING_SUPER_AMOUNT_CENTS", 10000), currency: "usd" };
+      return { id, name: "Super", amountCents: envNumber("BILLING_SUPER_AMOUNT_CENTS", 165000), currency: planCurrency() };
     case "ultra":
-      return { id, name: "Ultra", amountCents: envNumber("BILLING_ULTRA_AMOUNT_CENTS", 20000), currency: "usd" };
+      return { id, name: "Ultra", amountCents: envNumber("BILLING_ULTRA_AMOUNT_CENTS", 350000), currency: planCurrency() };
     case "agency":
       return { id, name: "Agency", amountCents: envNumber("BILLING_AGENCY_AMOUNT_CENTS", 350000), currency: planCurrency() };
   }
@@ -108,20 +106,22 @@ export function creditMultiplier(): number {
 }
 
 /**
- * Billing currency. Defaults to **ZAR** (owner decision 2026-09-30): Paystack is the primary
+ * Billing currency. Defaults to **ZAR** (owner decision 2026-09-30): Paystack is the only
  * gateway and is Africa-first, and v1's `payments.currency` defaulted to ZAR too.
  *
- * NOTE the tier amounts (`BILLING_PRO_AMOUNT_CENTS`, `BILLING_AGENCY_AMOUNT_CENTS`) were chosen
- * as USD figures. R49/R200 is not the same price as $49/$200 — review them before taking money.
+ * Tier amounts (`BILLING_*_AMOUNT_CENTS`) are denominated in THIS currency —
+ * R350 is not $350. `creditsForPlan` converts to USD grants; review amounts
+ * before taking money.
  */
 export function planCurrency(): string {
   return (process.env.BILLING_CURRENCY ?? "zar").toLowerCase();
 }
 
 /**
- * Portal bonus: credits granted per USD of portal-tier subscription. The "10% BONUS"
- * badge on pricing.png — $20 → $22, $100 → $110, $200 → $220.
- * Distinct from `creditMultiplier()` (0.7 margin floor on the legacy ZAR tiers).
+ * Portal bonus: credits granted per unit of portal-tier subscription price. The
+ * "10% BONUS" badge on pricing — R350 → ~$23.49, R1,650 → ~$110.74,
+ * R3,500 → ~$234.90 (at 16.39 ZAR/USD).
+ * Distinct from `creditMultiplier()` (0.7 margin floor on the legacy tier).
  */
 export function portalBonusMultiplier(): number {
   const raw = Number(process.env.BILLING_PORTAL_BONUS_MULTIPLIER);
@@ -166,21 +166,21 @@ export function usdPerBillingUnit(): number {
  * Credits granted for a plan, in **USD**.
  *
  * Credits are USD-denominated because model prices are USD (`QONTXT_V2_COST_MODEL.md`, the
- * router's `pricing.ts`). The plan PRICE is in the billing currency, so the two must be
- * converted — taking `amountCents / 100` directly would treat R803 as $803 and grant ~18x the
- * intended inference. That is a revenue-destroying bug, not a rounding error, which is why the
- * conversion lives here rather than at the call site.
+ * router's `pricing.ts`). Every plan PRICE is in the billing currency, so each branch
+ * converts to USD first — taking `amountCents / 100` directly would treat R350 as $350
+ * and grant ~16x the intended inference. That is a revenue-destroying bug, not a
+ * rounding error, which is why the conversion lives here rather than at the call site.
  *
- * Free tier gets a flat monthly grant (already USD).
+ * Portal tiers grant price x bonus (R350 → ~$23.49 at 16.39 ZAR/USD); the legacy
+ * tier grants price x margin floor (0.7). Free tier gets a flat monthly grant.
  */
 export function creditsForPlan(plan: PlanId): number {
   if (plan === "free") return envNumber("MINERVA_FREE_CREDITS_USD", 5);
   if (plan === "plus" || plan === "super" || plan === "ultra") {
-    // Portal tiers are USD list prices: grant price x bonus ($20 → $22, $100 → $110, $200 → $220).
-    const priceUsd = paidPlan(plan).amountCents / 100;
+    const priceUsd = (paidPlan(plan).amountCents / 100) * usdPerBillingUnit();
     return round2(priceUsd * portalBonusMultiplier());
   }
-  // Legacy tier: price is in the billing currency, converted back to USD first.
+  // Legacy tier: same conversion, margin floor instead of bonus.
   const priceInBillingCurrency = paidPlan(plan).amountCents / 100;
   const priceUsd = priceInBillingCurrency * usdPerBillingUnit();
   return round2(priceUsd * creditMultiplier());

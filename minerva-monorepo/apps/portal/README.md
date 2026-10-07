@@ -40,3 +40,21 @@ pnpm --filter @minerva/portal dev      # :3002
 pnpm --filter @minerva/portal typecheck
 pnpm --filter @minerva/portal build
 ```
+
+## Paystack plans (subscriptions)
+
+Tiers bill in ZAR through Paystack (`PAYSTACK_SECRET_KEY`, test vs live by key
+prefix). Dashboard plan codes must price-match `@minerva/billing` — checkout
+refuses on drift. Provision (idempotent, reuses matches) per environment:
+
+```bash
+export PAYSTACK_SECRET_KEY=sk_test_...
+pnpm --filter @minerva/portal paystack:plans -- --dry-run   # preview
+pnpm --filter @minerva/portal paystack:plans                 # create test plans
+export PAYSTACK_SECRET_KEY=sk_live_...
+pnpm --filter @minerva/portal paystack:plans -- --live       # create live plans
+```
+
+Copy the printed `PAYSTACK_PLAN_*` codes into the deploy env, register
+`<portal>/api/billing/paystack/webhook` as the webhook URL, and apply
+migration `044_paystack_billing.sql`.

@@ -100,7 +100,7 @@ hermes doctor        # reports the resolved managed dir + pinned key counts
 If you try to change a managed value, Minerva refuses and names the source:
 
 ```bash
-$ hermes config set model.default my/model
+$ minerva config set model.default my/model
 Cannot set 'model.default': it is managed by your administrator
 (/etc/hermes/config.yaml) and cannot be changed.
 ```

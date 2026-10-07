@@ -257,7 +257,7 @@ Custom OpenAI-compatible endpoints (Together.ai, RunPod, local servers) get thei
 When you set up a custom endpoint via `minerva model`, it auto-generates a name like "Together.ai" or "Local (localhost:8080)". This name becomes the pool key.
 
 ```bash
-# After setting up a custom endpoint via hermes model:
+# After setting up a custom endpoint via minerva model:
 hermes auth list
 # Shows:
 #   Together.ai (1 credential):

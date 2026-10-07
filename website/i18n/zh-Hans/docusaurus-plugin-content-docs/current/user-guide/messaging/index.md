@@ -134,7 +134,7 @@ hermes gateway setup        # 交互式配置所有消息平台
 hermes gateway              # 在前台运行
 hermes gateway setup        # 交互式配置消息平台
 hermes gateway install      # 安装为用户服务（Linux）/ launchd 服务（macOS）
-sudo hermes gateway install --system   # 仅 Linux：安装开机启动的系统服务
+sudo minerva gateway install --system   # 仅 Linux：安装开机启动的系统服务
 hermes gateway start        # 启动默认服务
 hermes gateway stop         # 停止默认服务
 hermes gateway status       # 检查默认服务状态
@@ -381,9 +381,9 @@ journalctl --user -u hermes-gateway -f  # 查看日志
 sudo loginctl enable-linger $USER
 
 # 或安装开机启动的系统服务，仍以你的用户身份运行
-sudo hermes gateway install --system
-sudo hermes gateway start --system
-sudo hermes gateway status --system
+sudo minerva gateway install --system
+sudo minerva gateway start --system
+sudo minerva gateway status --system
 journalctl -u hermes-gateway -f
 ```
 

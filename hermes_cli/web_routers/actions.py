@@ -128,7 +128,7 @@ def _durable_completed_update_action_id(lines: List[str]) -> Optional[str]:
     last_start = last_completed = -1
     completed_action_id: Optional[str] = None
     for index, line in enumerate(lines):
-        if line.startswith("=== hermes update started "):
+        if line.startswith("=== minerva update started "):
             last_start = index
         match = _UPDATE_ACTION_COMPLETED_RE.fullmatch(line.strip())
         if match:
@@ -249,7 +249,7 @@ async def update_hermes():
         return response
 
     action_id = secrets.token_hex(16)
-    with http_failure("Failed to spawn hermes update", 500, "Failed to start update"):
+    with http_failure("Failed to spawn minerva update", 500, "Failed to start update"):
         proc = _spawn_hermes_action(["update"], "hermes-update", env_overrides={"HERMES_ACTION_ID": action_id})
     return {"ok": True, "pid": proc.pid, "name": "hermes-update", "action_id": action_id}
 

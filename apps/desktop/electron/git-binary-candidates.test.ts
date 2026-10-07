@@ -63,7 +63,7 @@ describe('windowsGitCandidates (#61494)', () => {
   }
 
   test('includes the UGit candidate and the resolver selection finds it when nothing earlier exists', () => {
-    // The reported machine (#61494): no hermes portable git, no Program Files
+    // The reported machine (#61494): no minerva portable git, no Program Files
     // Git, nothing on PATH — only the UGit-bundled copy exists. An Electron
     // process launched from Explorer inherits the login-time environment
     // block, which lacks the PATH entry the UGit installer added later, so

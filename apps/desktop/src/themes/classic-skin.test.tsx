@@ -112,7 +112,7 @@ describe('Classic Minerva is an explicit Desktop pick, never inferred from stock
     expect(paintedSkin()).toBe('nous')
   })
 
-  it('/skin gold and /skin hermes select Classic; /skin default stays the Desktop default (Minerva)', async () => {
+  it('/skin gold and /skin minerva select Classic; /skin default stays the Desktop default (Minerva)', async () => {
     const run = await launch(stockDefaultSkin)
 
     act(() => void run.api.skin?.('gold'))

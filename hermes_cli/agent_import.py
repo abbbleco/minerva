@@ -1,4 +1,4 @@
-"""hermes import-agent — import Claude Code / Codex CLI setups into Minerva.
+"""minerva import-agent — import Claude Code / Codex CLI setups into Minerva.
 
 Secrets are NEVER imported: credential files are never read, and MCP env vars with secret-looking
 names (KEY, TOKEN, SECRET, PASSWORD, ...) are stripped and reported so the user re-adds them via
@@ -540,12 +540,12 @@ def import_agent_command(args) -> None:
         if not detected:
             print()
             print_error("No supported agent setup found (~/.claude or ~/.codex).")
-            print_info("Specify one explicitly: hermes import-agent claude-code --source /path")
+            print_info("Specify one explicitly: minerva import-agent claude-code --source /path")
             return
         if len(detected) > 1 and explicit_source is None:
             print()
             print_info("Multiple agent setups detected: " + ", ".join(detected))
-            print_info("Pick one: hermes import-agent claude-code   or   hermes import-agent codex")
+            print_info("Pick one: minerva import-agent claude-code   or   minerva import-agent codex")
             return
         agent = detected[0]
     source_dir = Path(explicit_source or Path.home() / _AGENT_DEFAULT_DIRS[agent])
@@ -557,7 +557,7 @@ def import_agent_command(args) -> None:
     if not source_dir.is_dir():
         print()
         print_error(f"Agent directory not found: {source_dir}")
-        print_info(f"Specify a custom path: hermes import-agent {agent} --source /path/to/{_AGENT_DEFAULT_DIRS[agent]}")
+        print_info(f"Specify a custom path: minerva import-agent {agent} --source /path/to/{_AGENT_DEFAULT_DIRS[agent]}")
         return
     hermes_home = get_hermes_home()
     print()
@@ -566,7 +566,7 @@ def import_agent_command(args) -> None:
     print_info(f"Source:      {source_dir}")
     print_info(f"Target:      {hermes_home}")
     print_info(f"Overwrite:   {'yes' if overwrite else 'no (skip conflicts)'}")
-    print_info("Secrets:     never imported — run 'hermes setup' for credentials")
+    print_info("Secrets:     never imported — run 'minerva setup' for credentials")
     # Ensure config.yaml exists before the import tries to merge into it
     if not get_config_path().exists():
         save_config(load_config())
@@ -604,7 +604,7 @@ def import_agent_command(args) -> None:
     if not args.yes:
         if not sys.stdin.isatty():
             print_info("Non-interactive session — preview only.")
-            print_info(f"To execute, re-run with: hermes import-agent {agent} --yes")
+            print_info(f"To execute, re-run with: minerva import-agent {agent} --yes")
             return
         if not prompt_yes_no("Proceed with import?", default=True):
             print_info("Import cancelled.")
@@ -616,13 +616,13 @@ def import_agent_command(args) -> None:
     from hermes_cli.agent_import_sync import update_sync_manifest
     try:
         update_sync_manifest(agent, source_dir.resolve(), hermes_home.resolve(), overwrite, report)
-        print_info("Source registered for sync — re-run 'hermes import-agent --sync' "
+        print_info("Source registered for sync — re-run 'minerva import-agent --sync' "
                    "any time to pull in changes.")
     except OSError as exc:
         logger.warning("Could not update import sync manifest: %s", exc)
     print()
     print_success("Import complete.")
-    print_info("API keys and credentials were NOT imported — run 'hermes setup' "
+    print_info("API keys and credentials were NOT imported — run 'minerva setup' "
                "to configure providers, or add them to ~/.hermes/.env.")
 
 
@@ -657,7 +657,7 @@ def print_import_report(report: Dict[str, Any], dry_run: bool) -> None:
         print(color("  ⚷ Secrets stripped (never imported):", Colors.YELLOW))
         for name in stripped:
             print(f"      {name}")
-        print_info("Re-add credentials deliberately via 'hermes setup' or ~/.hermes/.env.")
+        print_info("Re-add credentials deliberately via 'minerva setup' or ~/.hermes/.env.")
         print()
     summary = report.get("summary", {})
     parts = [f"{summary[k]} {label}" for k, _, _, label in groups if summary.get(k)]

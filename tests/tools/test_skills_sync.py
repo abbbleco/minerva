@@ -162,11 +162,11 @@ class TestRmtreeWritableScopeGuard:
         would wipe every installed skill (the degenerate #48200 path)."""
         from tools.skills_sync import _rmtree_writable
 
-        hermes = tmp_path / "home"
+        minerva = tmp_path / "home"
         hermes.mkdir()
-        skills = hermes / "skills"
+        skills = minerva / "skills"
         (skills / "keep").mkdir(parents=True)
-        sibling = hermes / "kanban.db"  # any non-skills path
+        sibling = minerva / "kanban.db"  # any non-skills path
         sibling.mkdir()
 
         with patch("tools.skills_sync.SKILLS_DIR", skills):

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 9
 title: "可选技能目录"
-description: "hermes-agent 附带的官方可选技能 — 通过 hermes skills install official/<category>/<skill> 安装"
+description: "hermes-agent 附带的官方可选技能 — 通过 minerva skills install official/<category>/<skill> 安装"
 ---
 
 # 可选技能目录

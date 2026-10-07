@@ -47,19 +47,19 @@ test('canonical paid tiers are plus/super/ultra; legacy agency stays readable, p
   assert.equal(isPlanId('bogus'), false);
 });
 
-test('portal prices are the pricing.png figures in USD', () => {
-  assert.equal(paidPlan('plus').amountCents, 2000);
-  assert.equal(paidPlan('super').amountCents, 10000);
-  assert.equal(paidPlan('ultra').amountCents, 20000);
+test('portal prices are ZAR figures (Paystack is the only gateway)', () => {
+  assert.equal(paidPlan('plus').amountCents, 35000);
+  assert.equal(paidPlan('super').amountCents, 165000);
+  assert.equal(paidPlan('ultra').amountCents, 350000);
   for (const id of ['plus', 'super', 'ultra'] as const) {
-    assert.equal(paidPlan(id).currency, 'usd');
+    assert.equal(paidPlan(id).currency, 'zar');
   }
 });
 
-test('portal credit grants are price x 10% bonus: 22/110/220', () => {
-  assert.equal(creditsForPlan('plus'), 22);
-  assert.equal(creditsForPlan('super'), 110);
-  assert.equal(creditsForPlan('ultra'), 220);
+test('portal credit grants are ZAR price x 10% bonus, converted to USD', () => {
+  assert.equal(creditsForPlan('plus'), 23.49);
+  assert.equal(creditsForPlan('super'), 110.74);
+  assert.equal(creditsForPlan('ultra'), 234.9);
   assert.ok(creditsForPlan('ultra') > creditsForPlan('super'));
   assert.ok(creditsForPlan('super') > creditsForPlan('plus'));
 });

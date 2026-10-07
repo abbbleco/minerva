@@ -1,4 +1,4 @@
-"""Package definitions for the tools hermes manages. Versions and hashes
+"""Package definitions for the tools minerva manages. Versions and hashes
 live in pm/lock.json (written by `pm lock`), never here."""
 
 from __future__ import annotations
@@ -303,7 +303,7 @@ _uv_lock_digest_cache: dict[Path, tuple] = {}
 def uv_cache_dir() -> Path:
     """The hermes-owned uv cache: machine-scoped and shared (keyed by
     content — two profiles reuse one cache), anchored to the DEFAULT
-    hermes root like partials_root(). A bundle ships a seeded copy at
+    minerva root like partials_root(). A bundle ships a seeded copy at
     the payload root (uv-cache/); the first call on a sealed install
     copies it out to the writable machine cache (the read-only payload
     can't serve uv's working cache), and a warm `uv sync --offline`

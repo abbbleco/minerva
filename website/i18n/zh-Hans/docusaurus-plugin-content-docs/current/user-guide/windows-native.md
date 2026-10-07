@@ -53,7 +53,7 @@ Windows 10 源码安装支持不代表 MSIX 支持 Windows 10。
 软件包包含 Python、Node 和基础依赖，首次启动无需克隆或编译源码。
 
 执行别名提供 `hermes`、`hermes-agent` 和 `hermes-acp`。
-用 `Get-Command hermes -All` 检查是否被其他安装覆盖。
+用 `Get-Command minerva -All` 检查是否被其他安装覆盖。
 在 Windows 的应用执行别名设置中管理这些入口。
 
 侧载版通过桌面 Update 控件交给 App Installer 更新。
@@ -219,7 +219,7 @@ ARM64 Windows 上的 Chromium/agent-browser 可以使用 x64 模拟，这与原�
 验证：
 
 ```powershell
-Get-Command hermes        # 应输出 C:\Users\<you>\AppData\Local\hermes\bin\hermes.exe
+Get-Command minerva        # 应输出 C:\Users\<you>\AppData\Local\hermes\bin\hermes.exe
 hermes --version
 ```
 

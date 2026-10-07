@@ -89,7 +89,7 @@ def _module_isolation():
 
 
 def _fresh_modules():
-    """Drop cached hermes modules so each test reloads against current env."""
+    """Drop cached minerva modules so each test reloads against current env."""
     _drop_reload_targets()
 
 

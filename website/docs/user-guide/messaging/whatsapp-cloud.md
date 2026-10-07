@@ -31,7 +31,7 @@ If those constraints don't work for your use case, the [Baileys bridge integrati
 ## Quick start
 
 ```bash
-hermes whatsapp-cloud
+minerva whatsapp-cloud
 ```
 
 The wizard walks you through every credential, validates each one as you paste it (catches the #1 setup trap — pasting a phone number into the Phone Number ID field), and prints exact follow-up instructions for the parts that need to happen outside the wizard (starting cloudflared, configuring Meta's webhook dashboard).

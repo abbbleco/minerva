@@ -44,8 +44,10 @@ export function planActionForTier(
   if (plan.id.toLowerCase() === subscription.current.tier_id.toLowerCase()) {
     return { kind: "current", text: "Current plan" };
   }
+  // The hub preselects from ?plan= and hosts the Paystack checkout.
+  const hub = `/manage-subscription?plan=${encodeURIComponent(plan.id)}`;
   if (subscription.current.tier_id.toLowerCase() === "free") {
-    return { kind: "link", text: plan.cta, href: "/manage-subscription" };
+    return { kind: "link", text: plan.cta, href: hub };
   }
-  return { kind: "link", text: "Switch plan", href: "/manage-subscription" };
+  return { kind: "link", text: "Switch plan", href: hub };
 }

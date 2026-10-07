@@ -172,7 +172,7 @@ This walks you through configuring each platform with arrow-key selection, shows
 hermes gateway              # Run in foreground
 hermes gateway setup        # Configure messaging platforms interactively
 hermes gateway install      # Install as a user service (Linux) / launchd service (macOS)
-sudo hermes gateway install --system   # Linux only: install a boot-time system service
+sudo minerva gateway install --system   # Linux only: install a boot-time system service
 hermes gateway start        # Start the default service
 hermes gateway stop         # Stop the default service
 hermes gateway status       # Check default service status
@@ -603,9 +603,9 @@ journalctl --user -u hermes-gateway -f  # View logs
 sudo loginctl enable-linger $USER
 
 # Or install a boot-time system service that still runs as your user
-sudo hermes gateway install --system
-sudo hermes gateway start --system
-sudo hermes gateway status --system
+sudo minerva gateway install --system
+sudo minerva gateway start --system
+sudo minerva gateway status --system
 journalctl -u hermes-gateway -f
 ```
 
@@ -637,7 +637,7 @@ hermes gateway install          # user service
 sudo loginctl enable-linger $USER   # one-time: start at boot, survive logout
 ```
 
-After that, `minerva update` can restart the gateway without any privileges. If you prefer to keep the system service, either run updates with `sudo hermes update`, or grant the service account passwordless sudo for systemctl, e.g. in `sudo visudo -f /etc/sudoers.d/hermes-gateway`:
+After that, `minerva update` can restart the gateway without any privileges. If you prefer to keep the system service, either run updates with `sudo minerva update`, or grant the service account passwordless sudo for systemctl, e.g. in `sudo visudo -f /etc/sudoers.d/hermes-gateway`:
 
 ```
 hermes ALL=(root) NOPASSWD: /usr/bin/systemctl --no-ask-password reset-failed hermes-gateway*, /usr/bin/systemctl --no-ask-password start hermes-gateway*, /usr/bin/systemctl --no-ask-password restart hermes-gateway*
@@ -647,7 +647,7 @@ hermes ALL=(root) NOPASSWD: /usr/bin/systemctl --no-ask-password reset-failed he
 Avoid keeping both the user and system gateway units installed at once unless you really mean to. Minerva will warn if it detects both because start/stop/status behavior gets ambiguous.
 
 :::note Inside a container, only the system scope is offered
-`minerva gateway install` (and the `minerva gateway setup` wizard) refuse to install a **user** service when Minerva detects it is running inside a container. A user unit lands in `~/.config/systemd/user`, and when that home is bind-mounted from the host (podman/distrobox), the host's own `systemd --user` enables and starts the same unit — a second gateway polling the same bot token. Run the gateway as the container's main process (`minerva gateway run`, with a container restart policy), or in a systemd container (systemd as PID 1) install the isolated system scope: `sudo hermes gateway install --system --run-as-user <user>`.
+`minerva gateway install` (and the `minerva gateway setup` wizard) refuse to install a **user** service when Minerva detects it is running inside a container. A user unit lands in `~/.config/systemd/user`, and when that home is bind-mounted from the host (podman/distrobox), the host's own `systemd --user` enables and starts the same unit — a second gateway polling the same bot token. Run the gateway as the container's main process (`minerva gateway run`, with a container restart policy), or in a systemd container (systemd as PID 1) install the isolated system scope: `sudo minerva gateway install --system --run-as-user <user>`.
 :::
 
 :::info Multiple installations
@@ -712,7 +712,7 @@ Because the launcher returns as soon as the gateway is spawned, Task Scheduler o
 
 ```
 ⚠ Scheduled Task registration predates the current template (missing: RestartOnFailure, LogonTrigger Delay; version 1.3 vs 1.4)
-  Repair: hermes gateway start  (or: hermes gateway install)
+  Repair: minerva gateway start  (or: minerva gateway install)
 ```
 
 `minerva gateway start` and `minerva update` run the same comparison and re-register a drifted task from the current template automatically (like the systemd unit refresh on Linux); when `schtasks` refuses without elevation, re-run `minerva gateway install`, which can request administrator approval. The check is silent when the task cannot be queried, and it only inspects a few settings Minerva owns (task version, `RestartOnFailure`, the logon trigger delay and the launcher arguments), so deliberate local edits elsewhere in the task are not flagged.

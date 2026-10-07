@@ -147,7 +147,7 @@ answer=$(hermes -z "summarize this" < /path/to/file.txt)
 ```bash
 hermes -z "…" --provider openrouter --model openai/gpt-5.5
 # 或：
-HERMES_INFERENCE_MODEL=anthropic/claude-sonnet-4.6 hermes -z "…"
+HERMES_INFERENCE_MODEL=anthropic/claude-sonnet-4.6 minerva -z "…"
 ```
 
 相同的 agent、相同的工具、相同的 skill——只是剥离了所有交互式/装饰性层。如果你还需要在记录中包含工具输出，请改用 `minerva chat -q`；`-z` 专门用于"我只需要最终答案"的场景。
@@ -168,7 +168,7 @@ hermes model
 - 配置自定义/自托管端点
 - 将新默认值保存到 config
 
-:::warning hermes model 与 /model——了解区别
+:::warning minerva model 与 /model——了解区别
 **`minerva model`**（从终端运行，在任何 Minerva 会话外部）是**完整的 provider 设置向导**。它可以添加新 provider、运行 OAuth 流程、提示输入 API 密钥并配置端点。
 
 **`/model`**（在活跃的 Minerva 聊天会话中输入）只能**在已设置好的 provider 和模型之间切换**。它无法添加新 provider、运行 OAuth 或提示输入 API 密钥。
@@ -230,7 +230,7 @@ hermes gateway <subcommand>
 | `--no-supervise` | 在 `run` 时：在 s6-overlay Docker 镜像内部，跳过 s6 自动监管，退回到 pre-s6 前台语义——gateway 作为容器主进程运行，无自动重启。在 s6 镜像之外为空操作。等同于设置 `HERMES_GATEWAY_NO_SUPERVISE=1`。 |
 
 :::tip WSL 用户
-使用 `minerva gateway run` 而非 `minerva gateway start`——WSL 的 systemd 支持不稳定。用 tmux 包裹以保持持久运行：`tmux new -s hermes 'hermes gateway run'`。详见 [WSL FAQ](./faq.md#wsl网关持续断开连接或-hermes-gateway-start-失败)。
+使用 `minerva gateway run` 而非 `minerva gateway start`——WSL 的 systemd 支持不稳定。用 tmux 包裹以保持持久运行：`tmux new -s minerva 'minerva gateway run'`。详见 [WSL FAQ](./faq.md#wsl网关持续断开连接或-hermes-gateway-start-失败)。
 :::
 
 ## `minerva lsp`
@@ -303,7 +303,7 @@ hermes portal [status|open|tools]
 ## `minerva whatsapp`
 
 ```bash
-hermes whatsapp
+minerva whatsapp
 ```
 
 运行 WhatsApp 配对/设置流程，包括模式选择和二维码配对。
@@ -524,7 +524,7 @@ hermes dump [--show-keys]
 ### 示例输出
 
 ```
---- hermes dump ---
+--- minerva dump ---
 version:          0.8.0 (2026.4.8) [af4abd2f]
 os:               Linux 6.14.0-37-generic x86_64
 python:           3.11.14

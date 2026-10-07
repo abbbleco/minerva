@@ -21,12 +21,12 @@ CMDLINES = [
     ("/venv/bin/hermes serve --isolated --host=127.0.0.1 --port=0 --ssh-owner-nonce abc", "serve", True, False),
     (r"C:\hermes\.venv\Scripts\hermes.exe serve --host 100.106.105.2 --port 9119", "serve", False, False),
     ("hermes.exe dashboard", "dashboard", False, False),
-    ("hermes --profile ops serve " + LOOPBACK, "serve", True, False),
-    ("hermes -m serve kanban --preserve-cache " + LOOPBACK, "kanban", False, False),
+    ("minerva --profile ops serve " + LOOPBACK, "serve", True, False),
+    ("minerva -m serve kanban --preserve-cache " + LOOPBACK, "kanban", False, False),
     ("python -m hermes_cli.main kanban --preserve-cache " + LOOPBACK, "kanban", False, False),
-    ("hermes --reasoning high dashboard " + LOOPBACK, "dashboard", False, False),
-    ("hermes gateway run --replace", "gateway", False, False),
-    ("hermes chat --model serve", "chat", False, False),
+    ("minerva --reasoning high dashboard " + LOOPBACK, "dashboard", False, False),
+    ("minerva gateway run --replace", "gateway", False, False),
+    ("minerva chat --model serve", "chat", False, False),
     ("python observer.py serve " + LOOPBACK, None, False, False),
 ]
 
@@ -42,9 +42,9 @@ def test_kill_and_relaunch_predicates_agree_with_the_canonical_holder_matcher(
 
 
 def test_desktop_local_serve_spares_fixed_port_and_remote_hosts():
-    assert not _is_desktop_local_serve_cmdline("hermes serve --host 100.106.105.2 --port 9119 --skip-build")
-    assert not _is_desktop_local_serve_cmdline("hermes serve --host 127.0.0.1 --port 9119")
-    assert _is_desktop_local_serve_cmdline("hermes serve --host localhost --port 0")
+    assert not _is_desktop_local_serve_cmdline("minerva serve --host 100.106.105.2 --port 9119 --skip-build")
+    assert not _is_desktop_local_serve_cmdline("minerva serve --host 127.0.0.1 --port 9119")
+    assert _is_desktop_local_serve_cmdline("minerva serve --host localhost --port 0")
 
 
 def test_profile_liveness_is_the_shared_ladder(tmp_path, monkeypatch):
@@ -70,8 +70,8 @@ def test_profile_liveness_is_the_shared_ladder(tmp_path, monkeypatch):
 
 
 # ``minerva serve`` is a substring of ``minerva server``: a terminal multiplexer started as
-# ``herdr --session hermes server`` was SIGTERMed by ``minerva update`` and its unit restarted (#121156).
-DECOY = "tool --name hermes server 30"
+# ``herdr --session minerva server`` was SIGTERMed by ``minerva update`` and its unit restarted (#121156).
+DECOY = "tool --name minerva server 30"
 BACKENDS = [
     "/opt/hermes/venv/bin/python -m hermes_cli.main serve --port 0",
     "/usr/bin/python3 /opt/hermes/hermes_cli/main.py dashboard --no-open",

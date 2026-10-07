@@ -581,7 +581,7 @@ async def _start_xai_device_code(profile: Optional[str]) -> Dict[str, Any]:
     )
 
 
-async def _start_abbble_device_code(profile: Optional[str]) -> Dict[str, Any]:
+async def _start_abbble_device_code(profile: Optional[str], provider_id: str = "abbble") -> Dict[str, Any]:
     """Start an ABBBLE Portal sign-in: the portal mints the device/user codes
     (Supabase-backed ``/api/portal/device/start``) and the ``_abbble_poller``
     collects the per-device router key on approval."""
@@ -596,16 +596,17 @@ async def _start_abbble_device_code(profile: Optional[str]) -> Dict[str, Any]:
         device_code=str(data["device_code"]), portal_base_url=portal_base_url,
         interval=interval, expires_at=time.time() + expires_in)
     return _device_session_started(
-        "abbble", profile, _abbble_poller, fields, str(data["user_code"]),
+        provider_id, profile, _abbble_poller, fields, str(data["user_code"]),
         str(data["verification_url"]), expires_in, interval)
 
 
 _DEVICE_CODE_STARTERS = {
     # Both ids start the ABBBLE Portal device flow. "nous" is the historical
     # provider id kept for stored auth state; there is no separate Nous
-    # provider and no Nous device endpoint anymore.
-    "abbble": _start_abbble_device_code,
-    "nous": _start_abbble_device_code, "openai-codex": _start_codex_device_code,
+    # device endpoint anymore. The session preserves the requested id so
+    # /poll/{session_id} provider matching succeeds for both.
+    "abbble": lambda profile: _start_abbble_device_code(profile, "abbble"),
+    "nous": lambda profile: _start_abbble_device_code(profile, "nous"), "openai-codex": _start_codex_device_code,
     "minimax-oauth": _start_minimax_device_code, "xai-oauth": _start_xai_device_code,
 }
 
@@ -687,7 +688,7 @@ def _build_oauth_catalog() -> list[Dict[str, Any]]:
             seen.add(d.slug)
             rows.append({
                 "id": d.slug, "name": d.label, "flow": "external",
-                "cli_command": f"hermes auth add {d.slug}", "docs_url": d.signup_url or "", "status_fn": None,
+                "cli_command": f"minerva auth add {d.slug}", "docs_url": d.signup_url or "", "status_fn": None,
             })
     except Exception:
         pass

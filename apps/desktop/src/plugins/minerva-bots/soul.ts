@@ -29,7 +29,7 @@ function messagingProtocolSection(name: string, roster: RosterRow[] | null | und
     'into it, like a DM. To message a teammate, run:',
     '',
     '```',
-    'hermes -p <agent-name> chat --in ~ -c "Bot Chat" --create-if-missing -Q -q "Message from \uD83E\uDD16 ' +
+    'minerva -p <agent-name> chat --in ~ -c "Bot Chat" --create-if-missing -Q -q "Message from \uD83E\uDD16 ' +
       handle +
       ' (@' +
       handle +

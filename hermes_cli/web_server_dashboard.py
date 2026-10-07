@@ -467,7 +467,7 @@ def _dashboard_plugin_search_dirs() -> List[tuple]:
     User dashboard plugins are a dashboard-owned asset (like theme YAML): resolved from the
     process launch home so they don't vanish when a request is scoped to another profile.
     When the process itself is profile-scoped (``HERMES_HOME=<root>/profiles/<name>``) the
-    launch home has no ``plugins/`` — user plugins live in the hermes root — so the default
+    launch home has no ``plugins/`` — user plugins live in the minerva root — so the default
     root is scanned too; profile-local plugins stay authoritative over same-named root ones.
     The project source is gated on shared truthy semantics (``1``/``true``/``yes``/``on``):
     a bare non-empty check let ``=0``/``=false`` silently enable it (GHSA-5qr3-c538-wm9j).
@@ -481,7 +481,7 @@ def _dashboard_plugin_search_dirs() -> List[tuple]:
     # context-local HERMES_HOME override (e.g. embedded /chat under --open-profile). #87197: when the
     # process itself is profile-scoped (``--profile <name>`` sets ``HERMES_HOME=<root>/profiles/<name>``),
     # the launch home is the profile directory, which has no ``plugins/`` — user plugins are installed in
-    # the hermes root (``~/.hermes/plugins``). Scan the default root as well (``get_default_hermes_root()``
+    # the minerva root (``~/.hermes/plugins``). Scan the default root as well (``get_default_hermes_root()``
     # unwraps ``<root>/profiles/<name>`` → ``<root>`` and returns a custom ``HERMES_HOME`` unchanged when it
     # *is* the root), mirroring how ``hermes_cli.plugins`` resolves plugin install locations. The
     # ``seen_names`` dedupe below keeps profile-local plugins (if any) authoritative over same-named root
@@ -645,7 +645,7 @@ def _plugin_auth_hint(name: str, provides_tools: list) -> tuple:
             if cached_result is None:
                 _schedule_check_fn_probe(entry.check_fn)
             elif cached_result is False:
-                return True, f"hermes auth {name}"
+                return True, f"minerva auth {name}"
     except Exception:
         pass
     return False, ""

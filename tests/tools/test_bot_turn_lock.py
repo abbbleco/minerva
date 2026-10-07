@@ -246,7 +246,7 @@ def test_peer_stdin_delivery_skips_local_lock(root, tmp_path, monkeypatch):
 
 def test_local_delivery_command_never_reenters_the_lock():
     """The gateway deliver handler runs local_delivery_command ALREADY holding
-    the profile lock. That argv must stay a raw hermes CLI invocation:
+    the profile lock. That argv must stay a raw minerva CLI invocation:
     routing it through the --run-delivery wrapper would make the child hit
     _delivery_lock (hermes CLI + '-p'), burn the full wait
     budget against its parent's flock, and fail every relay delivery with

@@ -175,7 +175,7 @@ def _argv_flag_value(argv: Sequence[str], flags: Sequence[str]) -> Optional[str]
 
 
 def _argv_env_home(argv: Sequence[str]) -> Optional[str]:
-    """``HERMES_HOME=<path>`` env-style assignment on the argv (``env HERMES_HOME=… hermes …``)."""
+    """``HERMES_HOME=<path>`` env-style assignment on the argv (``env HERMES_HOME=… minerva …``)."""
     for token in reversed(list(argv)):
         if isinstance(token, str) and token.startswith("HERMES_HOME="):
             return token[len("HERMES_HOME="):]

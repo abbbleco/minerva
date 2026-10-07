@@ -196,7 +196,7 @@ async def test_gateway_internal_events_bypass_estop(hermes_home):
     assert reply is None or "paused" not in (reply or "").lower()
 
 
-# ── CLI: hermes pause / hermes resume ───────────────────────────────────────
+# ── CLI: minerva pause / minerva resume ───────────────────────────────────────
 
 
 def test_cli_pause_engages_with_reason(hermes_home, capsys):
@@ -231,7 +231,7 @@ def test_cli_resume_disengages(hermes_home, capsys):
 
 
 
-# ── hermes status surfacing ─────────────────────────────────────────────────
+# ── minerva status surfacing ─────────────────────────────────────────────────
 
 
 def test_status_line_when_paused(hermes_home):
@@ -289,7 +289,7 @@ async def test_gateway_slash_commands_bypass_estop(hermes_home):
         reply = await runner._handle_message(_FakeCmdEvent())
     except Exception:
         return
-    assert reply is None or "hermes is paused" not in (reply or "").lower()
+    assert reply is None or "minerva is paused" not in (reply or "").lower()
 
 
 class _FakePauseEvent(_FakeEvent):

@@ -63,7 +63,7 @@ export interface CheckoutStrategyDeps {
 export function buildManualUpdateCommand(currentBranch: string | null | undefined): string {
   return currentBranch && currentBranch !== 'HEAD' && currentBranch !== 'main'
     ? `minerva update --branch ${currentBranch}`
-    : 'hermes update'
+    : 'minerva update'
 }
 
 /**

@@ -60,7 +60,7 @@ def pool_cooldown_message(provider_id: str) -> Optional[str]:
 
     ``resolve_provider_client()`` returns ``None`` both when no credential exists and when every
     pool entry sits in a 429/quota cooldown, so the raise sites could only say "no credentials
-    were found. Run hermes auth add …" — wrong on both counts for a valid OAuth grant that is
+    were found. Run minerva auth add …" — wrong on both counts for a valid OAuth grant that is
     merely rate-limited (#56810). Read the persisted pool state (no seeding, no writes) and name
     the cooldown and its reset time instead; ``None`` when the pool is empty or a credential is
     usable (the caller keeps the missing-credential diagnostic).

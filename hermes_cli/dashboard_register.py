@@ -122,7 +122,7 @@ def _print_post_register_hint(
     else:
         print(
             "  To require Nous login (e.g. exposing on your LAN or a public host):\n"
-            "    hermes dashboard --host 0.0.0.0\n"
+            "    minerva dashboard --host 0.0.0.0\n"
             "  …then log in at the dashboard's /login page.")
     print(
         "\n  If the dashboard is already running, restart it to pick up the new env.\n"

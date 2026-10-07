@@ -63,7 +63,7 @@ updates:
 在 Windows 上，如果 `minerva update` 检测到另一个 `hermes.exe` 进程持有 venv 入口点可执行文件的句柄，它将拒绝运行 — 最常见的情况是 Minerva Desktop 应用启动的后端进程、另一个终端中打开的 `hermes` REPL，或正在运行的 gateway：
 
 ```
-$ hermes update
+$ minerva update
 ✗ Another hermes.exe is running:
     PID 12345  hermes.exe
 
@@ -81,7 +81,7 @@ $ hermes update
 预期输出如下：
 
 ```
-$ hermes update
+$ minerva update
 Updating Minerva Agent...
 📥 Pulling latest code...
 Already up to date.  (or: Updating abc1234..def5678)

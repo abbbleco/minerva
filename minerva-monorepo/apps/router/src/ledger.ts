@@ -15,6 +15,8 @@ import { createServerClient } from "@minerva/database";
 
 export interface DebitInput {
   agencyId: string;
+  /** Attributed member for per-seat accounting (null = agency-pool spend). */
+  userId?: string | null;
   /** Positive USD cost; the ledger row is written as a negative amount. */
   costUsd: number;
   model: string;
@@ -52,6 +54,7 @@ export async function debitInference(input: DebitInput): Promise<DebitResult> {
         completion_tokens: input.completionTokens,
       },
       p_request_id: input.requestId ?? null,
+      p_user_id: input.userId ?? null,
     });
 
     if (error) {

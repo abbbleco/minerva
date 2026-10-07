@@ -77,7 +77,7 @@ def profile_lifecycle(command: str, args) -> bool:
         answer = request_unserve_profile(host_home, name)
         if _confirmed(answer, "unserved", name):
             print(f"Profile '{name}' parked; its bots and cron are stopped. "
-                  f"Start again with: hermes -p {name} gateway start")
+                  f"Start again with: minerva -p {name} gateway start")
         else:
             print(f"Profile '{name}' parked, but immediate stop was not confirmed: {_failure(answer)}.")
             print("The host drops it on its next rescan (within 30s).")

@@ -138,9 +138,9 @@ A simple polling pattern for hands-off monitoring:
 ```bash
 while true; do
     clear
-    hermes kanban list --tenant <slug>
+    minerva kanban list --tenant <slug>
     echo "---"
-    hermes kanban stats --tenant <slug>
+    minerva kanban stats --tenant <slug>
     sleep 30
 done
 ```

@@ -162,7 +162,7 @@ _SCHEMA_OVERRIDES: Dict[str, Dict[str, Any]] = {
     "updates.refresh_cua_driver": {
         "type": "boolean",
         "description": (
-            "Refresh an already-installed cua-driver during hermes update. "
+            "Refresh an already-installed cua-driver during minerva update. "
             "Disable this on non-admin macOS accounts where /Applications is "
             "not writable."
         ),

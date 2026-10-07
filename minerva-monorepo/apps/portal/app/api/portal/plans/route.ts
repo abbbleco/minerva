@@ -53,7 +53,7 @@ export async function GET() {
     }),
   ];
   return NextResponse.json(
-    { plans, currency_note: "Portal tiers bill in USD." },
+    { plans, currency_note: "Portal tiers bill in ZAR." },
     { headers: { "access-control-allow-origin": "*" } }
   );
 }

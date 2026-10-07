@@ -110,7 +110,7 @@ def _ensure_sdk(extra: str) -> None:
             pm.sync_venv([extra], explicit=True)
         except (pm.InstallError, OSError, ValueError) as exc:
             _setup.print_warning(f"Install failed: {exc}")
-            _setup.print_info("Retry with: hermes setup terminal")
+            _setup.print_info("Retry with: minerva setup terminal")
         else:
             _setup.print_success(f"{extra} SDK installed. Restart Minerva to use it.")
 

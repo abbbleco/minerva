@@ -193,7 +193,7 @@ compromise you accept.
 fastest way to find out *why* an action isn't working.
 
 ```
-$ hermes computer-use doctor
+$ minerva computer-use doctor
 ⚠️  cua-driver VERSION on darwin: degraded
   ✅ binary_version: cua-driver VERSION
   ✅ platform_supported: macOS 26.4.1 (arm64)

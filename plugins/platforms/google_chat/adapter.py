@@ -904,7 +904,7 @@ class GoogleChatAdapter(BasePlatformAdapter):
         return await handle_setup_files_command(self, chat_id, thread_id, raw_text, sender_email)
 
     async def _build_message_event(self, msg: Dict[str, Any], envelope: Dict[str, Any]) -> Optional[MessageEvent]:
-        """Parse a Chat API message into a hermes MessageEvent."""
+        """Parse a Chat API message into a minerva MessageEvent."""
         space = envelope.get("space") or msg.get("space") or {}
         space_name = space.get("name") or ""  # "spaces/XXX"
         space_type = (space.get("type") or space.get("spaceType") or "").upper()
@@ -1663,7 +1663,7 @@ def interactive_setup() -> None:
         save_env_value("GOOGLE_CHAT_HOME_CHANNEL", home.strip())
     print()
     print_success("Google Chat configuration saved to ~/.hermes/.env")
-    print_info("Restart the gateway: hermes gateway restart")
+    print_info("Restart the gateway: minerva gateway restart")
 
 
 # Strict resource-name patterns: anything outside Chat's documented character set

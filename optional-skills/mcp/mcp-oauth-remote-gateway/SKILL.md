@@ -54,7 +54,7 @@ to `http://127.0.0.1:P/callback?code=...`, which resolves to the user's own
 laptop and fails to connect. The callback never reaches the Minerva process, the
 flow times out, and `/reload-mcp` returns "No MCP tools available" with no detail.
 
-Symptoms to recognize: `[xdg-open] <defunct>` processes under the hermes user, an
+Symptoms to recognize: `[xdg-open] <defunct>` processes under the minerva user, an
 empty or missing tokens directory (`$HERMES_HOME/mcp-tokens/`), and a reload that
 responds without any "Added/Reconnected: X" line in `change_detail`.
 
@@ -79,7 +79,7 @@ gateway/bot where `/reload-mcp` triggers the flow with nobody at a prompt.
 
 A remote Minerva gateway often also runs the **dashboard** web UI as a SEPARATE
 process (e.g. `minerva dashboard --host 0.0.0.0 --port <port>`; check with
-`ps aux | grep 'hermes dashboard'`). It exposes a connector/MCP console —
+`ps aux | grep 'minerva dashboard'`). It exposes a connector/MCP console —
 endpoints like `/api/mcp/servers`, `/api/mcp/status`, and `/connectors` (all
 login-gated; a cookieless curl returning 401/302 confirms they exist).
 

@@ -20,8 +20,8 @@ set -eu
 HERMES_HOME="${HERMES_HOME:-/opt/data}"
 INSTALL_DIR="/opt/hermes"
 
-# Drop to hermes via s6-setuidgid, but skip it when already non-root.
-as_hermes() { [ "$(id -u)" = 0 ] || { "$@"; return; }; s6-setuidgid hermes "$@"; }
+# Drop to minerva via s6-setuidgid, but skip it when already non-root.
+as_hermes() { [ "$(id -u)" = 0 ] || { "$@"; return; }; s6-setuidgid minerva "$@"; }
 
 # --- Reject the unsupported `docker run --user <uid>:<gid>` start ---
 # Detect the case where the container was launched with `--user` pinned to an
@@ -45,9 +45,9 @@ as_hermes() { [ "$(id -u)" = 0 ] || { "$@"; return; }; s6-setuidgid hermes "$@";
 # the container was started as, so `id -u` here is the host UID (e.g. 1000), and
 # `id -u hermes` is the unremapped build UID (10000) because no root-only remap
 # could run. root starts (id -u = 0) and the normal supervised drop to the
-# hermes UID are both unaffected.
+# minerva UID are both unaffected.
 cur_uid="$(id -u)"
-if [ "$cur_uid" != 0 ] && [ "$cur_uid" != "$(id -u hermes)" ]; then
+if [ "$cur_uid" != 0 ] && [ "$cur_uid" != "$(id -u minerva)" ]; then
     cat >&2 <<EOF
 [stage2] ERROR: container started with --user $cur_uid (an arbitrary, non-hermes UID).
 
@@ -66,7 +66,7 @@ NAS users (Synology / unRAID / UGOS) can use the PUID/PGID aliases:
 
     docker run -e PUID=\$(id -u) -e PGID=\$(id -g) ...
 
-The image remaps the hermes user to that UID/GID at boot and chowns the data
+The image remaps the minerva user to that UID/GID at boot and chowns the data
 volume accordingly, so files land owned by your host user — the same outcome
 --user was being used for, without breaking the supervision tree.
 EOF
@@ -76,7 +76,7 @@ fi
 # --- Bootstrap HERMES_HOME as root ---
 # Create the directory (and any missing parents) while we still have root
 # privileges so the chown checks below see real metadata and the later
-# `s6-setuidgid hermes mkdir -p` block doesn't EACCES on root-owned
+# `s6-setuidgid minerva mkdir -p` block doesn't EACCES on root-owned
 # ancestors. Without this, custom HERMES_HOME paths whose parents only
 # root can create (e.g. `HERMES_HOME=/home/hermes/.hermes` in a Compose
 # file, or any path under a fresh / not pre-populated by the image)
@@ -104,22 +104,22 @@ validate_uid_gid() {
 HERMES_UID="${HERMES_UID:-${PUID:-}}"
 HERMES_GID="${HERMES_GID:-${PGID:-}}"
 
-if [ -n "${HERMES_UID:-}" ] && validate_uid_gid "$HERMES_UID" && [ "$HERMES_UID" != "$(id -u hermes)" ]; then
-    echo "[stage2] Changing hermes UID to $HERMES_UID"
+if [ -n "${HERMES_UID:-}" ] && validate_uid_gid "$HERMES_UID" && [ "$HERMES_UID" != "$(id -u minerva)" ]; then
+    echo "[stage2] Changing minerva UID to $HERMES_UID"
     usermod -u "$HERMES_UID" hermes
 fi
-if [ -n "${HERMES_GID:-}" ] && validate_uid_gid "$HERMES_GID" && [ "$HERMES_GID" != "$(id -g hermes)" ]; then
-    echo "[stage2] Changing hermes GID to $HERMES_GID"
+if [ -n "${HERMES_GID:-}" ] && validate_uid_gid "$HERMES_GID" && [ "$HERMES_GID" != "$(id -g minerva)" ]; then
+    echo "[stage2] Changing minerva GID to $HERMES_GID"
     # -o allows non-unique GID (e.g. macOS GID 20 "staff" may already
     # exist as "dialout" in the Debian-based container image).
-    groupmod -o -g "$HERMES_GID" hermes 2>/dev/null || true
+    groupmod -o -g "$HERMES_GID" minerva 2>/dev/null || true
 fi
 
 # --- Docker socket group membership (docker-in-docker / DooD) ---
 # When the user bind-mounts the host Docker daemon socket
 # (`-v /var/run/docker.sock:/var/run/docker.sock`) to use the `docker`
 # terminal backend from inside the container, the socket is owned by the
-# host's `docker` group (or root). The supervised hermes user (UID 10000)
+# host's `docker` group (or root). The supervised minerva user (UID 10000)
 # is not a member of any group that matches the socket's GID, so every
 # `docker` invocation EACCES'es and `check_terminal_requirements()` fails.
 # See #16703.
@@ -131,7 +131,7 @@ fi
 # /etc/group entry whose GID matches the socket, the kernel-granted
 # supp group is silently wiped between PID 1 and the dropped process.
 # Confirmed empirically: `--group-add 998` alone leaves the dropped
-# hermes process with `Groups: 10000` (998 gone); after this hook adds
+# minerva process with `Groups: 10000` (998 gone); after this hook adds
 # the entry, the dropped process has `Groups: 998 10000` as expected.
 #
 # Fix: detect the socket's GID at boot and ensure /etc/group has a
@@ -142,15 +142,15 @@ fi
 #   - socket owned by GID 0 (root) — some Podman setups; usermod -aG root
 #   - socket GID already used by a known container group (e.g. tty=5):
 #     reuse that group's name rather than creating a duplicate
-#   - hermes is already a member of the right group (idempotent restart)
+#   - minerva is already a member of the right group (idempotent restart)
 #   - chown/groupadd failures under rootless containers — non-fatal
 for sock in /var/run/docker.sock /run/docker.sock; do
     [ -S "$sock" ] || continue
     sock_gid=$(stat -c '%g' "$sock" 2>/dev/null) || continue
     [ -n "$sock_gid" ] || continue
     # Already a member? Nothing to do.
-    if id -G hermes 2>/dev/null | tr ' ' '\n' | grep -qx "$sock_gid"; then
-        echo "[stage2] hermes already in group $sock_gid for $sock"
+    if id -G minerva 2>/dev/null | tr ' ' '\n' | grep -qx "$sock_gid"; then
+        echo "[stage2] minerva already in group $sock_gid for $sock"
         break
     fi
     # Resolve or create a group name for this GID.
@@ -163,24 +163,24 @@ for sock in /var/run/docker.sock /run/docker.sock; do
         fi
         echo "[stage2] Created group $sock_group (GID $sock_gid) for Docker socket"
     fi
-    if usermod -aG "$sock_group" hermes 2>/dev/null; then
-        echo "[stage2] Added hermes to group $sock_group (GID $sock_gid) for $sock"
+    if usermod -aG "$sock_group" minerva 2>/dev/null; then
+        echo "[stage2] Added minerva to group $sock_group (GID $sock_gid) for $sock"
     else
-        echo "[stage2] Warning: usermod -aG $sock_group hermes failed; docker backend may fail with EACCES"
+        echo "[stage2] Warning: usermod -aG $sock_group minerva failed; docker backend may fail with EACCES"
     fi
     break
 done
 
 # --- Fix ownership of data volume ---
 # When HERMES_UID is remapped or the top-level $HERMES_HOME isn't owned by
-# the runtime hermes UID, restore ownership to hermes — but ONLY for the
-# directories hermes actually writes to. The full $HERMES_HOME may be a
+# the runtime minerva UID, restore ownership to minerva — but ONLY for the
+# directories minerva actually writes to. The full $HERMES_HOME may be a
 # host-mounted bind containing unrelated user files; `chown -R` would
 # silently destroy host ownership of those (see issue #19788).
 #
 # The canonical list of hermes-owned subdirs is the same one the s6-setuidgid
 # mkdir -p block below seeds. Keep them in sync if the seed list changes.
-actual_hermes_uid=$(id -u hermes)
+actual_hermes_uid=$(id -u minerva)
 
 path_has_symlink_component() {
     path="$1"
@@ -222,7 +222,7 @@ chown_hermes_tree() {
 
 tree_has_non_hermes_owner() {
     target="$1"
-    find "$target" \( ! -user hermes -o ! -group hermes \) -print -quit 2>/dev/null | grep -q .
+    find "$target" \( ! -user minerva -o ! -group minerva \) -print -quit 2>/dev/null | grep -q .
 }
 
 needs_chown=false
@@ -230,13 +230,13 @@ if [ "$(stat -c %u "$HERMES_HOME" 2>/dev/null)" != "$actual_hermes_uid" ]; then
     needs_chown=true
 fi
 if [ "$needs_chown" = true ]; then
-    echo "[stage2] Fixing ownership of $HERMES_HOME (targeted) to hermes ($actual_hermes_uid)"
+    echo "[stage2] Fixing ownership of $HERMES_HOME (targeted) to minerva ($actual_hermes_uid)"
     # In rootless Podman the container's "root" is mapped to an
     # unprivileged host UID — chown will fail. That's fine: the volume
     # is already owned by the mapped user on the host side.
     #
     # Top-level $HERMES_HOME: chown the directory itself (not its contents)
-    # so hermes can mkdir new subdirs but bind-mounted host files keep
+    # so minerva can mkdir new subdirs but bind-mounted host files keep
     # their existing ownership.
     if refuse_symlinked_path "chown" "$HERMES_HOME"; then
         :
@@ -245,7 +245,7 @@ if [ "$needs_chown" = true ]; then
             echo "[stage2] Warning: chown $HERMES_HOME failed (rootless container?) — continuing"
     fi
     # Minerva-owned subdirs: recursive chown is safe here because these are
-    # created and managed exclusively by hermes (see the s6-setuidgid mkdir
+    # created and managed exclusively by minerva (see the s6-setuidgid mkdir
     # -p block below for the canonical list).
     for sub in cron sessions logs hooks memories skills skins plans workspace home profiles pairing platforms/pairing; do
         if [ -e "$HERMES_HOME/$sub" ] && tree_has_non_hermes_owner "$HERMES_HOME/$sub"; then
@@ -256,18 +256,18 @@ fi
 
 # --- Immutable install tree ---
 # Do not chown runtime code or dependency trees under $INSTALL_DIR back to the
-# hermes user. Hosted/container instances keep mutable state under
+# minerva user. Hosted/container instances keep mutable state under
 # $HERMES_HOME (/opt/data) and run with PYTHONDONTWRITEBYTECODE. Keeping
 # /opt/hermes root-owned and non-writable prevents an agent session from
 # self-modifying the installed source, venv, TUI bundle, or node_modules and
 # bricking the gateway. On-demand dependency installs go to PM generations
 # under $HERMES_HOME/installs, never into this tree.
 
-# Always reset ownership of $HERMES_HOME/profiles to hermes on every
+# Always reset ownership of $HERMES_HOME/profiles to minerva on every
 # boot. Profile dirs and files can land owned by root when commands
-# are invoked via `docker exec <container> hermes …` (which defaults
+# are invoked via `docker exec <container> minerva …` (which defaults
 # to root unless `-u` is passed), and that breaks the cont-init
-# reconciler (02-reconcile-profiles) which runs as hermes and walks
+# reconciler (02-reconcile-profiles) which runs as minerva and walks
 # the profiles dir. Skip the recursive walk when the tree is already
 # owned correctly so warm boots do not rescan huge profile caches.
 # Idempotent; skipped on rootless containers where chown would fail.
@@ -277,7 +277,7 @@ fi
 
 # Always reset ownership of $HERMES_HOME/cron on every boot for the same
 # docker-exec/root-write reason as profiles/. The cron scheduler state
-# (jobs.json) must stay readable by the unprivileged hermes runtime even
+# (jobs.json) must stay readable by the unprivileged minerva runtime even
 # after root-context maintenance commands or scheduler writes. Skip the
 # recursive walk when the tree is already owned correctly (same warm-boot
 # gate as profiles/).
@@ -290,7 +290,7 @@ fi
 # (CWE-59/367). The targeted data-volume chown above only runs when the
 # top-level $HERMES_HOME is mis-owned, so a warm volume with hermes-owned
 # HERMES_HOME but root-owned logs/gateways would otherwise leave
-# s6-setuidgid hermes mkdir failing with Permission denied. Non-recursive:
+# s6-setuidgid minerva mkdir failing with Permission denied. Non-recursive:
 # profile leaf dirs are each created/owned by their own log/run as hermes.
 if [ -d "$HERMES_HOME/logs/gateways" ]; then
     if refuse_symlinked_path "chown" "$HERMES_HOME/logs/gateways"; then
@@ -302,8 +302,8 @@ fi
 
 # Always reset ownership of pairing data on every boot, same docker-exec/
 # root-write reason as profiles/ and cron/. `docker exec <container>
-# hermes pairing approve …` defaults to uid=0 and writes 0600 root-owned
-# approval files that the unprivileged hermes gateway cannot read,
+# minerva pairing approve …` defaults to uid=0 and writes 0600 root-owned
+# approval files that the unprivileged minerva gateway cannot read,
 # silently leaving the approved user unauthorized (#10270). The targeted
 # data-volume chown above only runs when the top-level $HERMES_HOME is
 # mis-owned, so warm boots skip it — this block makes a container restart
@@ -322,8 +322,8 @@ fi
 # The targeted data-volume chown above only covers hermes-owned
 # *subdirectories*; loose state files living directly under $HERMES_HOME
 # are missed. When those files are created or rewritten by
-# `docker exec <container> hermes …` (root unless `-u` is passed) they
-# land root-owned, and the unprivileged hermes runtime then hits
+# `docker exec <container> minerva …` (root unless `-u` is passed) they
+# land root-owned, and the unprivileged minerva runtime then hits
 # PermissionError on next startup (e.g. gateway.lock / state.db /
 # auth.json), producing a gateway restart loop.
 #
@@ -350,7 +350,7 @@ for f in \
 done
 
 # --- config.yaml permissions ---
-# Ensure config.yaml is readable by the hermes runtime user even if it
+# Ensure config.yaml is readable by the minerva runtime user even if it
 # was edited on the host after initial ownership setup.
 if [ -f "$HERMES_HOME/config.yaml" ]; then
     if refuse_symlinked_path "chown/chmod" "$HERMES_HOME/config.yaml"; then
@@ -361,8 +361,8 @@ if [ -f "$HERMES_HOME/config.yaml" ]; then
     fi
 fi
 
-# --- Seed directory structure as hermes user ---
-# Run as hermes via s6-setuidgid so dirs end up owned correctly (matters
+# --- Seed directory structure as minerva user ---
+# Run as minerva via s6-setuidgid so dirs end up owned correctly (matters
 # under rootless Podman where chown back to root would fail).
 #
 # Use direct `mkdir -p` invocation (no `sh -c "..."` wrapper) so the
@@ -387,7 +387,7 @@ as_hermes mkdir -p \
 # --- XDG_RUNTIME_DIR ---
 # 0700 as dbus requires. It lives in world-writable /tmp under a predictable name
 # and holds the display-allocation lock, so it is a security boundary: refuse a
-# symlink or a directory someone else owns (chowning that one would hand hermes a
+# symlink or a directory someone else owns (chowning that one would hand minerva a
 # directory whose creator keeps an fd into it), and chown rather than assume —
 # `usermod -u` above does not chown outside the home dir, so a HERMES_UID remap
 # would leave it owned by the old uid and every Xfce/dbus/lock open would EACCES.
@@ -397,7 +397,7 @@ if [ -n "${XDG_RUNTIME_DIR:-}" ]; then
     if refuse_symlinked_path "create" "$XDG_RUNTIME_DIR"; then
         :
     elif [ -n "$xdg_owner" ] && [ "$xdg_owner" != "0" ] && [ "$xdg_owner" != "$actual_hermes_uid" ]; then
-        echo "[stage2] Warning: $XDG_RUNTIME_DIR is owned by uid $xdg_owner (not root or hermes) — refusing to adopt it"
+        echo "[stage2] Warning: $XDG_RUNTIME_DIR is owned by uid $xdg_owner (not root or minerva) — refusing to adopt it"
     else
         mkdir -p "$XDG_RUNTIME_DIR" 2>/dev/null || \
             echo "[stage2] Warning: could not create XDG_RUNTIME_DIR $XDG_RUNTIME_DIR (continuing)"
@@ -418,7 +418,7 @@ fi
 # bind-mounted from the host (~/.hermes:/opt/data) and sometimes shared with a
 # host-side Desktop/CLI install. Stamping 'docker' here clobbered that host
 # install's marker, so its in-app updater read 'docker' and refused to run
-# 'hermes update'. To heal homes already poisoned by older images, remove a
+# 'minerva update'. To heal homes already poisoned by older images, remove a
 # stale 'docker' stamp from $HERMES_HOME if one is present (the host install's
 # own installer re-creates its code-scoped stamp; a genuine container relies on
 # the baked /opt/hermes stamp, so deleting the data-dir copy is safe).
@@ -620,15 +620,15 @@ fi
 # staging 2026-08-20: "flaps suspend request failed: [Errno 13]"). This hook
 # runs as root before user services (the gateway) start, so grant group access
 # here. Scope note: group-write exposes the WHOLE local Machines API to the
-# hermes group (any group member could e.g. stop/suspend this machine), not
+# minerva group (any group member could e.g. stop/suspend this machine), not
 # just the suspend endpoint — accepted because the agent already executes
 # arbitrary user code as that same principal and the socket only controls THIS
 # machine. No-op off Fly (socket absent).
 if [ -S /.fly/api ]; then
     if refuse_symlinked_path "chgrp/chmod" /.fly/api; then
         :
-    elif chgrp hermes /.fly/api 2>/dev/null && chmod g+w /.fly/api 2>/dev/null; then
-        echo "[stage2] Granted hermes group access to the Fly Machines API socket"
+    elif chgrp minerva /.fly/api 2>/dev/null && chmod g+w /.fly/api 2>/dev/null; then
+        echo "[stage2] Granted minerva group access to the Fly Machines API socket"
     else
         echo "[stage2] Warning: could not grant group access to /.fly/api — scale-to-zero self-suspend will fail EACCES (fail-awake)"
     fi
@@ -641,7 +641,7 @@ fi
 # after first-boot seeding and before supervised gateway services start.
 # Set HERMES_SKIP_CONFIG_MIGRATION=1 for controlled/manual migrations.
 if [ -f "$HERMES_HOME/config.yaml" ]; then
-    s6-setuidgid hermes "$INSTALL_DIR/.venv/bin/python" "$INSTALL_DIR/scripts/docker_config_migrate.py" \
+    s6-setuidgid minerva "$INSTALL_DIR/.venv/bin/python" "$INSTALL_DIR/scripts/docker_config_migrate.py" \
         || echo "[stage2] Warning: docker_config_migrate.py failed; continuing"
 fi
 
@@ -654,7 +654,7 @@ fi
 # keeps the extras recorded for the next boot or install. Then collect the
 # generations nothing selects any more: no service holds a lease yet, and
 # collect_generations keeps anything younger than a day.
-s6-setuidgid hermes "$INSTALL_DIR/.venv/bin/python" -c '
+s6-setuidgid minerva "$INSTALL_DIR/.venv/bin/python" -c '
 from pathlib import Path
 from hermes_cli.runtime_state import collect_generations
 from pm.environments import install_state_dir
@@ -698,7 +698,7 @@ if [ -f "$HERMES_HOME/auth.json" ] && [ -n "${HERMES_AUTH_JSON_REBOOTSTRAP:-}" ]
     if refuse_symlinked_path "reseed" "$HERMES_HOME/auth.json"; then
         :
     else
-        s6-setuidgid hermes "$INSTALL_DIR/.venv/bin/python" \
+        s6-setuidgid minerva "$INSTALL_DIR/.venv/bin/python" \
             "$INSTALL_DIR/scripts/docker_rebootstrap_nous_session.py" \
             "$HERMES_HOME/auth.json" \
             || echo "[stage2] Warning: docker_rebootstrap_nous_session.py failed; continuing"

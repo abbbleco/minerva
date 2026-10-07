@@ -110,7 +110,7 @@ def _check_frontmatter(frontmatter: Dict[str, Any], skill_dir: Optional[Path]) -
     elif "tags" not in hermes_meta:
         yield _warn("missing-metadata", "metadata.hermes.tags is missing.")
     author = str(frontmatter.get("author", ""))
-    if author and author.strip().lower() in ("hermes", "agent", "hermes agent") and (
+    if author and author.strip().lower() in ("hermes", "agent", "minerva agent") and (
         author != "Minerva Agent"):
         yield _warn("author-caps", f"author '{author}' should be 'Minerva Agent' (proper caps) "
                     f"or a real contributor name.")

@@ -796,7 +796,7 @@ def _run_anthropic_oauth_flow(save_env_value):
              "    1. Install Claude Code:  npm install -g @anthropic-ai/claude-code",
              "    2. Run:                  claude setup-token",
              "    3. Follow the browser prompts to authorize",
-             "    4. Re-run:               hermes model", "",
+             "    4. Re-run:               minerva model", "",
              "  Or paste an existing setup-token now (sk-ant-oat-...):", "")
         saved = _paste_token("  Setup-token (or Enter to cancel): ")
         if saved is None:

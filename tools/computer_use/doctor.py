@@ -435,7 +435,7 @@ def run_doctor(driver_cmd: Optional[str] = None, *, include: Sequence[str] = (),
     from tools.computer_use.cua_backend_driver import resolve_cua_driver_cmd
     binary = resolve_cua_driver_cmd(driver_cmd)
     if not binary:
-        print(f"cua-driver: not installed (looked for {driver_cmd or 'cua-driver (PATH and canonical install paths)'!r}).\n  Run: hermes computer-use install")
+        print(f"cua-driver: not installed (looked for {driver_cmd or 'cua-driver (PATH and canonical install paths)'!r}).\n  Run: minerva computer-use install")
         return 2
     try:  # prefer real health_report; on denial/non-schema, synthesize via probes
         try:

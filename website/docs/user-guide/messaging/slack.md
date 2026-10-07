@@ -38,7 +38,7 @@ Mode — all at once.
 
 1. Generate the manifest. New Slack apps must use Agent view:
    ```bash
-   hermes slack manifest --agent-view --write
+   minerva slack manifest --agent-view --write
    ```
    This writes `~/.hermes/slack-manifest.json` and prints paste-in
    instructions. Existing apps that still use Slack's legacy Assistant view
@@ -48,7 +48,7 @@ Mode — all at once.
    Markdown file, add `--long-description-file`:
 
    ```bash
-   hermes slack manifest --agent-view \
+   minerva slack manifest --agent-view \
      --long-description-file AGENTS.md --write
    ```
 
@@ -228,7 +228,7 @@ Then start the gateway:
 ```bash
 hermes gateway              # Foreground
 hermes gateway install      # Install as a user service
-sudo hermes gateway install --system   # Linux only: boot-time system service
+sudo minerva gateway install --system   # Linux only: boot-time system service
 ```
 
 :::tip Codex reasoning-effort safety

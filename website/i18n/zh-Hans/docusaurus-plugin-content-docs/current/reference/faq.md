@@ -442,11 +442,11 @@ hermes config show
 hermes gateway run
 
 # 方案二：通过 tmux 持久运行（关闭终端后仍存活）
-tmux new -s hermes 'hermes gateway run'
+tmux new -s minerva 'minerva gateway run'
 # 稍后重新连接：tmux attach -t hermes
 
 # 方案三：通过 nohup 后台运行
-nohup hermes gateway run > ~/.hermes/logs/gateway.log 2>&1 &
+nohup minerva gateway run > ~/.hermes/logs/gateway.log 2>&1 &
 ```
 
 如果仍想尝试 systemd，请确保已启用：
@@ -463,7 +463,7 @@ nohup hermes gateway run > ~/.hermes/logs/gateway.log 2>&1 &
 
 :::tip Windows 开机自启
 如需可靠的自启动，使用 Windows 任务计划程序在登录时启动 WSL + 网关：
-1. 创建一个任务，运行 `wsl -d Ubuntu -- bash -lc 'hermes gateway run'`
+1. 创建一个任务，运行 `wsl -d Ubuntu -- bash -lc 'minerva gateway run'`
 2. 设置在用户登录时触发
 :::
 
@@ -740,7 +740,7 @@ skills:
 
 2. 在**源机器**上创建完整备份：
    ```bash
-   hermes backup
+   minerva backup
    ```
    归档保存到 `~/hermes-backup-<timestamp>.zip`。
    完整备份涵盖 Minerva 数据根目录中的配置、凭据、记忆、技能、会话和 profiles。
@@ -752,7 +752,7 @@ skills:
    scp ~/hermes-backup-<timestamp>.zip newmachine:~/
 
    # 在新机器上
-   hermes import ~/hermes-backup-<timestamp>.zip
+   minerva import ~/hermes-backup-<timestamp>.zip
    ```
 
 4. 在新机器上运行 `minerva setup` 以验证 API key 和提供商配置是否正常工作。

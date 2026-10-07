@@ -217,7 +217,7 @@ test('findRunningGatewayProfiles returns [] when no pid files exist', () => {
 })
 
 test('findRunningGatewayProfiles drops stale (non-hermes) recycled PIDs', () => {
-  // Two profiles have pid files, but only coder's pid is a live hermes process.
+  // Two profiles have pid files, but only coder's pid is a live minerva process.
   // The recycled PID at 5678 belongs to an unrelated process (e.g. Chrome).
   const fs = makeFs({
     '/home/u/.hermes/profiles/coder/gateway.pid': { content: '{"pid":1234}' },

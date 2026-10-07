@@ -26,12 +26,13 @@ from providers.base import ProviderProfile
 #: hosted router; local dev points the env var at http://127.0.0.1:8090.
 DEFAULT_ROUTER_URL = "https://minrouter.abbbleco.workers.dev"
 
-#: Curated picker list used only when ``GET /v1/models`` fails. Keep in sync
-#: with ``apps/router/src/catalog.ts``. Free-tier keys never see paid models —
-#: the router filters the catalog per key.
+#: Picker list used only when ``GET /v1/models`` fails. Keep in sync with
+#: ``apps/router/src/catalog.ts``. Free models only, so the fallback is usable
+#: on every tier — a paid flagship here would fail validation on free keys.
 FALLBACK_MODELS = (
-    "minerva/anthropic-claude-opus-4.6",
-    "minerva/anthropic-claude-sonnet-4.6",
+    "minerva/openrouter-free",
+    "minerva/google-gemma-4-31b-it:free",
+    "minerva/nvidia-nemotron-3-ultra-550b-a55b:free",
 )
 
 
@@ -76,7 +77,7 @@ _base = router_base_url()
 
 minerva = MinervaProfile(
     name="minerva",
-    aliases=("minerva-router",),
+    aliases=("minerva-router", "abbble"),
     env_vars=("MINERVA_ROUTER_KEY", "MINERVA_ROUTER_URL"),
     base_url=_base,
     models_url=f"{_base}/models",

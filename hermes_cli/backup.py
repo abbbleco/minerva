@@ -1,4 +1,4 @@
-"""Backup and import commands for hermes CLI."""
+"""Backup and import commands for minerva CLI."""
 
 import json
 import logging
@@ -310,7 +310,7 @@ def _is_link_path(path: Path) -> bool:
 
 
 def _should_exclude(rel_path: Path) -> bool:
-    """Return True if *rel_path* (relative to hermes root) should be skipped."""
+    """Return True if *rel_path* (relative to minerva root) should be skipped."""
     parts = rel_path.parts
     if _in_excluded_root_dir(rel_path):
         return True
@@ -666,7 +666,7 @@ def _run_backup_locked(args, hermes_root: Path) -> bool:
     if errors:
         _print_capped(f"\n  Archive kept, but {len(errors)} file(s) could not be added:", errors, "  ")
     else:
-        print(f"\nRestore with: hermes import {out_path.name}")
+        print(f"\nRestore with: minerva import {out_path.name}")
     # Prune only after a complete archive: a timer hitting the same unreadable file every run must
     # not rotate the last good backups out in favour of incomplete ones.
     keep = getattr(args, "keep", 0)  # 0 / absent: never prune (non-CLI callers)
@@ -995,19 +995,19 @@ def run_import(args) -> Optional[int]:
                 # hermes_cli.profiles might not be available (fresh install)
                 if any(profiles_dir.iterdir()):
                     print("\n  Profiles detected but aliases could not be created.")
-                    print("  Run: hermes profile list  (after installing hermes)")
+                    print("  Run: minerva profile list  (after installing minerva)")
 
         # Guidance
         print()
         if not (hermes_root / "hermes-agent").is_dir():
             print("Note: The hermes-agent codebase was not included in the backup.")
-            print("  If this is a fresh install, run: hermes update")
+            print("  If this is a fresh install, run: minerva update")
 
         if restored_profiles:
             gw_profiles = [n for n, _ in restored_profiles]
             print("\nTo re-enable gateway services for profiles:")
             for pname in gw_profiles:
-                print(f"  hermes -p {pname} gateway install")
+                print(f"  minerva -p {pname} gateway install")
 
         # Bring the restored install to life: the backup may contain bot
         # tokens and registered cron jobs, but they're inert without a
@@ -1031,7 +1031,7 @@ def run_import(args) -> Optional[int]:
                 "alone to avoid clashing with the install at "
                 f"{native_default}."
             )
-            print("To start a gateway for this home, run:  hermes gateway install")
+            print("To start a gateway for this home, run:  minerva gateway install")
         else:
             try:
                 from hermes_cli.gateway import ensure_gateway_service, _is_service_running
@@ -1041,7 +1041,7 @@ def run_import(args) -> Optional[int]:
                     ensure_gateway_service(context="import")
             except Exception:
                 print("\nStart the gateway to activate cron jobs and messaging:")
-                print("  hermes gateway install")
+                print("  minerva gateway install")
 
         if errors:
             print(f"Import incomplete: {len(errors)} file(s) were not restored (see Warnings above). "
@@ -1051,7 +1051,7 @@ def run_import(args) -> Optional[int]:
 
 
 
-# --- Quick state snapshots (used by /snapshot slash command and hermes backup --quick) ---
+# --- Quick state snapshots (used by /snapshot slash command and minerva backup --quick) ---
 
 # Critical state files (relative to HERMES_HOME) for quick snapshots; everything else is
 # regeneratable or managed separately (skills, repo, sessions/). Entries may be files OR
@@ -1190,7 +1190,7 @@ def create_pre_migration_backup(
 
 
 # ---------------------------------------------------------------------------
-# Quick state snapshots (used by /snapshot slash command and hermes backup --quick)
+# Quick state snapshots (used by /snapshot slash command and minerva backup --quick)
 # ---------------------------------------------------------------------------
 
 def create_quick_snapshot(
@@ -2148,7 +2148,7 @@ def prune_quick_snapshots(
 
 
 def run_quick_backup(args) -> None:
-    """CLI entry point for hermes backup --quick."""
+    """CLI entry point for minerva backup --quick."""
     label = getattr(args, "label", None)
     snap_id = create_quick_snapshot(label=label)
     if snap_id:

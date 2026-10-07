@@ -307,8 +307,8 @@ def removed_backend_note(section: str, name: str) -> Optional[str]:
 def selection_error(section: str, selection_name: str, failure: str) -> str:
     """The uniform honest-error contract for a selected-but-broken provider."""
     failure = removed_backend_note(section, selection_name) or failure
-    return (f"{section} is configured to use {selection_name} (set via hermes "
-            f"tools), but {failure}. Run 'hermes tools' to change it.")
+    return (f"{section} is configured to use {selection_name} (set via minerva "
+            f"tools), but {failure}. Run 'minerva tools' to change it.")
 
 
 def fal_key_is_configured() -> bool:

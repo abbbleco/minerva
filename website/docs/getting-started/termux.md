@@ -87,8 +87,8 @@ Do not use the desktop/server `install.sh` or a glibc Linux archive on this targ
 6. Configure a provider, then start the TUI:
 
    ```bash
-   hermes setup
-   hermes --tui
+   minerva setup
+   minerva --tui
    ```
 
 The `hermes`, `hermes-agent`, and `hermes-acp` commands use the packaged runtimes.
@@ -129,7 +129,7 @@ For a background process:
 
 ```bash
 mkdir -p "${HERMES_HOME:-$HOME/.hermes}/logs"
-nohup hermes gateway run >> "${HERMES_HOME:-$HOME/.hermes}/logs/gateway.log" 2>&1 &
+nohup minerva gateway run >> "${HERMES_HOME:-$HOME/.hermes}/logs/gateway.log" 2>&1 &
 ```
 
 :::warning Android process limits

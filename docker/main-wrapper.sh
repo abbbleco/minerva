@@ -17,7 +17,7 @@
 #   first arg is an executable    → exec it directly (sleep, bash, sh, …)
 #   first arg is anything else    → exec `minerva <args>` (subcommand passthrough)
 #
-# Drop to hermes via s6-setuidgid, but skip it when already non-root.
+# Drop to minerva via s6-setuidgid, but skip it when already non-root.
 set -e
 
 if [ -z "${HERMES_MAIN_WRAPPER_ENV_READY:-}" ] && \
@@ -28,17 +28,17 @@ if [ -z "${HERMES_MAIN_WRAPPER_ENV_READY:-}" ] && \
 fi
 unset HERMES_MAIN_WRAPPER_ENV_READY
 
-drop() { [ "$(id -u)" = 0 ] && set -- s6-setuidgid hermes "$@"; exec "$@"; }
+drop() { [ "$(id -u)" = 0 ] && set -- s6-setuidgid minerva "$@"; exec "$@"; }
 
 # --- Reject the unsupported `docker run --user <uid>:<gid>` start ---
 # Mirror the guard in stage2-hook.sh (cont-init). This is the surface the
 # user actually sees in `docker run` output: when the container is pinned to
 # an arbitrary non-root, non-hermes UID, the bootstrap was skipped and the
-# baked image dirs (owned by the hermes build UID) are unwritable, so fail
+# baked image dirs (owned by the minerva build UID) are unwritable, so fail
 # fast here with actionable guidance rather than crashing on `cd`/EACCES
 # further down. See stage2-hook.sh for the full rationale.
 cur_uid="$(id -u)"
-if [ "$cur_uid" != 0 ] && [ "$cur_uid" != "$(id -u hermes)" ]; then
+if [ "$cur_uid" != 0 ] && [ "$cur_uid" != "$(id -u minerva)" ]; then
     cat >&2 <<EOF
 [hermes] ERROR: container started with --user $cur_uid (an arbitrary, non-hermes UID) — not supported.
 
@@ -51,7 +51,7 @@ NAS users (Synology / unRAID / UGOS) can use the PUID/PGID aliases:
 
     docker run -e PUID=\$(id -u) -e PGID=\$(id -g) ...
 
-The image remaps the hermes user to that UID/GID at boot and chowns the data
+The image remaps the minerva user to that UID/GID at boot and chowns the data
 volume, so files land owned by your host user — the same outcome --user gave,
 without breaking the s6 supervision tree.
 EOF
@@ -59,7 +59,7 @@ EOF
 fi
 
 # HOME comes through with-contenv as /root (the /init context). Override
-# to the hermes user's home before dropping privileges so libraries that
+# to the minerva user's home before dropping privileges so libraries that
 # resolve paths via $HOME (e.g. discord lockfile under XDG_STATE_HOME)
 # don't try to write to /root.
 export HOME=/opt/data
@@ -80,7 +80,7 @@ if [ $# -eq 0 ]; then
     drop hermes
 fi
 
-# A leading flag is a hermes global option (`-p <profile> gateway run`), never an executable:
+# A leading flag is a minerva global option (`-p <profile> gateway run`), never an executable:
 # `command -v -p` parses -p as an option to `command` itself and succeeds, so the wrapper exec'd
 # "-p" and the container restart-looped.
 case "$1" in
@@ -94,4 +94,4 @@ case "$1" in
 esac
 
 # Minerva subcommand pass-through.
-drop hermes "$@"
+drop minerva "$@"

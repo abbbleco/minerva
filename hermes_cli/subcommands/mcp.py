@@ -14,8 +14,8 @@ def build_mcp_parser(subparsers, *, cmd_mcp: Callable) -> None:
         "mcp", help="Manage MCP servers and run Minerva as an MCP server",
         description="Manage MCP server connections and run Minerva as an MCP server.\n\n"
             "MCP servers provide additional tools via the Model Context Protocol.\n"
-            "Use 'hermes mcp add' to connect to a new server, or\n"
-            "'hermes mcp serve' to expose Minerva conversations over MCP.")
+            "Use 'minerva mcp add' to connect to a new server, or\n"
+            "'minerva mcp serve' to expose Minerva conversations over MCP.")
     mcp_sub = mcp_parser.add_subparsers(dest="mcp_action")
 
     mcp_serve_p = mcp_sub.add_parser(

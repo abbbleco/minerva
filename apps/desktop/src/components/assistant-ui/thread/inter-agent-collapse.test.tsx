@@ -110,15 +110,15 @@ describe('inter-agent collapse gate', () => {
     render(
       <Harness
         messages={[
-          user('u1', 'ask hermes for the list'),
+          user('u1', 'ask minerva for the list'),
           dispatch('a0', '@Minerva'),
           user('u2', DELIVERY),
-          assistant('a1', 'here is the list hermes sent', false)
+          assistant('a1', 'here is the list minerva sent', false)
         ]}
       />
     )
 
-    await screen.findByText('here is the list hermes sent')
+    await screen.findByText('here is the list minerva sent')
     expect(screen.queryByText(/Replied to/)).toBeNull()
     expect(screen.queryByText('show reply')).toBeNull()
   })
@@ -139,10 +139,10 @@ describe('inter-agent collapse gate', () => {
     render(
       <Harness
         messages={[
-          user('u1', 'ask hermes for the list'),
+          user('u1', 'ask minerva for the list'),
           dispatch('a0', '@Minerva'),
           user('u2', DELIVERY),
-          assistant('a1', 'here is the list hermes sent', false),
+          assistant('a1', 'here is the list minerva sent', false),
           user('u3', 'ok thanks'),
           assistant('a2', 'anytime', false),
           user('u4', 'Message from 🤖 Minerva (@hermes): unsolicited: build broke'),

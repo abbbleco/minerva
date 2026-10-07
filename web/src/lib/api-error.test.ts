@@ -80,7 +80,7 @@ describe("fetchJSON error contract", () => {
     expect(err.message).not.toMatch(/^\d{3}/);
   });
 
-  it("turns a network failure into the 'is hermes dashboard running' sentence", async () => {
+  it("turns a network failure into the 'is minerva dashboard running' sentence", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn<typeof fetch>(async () => {

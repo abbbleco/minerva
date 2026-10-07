@@ -344,7 +344,7 @@ model:
 hermes chat --provider bedrock --model us.anthropic.claude-sonnet-4-6
 
 # 或使用显式环境变量
-AWS_PROFILE=myprofile AWS_REGION=us-east-1 hermes chat --provider bedrock --model us.anthropic.claude-sonnet-4-6
+AWS_PROFILE=myprofile AWS_REGION=us-east-1 minerva chat --provider bedrock --model us.anthropic.claude-sonnet-4-6
 ```
 
 或在 `config.yaml` 中永久设置：
@@ -447,7 +447,7 @@ hermes chat --provider nvidia --model nvidia/nemotron-3-super-120b-a12b
 # 需要：~/.hermes/.env 中的 NVIDIA_API_KEY
 
 # 本地 NIM 端点——覆盖基础 URL
-NVIDIA_BASE_URL=http://localhost:8000/v1 hermes chat --provider nvidia --model nvidia/nemotron-3-super-120b-a12b
+NVIDIA_BASE_URL=http://localhost:8000/v1 minerva chat --provider nvidia --model nvidia/nemotron-3-super-120b-a12b
 ```
 
 或在 `config.yaml` 中永久设置：
@@ -560,7 +560,7 @@ model:
 
 ### 使用 `/model` 切换模型
 
-:::warning hermes model 与 /model
+:::warning minerva model 与 /model
 **`minerva model`**（在终端中运行，任何聊天会话之外）是**完整的提供商配置向导**。用于添加新提供商、运行 OAuth 流程、输入 API key 和配置自定义端点。
 
 **`/model`**（在活跃的 Minerva 聊天会话中输入）只能在**已配置的**提供商和模型之间**切换**。它无法添加新提供商、运行 OAuth 或提示输入 API key。如果你只配置了一个提供商（如 OpenRouter），`/model` 只会显示该提供商的模型。
@@ -1353,7 +1353,7 @@ model:
 
 2. 将 Minerva 指向你的实例（无需 API key）：
    ```bash
-   hermes config set FIRECRAWL_API_URL http://localhost:3002
+   minerva config set FIRECRAWL_API_URL http://localhost:3002
    ```
 
 如果你的自托管实例启用了认证，也可以同时设置 `FIRECRAWL_API_KEY` 和 `FIRECRAWL_API_URL`。

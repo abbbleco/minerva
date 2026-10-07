@@ -81,7 +81,7 @@ def detect_service_manager() -> ServiceManagerKind:
 def _s6_running() -> bool:
     """True when s6-svscan is PID 1 in this container.
 
-    Must work for the unprivileged hermes user too: ``/proc/1/exe`` is unreadable for other UIDs
+    Must work for the unprivileged minerva user too: ``/proc/1/exe`` is unreadable for other UIDs
     (``resolve()`` silently yields the literal ``exe``), which made runtime registration inert in
     production. Probe the world-readable ``/proc/1/comm`` AND ``/run/s6/basedir`` — either alone
     can false-positive.
@@ -89,7 +89,7 @@ def _s6_running() -> bool:
     The obvious probe — ``Path('/proc/1/exe').resolve()`` — only works as root: for any other UID, the
     symlink at ``/proc/1/exe`` is unreadable and ``resolve()`` silently returns the path unchanged, so the
     resolved name is the literal ``"exe"`` and detection always fails. Since every Minerva runtime call
-    inside the container drops to hermes via ``s6-setuidgid``, that silent failure made the entire
+    inside the container drops to minerva via ``s6-setuidgid``, that silent failure made the entire
     service-manager runtime-registration path inert in production (PR #30136 review).
     """
     try:
@@ -316,7 +316,7 @@ def _chown_hermes(path: Path) -> None:
     try:
         os.chown(path, _HERMES_UID, _HERMES_GID)
     except PermissionError:
-        # Already running as hermes → the dir is hermes-owned by default; swallowing keeps root
+        # Already running as minerva → the dir is hermes-owned by default; swallowing keeps root
         # and unprivileged callers on one code path.
         pass
 
@@ -325,14 +325,14 @@ def _seed_supervise_skeleton(svc_dir: Path) -> None:
     """Pre-create hermes-owned ``supervise/`` and top-level ``event/`` inside a service directory.
 
     s6-supervise (root) creates ``event/``/``supervise/`` 0700 and the control FIFO 0600, so the
-    hermes user gets EACCES on every ``s6-svc``/``s6-svstat``. s6 treats EEXIST as success and skips
+    minerva user gets EACCES on every ``s6-svc``/``s6-svstat``. s6 treats EEXIST as success and skips
     its chown/chmod fix-up, so seeding before ``s6-svscanctl -a`` makes s6-supervise inherit our
     ownership. ``log/`` gets the same skeleton (its own supervise instance) or unregister teardown
     EACCESes on the logger. Idempotent: existing entries (possibly live FIFOs) are left untouched.
 
     The PR #30136 review surfaced this as a real product gap: the entire S6ServiceManager lifecycle
     (``register/start/stop/unregister _profile_gateway``) was inert in production because every operation is
-    dispatched as the hermes user.
+    dispatched as the minerva user.
     Reference --------- Discussed at length on the skarnet `skaware` mailing list in 2020
     (`<http://skarnet.org/lists/skaware/1424.html>`_); see also just-containers/s6-overlay#130. The
     pre-creation pattern was historically called out as forward-compatibility-fragile, but the EEXIST
@@ -465,12 +465,12 @@ class S6ServiceManager:
         # above prevents the run→start→run recursion. s6 guarantees one supervised instance per
         # slot, so there is no legitimate sibling for ``--replace`` to clobber.
         if profile == "default":
-            gateway_cmd = "hermes gateway run --replace"
+            gateway_cmd = "minerva gateway run --replace"
         else:
-            gateway_cmd = f"hermes -p {shlex.quote(profile)} gateway run --replace"
+            gateway_cmd = f"minerva -p {shlex.quote(profile)} gateway run --replace"
         # Skip the drop when already non-root (setgroups() lacks CAP_SETGID → s6 boot-loop).
         lines.append(f'[ "$(id -u)" = 0 ] || exec {gateway_cmd}')
-        lines.append(f"exec s6-setuidgid hermes {gateway_cmd}")
+        lines.append(f"exec s6-setuidgid minerva {gateway_cmd}")
         return "\n".join(lines) + "\n"
 
     @staticmethod
@@ -519,15 +519,15 @@ class S6ServiceManager:
             # Parent logs/gateways is seeded hermes-owned at stage2 boot (test_log_dir_seed.py).
             # See #45258.
             f'if [ "$(id -u)" = 0 ]; then\n'
-            f'  s6-setuidgid hermes mkdir -p "$log_dir"\n'
-            f'  s6-setuidgid hermes rm -f "$log_dir/lock"\n'
+            f'  s6-setuidgid minerva mkdir -p "$log_dir"\n'
+            f'  s6-setuidgid minerva rm -f "$log_dir/lock"\n'
             f'else\n'
             f'  mkdir -p "$log_dir"\n'
             f'  rm -f "$log_dir/lock"\n'
             f'fi\n'
             # Skip the drop when already non-root (CAP_SETGID).
             f'[ "$(id -u)" = 0 ] || exec s6-log 1 n10 s1000000 T "$log_dir"\n'
-            f'exec s6-setuidgid hermes s6-log 1 n10 s1000000 T "$log_dir"\n'
+            f'exec s6-setuidgid minerva s6-log 1 n10 s1000000 T "$log_dir"\n'
         )
 
     # -- lifecycle ---------------------------------------------------------

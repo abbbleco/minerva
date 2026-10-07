@@ -207,7 +207,7 @@ def ensure_windows_bin_launchers(
         # closed/broken stderr must not turn a successful heal into a crash.
         with contextlib.suppress(OSError, ValueError):
             print(
-                "  ✓ Restored hermes launcher(s): " + ", ".join(restored),
+                "  ✓ Restored minerva launcher(s): " + ", ".join(restored),
                 file=sys.stderr,
             )
     return restored
@@ -335,7 +335,7 @@ def migrate_windows_bin_path(
             return False
         with contextlib.suppress(OSError, ValueError):
             print(
-                f"  ✓ hermes launchers now resolve from {home_bin} "
+                f"  ✓ minerva launchers now resolve from {home_bin} "
                 "(legacy PATH entries removed)",
                 file=sys.stderr,
             )

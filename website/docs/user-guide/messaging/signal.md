@@ -116,7 +116,7 @@ Then start the gateway:
 ```bash
 hermes gateway              # Foreground
 hermes gateway install      # Install as a user service
-sudo hermes gateway install --system   # Linux only: boot-time system service
+sudo minerva gateway install --system   # Linux only: boot-time system service
 ```
 
 ---

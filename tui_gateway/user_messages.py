@@ -107,7 +107,7 @@ def agent_init_failed_message(exc: Any) -> str:
     if any(prefix in str(exc) for prefix in _AUTH_LOCK_TIMEOUT_PREFIXES):
         return (f"Minerva could not start the assistant for this session. Details: {exc}. "
                 "Wait for the other process to release the lock (or exit it — check for a running "
-                "dashboard or background hermes process), then retry.")
+                "dashboard or background minerva process), then retry.")
     return (f"Minerva could not start the assistant for this session. Details: {exc}. "
             "Check the model and provider with /model, or run `minerva setup` in a terminal to reconfigure.")
 

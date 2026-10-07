@@ -406,11 +406,11 @@ def _serve_relaunch_commands(entries: list[dict]) -> list[list[str]]:
     """Rebuild launch commands for stopped serves from ledger host/port/profile — never argv parsing
     (joined argv cannot round-trip Windows paths with spaces). Entries without a port are skipped."""
     from hermes_cli.update_cmd import _m
-    hermes = "hermes"
+    minerva = "hermes"
     with suppress(Exception):
         scripts_dir = _m()._venv_scripts_dir()
         if scripts_dir is not None:
-            hermes = next((str(scripts_dir / n) for n in ("hermes.exe", "hermes", "minerva.exe", "minerva") if (scripts_dir / n).is_file()), hermes)
+            minerva = next((str(scripts_dir / n) for n in ("hermes.exe", "hermes", "minerva.exe", "minerva") if (scripts_dir / n).is_file()), minerva)
     commands: list[list[str]] = []
     for entry in entries:
         port = entry.get("port")
@@ -958,7 +958,7 @@ def _pause_windows_gateways_for_update() -> dict | None:
     if unmapped_pids:
         print(f"  → Stopped {len(unmapped_pids)} gateway process(es) without profile mapping")
         if any(not u.get("argv") for u in unmapped):  # no recoverable cmdline (psutil missing, denied, gone)
-            print("    Restart manually after update: hermes gateway run")
+            print("    Restart manually after update: minerva gateway run")
     token = {"resume_needed": True, "profiles": profiles, "unmapped_pids": unmapped_pids, "unmapped": unmapped}
     # Every profile with ANY live gateway at discovery counts as running: service-supervised ones skip the
     # socket pause (absent from ``profiles``) but the SCM restart brings them back, not a cold-start.
@@ -1277,7 +1277,7 @@ def _verify_relaunched_gateways_alive(token: dict, profiles: dict, unmapped: lis
         print(
             "\n  ⚠ Windows gateway restart could not be verified — no stable gateway process appeared after relaunch.\n"
             "    (The respawned gateway may have been killed by a parent Job Object during updater teardown, #48820.)\n"
-            "    Recover with: hermes gateway restart"
+            "    Recover with: minerva gateway restart"
         )
         raise RuntimeError("Windows gateway relaunch after update was not verified alive")
     with suppress(Exception):

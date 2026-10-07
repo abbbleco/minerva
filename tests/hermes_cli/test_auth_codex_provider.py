@@ -396,7 +396,7 @@ def test_refresh_429_classified_as_quota_not_auth_failure(monkeypatch):
 
     Regression test for #32790: must NOT force relogin and must carry the
     dedicated rate-limit code so callers surface a "retry later" notice rather
-    than a misleading "run hermes auth".
+    than a misleading "run minerva auth".
     """
     from hermes_cli.auth import (
         CODEX_RATE_LIMITED_CODE,
@@ -421,7 +421,7 @@ def test_refresh_429_classified_as_quota_not_auth_failure(monkeypatch):
     # User-facing copy must not tell the operator to re-authenticate.
     rendered = format_auth_error(err)
     assert "re-authenticate" not in rendered
-    assert "hermes auth" not in rendered
+    assert "minerva auth" not in rendered
 
 
 def test_refresh_429_without_retry_after_header(monkeypatch):

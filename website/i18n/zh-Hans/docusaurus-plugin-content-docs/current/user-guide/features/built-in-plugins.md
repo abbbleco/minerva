@@ -136,7 +136,7 @@ hermes tools  # → Langfuse Observability → Cloud 或 Self-Hosted
 ```bash
 python -c "import pm; pm.sync_venv(['langfuse'], explicit=True)"
 source ./activate
-python hermes plugins enable observability/langfuse
+python minerva plugins enable observability/langfuse
 ```
 
 PowerShell 使用 `. .\activate.ps1` 激活。将凭据写入活动数据目录的 `.env`

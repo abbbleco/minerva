@@ -111,7 +111,7 @@ def fake_subprocess_run(monkeypatch: pytest.MonkeyPatch):
 #
 # The skeleton helper pre-creates the dirs and FIFOs that s6-supervise
 # would otherwise create as root mode 0700, locking out the
-# unprivileged hermes user from every lifecycle op. These tests run
+# unprivileged minerva user from every lifecycle op. These tests run
 # against tmp_path and assert the produced layout — the live-container
 # verification (against real s6-svc / s6-svstat) lives in
 # tests/docker/test_s6_profile_gateway_integration.py.
@@ -200,8 +200,8 @@ def test_render_run_script_uses_replace_to_take_over_stale_holder() -> None:
     """
     default_text = S6ServiceManager._render_run_script("default", {})
     # Root profile: bare `minerva gateway run --replace` (no -p flag).
-    assert "hermes gateway run --replace" in default_text
-    assert "hermes -p default" not in default_text
+    assert "minerva gateway run --replace" in default_text
+    assert "minerva -p default" not in default_text
     # Every exec line that launches the gateway must carry --replace, so
     # neither the non-root nor the privilege-drop branch can spin.
     gateway_execs = [
@@ -296,7 +296,7 @@ def test_s6_log_run_creates_leaf_as_hermes_without_chown(
     """log/run must not root-chown/unlink volume paths; create leaf as hermes.
 
     #45258 parent ownership is stage2's job (``logs/gateways`` seeded as
-    hermes). Restartable log/run must not pathname-chown or pathname-rm a
+    minerva). Restartable log/run must not pathname-chown or pathname-rm a
     hermes-writable tree from root — that is a symlink TOCTOU hole.
     """
     mgr = S6ServiceManager(scandir=s6_scandir)
@@ -308,15 +308,15 @@ def test_s6_log_run_creates_leaf_as_hermes_without_chown(
         "restartable log/run must not invoke chown on hermes-writable paths; "
         f"saw: {log_text!r}"
     )
-    assert 's6-setuidgid hermes mkdir -p "$log_dir"' in log_text
-    assert 's6-setuidgid hermes rm -f "$log_dir/lock"' in log_text
+    assert 's6-setuidgid minerva mkdir -p "$log_dir"' in log_text
+    assert 's6-setuidgid minerva rm -f "$log_dir/lock"' in log_text
     assert 'else\n  mkdir -p "$log_dir"\n  rm -f "$log_dir/lock"\nfi\n' in log_text
     # Lock cleanup must not remain a bare root-context pathname op after fi.
     after_fi = log_text.split("fi\n", 1)[-1]
     assert 'rm -f "$log_dir/lock"' not in after_fi
 
-    mkdir_as_hermes_idx = log_text.index('s6-setuidgid hermes mkdir -p "$log_dir"')
-    rm_as_hermes_idx = log_text.index('s6-setuidgid hermes rm -f "$log_dir/lock"')
+    mkdir_as_hermes_idx = log_text.index('s6-setuidgid minerva mkdir -p "$log_dir"')
+    rm_as_hermes_idx = log_text.index('s6-setuidgid minerva rm -f "$log_dir/lock"')
     exec_idx = log_text.index("s6-log 1 ")
     assert mkdir_as_hermes_idx < rm_as_hermes_idx < exec_idx
 
@@ -360,7 +360,7 @@ def test_s6_log_run_never_invokes_chown_with_symlinked_log_dir(tmp_path) -> None
     )
     # Pretend we are root so the script takes the s6-setuidgid setup path.
     # Mark the drop so fake rm can refuse unlink outside HERMES_HOME the way
-    # a real hermes uid cannot delete a foreign root-owned lock.
+    # a real minerva uid cannot delete a foreign root-owned lock.
     (bin_dir / "id").write_text(
         "#!/bin/sh\n"
         'if [ "$1" = "-u" ]; then echo 0; exit 0; fi\n'
@@ -376,7 +376,7 @@ def test_s6_log_run_never_invokes_chown_with_symlinked_log_dir(tmp_path) -> None
     real_rm = "/bin/rm"
     (bin_dir / "rm").write_text(
         "#!/bin/sh\n"
-        # Privilege-dropped: no-op. Models that hermes cannot unlink a foreign
+        # Privilege-dropped: no-op. Models that minerva cannot unlink a foreign
         # root-owned lock outside the volume; avoids a realpath/rm TOCTOU in
         # the test double itself. Root-context: real rm — a residual bare
         # ``rm -f "$log_dir/lock"`` would delete victim/lock via the symlink.

@@ -188,7 +188,7 @@ def _check_requires_env(report: ValidationReport, manifest: dict) -> None:
 # module using the same file-location mechanics PluginManager uses, calls
 # register() against a recording stub ctx, and prints a sentinel-prefixed
 # JSON line of what was actually registered. Deliberately imports NOTHING
-# from hermes so a hostile plugin only sees a bare interpreter — the one
+# from minerva so a hostile plugin only sees a bare interpreter — the one
 # exception is `providers` for `kind: model-provider`, whose contract IS
 # calling providers.register_provider at import.
 _PROBE_SCRIPT = r"""

@@ -345,7 +345,7 @@ class _ShallowLock:
         except OSError as exc:
             raise RuntimeError(f"cannot create shallow lock: {exc}") from exc
         try:
-            os.write(fd, b"hermes shallow maintenance\n")
+            os.write(fd, b"minerva shallow maintenance\n")
         finally:
             os.close(fd)
         return self

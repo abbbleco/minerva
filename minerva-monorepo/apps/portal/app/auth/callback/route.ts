@@ -48,5 +48,19 @@ export async function GET(request: Request) {
     return NextResponse.redirect(new URL(`/login?error=${encodeURIComponent(error.message)}`, url.origin));
   }
 
+  // Activate pending email invites so a first login lands in the inviting
+  // agency instead of minting a fresh personal one. Best-effort, never blocks.
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (user) {
+      const { claimInvitesForUser } = await import("@/app/lib/members-server");
+      await claimInvitesForUser(user.id, user.email ?? "");
+    }
+  } catch {
+    // Sign-in stands; the invite stays pending for the next login.
+  }
+
   return NextResponse.redirect(new URL(next, url.origin));
 }

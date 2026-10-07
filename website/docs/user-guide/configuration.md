@@ -565,13 +565,13 @@ python -c "import pm; pm.sync_venv(['vercel'], explicit=True)"
 For one-off local development, Minerva also accepts short-lived Vercel OIDC tokens:
 
 ```bash
-VERCEL_OIDC_TOKEN="$(vc project token <project-name>)" hermes chat
+VERCEL_OIDC_TOKEN="$(vc project token <project-name>)" minerva chat
 ```
 
 From a linked Vercel project directory, you can omit the project name:
 
 ```bash
-VERCEL_OIDC_TOKEN="$(vc project token)" hermes chat
+VERCEL_OIDC_TOKEN="$(vc project token)" minerva chat
 ```
 
 OIDC tokens are short-lived and should not be used as the documented deployment path.
@@ -964,7 +964,7 @@ Leaving the list empty, or omitting the key, is a no-op.
 Enable isolated git worktrees for running multiple agents in parallel on the same repo:
 
 ```yaml
-worktree: true    # Always create a worktree (same as hermes -w)
+worktree: true    # Always create a worktree (same as minerva -w)
 # worktree: false # Default — only when -w flag is passed
 ```
 
@@ -1401,7 +1401,7 @@ Earlier builds split aggregator users (OpenRouter, ABBBLE Portal) onto a cheap p
 Instead of hand-editing YAML, run `minerva model` and pick **"Configure auxiliary models"** from the menu. You'll get an interactive per-task picker:
 
 ```
-$ hermes model
+$ minerva model
 → Configure auxiliary models
 
 [ ] vision               currently: auto / main model
@@ -2654,7 +2654,7 @@ quick_commands:
     command: df -h /
   update:
     type: exec
-    command: hermes update
+    command: minerva update
   gpu:
     type: exec
     command: nvidia-smi --query-gpu=name,utilization.gpu,memory.used,memory.total --format=csv,noheader
@@ -2726,7 +2726,7 @@ web:
   # call attempts the chosen backend again (never sticky).
   keyless_rescue: true
 
-  # Pin Exa/Parallel to a tier (set by the hermes tools Free/Paid rows).
+  # Pin Exa/Parallel to a tier (set by the minerva tools Free/Paid rows).
   # free = always the anonymous endpoint; paid = always the keyed SDK path;
   # unset = auto (key present -> paid, otherwise free).
   provider_tier:
@@ -2929,7 +2929,7 @@ Automatic filesystem snapshots before destructive file operations. See the [Chec
 
 ```yaml
 checkpoints:
-  enabled: false                 # Enable automatic checkpoints (also: hermes chat --checkpoints). Default: false (opt-in).
+  enabled: false                 # Enable automatic checkpoints (also: minerva chat --checkpoints). Default: false (opt-in).
   max_snapshots: 20              # Max checkpoints to keep per directory (default: 20)
 ```
 

@@ -433,6 +433,6 @@ def test_repo_gitignores_the_legacy_bin_dir():
         capture_output=True, env=env,
     )
     assert result.returncode == 0, (
-        "bin/hermes.exe is not gitignored — hermes update's autostash "
+        "bin/hermes.exe is not gitignored — minerva update's autostash "
         "(--include-untracked) would sweep pre-migration launchers off disk"
     )

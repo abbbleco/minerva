@@ -2,16 +2,16 @@
 
 The shim (docker/hermes-exec-shim.sh, installed at /opt/hermes/bin/hermes)
 exists to prevent the auth.json ownership-mismatch bug where
-`docker exec <c> hermes login` would write /opt/data/auth.json as
+`docker exec <c> minerva login` would write /opt/data/auth.json as
 root:root mode 0600, leaving the supervised gateway (UID 10000) unable
 to read its own credentials and returning "Provider authentication
 failed: Minerva is not logged into ABBBLE Portal" on every message.
 
 These tests verify:
 
-1. ``docker exec <c> hermes …`` (defaulting to root) gets dropped to the
-   hermes user before the real binary runs.
-2. ``docker exec --user hermes <c> hermes …`` (already non-root) short-
+1. ``docker exec <c> minerva …`` (defaulting to root) gets dropped to the
+   minerva user before the real binary runs.
+2. ``docker exec --user minerva <c> minerva …`` (already non-root) short-
    circuits and doesn't try to drop again.
 3. Files written under $HERMES_HOME from a ``docker exec`` session land
    as hermes:hermes — the actual user-visible invariant.
@@ -159,7 +159,7 @@ def test_e2e_login_then_supervised_gateway_can_read_auth(
 ) -> None:
     """End-to-end regression for the original bug.
 
-    Pre-shim: ``docker exec <c> hermes login`` (root) wrote
+    Pre-shim: ``docker exec <c> minerva login`` (root) wrote
     /opt/data/auth.json as root:root 0600. The supervised gateway (UID
     10000) couldn't read it, _load_auth_store swallowed PermissionError
     as a parse failure, and resolve_nous_runtime_credentials raised
@@ -173,7 +173,7 @@ def test_e2e_login_then_supervised_gateway_can_read_auth(
 
     Specifically: pretend the operator ran `minerva login` (writes
     auth.json) and verify (a) the file exists and (b) it's readable by
-    the hermes UID. We use `minerva auth list` since that touches the
+    the minerva UID. We use `minerva auth list` since that touches the
     auth store on the read side and would fail with the same
     'not logged in' shape if the file was unreadable to uid 10000.
     """
@@ -200,7 +200,7 @@ def test_e2e_login_then_supervised_gateway_can_read_auth(
     assert r.returncode == 0, f"find failed: {r.stderr}"
     unreadable = [ln for ln in r.stdout.splitlines() if ln.strip()]
     assert not unreadable, (
-        "Files written by `docker exec` are unreadable to the hermes user "
+        "Files written by `docker exec` are unreadable to the minerva user "
         f"(supervised gateway UID): {unreadable}. The shim failed to drop "
         "privileges before the write."
     )

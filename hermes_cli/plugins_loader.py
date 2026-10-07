@@ -382,7 +382,7 @@ class PluginLoaderMixin:
         if missing:
             logger.warning(
                 "Plugin %s declares Python dependencies that are not "
-                "installed: %s. For an enabled plugin, run hermes pm repair, "
+                "installed: %s. For an enabled plugin, run minerva pm repair, "
                 "then restart Minerva. Discovery does not install dependencies.",
                 key, ", ".join(missing),
             )

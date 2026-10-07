@@ -8,7 +8,8 @@
     "start": "next start --port 3002",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "node --import tsx --test tests/*.test.ts"
+    "test": "node --import tsx --test tests/*.test.ts",
+    "paystack:plans": "tsx scripts/create-paystack-plans.ts"
   },
   "dependencies": {
     "@minerva/billing": "workspace:*",

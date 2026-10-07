@@ -20,7 +20,7 @@ def _install_tts_extra(extra: str) -> bool:
         pm.sync_venv([extra], explicit=True)
     except (pm.InstallError, OSError, ValueError) as exc:
         _setup.print_error(f"Failed to install {extra}: {exc}")
-        _setup.print_info("Retry with: hermes setup tts")
+        _setup.print_info("Retry with: minerva setup tts")
         return False
     _setup.print_success(f"{extra} installed. Restart Minerva to use it.")
     return True
@@ -199,7 +199,7 @@ def _xai_api_key_path():
         _setup.print_success("xAI TTS API key saved")
         return None
     from hermes_constants import display_hermes_home as _dhh
-    return ("No xAI API key provided for TTS. Configure XAI_API_KEY via hermes setup model "
+    return ("No xAI API key provided for TTS. Configure XAI_API_KEY via minerva setup model "
             f"or {_dhh()}/.env to use xAI TTS. Falling back to Edge TTS.")
 
 
@@ -266,7 +266,7 @@ def _setup_tts_provider(config: dict):
 
 
 def setup_tts(config: dict):
-    """Standalone TTS setup (for 'hermes setup tts')."""
+    """Standalone TTS setup (for 'minerva setup tts')."""
     _setup_tts_provider(config)
 
 

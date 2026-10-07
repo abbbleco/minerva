@@ -82,7 +82,7 @@ _STEWARD_UPDATE_FALLBACK = (
 # desktop-app message is per-OS because each OS owns app removal
 # differently.
 _STEWARD_DELETE_DATA_PREAMBLE = "To delete your Minerva data (chats, configuration, etc),\n"
-_STEWARD_DELETE_DATA_CLI = "run:\n$ hermes uninstall --data\n"
+_STEWARD_DELETE_DATA_CLI = "run:\n$ minerva uninstall --data\n"
 _STEWARD_DELETE_DATA_DESKTOP = "Open Minerva Desktop, go to Settings -> About, and delete your data from there.\n"
 
 _STEWARD_UNINSTALL_MESSAGES = {

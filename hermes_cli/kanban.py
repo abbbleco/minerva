@@ -127,7 +127,7 @@ def _check_dispatcher_presence(hermes_home: Optional[Path] = None) -> tuple[bool
                 "back on and restart the gateway, OR run the legacy "
                 "standalone daemon (`minerva kanban daemon --force`).")
     return (False, "No gateway is running — the task will sit in 'ready' until you "
-            "start it. Run:\n    hermes gateway start\n"
+            "start it. Run:\n    minerva gateway start\n"
             "The gateway hosts an embedded dispatcher (tick interval 60s by "
             "default); your task will be picked up on the next tick after "
             "the gateway comes up.")
@@ -143,8 +143,8 @@ def kanban_command(args: argparse.Namespace) -> int:
         if parser is not None:
             parser.print_help()
         else:
-            print("usage: hermes kanban <action> [options]\n"
-                  "Run 'hermes kanban --help' for the full list of actions.", file=sys.stderr)
+            print("usage: minerva kanban <action> [options]\n"
+                  "Run 'minerva kanban --help' for the full list of actions.", file=sys.stderr)
         return 0
 
     # Fast-fail for UX only; the durable trust boundary is in kanban_db, since children can
@@ -300,7 +300,7 @@ def _cmd_init(args: argparse.Namespace) -> int:
               "Create one with `minerva -p <name> setup` before assigning tasks.")
     print(
         "\nNext step: start the gateway so ready tasks actually get picked up.\n"
-        "  hermes gateway start\n\n"
+        "  minerva gateway start\n\n"
         "The gateway hosts an embedded dispatcher that ticks every 60 seconds\n"
         "by default (config: kanban.dispatch_interval_seconds). Without a\n"
         "running gateway, tasks stay in 'ready' forever."

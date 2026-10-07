@@ -20,8 +20,8 @@ def _blank_slate_done(config: dict, hermes_home, tools_line: str, *extra: str, i
     from hermes_cli.setup import _info, _print_setup_summary, print_success
     print()
     print_success("Blank Slate setup complete — minimal agent ready.")
-    _info(*([intro] if intro else []), tools_line, "  Seed skills:         hermes skills opt-in --sync",
-          "  Add MCP servers:     hermes mcp add", *extra, "  Tune agent settings: hermes setup agent", None)
+    _info(*([intro] if intro else []), tools_line, "  Seed skills:         minerva skills opt-in --sync",
+          "  Add MCP servers:     minerva mcp add", *extra, "  Tune agent settings: minerva setup agent", None)
     _print_setup_summary(config, hermes_home)
 
 
@@ -66,7 +66,7 @@ def _run_portal_one_shot(config: dict) -> None:
     def _on_error(exc: Exception) -> None:
         from hermes_cli.auth_error_copy import provider_setup_failure_lines
         print()
-        lead, *rest = provider_setup_failure_lines(exc, retry_command="hermes portal")
+        lead, *rest = provider_setup_failure_lines(exc, retry_command="minerva portal")
         print_error(f"  {lead}")
         for line in rest:
             print_info(f"  {line}")
@@ -100,7 +100,7 @@ def _run_first_time_quick_setup(config: dict, hermes_home, is_existing: bool):
 
     def _on_error(exc: Exception) -> None:
         from hermes_cli.auth_error_copy import provider_setup_failure_lines
-        lead, *rest = provider_setup_failure_lines(exc, retry_command="hermes model")
+        lead, *rest = provider_setup_failure_lines(exc, retry_command="minerva model")
         print_warning(lead)
         for line in rest:
             print_info(line)
@@ -118,7 +118,7 @@ def _run_first_time_quick_setup(config: dict, hermes_home, is_existing: bool):
     # Step 4: Offer messaging gateway setup
     print()
     gateway_choice = prompt_choice("Connect a messaging platform? (Telegram, Discord, etc.)", [
-        "Set up messaging now (recommended)", "Skip — set up later with 'hermes setup gateway'",
+        "Set up messaging now (recommended)", "Skip — set up later with 'minerva setup gateway'",
     ], 0)
     if gateway_choice == 0:
         setup_gateway(config)
@@ -130,9 +130,9 @@ def _run_first_time_quick_setup(config: dict, hermes_home, is_existing: bool):
         ensure_gateway_service(context="setup")
     print()
     print_success("Setup complete! You're ready to go.")
-    _info(None, "  Configure all settings:    hermes setup")
+    _info(None, "  Configure all settings:    minerva setup")
     if gateway_choice != 0:
-        print_info("  Connect Telegram/Discord:  hermes setup gateway")
+        print_info("  Connect Telegram/Discord:  minerva setup gateway")
     _print_macos_fda_tip()
     print()
     _print_setup_summary(config, hermes_home)
@@ -267,7 +267,7 @@ def _run_blank_slate_setup(config: dict, hermes_home, is_existing: bool):
     # Blank Slate means no bundled skills; record the opt-out so future `minerva update` runs
     # don't re-inject them.
     _set_bundled_skills_opt_out(True, "skill opt-out")
-    _blank_slate_done(config, hermes_home, "  Enable tools:        hermes tools", "  Enable plugins:      hermes plugins",
+    _blank_slate_done(config, hermes_home, "  Enable tools:        minerva tools", "  Enable plugins:      minerva plugins",
                       intro="Enable anything later, on demand:")
 
 
@@ -329,7 +329,7 @@ def _blank_slate_walkthrough(config: dict, hermes_home):
     if prompt_yes_no("Connect a messaging platform (Telegram, Discord, …)?", default=False):
         setup_gateway(config)
     save_config(config)
-    _blank_slate_done(config, hermes_home, "  Enable more tools:   hermes tools")
+    _blank_slate_done(config, hermes_home, "  Enable more tools:   minerva tools")
 
 
 def _run_quick_setup(config: dict, hermes_home):
@@ -349,7 +349,7 @@ def _run_quick_setup(config: dict, hermes_home):
     current_ver, latest_ver = check_config_version()
     if not (missing_required or missing_optional or missing_config or current_ver < latest_ver):
         print_success("Everything is configured! Nothing to do.")
-        _info(None, "Run 'hermes setup' and choose 'Full Setup' to reconfigure,",
+        _info(None, "Run 'minerva setup' and choose 'Full Setup' to reconfigure,",
               "or pick a specific section from the menu.")
         return
     if missing_required:
@@ -375,7 +375,7 @@ def _run_quick_setup(config: dict, hermes_home):
     if missing_messaging:  # checklist, then prompt for each selected platform's vars
         print_header("Messaging Platforms", gap=True)
         _info("Connect Minerva to messaging apps to chat from anywhere.",
-              "You can configure these later with 'hermes setup gateway'.")
+              "You can configure these later with 'minerva setup gateway'.")
         # Group by platform in first-seen order; vars matching no platform are dropped.
         grouped: dict[str, list] = {}
         emojis = {}

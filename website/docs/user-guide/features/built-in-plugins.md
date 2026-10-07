@@ -165,7 +165,7 @@ with the intended Minerva home. Use the checkout's prepared Python:
 ```bash
 python -c "import pm; pm.sync_venv(['langfuse'], explicit=True)"
 source ./activate
-python hermes plugins enable observability/langfuse
+python minerva plugins enable observability/langfuse
 ```
 
 Use `. .\activate.ps1` for PowerShell activation. Then put the credentials in

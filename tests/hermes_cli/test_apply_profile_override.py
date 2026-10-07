@@ -1,6 +1,6 @@
 """Regression tests for _apply_profile_override HERMES_HOME guard (issue #22502).
 
-When HERMES_HOME is set to the hermes root (e.g. systemd hardcodes
+When HERMES_HOME is set to the minerva root (e.g. systemd hardcodes
 HERMES_HOME=/root/.hermes), _apply_profile_override must still read
 active_profile and update HERMES_HOME to the profile directory.
 
@@ -118,13 +118,13 @@ def test_missing_profile_still_blocks_other_or_explicit_commands(
             active_profile="ray", create_active_profile=False, argv=argv,
         )
     assert exc.value.code == 1
-    assert ("hermes profile use default" in capsys.readouterr().err) is expect_hint
+    assert ("minerva profile use default" in capsys.readouterr().err) is expect_hint
 
 
 class TestApplyProfileOverrideHermesHomeGuard:
     """Regression guard for issue #22502.
 
-    Verifies that HERMES_HOME pointing to the hermes root does NOT suppress
+    Verifies that HERMES_HOME pointing to the minerva root does NOT suppress
     the active_profile check, while HERMES_HOME already pointing to a
     profile directory IS trusted as-is.
     """
@@ -135,7 +135,7 @@ class TestApplyProfileOverrideHermesHomeGuard:
         """HERMES_HOME=/root/.hermes + active_profile=coder must redirect
         HERMES_HOME to .../profiles/coder.
 
-        Bug scenario from #22502: systemd sets HERMES_HOME to the hermes root
+        Bug scenario from #22502: systemd sets HERMES_HOME to the minerva root
         and the user switches to a profile via `minerva profile use`.
         Before the fix, the guard returned early and active_profile was ignored.
         """

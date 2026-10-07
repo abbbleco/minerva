@@ -179,7 +179,7 @@ def _build_child_env(*, rpc_endpoint: str, rpc_token: str, tmpdir: str,
         # Surface once per interpreter so "import hermes_constants fails" is diagnosable.
         _external_env_logged.add(child_python)
         logger.info("execute_code: child interpreter %s is outside the Minerva "
-                    "environment; hermes root omitted from PYTHONPATH", child_python)
+                    "environment; minerva root omitted from PYTHONPATH", child_python)
     if _existing_pp:
         _pp_parts.append(_existing_pp)
     child_env["PYTHONPATH"] = os.pathsep.join(_pp_parts)
@@ -245,7 +245,7 @@ def _python_environment_prefix(python_path: str) -> str:
 def _uses_hermes_python_environment(python_path: str) -> bool:
     """Whether *python_path* belongs to Minerva's active Python environment. Short-circuits when
     it IS the running interpreter (by path or realpath — covers ``uv run`` venvs) so no probe
-    runs on the default strict path and a flaky probe can never drop the hermes root."""
+    runs on the default strict path and a flaky probe can never drop the minerva root."""
     if python_path == sys.executable or os.path.realpath(python_path) == os.path.realpath(sys.executable):
         return True
     return _python_environment_prefix(python_path) == os.path.realpath(sys.prefix)

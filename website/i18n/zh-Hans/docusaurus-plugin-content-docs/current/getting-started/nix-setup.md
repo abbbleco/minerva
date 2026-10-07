@@ -19,7 +19,7 @@ Minerva Agent 提供了一个 Nix flake，支持三个层级的集成：
 
 **对于非 NixOS 用户**，这只影响安装步骤。之后的操作（`minerva setup`、`minerva gateway install`、编辑配置）与标准安装完全相同。
 
-**对于 NixOS 模块用户**，整个生命周期有所不同：配置存放在 `configuration.nix` 中，密钥通过 sops-nix/agenix 管理，服务是一个 systemd 单元，CLI 配置命令被屏蔽。管理 hermes 的方式与管理其他 NixOS 服务相同。
+**对于 NixOS 模块用户**，整个生命周期有所不同：配置存放在 `configuration.nix` 中，密钥通过 sops-nix/agenix 管理，服务是一个 systemd 单元，CLI 配置命令被屏蔽。管理 minerva 的方式与管理其他 NixOS 服务相同。
 :::
 
 ## PM 固定版本
@@ -121,7 +121,7 @@ nix build
 上面的 `environmentFiles` 行假设你已配置 [sops-nix](https://github.com/Mic92/sops-nix) 或 [agenix](https://github.com/ryantm/agenix)。该文件至少应包含一个 LLM 提供商密钥（例如 `OPENROUTER_API_KEY=sk-or-...`）。完整设置请参阅[密钥管理](#密钥管理)。如果你还没有密钥管理器，可以先使用普通文件——只需确保它不是全局可读的：
 
 ```bash
-echo "OPENROUTER_API_KEY=sk-or-your-key" | sudo install -m 0600 -o hermes /dev/stdin /var/lib/hermes/env
+echo "OPENROUTER_API_KEY=sk-or-your-key" | sudo install -m 0600 -o minerva /dev/stdin /var/lib/hermes/env
 ```
 
 ```nix
@@ -141,7 +141,7 @@ services.hermes-agent.environmentFiles = [ "/var/lib/hermes/env" ];
 - 路由是透明的：`minerva chat`、`minerva sessions list`、`minerva --version` 等命令都会在底层 exec 进容器
 - 所有 CLI 参数原样转发
 - 如果容器未运行，CLI 会短暂重试（交互式使用时显示 5 秒 spinner，脚本中静默等待 10 秒），然后以明确的错误退出——不会静默回退
-- 对于在 hermes 代码库上工作的开发者，设置 `HERMES_DEV=1` 可绕过容器路由，直接运行本地检出版本
+- 对于在 minerva 代码库上工作的开发者，设置 `HERMES_DEV=1` 可绕过容器路由，直接运行本地检出版本
 
 设置 `container.hostUsers` 可创建 `~/.hermes` 到服务状态目录的符号链接，使主机 CLI 和容器共享会话、配置和记忆：
 
@@ -167,7 +167,7 @@ security.sudo.extraRules = [{
 }];
 ```
 
-CLI 会自动检测何时需要 sudo 并透明地使用它。没有此配置，你需要手动运行 `sudo hermes chat`。
+CLI 会自动检测何时需要 sudo 并透明地使用它。没有此配置，你需要手动运行 `sudo minerva chat`。
 :::
 
 ### 验证运行状态
@@ -336,7 +336,7 @@ Nix 用户最常见自定义需求的快速参考：
 | 在主机 CLI 和容器间共享状态 | `container.hostUsers` | `[ "sidbin" ]` |
 | 为 Agent 提供额外工具 | `extraPackages` | `[ pkgs.pandoc pkgs.imagemagick ]` |
 | 使用自定义基础镜像 | `container.image` | `"ubuntu:24.04"` |
-| 覆盖 hermes 包 | `package` | `inputs.hermes-agent.packages.${system}.default.override { ... }` |
+| 覆盖 minerva 包 | `package` | `inputs.hermes-agent.packages.${system}.default.override { ... }` |
 | 更改状态目录 | `stateDir` | `"/opt/hermes"` |
 | 设置 Agent 的工作目录 | `workingDirectory` | `"/home/user/projects"` |
 
@@ -489,11 +489,11 @@ Token 存储在 `$HERMES_HOME/mcp-tokens/<server-name>.json` 中，在重启和�
 ```bash
 # 容器模式
 docker exec -it hermes-agent \
-  hermes mcp add my-oauth-server --url https://mcp.example.com/mcp --auth oauth
+  minerva mcp add my-oauth-server --url https://mcp.example.com/mcp --auth oauth
 
 # 原生模式
-sudo -u hermes HERMES_HOME=/var/lib/hermes/.hermes \
-  hermes mcp add my-oauth-server --url https://mcp.example.com/mcp --auth oauth
+sudo -u minerva HERMES_HOME=/var/lib/hermes/.hermes \
+  minerva mcp add my-oauth-server --url https://mcp.example.com/mcp --auth oauth
 ```
 
 容器使用 `--network=host`，因此 `127.0.0.1` 上的 OAuth 回调监听器可从主机浏览器访问。
@@ -533,7 +533,7 @@ scp ~/.hermes/mcp-tokens/my-oauth-server{,.client}.json \
 
 ## 托管模式
 
-当 hermes 通过 NixOS 模块运行时，以下 CLI 命令会被**屏蔽**，并显示指向 `configuration.nix` 的描述性错误：
+当 minerva 通过 NixOS 模块运行时，以下 CLI 命令会被**屏蔽**，并显示指向 `configuration.nix` 的描述性错误：
 
 | 被屏蔽的命令 | 原因 |
 |---|---|
@@ -546,7 +546,7 @@ scp ~/.hermes/mcp-tokens/my-oauth-server{,.client}.json \
 这可以防止 Nix 声明的内容与磁盘上实际内容之间产生漂移。检测使用两个信号：
 
 1. **`HERMES_MANAGED=true`** 环境变量——由 systemd 服务设置，对 gateway 进程可见
-2. **`.managed` 标记文件**，位于 `HERMES_HOME` 中——由激活脚本设置，对交互式 shell 可见（例如 `docker exec -it hermes-agent hermes config set ...` 也会被屏蔽）
+2. **`.managed` 标记文件**，位于 `HERMES_HOME` 中——由激活脚本设置，对交互式 shell 可见（例如 `docker exec -it hermes-agent minerva config set ...` 也会被屏蔽）
 
 要更改配置，请编辑你的 Nix 配置并运行 `sudo nixos-rebuild switch`。
 
@@ -598,7 +598,7 @@ Nix 构建的二进制文件能在 Ubuntu 容器内运行，是因为 `/nix/stor
 | 卷/选项变更 | **是** | 保留 | 保留 | **丢失** |
 | `environment`/`environmentFiles` 变更 | 否 | 保留 | 保留 | 保留 |
 
-仅当容器的**身份哈希**发生变化时才会重建容器。哈希涵盖：schema 版本、镜像、`extraVolumes`、`extraOptions` 和入口点脚本。环境变量、settings、文档或 hermes 包本身的变更**不会**触发重建。
+仅当容器的**身份哈希**发生变化时才会重建容器。哈希涵盖：schema 版本、镜像、`extraVolumes`、`extraOptions` 和入口点脚本。环境变量、settings、文档或 minerva 包本身的变更**不会**触发重建。
 
 :::warning 可写层丢失
 当身份哈希发生变化（镜像升级、新卷、新容器选项）时，容器会被销毁并从 `container.image` 的全新拉取重建。可写层中通过 `apt install`、`pip install` 或 `npm install` 安装的包将丢失。`/data` 和 `/home/hermes` 中的状态会保留（这些是绑定挂载）。
@@ -608,7 +608,7 @@ Nix 构建的二进制文件能在 Ubuntu 容器内运行，是因为 `/nix/stor
 
 ### GC Root 保护
 
-`preStart` 脚本在 `${stateDir}/.gc-root` 创建一个指向当前 hermes 包的 GC root。这可以防止 `nix-collect-garbage` 删除正在运行的二进制文件。如果 GC root 损坏，重启服务会重新创建它。
+`preStart` 脚本在 `${stateDir}/.gc-root` 创建一个指向当前 minerva 包的 GC root。这可以防止 `nix-collect-garbage` 删除正在运行的二进制文件。如果 GC root 损坏，重启服务会重新创建它。
 
 ---
 
@@ -654,7 +654,7 @@ services.hermes-agent.extraPythonPackages = [
 ];
 ```
 
-该包的 `site-packages` 会添加到 hermes wrapper 的 PYTHONPATH 中。`importlib.metadata` 在会话启动时发现入口点。
+该包的 `site-packages` 会添加到 minerva wrapper 的 PYTHONPATH 中。`importlib.metadata` 在会话启动时发现入口点。
 
 ### 可选依赖组（`extraDependencyGroups`）
 
@@ -718,7 +718,7 @@ services.hermes-agent.settings.plugins.enabled = [
 ```
 
 :::note
-构建时冲突检查可防止插件包覆盖核心 hermes 依赖。如果插件提供了封闭 venv 中已有的包，`nixos-rebuild` 会以明确的错误失败。
+构建时冲突检查可防止插件包覆盖核心 minerva 依赖。如果插件提供了封闭 venv 中已有的包，`nixos-rebuild` 会以明确的错误失败。
 :::
 
 ---
@@ -774,7 +774,7 @@ nix build .#checks.x86_64-linux.config-roundtrip    # 合并脚本保留用户�
 | `package-contents` | `hermes` 和 `hermes-agent` 二进制文件存在且 `minerva --version` 可运行 |
 | `entry-points-sync` | `pyproject.toml` 中 `[project.scripts]` 的每个条目在 Nix 包中都有对应的封装二进制文件 |
 | `cli-commands` | `minerva --help` 暴露 `gateway` 和 `config` 子命令 |
-| `managed-guard` | `HERMES_MANAGED=true hermes config set ...` 打印 NixOS 错误 |
+| `managed-guard` | `HERMES_MANAGED=true minerva config set ...` 打印 NixOS 错误 |
 | `bundled-skills` | skills 目录存在，包含 SKILL.md 文件，wrapper 中设置了 `HERMES_BUNDLED_SKILLS` |
 | `config-roundtrip` | 7 种合并场景：全新安装、Nix 覆盖、用户键保留、混合合并、MCP 累加合并、嵌套深度合并、幂等性 |
 
@@ -841,7 +841,7 @@ nix build .#checks.x86_64-linux.config-roundtrip    # 合并脚本保留用户�
 | 选项 | 类型 | 默认值 | 描述 |
 |---|---|---|---|
 | `extraArgs` | `listOf str` | `[]` | `minerva gateway` 的额外参数 |
-| `extraPackages` | `listOf package` | `[]` | Agent 可用的额外包。添加到 hermes 用户的每用户 profile，终端命令、skills 和 cron 任务均可见 |
+| `extraPackages` | `listOf package` | `[]` | Agent 可用的额外包。添加到 minerva 用户的每用户 profile，终端命令、skills 和 cron 任务均可见 |
 | `extraPlugins` | `listOf package` | `[]` | 以符号链接方式安装到 `$HERMES_HOME/plugins/` 的目录插件包。每个包必须包含 `plugin.yaml` |
 | `extraPythonPackages` | `listOf package` | `[]` | 添加到 PYTHONPATH 用于入口点插件发现的 Python 包。使用所选包的 `python.pkgs` 构建 |
 | `extraDependencyGroups` | `listOf str` | `[]` | 包含到封闭 venv 中的 pyproject.toml 可选 extras（例如 `["honcho"]`）。由 uv 解析——无冲突 |
@@ -957,7 +957,7 @@ sudo systemctl start hermes-agent
 
 ```bash
 # 原生模式
-sudo -u hermes cat /var/lib/hermes/.hermes/.env
+sudo -u minerva cat /var/lib/hermes/.hermes/.env
 
 # 容器模式
 docker exec hermes-agent cat /data/.hermes/.env
@@ -977,7 +977,7 @@ nix-store --query --roots $(docker exec hermes-agent readlink /data/current-pack
 | 容器意外重建 | `extraVolumes`、`extraOptions` 或 `image` 发生变更 | 预期行为——可写层重置。重新安装包或使用自定义镜像 |
 | `minerva --version` 显示旧版本 | 容器未重启 | `systemctl restart hermes-agent` |
 | `/var/lib/hermes` 权限拒绝 | 状态目录为 `0750 hermes:hermes` | 使用 `docker exec` 或 `sudo -u hermes` |
-| `nix-collect-garbage` 删除了 hermes | GC root 缺失 | 重启服务（preStart 会重新创建 GC root） |
+| `nix-collect-garbage` 删除了 minerva | GC root 缺失 | 重启服务（preStart 会重新创建 GC root） |
 | `no container with name or ID "hermes-agent"`（Podman） | Podman rootful 容器对普通用户不可见 | 为 podman 添加免密 sudo（参见[容器模式](#容器架构)章节） |
 | `unable to find user hermes` | 容器仍在启动中（入口点尚未创建用户） | 等待几秒后重试——CLI 会自动重试 |
 | 通过 `extraPackages` 添加的工具在终端中找不到 | 需要 `nixos-rebuild switch` 更新每用户 profile | 重建并重启：`nixos-rebuild switch && systemctl restart hermes-agent` |

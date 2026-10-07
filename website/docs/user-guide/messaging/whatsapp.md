@@ -52,7 +52,7 @@ Unlike older browser-driven bridges, the current Baileys-based bridge does **not
 ## Step 1: Run the Setup Wizard
 
 ```bash
-hermes whatsapp
+minerva whatsapp
 ```
 
 The wizard will:
@@ -149,7 +149,7 @@ Then start the gateway:
 ```bash
 hermes gateway              # Foreground
 hermes gateway install      # Install as a user service
-sudo hermes gateway install --system   # Linux only: boot-time system service
+sudo minerva gateway install --system   # Linux only: boot-time system service
 ```
 
 The gateway starts the WhatsApp bridge automatically using the saved session.
@@ -172,7 +172,7 @@ If the session breaks (phone reset, WhatsApp update, manually unlinked), you'll 
 errors in the gateway logs. To fix it:
 
 ```bash
-hermes whatsapp
+minerva whatsapp
 ```
 
 This generates a fresh QR code. Scan it again and the session is re-established. The gateway

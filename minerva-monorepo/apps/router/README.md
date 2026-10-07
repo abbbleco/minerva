@@ -73,6 +73,7 @@ grants ≠ gates.
 | `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` | live | tenant resolution + ledger (service key, never browser) |
 | `OPENROUTER_API_KEY` | live | upstream inference — **router only**, never the portal. The one-key pool; `OPENROUTER_API_KEYS` (comma-separated, wins when set) spreads load round-robin with same-request failover (429 → next key, each key at most once) |
 | `OPENROUTER_SITE_URL` / `OPENROUTER_APP_NAME` | – | upstream attribution headers |
+| `MINERVA_MODELS_TTL_SECONDS` | – | live `/v1/models` cache TTL, default `3600` (min `60`). `src/catalog.ts` is only the offline fallback |
 | `MINERVA_EMBEDDING_MODEL` | – | embeddings model override |
 | `MINERVA_ROUTER_STUB` | – | `1` = canned bytes + scriptable 402s, no DB/upstream. Must be `0`/unset in prod |
 | `MINERVA_CORS_ORIGINS` | – | comma-separated browser origins, default `https://portal.abbble.co.za,localhost:3000,localhost:3001`. Native clients ignore CORS |
@@ -80,8 +81,18 @@ grants ≠ gates.
 
 ```bash
 docker build -f apps/router/Dockerfile -t minrouter .  # context MUST be the monorepo root (workspace:* deps)
-pnpm --filter @minerva/router test    # contract suite: catalog, gates, pricing, CORS, upstream, vercel entry
+pnpm --filter @minerva/router test    # contract suite: catalog, live-models, gates, pricing, CORS, upstream, vercel entry
 ```
+
+## Model catalog
+
+`/v1/models` and chat resolution serve OpenRouter's **live** list (`src/live-models.ts`:
+hourly cache, stale-served while a background refresh runs), tier-filtered per key
+(free keys see only zero-price models). The pinned `src/catalog.ts` is the offline
+fallback and the stub router's deterministic list — not the live catalog. Chat billing
+uses the resolving entry's prices (live when resolved live), so rotations never rewrite
+ledger history. The engine default for the `minerva` provider is the free meta-router
+(`minerva/openrouter-free`), which is listed on every tier.
 
 ## Vercel deploy
 

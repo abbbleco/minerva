@@ -91,7 +91,7 @@ def _render_all(capsys) -> dict[str, str]:
     out["auth list"] = capsys.readouterr().out
     ctx = SimpleNamespace(config={}, nous_logged_in=False, nous_inference_present=False, nous_account_info=None)
     status_auth._render_auth_providers(ctx)
-    out["hermes status"] = capsys.readouterr().out
+    out["minerva status"] = capsys.readouterr().out
     portal_cli._cmd_status(SimpleNamespace())
     out["portal info"] = capsys.readouterr().out
     return out
@@ -166,7 +166,7 @@ def test_no_chat_copy_of_any_sign_in_state_leaks_a_terminal_verb_or_a_forbidden_
         "retry_after": 0.0,
     }
     forbidden = re.compile(r"claim|nous portal|anonymous|guest", re.IGNORECASE)
-    terminal_or_url = re.compile(r"hermes |https?://", re.IGNORECASE)
+    terminal_or_url = re.compile(r"minerva |https?://", re.IGNORECASE)
 
     for state_type in anon_auth.SignInState.__subclasses__():
         kwargs = {field.name: placeholders[field.name] for field in dataclasses.fields(state_type)}

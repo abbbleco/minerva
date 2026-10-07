@@ -30,7 +30,7 @@ name: uv.lock check
 #
 #     git fetch origin main
 #     git rebase origin/main      # or merge, whatever the repo prefers
-#     hermes pm lock                     # regenerates uv.lock against new pyproject.toml
+#     minerva pm lock                     # regenerates uv.lock against new pyproject.toml
 #     git add uv.lock
 #     git commit -m "chore: refresh uv.lock after rebase onto main"
 #     git push --force-with-lease # if you rebased
@@ -141,7 +141,7 @@ jobs:
           ```bash
           git fetch origin main
           git rebase origin/main   # or `git merge origin/main`
-          hermes pm lock                  # regenerate against new pyproject.toml
+          minerva pm lock                  # regenerate against new pyproject.toml
           git add uv.lock
           git commit -m "chore: refresh uv.lock after syncing with main"
           git push --force-with-lease  # drop --force-with-lease if you merged

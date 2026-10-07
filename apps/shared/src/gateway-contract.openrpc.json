@@ -39524,7 +39524,7 @@
     },
     {
       "name": "display.status",
-      "summary": "This profile's screen started or stopped (also for transitions made outside hermes serve).",
+      "summary": "This profile's screen started or stopped (also for transitions made outside minerva serve).",
       "params": [
         {
           "name": "payload",

@@ -712,7 +712,7 @@ def _render_entries(entries: List[PluginCatalogEntry], console) -> None:
     console.print()
     console.print(table)
     console.print()
-    console.print("[dim]Details:[/dim] hermes plugins info <name>    [dim]Install:[/dim] hermes plugins install <name>")
+    console.print("[dim]Details:[/dim] minerva plugins info <name>    [dim]Install:[/dim] minerva plugins install <name>")
 
 
 def cmd_search(term: str = "", *, json_output: bool = False) -> None:
@@ -746,7 +746,7 @@ def cmd_info(name: str) -> None:
     console.print()
     rows = [("Repo", entry.repo), ("Subdir", entry.subdir), ("Version", entry.version), ("Pinned SHA", entry.sha),
             ("Image", entry.image),
-            ("Maintainer", entry.maintainer), ("Requires", f"hermes {entry.requires_hermes}" if entry.requires_hermes else ""),
+            ("Maintainer", entry.maintainer), ("Requires", f"minerva {entry.requires_hermes}" if entry.requires_hermes else ""),
             ("Platforms", ", ".join(entry.platforms)), ("Docs", entry.docs_url)]
     for label, value in rows:
         if value:
@@ -761,7 +761,7 @@ def cmd_info(name: str) -> None:
         console.print(f"[red bold]✗ REMOVED from catalog: {removed.reason or 'no reason recorded'}"
                       f"{f' ({removed.date})' if removed.date else ''}[/red bold]")
         console.print()
-    console.print(f"[dim]Install:[/dim]     hermes plugins install {entry.name}")
+    console.print(f"[dim]Install:[/dim]     minerva plugins install {entry.name}")
     console.print()
 
 

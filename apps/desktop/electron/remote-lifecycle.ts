@@ -190,13 +190,13 @@ function expandRemotePath(p) {
   return shq(p)
 }
 
-// Resolve the remote hermes executable. An EXPLICIT path is honored strictly
+// Resolve the remote minerva executable. An EXPLICIT path is honored strictly
 // (throws a path-naming error if not executable — never silently falls back to a
 // different install). A BLANK path auto-detects: login-shell `command -v` (a
 // non-login `ssh host cmd` PATH misses user installs), then known install paths.
 async function locateHermes(ssh, remoteHermesPath) {
   const resolveLauncher = async (candidate: string) => {
-    // Return the candidate path directly. The hermes binary or wrapper script
+    // Return the candidate path directly. The minerva binary or wrapper script
     // is executable and handles argument forwarding (e.g. `exec <python> <script> "$@"`)
     // correctly on its own. Previously, this function followed `exec` wrappers and
     // returned only the python interpreter, which broke:
@@ -272,7 +272,7 @@ async function locateHermes(ssh, remoteHermesPath) {
 }
 
 // Probe the resolved binary's version string (first line of `<hermes> --version`,
-// e.g. "Minerva Agent v0.18.2 ..."), or '' on failure. Surfaces WHICH hermes a
+// e.g. "Minerva Agent v0.18.2 ..."), or '' on failure. Surfaces WHICH minerva a
 // connection uses, so a stale/unexpected install is visible.
 async function probeHermesVersion(ssh, hermesPath) {
   try {
@@ -1151,7 +1151,7 @@ async function terminateOwnedDashboardForUpdate(ssh, expected) {
 // starts a new session; macOS has no setsid, so fall back to nohup (HUP-immune;
 // fd-detachment is already handled by </dev/null + redirect + &).
 function buildSpawnCommand(hermesPath, profile, opts: any = {}) {
-  const hermes = expandRemotePath(hermesPath)
+  const minerva = expandRemotePath(hermesPath)
   // The roster/SSH bridge hands us the profile verbatim: a non-slug value must never
   // cross into the remote spawn argv, where the CLI used to str()-coerce it into a
   // phantom profiles/0/ directory (#88842).
@@ -1190,7 +1190,7 @@ function buildSpawnCommand(hermesPath, profile, opts: any = {}) {
 
   const dashCmd =
     `ulimit -n ${REMOTE_NOFILE_SOFT_LIMIT} 2>/dev/null || true; ` +
-    `exec env HERMES_DESKTOP=1${opts.guestOnboarding === true ? ' HERMES_GUEST_ONBOARDING=1' : ''} ${hermes} ${profileArgs}${subCmd}`
+    `exec env HERMES_DESKTOP=1${opts.guestOnboarding === true ? ' HERMES_GUEST_ONBOARDING=1' : ''} ${minerva} ${profileArgs}${subCmd}`
 
   const detachedShell: string = `eval "exec $1>&-"; ${dashCmd} </dev/null >> ${logPath} 2>&1 & echo $!`
   // The inner shell backgrounds Minerva and reports its PID; backgrounding the
@@ -1249,13 +1249,13 @@ function buildSpawnCommand(hermesPath, profile, opts: any = {}) {
 }
 
 async function remoteSupportsSshOwnership(ssh, hermesPath) {
-  const hermes = expandRemotePath(hermesPath)
+  const minerva = expandRemotePath(hermesPath)
 
   // The watchdog wraps the inner `serve --help` so the hung CLI is its direct
   // child and dies remotely instead of orphaning (#110478). The `$( (` space
   // is load-bearing: without it the shell parses `$((` as arithmetic expansion.
   const out = await ssh.exec(
-    `help="$( ${withRemoteTimeout(`${hermes} serve --help 2>&1`)} )"; ` +
+    `help="$( ${withRemoteTimeout(`${minerva} serve --help 2>&1`)} )"; ` +
       `printf '%s' "$help" | grep -q ssh-session-token-file && ` +
       `printf '%s' "$help" | grep -q ssh-owner-nonce && echo YES || echo NO`
   )
@@ -1549,11 +1549,11 @@ async function connect(deps) {
   const hermesHome = await probeRemoteHermesHome(ssh)
   await assertRemoteInstallUpdateClear(ssh, hermesHome)
   const hermesPath = await locateHermes(ssh, remoteHermesPath)
-  log(`located hermes at ${hermesPath}`)
+  log(`located minerva at ${hermesPath}`)
   const hermesVersion = await probeHermesVersion(ssh, hermesPath)
 
   if (hermesVersion) {
-    log(`remote hermes version: ${hermesVersion}`)
+    log(`remote minerva version: ${hermesVersion}`)
   }
 
   const reuseToken = deps.reuseToken || ''

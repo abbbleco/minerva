@@ -190,7 +190,7 @@ def _update_log_line() -> str:
     """The update.log run banner hermes_cli.main_dashboard writes on every update."""
     import datetime as dt
 
-    return f"\n=== hermes update started {dt.datetime.now().isoformat(timespec='seconds')} ===\n".lstrip()
+    return f"\n=== minerva update started {dt.datetime.now().isoformat(timespec='seconds')} ===\n".lstrip()
 
 
 def _handoff_log_line() -> str:

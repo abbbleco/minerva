@@ -29,8 +29,8 @@ test('Windows path prefix match is ordinal case-insensitive', () => {
 })
 
 test('excludes external venv holders that are not the hindsight daemon', () => {
-  // a user terminal running the hermes CLI from the venv — must NOT be killed
-  assert.equal(isHermesOwnedVenvDaemon('C:\\Hermes\\venv\\Scripts\\hermes.exe', 'hermes chat -q "hi"', SCRIPTS), false)
+  // a user terminal running the minerva CLI from the venv — must NOT be killed
+  assert.equal(isHermesOwnedVenvDaemon('C:\\Hermes\\venv\\Scripts\\hermes.exe', 'minerva chat -q "hi"', SCRIPTS), false)
   // an unrelated python script using the venv interpreter
   assert.equal(
     isHermesOwnedVenvDaemon('C:\\Hermes\\venv\\Scripts\\python.exe', 'python C:\\tools\\import.py', SCRIPTS),
@@ -80,7 +80,7 @@ test('matches the minerva.exe rebrand alias identically', () => {
   )
 })
 
-test('matches the dashboard scheduled task (python -m hermes_cli / -m hermes)', () => {
+test('matches the dashboard scheduled task (python -m hermes_cli / -m minerva)', () => {
   assert.equal(
     isExternalVenvHolder(
       'C:\\Hermes\\venv\\Scripts\\python.exe',
@@ -90,7 +90,7 @@ test('matches the dashboard scheduled task (python -m hermes_cli / -m hermes)', 
     true
   )
   assert.equal(
-    isExternalVenvHolder('C:\\Hermes\\venv\\Scripts\\pythonw.exe', 'pythonw.exe -m hermes serve', SCRIPTS),
+    isExternalVenvHolder('C:\\Hermes\\venv\\Scripts\\pythonw.exe', 'pythonw.exe -m minerva serve', SCRIPTS),
     true
   )
 })
@@ -108,17 +108,17 @@ test('never matches an unrelated process that merely borrows the venv interprete
   )
 })
 
-test('never matches a process outside the venv, even with hermes in the cmdline', () => {
+test('never matches a process outside the venv, even with minerva in the cmdline', () => {
   // an editor / shell whose command line mentions the install root (#62445 regression guard)
   assert.equal(
     isExternalVenvHolder('C:\\Windows\\System32\\cmd.exe', 'cmd /c cd C:\\Hermes\\venv\\Scripts && dir', SCRIPTS),
     false
   )
-  assert.equal(isExternalVenvHolder('C:\\Other\\hermes.exe', 'hermes gateway run', SCRIPTS), false)
+  assert.equal(isExternalVenvHolder('C:\\Other\\hermes.exe', 'minerva gateway run', SCRIPTS), false)
 })
 
 test('sibling-dir and boundary safety for the external selector', () => {
-  assert.equal(isExternalVenvHolder('C:\\Hermes\\venv\\ScriptsX\\hermes.exe', 'hermes gateway run', SCRIPTS), false)
-  assert.equal(isExternalVenvHolder(null, 'hermes gateway run', SCRIPTS), false)
+  assert.equal(isExternalVenvHolder('C:\\Hermes\\venv\\ScriptsX\\hermes.exe', 'minerva gateway run', SCRIPTS), false)
+  assert.equal(isExternalVenvHolder(null, 'minerva gateway run', SCRIPTS), false)
   assert.equal(isExternalVenvHolder('C:\\Hermes\\venv\\Scripts\\hermes.exe', null, SCRIPTS), false)
 })

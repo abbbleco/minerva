@@ -17,7 +17,7 @@ rm apps/desktop/e2e/probe-dm-delivery.spec.ts
 
 Use the current seat's actual Xauthority path and an existing runtime venv.
 Artifacts default to `/tmp/botmode-dm-review/native` (override with `BOT_DM_EVIDENCE`); sandbox path is printed. The
-fixture's generated hermes shim pins every child to this checkout, not an installed launcher.
+fixture's generated minerva shim pins every child to this checkout, not an installed launcher.
 
 ## Verified results
 

@@ -173,7 +173,7 @@ def _print_rows_text(rows: List[_Row]) -> None:
     for row in rows:
         print(f"  {_format_row(row)}")
     print()
-    _say("  Install: hermes mcp install <name>    Picker: hermes mcp", Colors.DIM)
+    _say("  Install: minerva mcp install <name>    Picker: minerva mcp", Colors.DIM)
     # Manifest-version warnings: the user's Minerva is too old to install everything listed.
     future = [d for d in catalog_diagnostics() if d[1] == "future_manifest"]
     if future:

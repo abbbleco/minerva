@@ -246,15 +246,15 @@ cmd_pre() {
   [ -d "$HERMES_HOME" ] || die "no HERMES_HOME at $HERMES_HOME"
   [ -d "$INSTALL_DIR/.git" ] || die "no git checkout at $INSTALL_DIR — this tool covers source installs"
   local hermes_exe
-  hermes_exe="$(resolve_hermes_exe)" || die "no hermes executable found in $INSTALL_DIR (venv/bin, .hermes/bin) or $HERMES_HOME/bin"
+  hermes_exe="$(resolve_hermes_exe)" || die "no minerva executable found in $INSTALL_DIR (venv/bin, .hermes/bin) or $HERMES_HOME/bin"
 
   step "before we start (nothing here is a pass/fail, just read it)"
   if command -v pgrep >/dev/null 2>&1; then
     local procs
-    procs="$(pgrep -fl hermes 2>/dev/null | grep -v 'hermes-update-rehearsal' || true)"
+    procs="$(pgrep -fl minerva 2>/dev/null | grep -v 'hermes-update-rehearsal' || true)"
     if [ -n "$procs" ]; then
       warn "Minerva looks like it is running — close the desktop app and the gateway"
-      warn "before you run 'hermes update', or the dependency sync may fail:"
+      warn "before you run 'minerva update', or the dependency sync may fail:"
       printf '    %s\n' "$procs"
     else
       ok "no Minerva processes running"
@@ -284,10 +284,10 @@ cmd_pre() {
   out="$(HERMES_HOME="$HERMES_HOME" "$hermes_exe" backup -o "$SNAP/hermes-backup.zip" 2>&1)" || code=$?
   if [ "$code" = 1 ] && [ -f "$SNAP/hermes-backup.zip" ]; then
     printf '    %s\n' "$out"
-    warn "hermes backup finished INCOMPLETE ($((SECONDS - started))s): the files listed above are not in $SNAP/hermes-backup.zip"
+    warn "minerva backup finished INCOMPLETE ($((SECONDS - started))s): the files listed above are not in $SNAP/hermes-backup.zip"
   elif [ "$code" != 0 ] || [ ! -f "$SNAP/hermes-backup.zip" ]; then
     printf '    %s\n' "$out"
-    die "hermes backup failed (exit $code) — nothing else was done"
+    die "minerva backup failed (exit $code) — nothing else was done"
   else
     ok "hermes-backup.zip ($(du -h "$SNAP/hermes-backup.zip" | cut -f1), $((SECONDS - started))s)"
   fi
@@ -462,7 +462,7 @@ cmd_post() {
 
   step "done"
   say "Your HERMES_HOME and the desktop app's data are back exactly as they were."
-  say "Open the desktop app once and run 'hermes doctor' to confirm."
+  say "Open the desktop app once and run 'minerva doctor' to confirm."
   say "Nothing was judged or changed by this script; the backup at $SNAP"
   say "(including hermes-backup.zip) is yours to keep or delete."
 }

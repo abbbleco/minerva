@@ -112,15 +112,15 @@ Create the work:
 
 ```bash
 for lang in Spanish French German; do
-    hermes kanban create "Translate homepage to $lang" \
+    minerva kanban create "Translate homepage to $lang" \
         --assignee translator --tenant content-ops
 done
 for i in 1 2 3 4 5; do
-    hermes kanban create "Transcribe Q3 customer call #$i" \
+    minerva kanban create "Transcribe Q3 customer call #$i" \
         --assignee transcriber --tenant content-ops
 done
 for sku in 1001 1002 1003 1004; do
-    hermes kanban create "Generate product description: SKU-$sku" \
+    minerva kanban create "Generate product description: SKU-$sku" \
         --assignee copywriter --tenant content-ops
 done
 ```

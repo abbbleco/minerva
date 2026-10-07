@@ -1,6 +1,6 @@
 # google_meet plugin
 
-Let the hermes agent join a Google Meet call, transcribe it, optionally speak
+Let the minerva agent join a Google Meet call, transcribe it, optionally speak
 in it, and do the followup work afterwards.
 
 ## What ships
@@ -14,7 +14,7 @@ in it, and do the followup work afterwards.
 ## Architecture
 
 ```
-┌─ gateway (Linux box, where hermes runs) ────────────────────────────┐
+┌─ gateway (Linux box, where minerva runs) ────────────────────────────┐
 │                                                                      │
 │   agent → meet_join(url, mode='realtime', node='my-mac')             │
 │         │                                                            │
@@ -92,7 +92,7 @@ echo 'OPENAI_API_KEY=sk-...' >> ~/.hermes/.env
 hermes meet join https://meet.google.com/abc-defg-hij --mode realtime
 ```
 
-On macOS, hermes will **not** switch your system audio input automatically — the
+On macOS, minerva will **not** switch your system audio input automatically — the
 user has to do it. This is deliberate: switching default input on a whim would
 be a surprising side effect.
 

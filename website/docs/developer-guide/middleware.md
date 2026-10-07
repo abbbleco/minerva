@@ -145,8 +145,8 @@ the working tree:
 export HERMES_HOME="$HOME/hermes-middleware-test"
 export HERMES_RUNTIME_DIR="$HERMES_HOME/tools"
 source ./activate
-python hermes plugins enable <plugin-name>
-python hermes chat --query 'Reply exactly ok'
+python minerva plugins enable <plugin-name>
+python minerva chat --query 'Reply exactly ok'
 ```
 
 ## Generic Plugin Examples

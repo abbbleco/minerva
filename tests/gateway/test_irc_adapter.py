@@ -171,7 +171,7 @@ class TestIRCAdapterMessageParsing:
         adapter._dispatch_message = capture_dispatch
         adapter._message_handler = AsyncMock()
 
-        await adapter._handle_line(":user!u@host PRIVMSG hermes :\x01ACTION waves\x01")
+        await adapter._handle_line(":user!u@host PRIVMSG minerva :\x01ACTION waves\x01")
         assert len(dispatched) == 1
         assert dispatched[0]["text"] == "* user waves"
 

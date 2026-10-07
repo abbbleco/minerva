@@ -14,7 +14,7 @@ description: "使用 `minerva send` 将任意 shell 脚本、cron 任务、CI ho
 - CI/CD 通知（部署完成、测试失败）
 - 需要将结果推送给你的 cron 脚本
 - 从终端发送一次性消息
-- 将任意工具的输出管道到任意平台（`make | hermes send --to slack:#builds`）
+- 将任意工具的输出管道到任意平台（`make | minerva send --to slack:#builds`）
 
 该命令复用 `minerva gateway` 已有的凭据和平台适配器，无需维护第二套配置。
 
@@ -27,7 +27,7 @@ description: "使用 `minerva send` 将任意 shell 脚本、cron 任务、CI ho
 hermes send --to telegram "deploy finished"
 
 # 将任意命令的 stdout 通过管道传入
-echo "RAM 92%" | hermes send --to telegram:-1001234567890
+echo "RAM 92%" | minerva send --to telegram:-1001234567890
 
 # 发送文件
 hermes send --to discord:#ops --file /tmp/report.md
@@ -92,7 +92,7 @@ Minerva 附带适配器的所有平台均可作为目标：
 
 1. **位置参数** — `minerva send --to telegram "hi"`
 2. **`--file PATH`** — `minerva send --to telegram --file msg.txt`
-3. **管道 stdin** — `echo hi | hermes send --to telegram`
+3. **管道 stdin** — `echo hi | minerva send --to telegram`
 
 当 stdin 是 TTY（无管道）时，Minerva **不会**等待输入——你会收到明确的用法错误提示。这可以防止脚本在意外省略消息体时挂起。
 
@@ -108,7 +108,7 @@ Minerva 附带适配器的所有平台均可作为目标：
 #!/usr/bin/env bash
 ram_pct=$(free | awk '/^Mem:/ {printf "%d", $3 * 100 / $2}')
 if [ "$ram_pct" -ge 85 ]; then
-  hermes send --to telegram --subject "⚠ MEMORY WARNING" \
+  minerva send --to telegram --subject "⚠ MEMORY WARNING" \
     "RAM ${ram_pct}% on $(hostname)"
 fi
 ```
@@ -124,9 +124,9 @@ fi
 ```bash
 # 在 .github/workflows/deploy.yml 或任意 CI 脚本中
 if ./scripts/deploy.sh; then
-  hermes send --to slack:#deploys "✅ ${CI_COMMIT_SHA:0:7} deployed"
+  minerva send --to slack:#deploys "✅ ${CI_COMMIT_SHA:0:7} deployed"
 else
-  tail -n 100 deploy.log | hermes send \
+  tail -n 100 deploy.log | minerva send \
     --to slack:#deploys --subject "❌ deploy failed"
   exit 1
 fi
@@ -145,8 +145,8 @@ fi
 
 ```bash
 ./train.py --epochs 200 && \
-  hermes send --to telegram "training done" || \
-  hermes send --to telegram "training failed (exit $?)"
+  minerva send --to telegram "training done" || \
+  minerva send --to telegram "training failed (exit $?)"
 ```
 
 ### 脚本中使用 `--json` 与 `--quiet`

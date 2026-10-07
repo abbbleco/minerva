@@ -224,7 +224,7 @@ metadata:
 
 4. **手动配置：** 用户也可直接设置值：
    ```bash
-   hermes config set skills.config.myplugin.path ~/my-data
+   minerva config set skills.config.myplugin.path ~/my-data
    ```
 
 :::tip 如何选择

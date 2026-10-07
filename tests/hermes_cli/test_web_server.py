@@ -939,7 +939,7 @@ CONFIG_SCHEMA = ProviderConfigSchema(
         data = resp.json()
         pip_rows = [row for row in data["results"] if row["kind"] == "pip"]
         assert pip_rows and pip_rows[0]["status"] == "installed"
-        assert pip_rows[0]["command"] == "hermes pm install"
+        assert pip_rows[0]["command"] == "minerva pm install"
         assert prepared == ["flatprov"]
 
 
@@ -1383,7 +1383,7 @@ CONFIG_SCHEMA = ProviderConfigSchema(
         def fail_spawn(*_args, **_kwargs):
             nonlocal spawned
             spawned = True
-            raise AssertionError("docker update guard should not spawn hermes update")
+            raise AssertionError("docker update guard should not spawn minerva update")
 
         # Bypass the managed-externally gate so we reach the docker install check.
         monkeypatch.setattr(_web_server_files, "_dashboard_local_update_managed_externally", lambda: False)
@@ -1421,7 +1421,7 @@ CONFIG_SCHEMA = ProviderConfigSchema(
         def fail_spawn(*_args, **_kwargs):
             nonlocal spawned
             spawned = True
-            raise AssertionError("APT-managed update guard should not spawn hermes update")
+            raise AssertionError("APT-managed update guard should not spawn minerva update")
 
         monkeypatch.setattr(_web_server_files, "_dashboard_local_update_managed_externally", lambda: False)
         # The shared admission gate (#91277 Phase 3) resolves the install
@@ -1461,7 +1461,7 @@ CONFIG_SCHEMA = ProviderConfigSchema(
             encoding="utf-8",
         )
         (tmp_path / "update.log").write_text(
-            "=== hermes update started 2026-08-17T11:19:35 ===\n"
+            "=== minerva update started 2026-08-17T11:19:35 ===\n"
             "✓ Update complete!\n"
             f"=== hermes-update completed {action_id} ===\n",
             encoding="utf-8",
@@ -4872,7 +4872,7 @@ class TestDashboardPluginManifestExtensions:
     def test_user_plugins_found_under_profile_scoped_process(self, tmp_path, monkeypatch):
         """Regression #87197: a profile-scoped process (``--profile <name>``
         sets HERMES_HOME=<root>/profiles/<name>) must still discover user
-        plugins installed in the hermes root's plugins/ directory."""
+        plugins installed in the minerva root's plugins/ directory."""
         root = tmp_path / "hermes-root"
         profile_home = root / "profiles" / "presale"
         profile_home.mkdir(parents=True)

@@ -320,7 +320,7 @@ Plugins (1):
 如果你的插件没有出现，或出现了但未加载——设置 `HERMES_PLUGINS_DEBUG=1` 可在 stderr 获取详细的发现日志：
 
 ```bash
-HERMES_PLUGINS_DEBUG=1 hermes plugins list
+HERMES_PLUGINS_DEBUG=1 minerva plugins list
 ```
 
 你将看到每个插件来源（内置、用户、项目、entry-points）的以下信息：
@@ -653,17 +653,17 @@ def register(ctx):
 
 ```python
 def _my_command(args):
-    """Handler for hermes my-plugin <subcommand>."""
+    """Handler for minerva my-plugin <subcommand>."""
     sub = getattr(args, "my_command", None)
     if sub == "status":
         print("All good!")
     elif sub == "config":
         print("Current config: ...")
     else:
-        print("Usage: hermes my-plugin <status|config>")
+        print("Usage: minerva my-plugin <status|config>")
 
 def _setup_argparse(subparser):
-    """Build the argparse tree for hermes my-plugin."""
+    """Build the argparse tree for minerva my-plugin."""
     subs = subparser.add_subparsers(dest="my_command")
     subs.add_parser("status", help="Show plugin status")
     subs.add_parser("config", help="Show plugin config")

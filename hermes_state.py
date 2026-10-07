@@ -465,7 +465,7 @@ class SessionDB(
     )
 
     # ── Write-contention tuning ──
-    # SQLite's deterministic busy handler convoys under many hermes processes: keep its
+    # SQLite's deterministic busy handler convoys under many minerva processes: keep its
     # timeout short (1s) and retry with random jitter. Patience is TIME-based (a sibling
     # legitimately holds the lock for seconds: checkpoint at close, VACUUM, recovery, FTS
     # optimize); attempt-counted budgets destroyed turns on a healthy store. Transcript

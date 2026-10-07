@@ -20,7 +20,7 @@ import { isLegacyDelegatedRoutine, normalizedProfileName, routineInputError, rou
 /** Run the delegation command under a `hermes` stub that prints its argv, so
  *  the assertion is what the SHELL passed — not what the string looks like. */
 function argvOf(prompt: string): string[] {
-  const command = prompt.slice(prompt.indexOf('hermes '), prompt.lastIndexOf('\n\nIf the command'))
+  const command = prompt.slice(prompt.indexOf('minerva '), prompt.lastIndexOf('\n\nIf the command'))
   const result = spawnSync('sh', ['-c', `hermes() { printf '%s\\037' "$@"; }\n${command}`], { encoding: 'utf8' })
 
   expect(result.status, result.stderr).toBe(0)

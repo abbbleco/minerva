@@ -61,4 +61,4 @@ post_install: |
   (docs search, instruction pseudo-tools, the raw-SQL query hatch, cloud
   credential minting, and team-membership tools); everything else stays
   enabled. Review or change the selection any time with:
-    hermes mcp configure betterstack
+    minerva mcp configure betterstack

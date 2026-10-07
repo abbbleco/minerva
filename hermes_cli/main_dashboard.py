@@ -36,7 +36,7 @@ def _find_stale_dashboard_pids(*, exclude_pids: set[int] | None = None,
         _scan_dashboard_processes,
     )
     pids = [pid for pid, _cmd in _scan_dashboard_processes(exclude_pids=exclude_pids)]
-    # The scan also selects the caller's own wrapper shell (``bash -c 'hermes dashboard --stop'``);
+    # The scan also selects the caller's own wrapper shell (``bash -c 'minerva dashboard --stop'``);
     # killing it takes down the invoking terminal.
     ancestors = _caller_ancestor_pids()
     pids = [pid for pid in pids if not _is_caller_wrapper_shell(pid, ancestors)]
@@ -525,7 +525,7 @@ def _install_hangup_protection(gateway_mode: bool = False):
         import datetime as _dt
 
         stage = "continued on the pulled code" if os.environ.get("HERMES_UPDATE_POST_SWAP") == "1" else "started"
-        log_file.write(f"\n=== hermes update {stage} {_dt.datetime.now().isoformat(timespec='seconds')} ===\n")
+        log_file.write(f"\n=== minerva update {stage} {_dt.datetime.now().isoformat(timespec='seconds')} ===\n")
 
         state["log_file"] = log_file
         sys.stdout = _UpdateOutputStream(state["prev_stdout"], log_file)
@@ -580,10 +580,10 @@ def _report_dashboard_status() -> int:
         live.append((pid, command, mode))
 
     if not live:
-        print("No hermes dashboard or serve processes running.")
+        print("No minerva dashboard or serve processes running.")
         return 0
 
-    print(f"{len(live)} hermes dashboard/serve process(es) running:")
+    print(f"{len(live)} minerva dashboard/serve process(es) running:")
     for pid, command, mode in live:
         print(f"    PID {pid} [{mode}]: {command}")
     return len(live)
@@ -651,7 +651,7 @@ def _maybe_setup_dashboard_auth_interactively(args) -> None:
         print(
             "  Run this on the host where the dashboard lives, then start "
             "the dashboard again:\n"
-            "    hermes dashboard register\n"
+            "    minerva dashboard register\n"
             "  It provisions a ABBBLE Portal OAuth client and writes "
             "HERMES_DASHBOARD_OAUTH_CLIENT_ID into ~/.hermes/.env for you.\n"
             "  Docs: https://hermes-agent.nousresearch.com/docs/"

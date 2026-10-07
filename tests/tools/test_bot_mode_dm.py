@@ -310,7 +310,7 @@ def test_local_delivery_command_and_ack(tmp_path, monkeypatch):
 
     # attribution prefix applied server-side; body verbatim inside the file
     content = Path(dm_file).read_text(encoding="utf-8")
-    assert content.startswith("Message from 🤖 hermes (@hermes): ")
+    assert content.startswith("Message from 🤖 minerva (@hermes): ")
     assert '$(and this is not shell)' in content
 
 
@@ -604,7 +604,7 @@ def test_live_dm_admitted_before_waiter_failure(tmp_path, monkeypatch):
     record = live.read_delivery_result(target, result["delivery_id"])
     assert record is not None
     assert record["owner"] == owner
-    assert record["message"] == "Message from 🤖 hermes (@hermes): hello"
+    assert record["message"] == "Message from 🤖 minerva (@hermes): hello"
     assert record["author"] == {"id": "bot:default", "name": "hermes", "is_bot": True}
     assert "notification_error" in result
 

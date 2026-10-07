@@ -32,7 +32,7 @@ if TYPE_CHECKING:  # annotation-only; the runtime import would be a cycle
 # Log-record parity with the origin module (caplog tests pin "hermes_cli.auth").
 logger = logging.getLogger("hermes_cli.auth")
 
-_UNUSABLE_JWT_RELOGIN = "Re-authenticate with: hermes auth add nous"
+_UNUSABLE_JWT_RELOGIN = "Re-authenticate with: minerva auth add nous"
 
 
 def _unusable_invoke_jwt_error(reason: str, *, no_refresh_token: bool = False) -> AuthError:
@@ -657,7 +657,7 @@ def _refresh_access_token(
             "Nous refresh tokens are single-use — only Minerva may call the "
             "refresh endpoint. For health checks, use `minerva auth status` "
             "instead.\n"
-            "Re-authenticate with: hermes auth add nous")
+            "Re-authenticate with: minerva auth add nous")
         relogin = True
     raise _nous_err(description, code, relogin=relogin)
 

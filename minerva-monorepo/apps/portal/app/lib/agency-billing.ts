@@ -112,9 +112,21 @@ export async function resolveAgencyContext(request: Request): Promise<AgencyCont
     (s) => s.status === "active" && (!s.current_period_end || new Date(s.current_period_end).getTime() > now)
   );
   const paidPlans = new Set(["plus", "super", "ultra", "agency"]);
-  const plan = active && paidPlans.has(active.plan) ? active.plan : "free";
-  const paid = plan !== "free";
   const pastDue = subscriptions.find((s) => s.status === "past_due");
+  // Canceled stops future charges, not current access: a paid period already
+  // bought still serves to its end (mirrors the router tenant rule).
+  const canceled = subscriptions.find(
+    (s) => s.status === "canceled" && s.current_period_end && new Date(s.current_period_end).getTime() > now
+  );
+  const plan =
+    active && paidPlans.has(active.plan)
+      ? active.plan
+      : pastDue && paidPlans.has(pastDue.plan)
+        ? pastDue.plan
+        : canceled && paidPlans.has(canceled.plan)
+          ? canceled.plan
+          : "free";
+  const paid = plan !== "free";
   const state = active && paid ? "active" : pastDue ? "past_due" : "free";
 
   const monthStart = new Date(Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth(), 1)).toISOString();

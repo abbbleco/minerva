@@ -226,10 +226,10 @@ def my_command(args):
     elif sub == "config":
         print("Showing config...")
     else:
-        print("Usage: hermes my-provider <status|config>")
+        print("Usage: minerva my-provider <status|config>")
 
 def register_cli(subparser) -> None:
-    """构建 hermes my-provider 的 argparse 树。
+    """构建 minerva my-provider 的 argparse 树。
 
     在 argparse 初始化时由 discover_plugin_cli_commands() 调用。
     """

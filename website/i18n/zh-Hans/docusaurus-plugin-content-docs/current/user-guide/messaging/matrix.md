@@ -249,7 +249,7 @@ E2EE 需要带有加密扩展的 `mautrix` 库以及 `libolm` C 库：
 # 安装带 E2EE 支持的 mautrix
 python -c "import pm; pm.sync_venv(['matrix'], explicit=True)"
 
-# 或通过 hermes extras 安装
+# 或通过 minerva extras 安装
 cd ~/.hermes/hermes-agent && python -c "import pm; pm.sync_venv(['matrix'], explicit=True)"
 ```
 
@@ -493,7 +493,7 @@ cd ~/.hermes/hermes-agent && python -c "import pm; pm.sync_venv(['matrix'], expl
 5. **重启 gateway**：
 
    ```bash
-   hermes gateway run
+   minerva gateway run
    ```
 
    如果设置了 `MATRIX_RECOVERY_KEY`，你应在日志中看到 `Matrix: cross-signing verified via recovery key`。
@@ -518,14 +518,14 @@ Matrix E2EE 需要 `libolm`，而该库无法在 macOS ARM64（Apple Silicon）�
 
 ```
 macOS（主机）：
-  └─ hermes gateway
+  └─ minerva gateway
        ├─ api_server 适配器 ← 监听 0.0.0.0:8642
        ├─ AIAgent ← 单一数据源
        ├─ 会话、记忆、技能
        └─ 本地文件访问（Obsidian、项目等）
 
 Linux 虚拟机（Docker）：
-  └─ hermes gateway（代理模式）
+  └─ minerva gateway（代理模式）
        ├─ Matrix 适配器 ← E2EE 解密/加密
        └─ HTTP 转发 → macOS:8642/v1/chat/completions
            （无 LLM API 密钥，无 agent，无推理）
@@ -594,7 +594,7 @@ services:
 
 1. 先启动主机 gateway：
    ```bash
-   hermes gateway
+   minerva gateway
    ```
 
 2. 启动 Docker 容器：

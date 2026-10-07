@@ -437,7 +437,7 @@ before starting another Python process.
 2. Relock:
 
    ```bash
-   hermes pm lock
+   minerva pm lock
    ```
 
    This re-resolves `uv.lock` from `pyproject.toml` with the same settings CI

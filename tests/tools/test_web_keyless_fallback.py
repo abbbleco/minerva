@@ -433,7 +433,7 @@ class TestResolutionOrder:
 
 
 # ---------------------------------------------------------------------------
-# hermes tools picker: tier variant rows
+# minerva tools picker: tier variant rows
 # ---------------------------------------------------------------------------
 
 

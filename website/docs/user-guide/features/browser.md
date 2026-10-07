@@ -694,7 +694,7 @@ Click @e5 to press the "Sign In" button
 Type text into an input field. Clears the field first, then types the new text.
 
 ```
-Type "hermes agent" into the search field @e3
+Type "minerva agent" into the search field @e3
 ```
 
 ### `browser_scroll`

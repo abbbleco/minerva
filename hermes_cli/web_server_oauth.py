@@ -145,24 +145,24 @@ _OAUTH_PROVIDER_CATALOG: tuple[Dict[str, Any], ...] = (
     # ABBBLE Portal first: the canonical sign-in. Device flow mints a per-device
     # router key into MINERVA_ROUTER_KEY (see _abbble_poller).
     {"id": "abbble", "name": "ABBBLE Portal", "flow": "device_code",
-     "cli_command": "hermes config set MINERVA_ROUTER_KEY <paste-key-from-portal>",
+     "cli_command": "minerva config set MINERVA_ROUTER_KEY <paste-key-from-portal>",
      "docs_url": "https://portal.abbble.co.za", "status_fn": None},
     # status_fn None → dispatched via auth.get_<provider>_auth_status.
-    {"id": "nous", "name": "ABBBLE Portal", "flow": "device_code", "cli_command": "hermes auth add nous",
+    {"id": "nous", "name": "ABBBLE Portal", "flow": "device_code", "cli_command": "minerva auth add nous",
      "docs_url": "https://portal.nousresearch.com", "status_fn": None},
     {"id": "openai-codex", "name": "ChatGPT or Codex Subscription", "flow": "device_code",
-     "cli_command": "hermes auth add openai-codex", "docs_url": "https://platform.openai.com/docs",
+     "cli_command": "minerva auth add openai-codex", "docs_url": "https://platform.openai.com/docs",
      "status_fn": None},
     {"id": "qwen-oauth", "name": "Qwen (via Qwen CLI)", "flow": "external",
-     "cli_command": "hermes auth add qwen-oauth", "docs_url": "https://github.com/QwenLM/qwen-code",
+     "cli_command": "minerva auth add qwen-oauth", "docs_url": "https://github.com/QwenLM/qwen-code",
      "status_fn": None},
     # Structurally device-code (verification URI + user code + token polling) with a PKCE
     # code-binding extension that doesn't change the operator UX.
     {"id": "minimax-oauth", "name": "MiniMax (OAuth)", "flow": "device_code",
-     "cli_command": "hermes auth add minimax-oauth", "docs_url": "https://www.minimax.io", "status_fn": None},
+     "cli_command": "minerva auth add minimax-oauth", "docs_url": "https://www.minimax.io", "status_fn": None},
     # Device code works in remote shells/containers without a reachable 127.0.0.1 callback.
     {"id": "xai-oauth", "name": "xAI Grok OAuth (SuperGrok / Premium+)", "flow": "device_code",
-     "cli_command": "hermes auth add xai-oauth",
+     "cli_command": "minerva auth add xai-oauth",
      "docs_url": "https://hermes-agent.nousresearch.com/docs/guides/xai-grok-oauth", "status_fn": None},
     # `copilot login` is the non-interactive subcommand; `copilot /login` is not valid
     # (slash-commands only exist inside an interactive session).
@@ -172,7 +172,7 @@ _OAUTH_PROVIDER_CATALOG: tuple[Dict[str, Any], ...] = (
     # in-dashboard Connect button would let a scriptable HTTP endpoint mint Claude Pro/Max
     # subscription tokens outside Anthropic's own client, against its OAuth usage policies.
     # Login works via the terminal (`minerva auth add anthropic`) or a plain API key.
-    {"id": "anthropic", "name": "Anthropic Account", "flow": "external", "cli_command": "hermes auth add anthropic",
+    {"id": "anthropic", "name": "Anthropic Account", "flow": "external", "cli_command": "minerva auth add anthropic",
      "docs_url": "https://docs.claude.com/en/api/getting-started", "status_fn": _anthropic_oauth_status},
     {"id": "claude-code", "name": "Anthropic OAuth: Required Extra Usage Credits to Use Subscription",
      "flow": "external", "cli_command": "claude setup-token",

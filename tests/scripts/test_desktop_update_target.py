@@ -105,7 +105,7 @@ def _run_handoff(tmp_path, target, *, windows=False, inherited_home=True, modern
             bin_dir = install / "venv" / "bin"
             bin_dir.mkdir(parents=True)
             (bin_dir / "python3").symlink_to(sys.executable)
-            hermes = bin_dir / "hermes"
+            minerva = bin_dir / "hermes"
             hermes.write_text(
                 f'#!/usr/bin/env bash\nexec {shlex.quote(sys.executable)} -m hermes_cli.main "$@"\n',
                 encoding="utf-8",

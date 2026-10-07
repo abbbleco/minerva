@@ -106,7 +106,7 @@ class ConnectorExecuteCall(_Wire):
     connector: str
     tool: str
     arguments: dict[str, Any] = Field(default_factory=dict)
-    # On the wire for the multi-account switch; never sent by hermes today, because the vendor answers
+    # On the wire for the multi-account switch; never sent by minerva today, because the vendor answers
     # 400 to any value while multi-account is off (contract probe F2).
     account: Optional[str] = None
 

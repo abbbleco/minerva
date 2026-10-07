@@ -2187,7 +2187,7 @@ const rendererReloadTimesRef: { current: number[] } = { current: [] }
 // the renderer's "Reload and retry" path or by quitting the app.
 let bootstrapFailure = null
 // Latched non-bootstrap backend spawn failure — stops getConnection() from
-// respawning hermes serve backend children in a tight loop while boot is broken.
+// respawning minerva serve backend children in a tight loop while boot is broken.
 let backendStartFailure = null
 // Latched CONFIRMED remote reauth failure. Remote failures deliberately do not
 // latch via backendStartFailure (they're usually transient and must stay
@@ -3621,7 +3621,7 @@ function recentHermesLog() {
   return hermesLog.slice(-20).join('\n')
 }
 
-// ─── Self-update (git-pull against the running backend's hermes root) ──────
+// ─── Self-update (git-pull against the running backend's minerva root) ──────
 
 function readDesktopUpdateConfig(): { branch: string; branchExplicit: boolean } {
   try {
@@ -5162,7 +5162,7 @@ function resolveRendererIndexWithMissing(): { index: string; missing: string[] }
     rememberLog(
       `[renderer] every renderer bundle is incomplete (${present.join(', ')}). ` +
         `The last update replaced the app while its files were locked. ` +
-        `Repair with: hermes desktop --force-build`
+        `Repair with: minerva desktop --force-build`
     )
 
     // present[0]'s own list, captured on the first loop iteration — never the
@@ -5176,7 +5176,7 @@ function resolveRendererIndexWithMissing(): { index: string; missing: string[] }
   rememberLog(
     `[renderer] index.html not found — the desktop app was packaged without a ` +
       `renderer bundle. Tried: ${candidates.join(', ')}. ` +
-      `Rebuild with: hermes desktop --force-build`
+      `Rebuild with: minerva desktop --force-build`
   )
 
   return { index: candidates[0], missing: [] }
@@ -7339,7 +7339,7 @@ function safeFrameOrigin(frame: { origin?: string } | null | undefined): string 
 //     ``POST /api/auth/ws-ticket`` (cookie-authed). The legacy ``?token=``
 //     path is unconditionally rejected by gated gateways.
 //   * ABBBLE Portal now issues a 24h ROTATING, reuse-detected refresh token
-//     alongside the ~15-min access token (Portal NAS #293 / hermes #37247).
+//     alongside the ~15-min access token (Portal NAS #293 / minerva #37247).
 //     Both are set as HttpOnly cookies (``hermes_session_at`` ~15 min,
 //     ``hermes_session_rt`` 24h). When the AT cookie lapses but the RT cookie
 //     is still alive, the gateway middleware transparently rotates a fresh AT
@@ -9314,8 +9314,8 @@ function isHermesProcess(pid) {
 
 // Seed active-profile.json from the best available signal when the file does
 // not yet exist.  Runs exactly once (no-op once the file exists).  Priority:
-//   1. Legacy ~/.hermes/active_profile (explicit CLI choice via hermes profile use)
-//   2. Running gateway (gateway.pid with verified liveness + hermes identity)
+//   1. Legacy ~/.hermes/active_profile (explicit CLI choice via minerva profile use)
+//   2. Running gateway (gateway.pid with verified liveness + minerva identity)
 //   3. state.db heuristics (hybrid recency×size score picks the primary workspace)
 // The stored JSON includes _migrated:true so the renderer can optionally surface
 // a one-time notification that the profile was auto-detected.
@@ -10396,7 +10396,7 @@ async function bootstrapSshConnectionInner(profile, sshConfig, reuseToken, sourc
 
   sshRememberLog(
     `[ssh] connection ${result.reused ? 'REUSED' : 'spawned'} dashboard: ` +
-      `${result.hermesVersion || 'hermes (version unknown)'} at ${result.hermesPath || '?'}`
+      `${result.hermesVersion || 'minerva (version unknown)'} at ${result.hermesPath || '?'}`
   )
 
   const connection = await buildRemoteConnection(
@@ -13125,7 +13125,7 @@ async function runHermesStart({ supervisorRecovery = false }: { supervisorRecove
     const token = crypto.randomBytes(32).toString('base64url')
     // Pin the desktop's chosen profile via the global --profile flag. A launch
     // override is persisted into active-profile.json before startHermes, so
-    // Minerva.exe --profile <name> and hermes -p <name> desktop both land here.
+    // Minerva.exe --profile <name> and minerva -p <name> desktop both land here.
     // Null (no stored preference, no launch flag) keeps the legacy bare serve
     // so the child still follows the sticky active_profile file.
     // `activeProfile` is the SAME decision that pinned routing above — never
@@ -15412,7 +15412,7 @@ function createWindow() {
             errorCode: details?.exitCode,
             errorDescription:
               'The desktop renderer crashed repeatedly (Windows STATUS_STACK_BUFFER_OVERRUN / 0xC0000409). GPU fallback could not recover the window.',
-            repairHint: 'hermes desktop --force-build',
+            repairHint: 'minerva desktop --force-build',
             reloadUrl: DEV_SERVER || pathToFileURL(resolveRendererIndex()).toString()
           })
 
@@ -15469,7 +15469,7 @@ function createWindow() {
           errorCode: details?.errorCode,
           url: details?.url,
           errorDescription: 'The desktop renderer failed to load repeatedly after the update.',
-          repairHint: 'hermes desktop --force-build',
+          repairHint: 'minerva desktop --force-build',
           reloadUrl: DEV_SERVER || pathToFileURL(resolveRendererIndex()).toString()
         })
       },
@@ -15530,7 +15530,7 @@ function createWindow() {
       errorCode: 'ERR_FILE_NOT_FOUND',
       errorDescription: `The desktop renderer bundle is incomplete after the last update (${tornAssets.length} missing file(s)).`,
       missingAssets: tornAssets,
-      repairHint: 'hermes desktop --force-build',
+      repairHint: 'minerva desktop --force-build',
       reloadUrl: pathToFileURL(rendererIndex).toString()
     })
   } else {

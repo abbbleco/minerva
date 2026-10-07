@@ -111,7 +111,7 @@ export const en: Translations = {
     diskElevatedBanner:
       "Your agent's disk is filling up. Consider clearing old sessions or expanding its storage.",
     multiplexStandaloneBanner:
-      "Your gateway serves only one profile. Not served: {profiles}. Why: {reason}. Fix: hermes gateway migrate --multiplex",
+      "Your gateway serves only one profile. Not served: {profiles}. Why: {reason}. Fix: minerva gateway migrate --multiplex",
     dismiss: "Dismiss",
     sharedMetricsTitle: "Help improve Minerva?",
     sharedMetricsBody:
@@ -157,7 +157,7 @@ export const en: Translations = {
     stopped: "Stopped",
     updateHermes: "Update Minerva",
     updateHermesConfirmMessage:
-      "This runs hermes update and restarts the gateway when it finishes. Active sessions keep their prompt cache until then.",
+      "This runs minerva update and restarts the gateway when it finishes. Active sessions keep their prompt cache until then.",
     updateHermesConfirmNow: "Update now",
     updateHermesConfirmTitle: "Update Minerva?",
     updatingHermes: "Updating Minerva…",

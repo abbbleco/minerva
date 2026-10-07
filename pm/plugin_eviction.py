@@ -62,7 +62,7 @@ def static_verdicts(entries: list[Entry], python_version: str) -> tuple[dict[Pat
             reasons[key] = f"its dependency declaration is invalid: {exc}"
             continue
         # Mirrors enabled_member_dirs, so the recorded stamp is the one boot expects.
-        hermes = requires_hermes_error(declaration.manifest)
+        minerva = requires_hermes_error(declaration.manifest)
         if hermes:
             waiting[key] = hermes
             continue

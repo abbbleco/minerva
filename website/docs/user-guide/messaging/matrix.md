@@ -690,7 +690,7 @@ changed identity keys for the same device as suspicious.
 5. **Restart the gateway**:
 
    ```bash
-   hermes gateway run
+   minerva gateway run
    ```
 
    If `MATRIX_RECOVERY_KEY` is set, you should see `Matrix: cross-signing verified via recovery key` in the logs.
@@ -725,14 +725,14 @@ applies to Windows with the corresponding host address and authentication.
 
 ```
 macOS (Host):
-  └─ hermes gateway
+  └─ minerva gateway
        ├─ api_server adapter ← listens on 0.0.0.0:8642
        ├─ AIAgent ← single source of truth
        ├─ Sessions, memory, skills
        └─ Local file access (Obsidian, projects, etc.)
 
 Linux VM (Docker):
-  └─ hermes gateway (proxy mode)
+  └─ minerva gateway (proxy mode)
        ├─ Matrix adapter ← E2EE decryption/encryption
        └─ HTTP forward → macOS:8642/v1/chat/completions
            (no LLM API keys, no agent, no inference)
@@ -803,7 +803,7 @@ needs Matrix credentials and proxy access, not inference-provider API keys.
 
 1. Start the host gateway first:
    ```bash
-   hermes gateway
+   minerva gateway
    ```
 
 2. Start the Docker container:

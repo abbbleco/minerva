@@ -226,7 +226,7 @@ hermes cron tick
 
 ```bash
 hermes gateway install     # 安装为用户服务
-sudo hermes gateway install --system   # Linux：服务器开机启动的系统服务
+sudo minerva gateway install --system   # Linux：服务器开机启动的系统服务
 hermes gateway             # 或在前台运行
 
 hermes cron list

@@ -2,7 +2,7 @@
 
 Build the real image and verify at runtime:
 
-  1. /opt/hermes is not writable by the hermes user (immutable install tree)
+  1. /opt/hermes is not writable by the minerva user (immutable install tree)
   2. A stale "docker" stamp in $HERMES_HOME is healed (removed) on boot
 
 The hosted write-policy env (PYTHONDONTWRITEBYTECODE,
@@ -25,7 +25,7 @@ from tests.docker.conftest import (
 def test_install_tree_not_writable_by_hermes(
     built_image: str, container_name: str, uid: int,
 ) -> None:
-    """The hermes user must not be able to modify /opt/hermes.
+    """The minerva user must not be able to modify /opt/hermes.
 
     The install tree (source, venv, TUI bundle, node_modules) must remain
     root-owned and non-writable so an agent session cannot self-modify
@@ -67,13 +67,13 @@ for relative in ('.venv/.lock', 'pm-runtime/.lock'):
 
     r = docker_exec_sh(
         container_name,
-        # Try to create a file under /opt/hermes as the hermes user
+        # Try to create a file under /opt/hermes as the minerva user
         "touch /opt/hermes/test_write 2>&1 && "
         "echo WRITE_SUCCEEDED || echo WRITE_FAILED",
         timeout=10,
     )
     assert "WRITE_FAILED" in r.stdout, (
-        f"hermes user can write to /opt/hermes (install tree not immutable): "
+        f"minerva user can write to /opt/hermes (install tree not immutable): "
         f"{r.stdout}"
     )
 
@@ -85,7 +85,7 @@ for relative in ('.venv/.lock', 'pm-runtime/.lock'):
         timeout=10,
     )
     assert "WRITE_FAILED" in r.stdout, (
-        f"hermes user can write to /opt/hermes/.venv: {r.stdout}"
+        f"minerva user can write to /opt/hermes/.venv: {r.stdout}"
     )
 
 

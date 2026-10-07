@@ -25,7 +25,7 @@ describe('normalizeHermesOpenString', () => {
     expect(normalizeHermesOpenString('hermes://open/settings/plugins')).toBe('/settings/plugins')
   })
 
-  it('rejects reserved hermes kinds and unsafe paths', () => {
+  it('rejects reserved minerva kinds and unsafe paths', () => {
     expect(normalizeHermesOpenString('hermes://blueprint/morning-brief')).toBeNull()
     expect(normalizeHermesOpenString('hermes://plugin/install')).toBeNull()
     expect(normalizeHermesOpenString('https://example.com/x')).toBeNull()

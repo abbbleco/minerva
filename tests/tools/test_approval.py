@@ -1080,7 +1080,7 @@ class TestHeredocScriptExecution:
 
 
 class TestPgrepKillExpansion:
-    """kill -9 $(pgrep hermes) bypasses the pkill/killall name-matching
+    """kill -9 $(pgrep minerva) bypasses the pkill/killall name-matching
     pattern because the command substitution is opaque to regex.
 
     See security audit Test 7.
@@ -1097,7 +1097,7 @@ class TestPgrepKillExpansion:
             assert "pgrep" in desc.lower()
 
     def test_kill_pidof_expansion_detected(self):
-        """`kill $(pidof hermes)` is the BSD/Linux equivalent of the
+        """`kill $(pidof minerva)` is the BSD/Linux equivalent of the
         pgrep expansion and bypasses the pkill/killall name pattern
         in the same way. See issue #33071."""
         dangerous, _, desc = detect_dangerous_command("kill -TERM $(pidof hermes_cli.main)")
@@ -1149,7 +1149,7 @@ class TestLaunchctlGatewayLifecycle:
             "launchctl kick'start' -k gui/501/ai.hermes.gateway",
             'launchctl boot"out" gui/501/ai.hermes.gateway',
             'launchctl bootout gui/501/ai.hermes."gateway"',
-            'hermes gateway re"start"',
+            'minerva gateway re"start"',
             'systemctl re"start" hermes-gateway',
         ):
             dangerous, _, _ = detect_dangerous_command(cmd)

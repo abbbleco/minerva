@@ -188,7 +188,7 @@ coder skills list             # list coder's skills
 coder config set model.default anthropic/claude-sonnet-4
 ```
 
-The alias works with every hermes subcommand — it's just `minerva -p <name>` under the hood.
+The alias works with every minerva subcommand — it's just `minerva -p <name>` under the hood.
 
 ### The `-p` flag
 

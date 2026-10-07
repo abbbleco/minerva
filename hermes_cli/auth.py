@@ -635,7 +635,7 @@ def _lock_holder_hint(lock_path: Path) -> str:
             return ""
         except OSError:
             pass  # exists but is not signalable (e.g. EPERM): still a live holder
-    return (f"another hermes process (pid {pid}) probably still holds it "
+    return (f"another minerva process (pid {pid}) probably still holds it "
             "(e.g. a dashboard or a slow credential refresh)")
 
 
@@ -1404,13 +1404,13 @@ def _get_config_hint_for_unknown_provider(provider_name: str) -> str:
         return ("OpenCode discontinued anonymous free-tier access outside its own client "
                 "(relay 403s FreeTierError), so the keyless 'opencode-free' provider was removed. "
                 "Switch to 'opencode-zen' (pay-as-you-go, OPENCODE_ZEN_API_KEY) or 'opencode-go' "
-                "($10/mo subscription, OPENCODE_GO_API_KEY) via 'hermes model'.")
+                "($10/mo subscription, OPENCODE_GO_API_KEY) via 'minerva model'.")
     try:
         from hermes_cli.config import validate_config_structure
         issues = validate_config_structure()
         if not issues:
             return ""
-        lines = ["Config issue detected — run 'hermes doctor' for full diagnostics:"]
+        lines = ["Config issue detected — run 'minerva doctor' for full diagnostics:"]
         for ci in issues:
             lines.append(f"  [{'ERROR' if ci.severity == 'error' else 'WARNING'}] {ci.message}")
             if ci.hint and ci.hint.splitlines()[0]:
@@ -1438,7 +1438,7 @@ def _refuse_env_adoption_if_config_corrupt() -> None:
     raise AuthError(
         f"config.yaml at {path} is corrupt ({err}) — refusing to auto-select "
         f"an inference provider from environment keys. Fix the YAML (a backup "
-        f"was saved next to it) or run hermes setup.",
+        f"was saved next to it) or run minerva setup.",
         code="corrupt_config")
 
 
@@ -1659,8 +1659,8 @@ def resolve_provider(
         return normalized
     if normalized != "auto":
         hint = _get_config_hint_for_unknown_provider(normalized)
-        tail = (f"\n\n{hint}" if hint else " Check 'hermes model' for available providers, "
-                "or run 'hermes doctor' to diagnose config issues.")
+        tail = (f"\n\n{hint}" if hint else " Check 'minerva model' for available providers, "
+                "or run 'minerva doctor' to diagnose config issues.")
         raise AuthError(f"Unknown provider '{normalized}'." + tail, code="invalid_provider")
 
     if explicit_api_key or explicit_base_url:  # one-off CLI creds always mean openrouter/custom
@@ -2480,9 +2480,9 @@ def _reset_config_provider() -> Path:
 
 
 def login_command(args) -> None:
-    """Deprecated: use 'hermes model' or 'hermes setup' instead."""
-    print("The 'hermes login' command has been removed.\nUse 'hermes auth' to manage credentials,\n"
-          "'hermes model' to select a provider, or 'hermes setup' for full setup.")
+    """Deprecated: use 'minerva model' or 'minerva setup' instead."""
+    print("The 'minerva login' command has been removed.\nUse 'minerva auth' to manage credentials,\n"
+          "'minerva model' to select a provider, or 'minerva setup' for full setup.")
     raise SystemExit(0)
 
 

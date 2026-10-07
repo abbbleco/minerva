@@ -718,7 +718,7 @@ class TestDirectAliasHostGating:
 
 
 # ---------------------------------------------------------------------------
-# hermes chat -m <alias> — the oneshot path
+# minerva chat -m <alias> — the oneshot path
 # ---------------------------------------------------------------------------
 
 class TestOneshotPassesAliasCredential:

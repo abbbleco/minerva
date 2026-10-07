@@ -177,7 +177,7 @@ def _delete_skill(name: str) -> dict[str, Any]:
     ok, message = skill_usage.archive_skill(name)
     if ok:
         _clear_skill_cache()
-    return {"ok": ok, "message": f"archived '{name}' — restore with: hermes curator restore {name}" if ok else message}
+    return {"ok": ok, "message": f"archived '{name}' — restore with: minerva curator restore {name}" if ok else message}
 
 
 def _delete_memory(node_id: str) -> dict[str, Any]:

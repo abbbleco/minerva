@@ -86,7 +86,7 @@ def _is_bionic_libc() -> bool:
     The libc flavor is part of the target triple, not a platform runtime
     branch: a linux-arm64 glibc artifact cannot exec under bionic and vice
     versa, so the resolver must pick the right row of the lock table. This
-    is the ONE place hermes probes for bionic; nothing downstream of
+    is the ONE place minerva probes for bionic; nothing downstream of
     current_target() needs to know how it was decided.
     """
     if sys.platform == "android":

@@ -5,11 +5,11 @@
 # Background
 # ----------
 # The s6 image runs the supervised gateway/main process as the unprivileged
-# `hermes` user (UID 10000). When an operator runs `docker exec <c> hermes ...`
+# `hermes` user (UID 10000). When an operator runs `docker exec <c> minerva ...`
 # the default UID is root (0), and any file the command writes under
 # $HERMES_HOME — auth.json, .env, config.yaml — ends up root-owned and
 # unreadable to the supervised gateway. The most common manifestation: the
-# user runs `docker exec <c> hermes login`, this writes
+# user runs `docker exec <c> minerva login`, this writes
 # /opt/data/auth.json as root:root mode 0600, and from then on the gateway
 # returns "Provider authentication failed: Minerva is not logged into Nous
 # Portal" on every incoming message — even though `docker exec <c> hermes
@@ -20,7 +20,7 @@
 # Fix
 # ---
 # This shim sits at /opt/hermes/bin/hermes and is placed earliest on PATH.
-# When invoked as root, it drops to the hermes user (via s6-setuidgid)
+# When invoked as root, it drops to the minerva user (via s6-setuidgid)
 # before exec'ing the real venv binary, so anything that writes under
 # $HERMES_HOME is uid-aligned with the supervised processes. When invoked
 # as any non-root UID — including the supervised processes themselves,
@@ -36,7 +36,7 @@
 # Opt-out: set HERMES_DOCKER_EXEC_AS_ROOT=1 (1/true/yes, case-insensitive)
 # to keep running as root. Reserved for diagnostic sessions where the
 # operator deliberately wants root semantics — e.g. inspecting root-only
-# state via the hermes CLI. Default is to drop.
+# state via the minerva CLI. Default is to drop.
 
 set -e
 
@@ -62,7 +62,7 @@ case "${HERMES_DOCKER_EXEC_AS_ROOT:-}" in
         ;;
 esac
 
-# Root, no opt-out. Drop to the hermes user.
+# Root, no opt-out. Drop to the minerva user.
 #
 # s6-setuidgid lives under /command/ which is NOT on `docker exec`'s PATH
 # (s6-overlay only puts /command/ on PATH for supervision-tree children).
@@ -74,14 +74,14 @@ if [ ! -x "$S6_SUID" ]; then
     # Fail loud rather than silently re-execing as root and leaking the
     # bug this shim exists to prevent.
     echo "hermes-shim: $S6_SUID not found; refusing to silently run as root." >&2
-    echo "hermes-shim: re-run with --user hermes or set HERMES_DOCKER_EXEC_AS_ROOT=1." >&2
+    echo "hermes-shim: re-run with --user minerva or set HERMES_DOCKER_EXEC_AS_ROOT=1." >&2
     exit 126
 fi
 
-# Reset HOME to the hermes user's home before dropping privileges. Without
+# Reset HOME to the minerva user's home before dropping privileges. Without
 # this, $HOME stays /root and any library that resolves paths off $HOME
 # (XDG caches, lockfiles, .config writes) will try to write to /root and
 # fail with EACCES. Mirrors main-wrapper.sh.
 export HOME=/opt/data
 
-exec "$S6_SUID" hermes "$REAL" "$@"
+exec "$S6_SUID" minerva "$REAL" "$@"

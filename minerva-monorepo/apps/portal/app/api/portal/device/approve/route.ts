@@ -103,6 +103,12 @@ export async function POST(request: NextRequest) {
     } = await supabase.auth.getUser();
     if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
+    // Claim pending email invites BEFORE the membership lookup: an invited
+    // user has no user_id rows yet, and without this they would mint a fresh
+    // personal agency and orphan the invite. Best-effort, never throws.
+    const { claimInvitesForUser } = await import("@/app/lib/members-server");
+    await claimInvitesForUser(user.id, user.email ?? "");
+
     const { data: memberships, error: mErr } = await supabase
       .from("agency_memberships")
       .select("agency_id, role, status, agencies!inner(id, slug, name)")

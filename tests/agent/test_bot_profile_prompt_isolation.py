@@ -97,7 +97,7 @@ def test_profile_name_correct_on_bound_profile_session(tmp_path, monkeypatch):
     the ambient home IS the profile dir, so deriving the profile name with
     ``get_hermes_home()/profiles`` as the root would never match and every
     profile would misreport as \"default\". The name must derive from the
-    hermes ROOT (get_default_hermes_root)."""
+    minerva ROOT (get_default_hermes_root)."""
     from agent import system_prompt
 
     bot_home = tmp_path / "profiles" / "mybot"

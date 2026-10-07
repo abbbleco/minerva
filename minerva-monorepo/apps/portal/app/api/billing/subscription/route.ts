@@ -50,11 +50,15 @@ export async function GET(request: Request) {
     },
     ...PAID_PLAN_IDS.map((id, index) => {
       const details = paidPlan(id);
+      const major = details.amountCents / 100;
       return {
         tier_id: id,
         name: details.name,
         tier_order: index + 1,
-        dollars_per_month_display: `$${details.amountCents / 100}`,
+        // Field name is the frozen backend contract; the value carries the
+        // billing currency's symbol (R350 / $20).
+        dollars_per_month_display:
+          details.currency.toLowerCase() === "zar" ? `R${major}` : `$${major}`,
         monthly_credits: creditsForPlan(id),
         is_current: plan === id,
         is_enabled: true,

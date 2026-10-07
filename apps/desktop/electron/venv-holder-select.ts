@@ -39,7 +39,7 @@ export function isHermesOwnedVenvDaemon(
  * True when a process is an external Minerva process holding this install's venv
  * (#62311): its exe lives under `<venv>\Scripts\` AND it is unambiguously a
  * Minerva program — the `hermes.exe` shim, `python -m hermes_cli...`, or
- * `python -m hermes ...`. These are the autostart holders (the gateway Startup
+ * `python -m minerva ...`. These are the autostart holders (the gateway Startup
  * item, the dashboard Scheduled Task) that neither the desktop's backend
  * teardown nor the hindsight-daemon sweep reach, and that keep the venv shim
  * locked so the update hand-off aborts every time.

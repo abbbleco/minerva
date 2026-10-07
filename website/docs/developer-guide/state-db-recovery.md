@@ -66,9 +66,9 @@ is still up. Next steps:
 
 ```bash
 hermes gateway stop
-HERMES_HOME="$HOME/.hermes" hermes sessions recover --source "$HOME/.hermes/state.db" --inspect-only
+HERMES_HOME="$HOME/.hermes" minerva sessions recover --source "$HOME/.hermes/state.db" --inspect-only
 # if recoverable:
-HERMES_HOME="$HOME/.hermes" hermes sessions recover --source "$HOME/.hermes/state.db" --output "$HOME/recovered-state.db"
+HERMES_HOME="$HOME/.hermes" minerva sessions recover --source "$HOME/.hermes/state.db" --output "$HOME/recovered-state.db"
 ```
 
 or restore the newest snapshot from `state-snapshots/`.
@@ -80,8 +80,8 @@ Keep them stopped for the complete repair and verification window.
 
 ```bash
 hermes gateway stop
-HERMES_HOME="$HOME/.hermes" hermes sessions repair --check-only
-HERMES_HOME="$HOME/.hermes" hermes sessions repair
+HERMES_HOME="$HOME/.hermes" minerva sessions repair --check-only
+HERMES_HOME="$HOME/.hermes" minerva sessions repair
 ```
 
 `sessions repair` creates a SQLite backup by default and performs structural
@@ -93,7 +93,7 @@ After repair, verify the health probe, stale marker, trigger set, and canonical
 row counts before restarting the gateway:
 
 ```bash
-HERMES_HOME="$HOME/.hermes" hermes sessions repair --check-only
+HERMES_HOME="$HOME/.hermes" minerva sessions repair --check-only
 sqlite3 "$HOME/.hermes/state.db" \
   "SELECT key, value FROM state_meta WHERE key = 'fts_stale';"
 sqlite3 "$HOME/.hermes/state.db" \

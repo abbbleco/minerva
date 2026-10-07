@@ -68,8 +68,8 @@ def parse_blueprint(skill_md_text: str) -> Optional[BlueprintSpec]:
         return None
 
     meta = fm.get("metadata")
-    hermes = meta.get("hermes") if isinstance(meta, dict) else None
-    blueprint = hermes.get("blueprint") if isinstance(hermes, dict) else None
+    minerva = meta.get("hermes") if isinstance(meta, dict) else None
+    blueprint = hermes.get("blueprint") if isinstance (minerva, dict) else None
     if blueprint is None:
         return None
     if not isinstance(blueprint, dict):

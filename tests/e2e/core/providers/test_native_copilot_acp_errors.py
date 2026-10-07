@@ -55,8 +55,8 @@ CRASH_STDERR = "fatal: agent segfaulted (fake)"
 
 # Red on current main for a tracked, open bug: key -> (the bug's own failure-message pattern, reason).
 KNOWN: dict[str, tuple[str, str]] = {
-    "auth_remedy": (r"^remedy 'hermes [^']+' is not implemented for copilot-acp: ",
-                    "#121290 copilot-acp auth failure tells the user to run a hermes command that is not implemented"),
+    "auth_remedy": (r"^remedy 'minerva [^']+' is not implemented for copilot-acp: ",
+                    "#121290 copilot-acp auth failure tells the user to run a minerva command that is not implemented"),
 }
 
 

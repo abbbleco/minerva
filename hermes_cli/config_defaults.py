@@ -671,7 +671,7 @@ DEFAULT_CONFIG = {
         # Show the one-time autoraise banner; False keeps the autoraise, hides the notice.
         "codex_gpt55_autoraise_notice": True,
         # Codex app-server thread compaction mode. The codex agent owns the thread context, so
-        # Minerva' summarizer cannot shrink it. native = codex decides; hermes = Minerva' threshold
+        # Minerva' summarizer cannot shrink it. native = codex decides; minerva = Minerva' threshold
         # triggers thread/compact/start; off = never auto-trigger.
         "codex_app_server_auto": "native",
         # Opt in to OpenAI server-side compaction on the Responses API. Only gpt-5.6-family on
@@ -2908,7 +2908,7 @@ OPTIONAL_ENV_VARS = {
     "AZURE_FOUNDRY_API_KEY": _prov("Azure Foundry API key for custom Azure endpoints",
         "Azure Foundry API Key", "https://ai.azure.com/", advanced=False),
     "AZURE_FOUNDRY_BASE_URL": _prov(
-        "Azure Foundry base URL (set via 'hermes model' for endpoint-specific config)",
+        "Azure Foundry base URL (set via 'minerva model' for endpoint-specific config)",
         "Azure Foundry base URL", None, password=False),
     # ── Tool API keys ──
     "EXA_API_KEY": _tool("Exa API key for AI-native web search and contents", "Exa API key",

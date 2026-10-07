@@ -373,7 +373,7 @@ def test_relay_route_queues_envelope_and_spawns_waiter(tmp_path, monkeypatch):
     assert len(pending) == 1
     assert pending[0]["target_connection"] == "cloud-1"
     assert pending[0]["target_profile"] == "default"
-    assert pending[0]["message"].startswith("Message from 🤖 hermes (@hermes): ping")
+    assert pending[0]["message"].startswith("Message from 🤖 minerva (@hermes): ping")
     # waiter watches this envelope's reply file
     assert pending[0]["id"] in spawned["command"]
 

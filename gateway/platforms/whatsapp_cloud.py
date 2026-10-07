@@ -152,7 +152,7 @@ def _optional_module(name: str, unavailable_log: str) -> Any:
         return None
 
 
-# Under the hermes dir so it survives restarts/reloads — same as the Baileys bridge.
+# Under the minerva dir so it survives restarts/reloads — same as the Baileys bridge.
 _INBOUND_MEDIA_CACHE = Path(get_hermes_dir("platforms/whatsapp_cloud/media", "whatsapp_cloud/media"))
 
 

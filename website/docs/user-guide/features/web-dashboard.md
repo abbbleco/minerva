@@ -673,7 +673,7 @@ To use the Nous provider you need an OAuth client ID (shape `agent:{id}`). There
 - **CLI — `minerva dashboard register`.** Run it on the host where the dashboard lives. It resolves your existing Nous login (run `minerva setup` first if you're not logged in), registers a self-hosted OAuth client with the Portal, and writes `HERMES_DASHBOARD_OAUTH_CLIENT_ID` into `~/.hermes/.env` for you. Optional flags: `--name` (a human-readable label, otherwise auto-generated) and `--redirect-uri` (a public HTTPS callback URL for an internet-facing host).
 
   ```bash
-  hermes dashboard register
+  minerva dashboard register
   # ✓ Registered dashboard "swift_falcon"
   # …writes HERMES_DASHBOARD_OAUTH_CLIENT_ID to ~/.hermes/.env
   ```
@@ -1097,7 +1097,7 @@ Custom providers can implement `supports_token`/`verify_token` the same way to e
 ```bash
 # Quick env-var path.
 HERMES_DASHBOARD_OAUTH_CLIENT_ID=agent:test \
-  hermes dashboard --host 0.0.0.0
+  minerva dashboard --host 0.0.0.0
 
 # Or the equivalent via config.yaml (recommended for local dev / on-prem):
 #

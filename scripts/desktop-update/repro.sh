@@ -145,7 +145,7 @@ case "$MODE" in
         printf 'FAIL %s -> %s\n' "$1" "$(cat "$L/.hermes-update-result.json" 2>/dev/null)"; fails=$((fails+1))
       fi
     }
-    stub_install() { # creates a fake install whose hermes update succeeds
+    stub_install() { # creates a fake install whose minerva update succeeds
       rm -rf "$L"; mkdir -p "$L/hermes-agent/venv/bin"
       printf '#!/bin/sh\nexit 0\n' > "$L/hermes-agent/venv/bin/hermes"
       chmod +x "$L/hermes-agent/venv/bin/hermes"

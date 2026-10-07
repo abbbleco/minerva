@@ -287,7 +287,7 @@ def _finalize_child_env(env: dict) -> dict:
 
 def _scrubbed_env(parts, plugin_strip: frozenset, fix_path) -> dict:
     """Filter each ``(items, unwrap_force)`` in *parts* into one env, rewrite PATH via
-    *fix_path* (always prepending the hermes install dir so bare ``hermes`` resolves
+    *fix_path* (always prepending the minerva install dir so bare ``hermes`` resolves
     for children of a systemd/cron-launched gateway), then apply the shared guards."""
     out: dict[str, str] = {}
     for items, unwrap_force in parts:
@@ -602,7 +602,7 @@ def _resolve_hermes_bin_dir() -> str | None:
     """Directory holding the ``hermes`` console-script, or None (cached). A gateway
     launched by systemd/cron/a desktop launcher lacks the install dir on PATH and bare
     ``hermes`` exits 127. Order: ``which``; absolute ``sys.argv[0]`` naming a real
-    hermes executable; ``sys.executable``'s dir if it holds the shim."""
+    minerva executable; ``sys.executable``'s dir if it holds the shim."""
     global _HERMES_BIN_DIR
     if _HERMES_BIN_DIR is not _SENTINEL:
         return _HERMES_BIN_DIR  # type: ignore[return-value]
@@ -623,7 +623,7 @@ def _resolve_hermes_bin_dir() -> str | None:
 
 
 def _prepend_hermes_bin_dir(existing_path: str) -> str:
-    """Prepend the hermes install dir to ``existing_path`` if missing."""
+    """Prepend the minerva install dir to ``existing_path`` if missing."""
     bin_dir = _resolve_hermes_bin_dir()
     return _prepend_missing_path_entries(existing_path, [bin_dir] if bin_dir else [])
 

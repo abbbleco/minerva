@@ -47,7 +47,7 @@ import hermes_bootstrap
     assert str(target) in result.stderr
     assert "source-update completion failed" not in result.stderr
     assert "run `minerva update`" not in result.stderr
-    assert "hermes pm repair" not in result.stderr
+    assert "minerva pm repair" not in result.stderr
     assert "Traceback" not in result.stderr
 
 

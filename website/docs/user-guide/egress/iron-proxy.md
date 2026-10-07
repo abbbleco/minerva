@@ -184,7 +184,7 @@ This sets `proxy.credential_source: bitwarden` and discovers provider env names 
 When `credential_source: bitwarden`, the iron-proxy daemon refetches secrets from BWS via `bws secret list <project_id>` **every time it starts**. So the rotation flow is:
 
 1. Rotate a key in the Bitwarden web app.
-2. `minerva egress stop && hermes egress start` on the host.
+2. `minerva egress stop && minerva egress start` on the host.
 3. Sandboxes started after that point swap proxy tokens for the new value.
 
 No `.env` edits. No Minerva restart on the host. The proxy daemon is the only thing that touches the new value — your host process and `os.environ` are untouched.
@@ -502,7 +502,7 @@ proxy:
     - "*.staging.example.com"
 ```
 
-Then `minerva egress setup` (to regenerate `proxy.yaml`) and `minerva egress stop && hermes egress start`.
+Then `minerva egress setup` (to regenerate `proxy.yaml`) and `minerva egress stop && minerva egress start`.
 
 ### Sandbox sees SSL verification errors
 

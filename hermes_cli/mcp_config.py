@@ -636,9 +636,9 @@ def cmd_mcp_add(args):
     if not url and not command:
         _error("Must specify --url <endpoint>, --command <cmd>, or --preset <name>")
         _info("Examples:")
-        _info('  hermes mcp add ink --url "https://mcp.ml.ink/mcp"')
-        _info('  hermes mcp add github --command npx --args @modelcontextprotocol/server-github')
-        _info('  hermes mcp add myserver --preset mypreset')
+        _info('  minerva mcp add ink --url "https://mcp.ml.ink/mcp"')
+        _info('  minerva mcp add github --command npx --args @modelcontextprotocol/server-github')
+        _info('  minerva mcp add myserver --preset mypreset')
         return
 
     # Overwriting an existing server is a re-add, not an install; cancels are not recorded either.
@@ -685,7 +685,7 @@ def cmd_mcp_add(args):
             saved = _save_mcp_server(name, server_config)
             if saved:
                 _success(f"Saved '{name}' to config (disabled)")
-                _info("Fix the issue, then: hermes mcp test " + name)
+                _info("Fix the issue, then: minerva mcp test " + name)
         _record(saved)
         return
 
@@ -740,8 +740,8 @@ def cmd_mcp_list(args=None):
         _info("No MCP servers configured.")
         print()
         _info("Add one with:")
-        _info('  hermes mcp add <name> --url <endpoint>')
-        _info('  hermes mcp add <name> --command <cmd> --args <args...>')
+        _info('  minerva mcp add <name> --url <endpoint>')
+        _info('  minerva mcp add <name> --command <cmd> --args <args...>')
         print()
         return
 
@@ -791,13 +791,13 @@ def _probe_failure_next_step(name: str, exc: BaseException) -> str:
     from tools.mcp_tool_node_abi import NodeAbiMismatchError
     root = _unwrap_exception_group(exc)
     if _is_auth_error(root) or getattr(getattr(root, "response", None), "status_code", None) in (401, 403):
-        return f"The server rejected the sign-in. Run: hermes mcp login {name}"
+        return f"The server rejected the sign-in. Run: minerva mcp login {name}"
     if isinstance(root, NodeAbiMismatchError):
-        return f"After rebuilding it under Minerva's Node as above, run: hermes mcp test {name}"
+        return f"After rebuilding it under Minerva's Node as above, run: minerva mcp test {name}"
     if "missing executable" in _format_connect_error(exc):
         return (f"Install that command, or set mcp_servers.{name}.command in {display_hermes_home()}/config.yaml "
                 "to its full path.")
-    return f"Check the server is running and the URL/command in its config, then run: hermes mcp test {name}"
+    return f"Check the server is running and the URL/command in its config, then run: minerva mcp test {name}"
 
 
 def cmd_mcp_test(args):
@@ -971,7 +971,7 @@ def cmd_mcp_reauth(args):
         return
     if not name:
         _error("Specify a server name, or use --all to re-auth every OAuth server.")
-        _info("Usage: hermes mcp reauth <name>   |   hermes mcp reauth --all")
+        _info("Usage: minerva mcp reauth <name>   |   minerva mcp reauth --all")
         return
     cfg = _lookup_server(name, servers)
     if cfg is not None:
@@ -1015,7 +1015,7 @@ def cmd_mcp_configure(args):
     """Reconfigure which tools are enabled for an existing MCP server."""
     import sys as _sys
     if not _sys.stdin.isatty():
-        print("Error: 'hermes mcp configure' requires an interactive terminal.", file=_sys.stderr)
+        print("Error: 'minerva mcp configure' requires an interactive terminal.", file=_sys.stderr)
         _sys.exit(1)
     name = args.name
     cfg = _lookup_server(name, _get_mcp_servers(), "Available")
@@ -1088,19 +1088,19 @@ def cmd_mcp_configure(args):
 
 
 _MCP_USAGE = (
-    "hermes mcp                                    Open the catalog picker (default)",
-    "hermes mcp catalog                            List Nous-approved MCPs",
-    "hermes mcp install <name>                     Install a catalog MCP",
-    "hermes mcp serve                              Run as MCP server",
-    "hermes mcp add <name> --url <endpoint>        Add a custom MCP server",
-    "hermes mcp add <name> --command <cmd>         Add a stdio server",
-    "hermes mcp add <name> --preset <preset>       Add from a known preset",
-    "hermes mcp remove <name>                      Remove a server",
-    "hermes mcp list                               List configured servers",
-    "hermes mcp test <name>                        Test connection",
-    "hermes mcp configure <name>                   Toggle tools",
-    "hermes mcp login <name>                       Re-authenticate OAuth",
-    "hermes mcp reauth <name> | --all              Re-auth one or all OAuth servers",
+    "minerva mcp                                    Open the catalog picker (default)",
+    "minerva mcp catalog                            List Nous-approved MCPs",
+    "minerva mcp install <name>                     Install a catalog MCP",
+    "minerva mcp serve                              Run as MCP server",
+    "minerva mcp add <name> --url <endpoint>        Add a custom MCP server",
+    "minerva mcp add <name> --command <cmd>         Add a stdio server",
+    "minerva mcp add <name> --preset <preset>       Add from a known preset",
+    "minerva mcp remove <name>                      Remove a server",
+    "minerva mcp list                               List configured servers",
+    "minerva mcp test <name>                        Test connection",
+    "minerva mcp configure <name>                   Toggle tools",
+    "minerva mcp login <name>                       Re-authenticate OAuth",
+    "minerva mcp reauth <name> | --all              Re-auth one or all OAuth servers",
 )
 
 

@@ -505,7 +505,7 @@ describe('OAuth onboarding', () => {
           providers: [
             {
               name: 'ABBBLE Portal',
-              slug: 'nous',
+              slug: 'minerva',
               models: [model]
             }
           ]
@@ -513,11 +513,11 @@ describe('OAuth onboarding', () => {
       }
 
       if (path.startsWith('/api/model/recommended-default?')) {
-        return { provider: 'nous', model, free_tier: false }
+        return { provider: 'minerva', model, free_tier: false }
       }
 
       if (path === '/api/model/set') {
-        return { ok: true, provider: 'nous', model, gateway_tools: [] }
+        return { ok: true, provider: 'minerva', model, gateway_tools: [] }
       }
 
       throw new Error(`unexpected api path: ${path}`)
@@ -533,7 +533,7 @@ describe('OAuth onboarding', () => {
       }
 
       if (method === 'setup.runtime_check') {
-        expect(params).toEqual({ provider: 'nous' })
+        expect(params).toEqual({ provider: 'minerva' })
 
         return { ok: true } as never
       }

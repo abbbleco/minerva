@@ -244,8 +244,8 @@ check_key() {
     return 1
 }
 
-check_key ELEVENLABS_API_KEY hermes ELEVENLABS_API_KEY || exit 1
-check_key OPENROUTER_API_KEY hermes OPENROUTER_API_KEY || exit 1
+check_key ELEVENLABS_API_KEY minerva ELEVENLABS_API_KEY || exit 1
+check_key OPENROUTER_API_KEY minerva OPENROUTER_API_KEY || exit 1
 # ...
 ```
 

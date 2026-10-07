@@ -365,15 +365,15 @@ its isolated development home. Leave any test venv before PM activation.
 
 ```bash
 source ./activate
-python hermes chat -q "Say hello" --provider your-provider --model your-model
+python minerva chat -q "Say hello" --provider your-provider --model your-model
 ```
 
 Also test the interactive flows if you changed menus:
 
 ```bash
 source ./activate
-python hermes model
-python hermes setup
+python minerva model
+python minerva setup
 ```
 
 For native providers, verify at least one tool call too, not just a plain text response.

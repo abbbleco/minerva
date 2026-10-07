@@ -123,7 +123,7 @@ def build_relaunch_argv(
 def relaunch(
     extra_args: Sequence[str], *, preserve_inherited: bool = True, original_argv: Optional[Sequence[str]] = None
 ) -> None:
-    """Replace the current process with a fresh hermes invocation.
+    """Replace the current process with a fresh minerva invocation.
 
     POSIX: ``os.execvp`` in place (same PID, no double-fork). Windows has no real exec — its
     ``execvp`` emulation only works for a real Win32 executable, so spawn + exit instead.

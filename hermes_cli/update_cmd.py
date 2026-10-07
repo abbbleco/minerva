@@ -1311,7 +1311,7 @@ def _verify_head_after_pull(
             f"origin/{branch} advanced but the working tree stayed put.")
         print(
             "  Reattach to the branch and retry: "
-            f"git -C {_m().PROJECT_ROOT} checkout {branch} && hermes update")
+            f"git -C {_m().PROJECT_ROOT} checkout {branch} && minerva update")
         _m()._resume_windows_gateways_after_update(_windows_gateway_resume)
         sys.exit(1)
 
@@ -1325,7 +1325,7 @@ def _verify_head_after_pull(
             f"'{post_pull_branch}' — not claiming success.")
         print(
             "  Switch to the target branch and retry: "
-            f"git -C {_m().PROJECT_ROOT} checkout {branch} && hermes update")
+            f"git -C {_m().PROJECT_ROOT} checkout {branch} && minerva update")
         _m()._resume_windows_gateways_after_update(_windows_gateway_resume)
         sys.exit(1)
     return post_pull_sha

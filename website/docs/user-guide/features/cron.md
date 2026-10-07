@@ -339,7 +339,7 @@ over ones that create new jobs each run.
 
 ```bash
 hermes gateway install     # Install as a user service
-sudo hermes gateway install --system   # Linux: boot-time system service for servers
+sudo minerva gateway install --system   # Linux: boot-time system service for servers
 hermes gateway             # Or run in foreground
 
 hermes cron list

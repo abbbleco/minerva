@@ -148,7 +148,7 @@ credential_pool_strategies:
 通过 `minerva model` 设置自定义端点时，会自动生成类似 "Together.ai" 或 "Local (localhost:8080)" 的名称，该名称即成为池的键。
 
 ```bash
-# After setting up a custom endpoint via hermes model:
+# After setting up a custom endpoint via minerva model:
 hermes auth list
 # Shows:
 #   Together.ai (1 credential):

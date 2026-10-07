@@ -609,7 +609,7 @@ def test_rebrand_text_replaces_openclaw_variants():
     # All-lowercase matches → lowercase ``hermes``; this preserves the
     # real filesystem path ``~/.hermes`` (Minerva home) when rebranding
     # memory entries that reference ``~/.openclaw`` or ``openclaw`` prose.
-    assert mod.rebrand_text("openclaw should always respond concisely") == "hermes should always respond concisely"
+    assert mod.rebrand_text("openclaw should always respond concisely") == "minerva should always respond concisely"
 
 
 

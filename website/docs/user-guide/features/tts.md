@@ -571,7 +571,7 @@ Minerva writes the incoming voice message to `{input_path}`, runs the command, a
 
 ### Fallback Behavior
 
-An **explicit** `stt.provider` selection (written in `config.yaml`, e.g. via `minerva tools`) is honored strictly — if that provider can't run, transcription fails with a clear error (`stt is configured to use <provider> (set via hermes tools), but <failure>. Run 'hermes tools' to change it.`) instead of silently switching engines. Note that `stt.provider: local` written in your config counts as an explicit selection.
+An **explicit** `stt.provider` selection (written in `config.yaml`, e.g. via `minerva tools`) is honored strictly — if that provider can't run, transcription fails with a clear error (`stt is configured to use <provider> (set via minerva tools), but <failure>. Run 'minerva tools' to change it.`) instead of silently switching engines. Note that `stt.provider: local` written in your config counts as an explicit selection.
 
 When **no provider has ever been selected**, Minerva auto-detects from what's available:
 - **Local faster-whisper unavailable** → Tries a local `whisper` CLI or `HERMES_LOCAL_STT_COMMAND` before cloud providers

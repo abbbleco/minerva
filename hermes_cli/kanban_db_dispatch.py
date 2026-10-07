@@ -2934,7 +2934,7 @@ def _default_spawn(task: Task, workspace: str, *, board: Optional[str] = None) -
     from agent.delegation_context import DELEGATED_CHILD_ENV_MARKER
     env.pop(DELEGATED_CHILD_ENV_MARKER, None)
     # `--cli` is the highest-precedence TUI override; dropping HERMES_TUI covers
-    # older hermes builds on PATH that predate the flag's precedence.
+    # older minerva builds on PATH that predate the flag's precedence.
     env.pop("HERMES_TUI", None)
 
     cmd = _worker_argv(task, profile_arg, env.get("HERMES_HOME"))

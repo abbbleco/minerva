@@ -871,7 +871,7 @@ Refreshing the directory (`/channels refresh` on platforms that expose it, or a 
 3. Restart the gateway:
 
    ```bash
-   hermes gateway restart
+   minerva gateway restart
    ```
 
 If the gateway log says Discord is connected and REST API checks work, but every inbound message is silent, look for this warning in `~/.hermes/logs/gateway.log`:

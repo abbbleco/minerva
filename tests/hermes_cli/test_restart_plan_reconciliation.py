@@ -162,7 +162,7 @@ def test_untouched_runtime_is_unaccounted_and_escalates(capsys):
     out = capsys.readouterr().out
     assert "never touched" in out
     assert "coder" in out and "500" in out
-    assert "hermes -p <profile> gateway restart" in out
+    assert "minerva -p <profile> gateway restart" in out
 
 
 def test_external_supervisor_counts_as_restarted():
@@ -369,7 +369,7 @@ def test_unaccounted_serve_report_names_serve_remedy_not_gateway_restart(capsys)
     out = capsys.readouterr().out
     assert "serve [default] pid 900" in out
     assert "relaunch `minerva serve`" in out
-    assert "hermes gateway restart" not in out
+    assert "minerva gateway restart" not in out
 
 
 def test_mixed_fleet_only_the_missed_one_escalates(capsys):

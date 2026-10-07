@@ -219,7 +219,7 @@ def activation_hint(result: Dict[str, Any]) -> str:
     if not result.get("gateway_reloaded"):
         if lines:  # live in open chats; a messaging gateway that starts later loads it at boot
             return "\n".join(lines)
-        return "\n".join([*lines, "Restart the gateway for the plugin to take effect:\n  hermes gateway restart"])
+        return "\n".join([*lines, "Restart the gateway for the plugin to take effect:\n  minerva gateway restart"])
     now, deferred = act.get("activated_now") or {}, act.get("deferred") or {}
     parts = []
     if now:

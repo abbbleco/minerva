@@ -76,7 +76,7 @@ test('clicking Update now moves the backend to the new commit, relaunches the ap
           explain: () => explain(`handoff log:\n${handoffLog(facts)}`)
         }
       )
-      expect(handoffLog(facts), `the updater's hermes update succeeded\n${explain()}`).toMatch(
+      expect(handoffLog(facts), `the updater's minerva update succeeded\n${explain()}`).toMatch(
         /hermes update exit code: 0\s*$|retry exit code: 0/m
       )
       expect(git(facts.checkout, 'rev-parse', 'HEAD'), 'the backend checkout is on the new upstream commit').toBe(

@@ -74,7 +74,7 @@ def install(root: Path) -> None:
     # apps/desktop/release/linux-unpacked, the tree the Desktop updater swaps in place.
     cp = sb.cli("desktop", "--build-only", timeout=1800)
     if cp.returncode != 0:
-        _fail("hermes desktop --build-only", cp)
+        _fail("minerva desktop --build-only", cp)
     facts = {
         "sandboxRoot": str(sb.root),
         "home": str(sb.home),

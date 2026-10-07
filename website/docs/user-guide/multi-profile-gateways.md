@@ -29,7 +29,7 @@ be online at the same time. Common reasons:
 Every profile already gets its own per-platform supervisor entry: a LaunchAgent
 (`ai.hermes.gateway-<name>.plist`), a systemd user service
 (`hermes-gateway-<name>.service`), a systemd **system** service when installed with
-`sudo hermes gateway install --system` (runs as the invoking user via `User=`), a
+`sudo minerva gateway install --system` (runs as the invoking user via `User=`), a
 Windows Scheduled Task, or an s6/Docker service — and the Desktop app spawns its own
 per-profile `minerva serve` backend. This guide adds the patterns for managing them
 collectively.
@@ -267,14 +267,14 @@ a host gateway is running right now:
 
   Install or start the host gateway from the default profile; it serves this one too:
 
-    hermes gateway install
+    minerva gateway install
 
   Or fold an existing per-profile fleet onto one host gateway:
 
-    hermes gateway migrate --multiplex
+    minerva gateway migrate --multiplex
 
   A separate per-profile gateway (for a fleet split across UNIX users or a
-  HERMES_HOME outside profiles/) needs --force:  hermes -p coder gateway install --force
+  HERMES_HOME outside profiles/) needs --force:  minerva -p coder gateway install --force
 
   Temporary compatibility path while multiplexing gaps are closed: set
   gateway.standalone: true in profiles/coder/config.yaml,
@@ -511,9 +511,9 @@ and every status surface repeats it, so you know what to paste into the vendor
 console:
 
 ```
-$ hermes -p coder gateway status
+$ minerva -p coder gateway status
 ✓ Gateway is running via the default-profile multiplexer
-  Manage it from the default profile: hermes gateway status
+  Manage it from the default profile: minerva gateway status
 
 Inbound callback URLs on the shared listener:
   line: http://127.0.0.1:8642/p/coder/line/webhook
@@ -883,9 +883,9 @@ run_for_profile() {
   profile="$1"
   action="$2"
   if [ "$profile" = "default" ]; then
-    hermes gateway "$action"
+    minerva gateway "$action"
   else
-    hermes -p "$profile" gateway "$action"
+    minerva -p "$profile" gateway "$action"
   fi
 }
 
@@ -898,7 +898,7 @@ case "$action" in
     done
     ;;
   list)
-    hermes gateway list
+    minerva gateway list
     ;;
   *)
     usage
@@ -986,7 +986,7 @@ hermes logs --help              # filters, levels, JSON output
 ```bash
 hermes profile list             # profiles + model + gateway state
 hermes-gateways status          # full status across every profile
-launchctl list | grep hermes    # macOS — PIDs and labels
+launchctl list | grep minerva    # macOS — PIDs and labels
 systemctl --user list-units 'hermes-gateway-*'   # Linux — units
 ```
 

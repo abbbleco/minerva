@@ -40,7 +40,7 @@ hermes profile list
 **示例：**
 
 ```bash
-$ hermes profile list
+$ minerva profile list
   default
 * work
   dev
@@ -182,7 +182,7 @@ hermes profile show <name>
 **示例：**
 
 ```bash
-$ hermes profile show work
+$ minerva profile show work
 Profile: work
 Path:    ~/.hermes/profiles/work
 Model:   anthropic/claude-sonnet-4 (anthropic)

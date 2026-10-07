@@ -153,7 +153,7 @@ export default function OverviewPage() {
                   </span>
                 )}
               </div>
-              <p className="nous-display mt-3 text-[44px]">${p.price}</p>
+              <p className="nous-display mt-3 text-[44px]">{p.priceDisplay}</p>
               <p className="text-[11px] tracking-widest text-white/60 uppercase">Per month</p>
               <div className="mt-3 h-[110px] overflow-hidden rounded-[2px]">
                 <Duo src={p.image} alt={`${p.id} tier art`} />

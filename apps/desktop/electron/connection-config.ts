@@ -28,7 +28,7 @@
 //     Max-Age tracks the access-token TTL, so the cookie jar drops it the
 //     instant the AT expires.
 //   - hermes_session_rt: the OAuth refresh token. Long-lived (24h rotating,
-//     reuse-detected — Portal NAS #293 / hermes #37247). When the AT cookie
+//     reuse-detected — Portal NAS #293 / minerva #37247). When the AT cookie
 //     has lapsed but the RT cookie is still present, the gateway middleware
 //     transparently rotates a fresh AT on the next authenticated request
 //     (POST /api/auth/ws-ticket), so the session is still LIVE even with no
@@ -1139,7 +1139,7 @@ function resolveAuthMode(inputAuthMode, existingAuthMode) {
 }
 
 /**
- * True if any cookie in `cookies` is a hermes session ACCESS-token cookie
+ * True if any cookie in `cookies` is a minerva session ACCESS-token cookie
  * with a non-empty value. `cookies` is an array of {name, value} (the shape
  * Electron's session.cookies.get returns).
  *

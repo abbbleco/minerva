@@ -116,7 +116,7 @@ SIGNAL_HOME_CHANNEL=+1234567890                  # cron 任务的默认投递目
 ```bash
 hermes gateway              # 前台运行
 hermes gateway install      # 安装为用户服务
-sudo hermes gateway install --system   # 仅 Linux：开机自启系统服务
+sudo minerva gateway install --system   # 仅 Linux：开机自启系统服务
 ```
 
 ---

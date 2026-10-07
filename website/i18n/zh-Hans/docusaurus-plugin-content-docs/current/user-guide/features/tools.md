@@ -139,13 +139,13 @@ hermes config set terminal.vercel_runtime node24
 对于本地一次性开发，Minerva 也接受短期 Vercel OIDC token：
 
 ```bash
-VERCEL_OIDC_TOKEN="$(vc project token <project-name>)" hermes chat
+VERCEL_OIDC_TOKEN="$(vc project token <project-name>)" minerva chat
 ```
 
 在已关联的 Vercel 项目目录中：
 
 ```bash
-VERCEL_OIDC_TOKEN="$(vc project token)" hermes chat
+VERCEL_OIDC_TOKEN="$(vc project token)" minerva chat
 ```
 
 启用 `container_persistent: true` 后，Minerva 使用 Vercel 快照在同一任务的沙箱重建时保留文件系统状态，其中可包含沙箱内 Minerva 同步的凭据、技能和缓存文件。快照不保留活跃进程、PID 空间或相同的活跃沙箱标识。

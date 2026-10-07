@@ -5,7 +5,7 @@
  * packaged binary) with a real `minerva serve` backend pointed at a mock
  * inference server. The full chain is exercised:
  *
- *   electron → hermes serve (python) → mock provider → renderer
+ *   electron → minerva serve (python) → mock provider → renderer
  *
  * Prerequisite: `npm run build` must have been run so dist/ exists.
  * Run from the nix devshell:
@@ -53,7 +53,7 @@ test.describe('dev-mode boot with mock backend', () => {
 
   test('backend boots and app becomes ready', async () => {
     // This is the big one — wait for the full boot chain to complete:
-    // electron starts → hermes serve is spawned → WS connects → config
+    // electron starts → minerva serve is spawned → WS connects → config
     // loaded → sessions loaded → boot overlay dismissed → composer visible.
     await waitForAppReady(fixture!, 120_000)
   })

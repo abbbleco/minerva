@@ -385,7 +385,7 @@ def _build_hermes_tools_mcp_entry() -> dict:
     unset the codex subprocess must inherit its launcher's runtime HERMES_HOME (systemd, gateway,
     kanban), not a migrate-time default burned into config.toml that pins the wrong profile. The
     pytest-tempdir guard keeps a sibling test's monkeypatched HERMES_HOME out of the user's real
-    config. PYTHONPATH passes through so a worktree-launched hermes finds the branch's modules.
+    config. PYTHONPATH passes through so a worktree-launched minerva finds the branch's modules.
     """
     import sys
     env: dict[str, str] = {}

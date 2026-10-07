@@ -497,6 +497,6 @@ def test_server_added_after_discovery_is_connected_by_the_next_agent_build(monke
     build_agent()  # new session, config unchanged: github is live, nothing to do
     assert len(runs) == 1
 
-    configured["linear"] = {"url": "https://mcp.example.test/linear"}  # hermes mcp add linear
+    configured["linear"] = {"url": "https://mcp.example.test/linear"}  # minerva mcp add linear
     build_agent()
     assert len(runs) == 2

@@ -292,7 +292,7 @@ def _maybe_apply_codex_app_server_runtime(*, provider: str, api_mode: str, model
 # ── base_url / credential helpers ──────────────────────────────────────────────────────────
 
 _ANTHROPIC_DEFAULT_BASE_URL = "https://api.anthropic.com"
-_NO_ANTHROPIC_CREDENTIALS_MSG = ("No Anthropic credentials found. Run 'hermes auth add anthropic' to sign in, "
+_NO_ANTHROPIC_CREDENTIALS_MSG = ("No Anthropic credentials found. Run 'minerva auth add anthropic' to sign in, "
                                  "or set ANTHROPIC_TOKEN / ANTHROPIC_API_KEY.")
 
 
@@ -1041,6 +1041,40 @@ def _raise_for_credentialless_bare_custom(requested_provider: str, runtime: Dict
     )
 
 
+def _nous_missing_falls_back_to_router(exc: AuthError) -> bool:
+    """True when a `nous` OAuth failure should serve the Portal router instead.
+
+    Missing-terminal states (no login, no token pair) and revoked grants all
+    mean Nous OAuth cannot satisfy the request; when the Portal router key
+    exists the request is a migration leftover (old config, strict check with
+    the vehicle id), not a genuine Nous misconfiguration.
+    """
+    code = getattr(exc, "code", None)
+    try:
+        from hermes_cli.auth import _NOUS_AUTH_MISSING_CODES, _OAUTH_GRANT_DEAD_CODES
+        if code in _NOUS_AUTH_MISSING_CODES or code in _OAUTH_GRANT_DEAD_CODES:
+            return True
+    except Exception:
+        pass
+    return False
+
+
+def _minerva_router_runtime_for_nous(requested_provider, model_cfg, target_model):
+    """Minerva router runtime when `nous` OAuth is gone but the router key exists, else None."""
+    try:
+        from hermes_cli.auth import get_abbble_auth_status
+        if not get_abbble_auth_status().get("logged_in"):
+            return None
+        pconfig = PROVIDER_REGISTRY.get("minerva")
+        if pconfig is None:
+            return None
+        return _api_key_provider_runtime("minerva", pconfig, requested_provider, model_cfg, target_model)
+    except AuthError:
+        return None
+    except Exception:
+        return None
+
+
 def _ladder_rungs(requested_provider, explicit_api_key, explicit_base_url, target_model):
     """Ladder rungs 2-8, yielded lazily so each is evaluated only when the previous one returned
     nothing; the last rung (OpenRouter / bare-custom fallback) always yields a runtime."""
@@ -1063,6 +1097,15 @@ def _ladder_rungs(requested_provider, explicit_api_key, explicit_base_url, targe
         try:
             yield _resolve_oauth_runtime(provider, requested_provider, model_cfg, target_model)
         except AuthError as exc:
+            # ABBBLE migration: an explicit `nous` request (old configs, strict
+            # onboarding checks) serves the Portal router when Nous OAuth is
+            # gone but MINERVA_ROUTER_KEY exists. Live Nous sessions still
+            # resolve above; this only triggers on missing-terminal states.
+            if provider == "nous" and _nous_missing_falls_back_to_router(exc):
+                router_runtime = _minerva_router_runtime_for_nous(requested_provider, model_cfg, target_model)
+                if router_runtime is not None:
+                    yield router_runtime
+                    return
             # Auto-detected login with stale/revoked/benched credentials: fall through to the env-var
             # providers, but keep the error so a keyless fallback can still say what is wrong.
             if requested_provider != "auto":

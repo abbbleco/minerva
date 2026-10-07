@@ -34,7 +34,7 @@ def _make_socket_dir(tmpdir, session_name, pid=None, owner_pid=None):
         tmpdir: base temp directory
         session_name: name like "h_abc1234567" or "cdp_abc1234567"
         pid: daemon PID to write to <session>.pid (None = no file)
-        owner_pid: owning hermes PID to write to <session>.owner_pid
+        owner_pid: owning minerva PID to write to <session>.owner_pid
                    (None = no file; tests the legacy path)
     """
     d = tmpdir / f"agent-browser-{session_name}"
@@ -116,7 +116,7 @@ class TestReapOrphanedBrowserSessions:
         terminate_calls = []
 
         def _pid_exists(pid):
-            return pid == 4242  # daemon alive, owning hermes gone
+            return pid == 4242  # daemon alive, owning minerva gone
 
         with patch("gateway.status._pid_exists", side_effect=_pid_exists), \
              patch("gateway.status.get_process_start_time", return_value=777), \
@@ -165,8 +165,8 @@ class TestReapOrphanedBrowserSessions:
 class TestOwnerPidCrossProcess:
     """Tests for owner_pid-based cross-process safe reaping.
 
-    The owner_pid file records which hermes process owns a daemon so that
-    concurrent hermes processes don't reap each other's active browser
+    The owner_pid file records which minerva process owns a daemon so that
+    concurrent minerva processes don't reap each other's active browser
     sessions.  Added to fix orphan accumulation from crashed processes.
     """
 
@@ -374,7 +374,7 @@ class TestLeakedDaemonWithLiveOwner:
     tracking is lost on any exception path between spawn and registration,
     yet the owner PID stays up, so the reaper skipped it forever.  Observed in
     the wild — five agent-browser daemons accumulated over 10 days inside one
-    long-lived hermes process, pinning ~5 CPU cores and driving load to 100+.
+    long-lived minerva process, pinning ~5 CPU cores and driving load to 100+.
 
     The daemon-side ``AGENT_BROWSER_IDLE_TIMEOUT_MS`` is not a backstop here:
     it does not fire when the daemon itself is wedged (e.g. Chrome's framework
@@ -494,7 +494,7 @@ class TestPeriodicOrphanReap:
     """The reaper must run repeatedly, not only at cleanup-thread startup.
 
     A startup-only reap can never recover from a leak that appears *after*
-    boot — which is exactly what happens in a hermes process that stays up
+    boot — which is exactly what happens in a minerva process that stays up
     for days.
     """
 

@@ -1449,7 +1449,7 @@ class OpenVikingMemoryProvider(MemoryProvider):
 
         ``/reload`` only refreshes ``os.environ`` — the existing provider instance is not re-initialized —
         so OPENVIKING_* values added to ``~/.hermes/.env`` after startup never reach the live client and
-        tools keep running against stale auth until the user restarts hermes (#21130).
+        tools keep running against stale auth until the user restarts minerva (#21130).
         """
         if not self._env_refresh_enabled:
             return self._client  # no baseline yet: keep whatever the caller wired up

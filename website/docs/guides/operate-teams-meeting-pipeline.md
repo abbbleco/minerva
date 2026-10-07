@@ -60,7 +60,7 @@ Minerva ships a built-in cron scheduler. The `--no-agent` mode runs a script as 
 mkdir -p ~/.hermes/scripts
 cat > ~/.hermes/scripts/maintain-teams-subscriptions.sh <<'EOF'
 #!/usr/bin/env bash
-exec hermes teams-pipeline maintain-subscriptions
+exec minerva teams-pipeline maintain-subscriptions
 EOF
 chmod +x ~/.hermes/scripts/maintain-teams-subscriptions.sh
 ```

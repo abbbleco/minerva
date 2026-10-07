@@ -830,7 +830,7 @@ KEEP_STASH=""
 if "${UPDATE_INVOKE[@]}" update --help 2>/dev/null | grep -q -- '--keep-stash'; then
   KEEP_STASH="--keep-stash"
 else
-  log "installed hermes predates --keep-stash; running without it"
+  log "installed minerva predates --keep-stash; running without it"
 fi
 # --gateway restarts the local messaging gateway after the update. The
 # Desktop omits it (--no-gateway) when it is served by a remote gateway
@@ -846,7 +846,7 @@ log "running: ${UPDATE_INVOKE[*]} update --yes $GATEWAY_FLAG $KEEP_STASH ${TARGE
 publish_stage "Updating code and dependencies"
 OUT="$("${UPDATE_INVOKE[@]}" update --yes $GATEWAY_FLAG $KEEP_STASH "${TARGET_ARGS[@]}" 2>&1)"; CODE=$?
 printf '%s\n' "$OUT" >> "$LOG" 2>/dev/null
-log "hermes update exit code: $CODE"
+log "minerva update exit code: $CODE"
 
 if [ "$LEGACY_INSTALL" -eq 1 ] && [ "$CODE" -ne 0 ] && [ "$CODE" -ne 2 ]; then
   # Retry once: update-boundary class (fresh code on disk, stale in memory).
@@ -859,7 +859,7 @@ if [ "$LEGACY_INSTALL" -eq 1 ] && [ "$CODE" -ne 0 ] && [ "$CODE" -ne 2 ]; then
   # dedicated exit code (8) so callers can distinguish "skipped" from a
   # real failure.
   if printf '%s' "$OUT" | grep -q "CODE UPDATE SKIPPED"; then
-    log "hermes update skipped (checkout parked on a non-target branch); not retrying"
+    log "minerva update skipped (checkout parked on a non-target branch); not retrying"
     FINAL_CODE=8
     FINAL_MSG="Update skipped: the git checkout is on a branch that isn't fully merged into $BRANCH. Switch to the target branch and update again (see the terminal output for the exact commands)."
     exit 8
@@ -876,23 +876,23 @@ trap 'on_signal TERM' TERM
 # Pre-PM update code could report a failed desktop build with exit zero.
 # Current composition propagates failure and never enters this legacy repair.
 if [ "$LEGACY_INSTALL" -eq 1 ] && [ "$CODE" -eq 0 ] && printf '%s' "$OUT" | grep -q "Desktop build failed"; then
-  log "desktop build failed inside hermes update; retrying build"
+  log "desktop build failed inside minerva update; retrying build"
   publish_stage "Rebuilding Desktop"
   "${UPDATE_INVOKE[@]}" desktop --force-build --build-only >> "$LOG" 2>&1 || {
-    FINAL_CODE=6 FINAL_MSG="Code and dependencies updated, but the Desktop app rebuild failed - you are running the previous build. Run hermes desktop --force-build from a terminal to retry."
+    FINAL_CODE=6 FINAL_MSG="Code and dependencies updated, but the Desktop app rebuild failed - you are running the previous build. Run minerva desktop --force-build from a terminal to retry."
     exit 6
   }
 fi
 
 if [ "$CODE" -eq 0 ]; then FINAL_CODE=0 FINAL_MSG="Update complete."
 else
-  FINAL_CODE="$CODE" FINAL_MSG="Update failed (exit $CODE). Run hermes debug share in a terminal to send a report."
+  FINAL_CODE="$CODE" FINAL_MSG="Update failed (exit $CODE). Run minerva debug share in a terminal to send a report."
   # The bricked-venv class is fixable and must not read as a generic exit 1:
   # a dead interpreter with a failed/impossible heal means retrying can never
   # succeed — tell the user what is actually wrong (#95759).
   if [ "$LEGACY_INSTALL" -eq 1 ] && ! tcc_probe_python "$INSTALL_ROOT/venv/bin/python3" \
       && ! tcc_probe_python "$INSTALL_ROOT/venv/bin/python"; then
-    FINAL_MSG="Update failed: the Python interpreter inside $INSTALL_ROOT/venv cannot start (heal state: $TCC_HEAL_STATE). Reinstall the runtime with the Minerva installer, or run hermes doctor --fix from a terminal if any hermes command still works."
+    FINAL_MSG="Update failed: the Python interpreter inside $INSTALL_ROOT/venv cannot start (heal state: $TCC_HEAL_STATE). Reinstall the runtime with the Minerva installer, or run minerva doctor --fix from a terminal if any minerva command still works."
   fi
 fi
 exit "$FINAL_CODE"

@@ -315,7 +315,7 @@ def process_state(pid: int, creation_time_ns: int, hermes_path: str, spawn_nonce
         return {"alive": True, "owned": False, "indeterminate": True, "reason": "argv-unavailable"}
     expected = os.path.normcase(os.path.abspath(hermes_path))
     arg0 = os.path.normcase(os.path.abspath(argv[0]))
-    # argv[0] is the hermes exe or (normally) the base Python, whose path varies by venv/uv
+    # argv[0] is the minerva exe or (normally) the base Python, whose path varies by venv/uv
     # layout — so match "a python running our module" (`-c` bootstrap or plain `-m`). Identity
     # is anchored by the unforgeable creation-time + secret owner-nonce below.
     is_python = os.path.basename(arg0).startswith("python")

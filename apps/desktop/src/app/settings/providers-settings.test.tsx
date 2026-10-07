@@ -208,7 +208,7 @@ describe('ProvidersSettings', () => {
     listOAuthProviders.mockResolvedValue({
       providers: [
         provider('qwen-oauth', true, {
-          cli_command: 'hermes auth add qwen-oauth',
+          cli_command: 'minerva auth add qwen-oauth',
           disconnect_hint: "Use `minerva auth add qwen-oauth` or that provider's CLI to remove it.",
           disconnectable: false,
           flow: 'external',

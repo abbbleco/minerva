@@ -297,7 +297,7 @@ default_permissions = ":workspace"
 
 ```bash
 # 在 work 配置文件中，你可以这样包装 hermes：
-CODEX_HOME=~/.hermes/profiles/work/codex hermes chat
+CODEX_HOME=~/.hermes/profiles/work/codex minerva chat
 ```
 
 你需要在设置了该 `CODEX_HOME` 的情况下重新运行一次 `codex login`，以便 OAuth token 落入配置文件范围的位置。之后，`minerva -p work` 将在隔离的 Codex 状态下运行。

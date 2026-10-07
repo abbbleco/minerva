@@ -119,6 +119,6 @@ def test_musl_host_gets_runnable_tools_or_a_refusal_naming_musl(alpine_install):
     assert not dead, ("musl host: published tool binaries that cannot execute: " + ", ".join(dead)
                       + "\n" + I.describe(cp))
     if rc == 0:
-        hermes = [p for code, p in probes if p.endswith("/.local/bin/hermes")]
-        assert hermes, "musl host: install exited 0 but published no hermes command:\n" + I.describe(cp)
+        minerva = [p for code, p in probes if p.endswith("/.local/bin/hermes")]
+        assert hermes, "musl host: install exited 0 but published no minerva command:\n" + I.describe(cp)
 

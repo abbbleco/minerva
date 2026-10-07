@@ -333,7 +333,7 @@ _NO_BASE_URL = {"ok": False, "reason": "no sync base url configured", "noop": Tr
 
 
 def push_skills(client: Optional[SyncClient] = None, *, skill_names: Optional[List[str]] = None,
-                identity: Optional[Dict[str, Any]] = None, message: str = "hermes skill sync") -> Dict[str, Any]:
+                identity: Optional[Dict[str, Any]] = None, message: str = "minerva skill sync") -> Dict[str, Any]:
     """Push opted-in skills to ``refs/user/<owner>/HEAD`` (upload objects, CAS HEAD). 409 with an actual
     head -> three-way merge + one retry; 409 on a NON-EXISTENT ref (stale local head) -> CAS as a create."""
     identity, client = _personal_client(identity, client)
@@ -459,7 +459,7 @@ def _gate_and_swallow(op: str, run: Callable[[Dict[str, Any]], Optional[Dict[str
         return None
 
 
-def maybe_push_skills(*, message: str = "hermes skill sync") -> Optional[Dict[str, Any]]:
+def maybe_push_skills(*, message: str = "minerva skill sync") -> Optional[Dict[str, Any]]:
     """Best-effort push (debounced skill_manage hook). Never raises."""
     return _gate_and_swallow("maybe_push_skills", lambda identity: push_skills(
         identity=identity, message=message) if list_synced_skill_names() else None)

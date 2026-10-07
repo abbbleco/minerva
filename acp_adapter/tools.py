@@ -1,4 +1,4 @@
-"""ACP tool-call helpers for mapping hermes tools to ACP ToolKind and building content."""
+"""ACP tool-call helpers for mapping minerva tools to ACP ToolKind and building content."""
 
 from __future__ import annotations
 
@@ -61,7 +61,7 @@ _Formatter = Callable[[str, Optional[str], Optional[Args]], Optional[str]]
 
 
 def get_tool_kind(tool_name: str) -> ToolKind:
-    """Return the ACP ToolKind for a hermes tool, defaulting to 'other'."""
+    """Return the ACP ToolKind for a minerva tool, defaulting to 'other'."""
     return TOOL_KIND_MAP.get(tool_name, "other")
 
 
@@ -779,7 +779,7 @@ _START_CONTENT_BUILDERS: Dict[str, Optional[Callable[[Args], Any]]] = {
 
 
 def build_tool_start(tool_call_id: str, tool_name: str, arguments: Args, *, edit_diff: Any = None) -> ToolCallStart:
-    """Create a ToolCallStart event for the given hermes tool invocation.
+    """Create a ToolCallStart event for the given minerva tool invocation.
 
     A malformed argument (e.g. a non-string ``command``/``path`` from a model
     ignoring the schema) must never abort the render — this runs on the live

@@ -1191,35 +1191,35 @@ the repo fix is what the running app picks up; a packaged/installed launcher
 would need a re-provision to gain both this fix and the feeds/goals features.
 ---
 
-# Session 19 � Phase 3 verify + goals-pane tsc fix (2026-10-05)
+# Session 19 � Phase 3 verify + goals-pane tsc fix (2026-10-05)
 
 User completed Phase 3 on the Session-16 registry foundation (committed as
 `f95e5269 feeds, ideas, goals`: detection, dispatch parity, REST router,
 minerva-goals pane, kanban bridge, Sessions 17-18 logged, plan already at
 Phase 3 done). Verification found renderer `tsc` red: 4x TS2554 in
-`goals-pane.test.tsx` � the same untyped-`vi.fn` mock shape as the feeds
+`goals-pane.test.tsx` � the same untyped-`vi.fn` mock shape as the feeds
 pane (zero-arg implementations invoked with args). Fixed by typing the mock
 params (`_body: unknown` / `_id: string`); no production code touched.
 
 Verified: renderer tsc 0; vitest minerva-goals 13/13; Python 34/34
 (test_goal_registry + test_goals_router via shim). Fixture-based goal suites
-(test_goals.py, gateway goal tests) remain CI-only � no pytest in .venv or
+(test_goals.py, gateway goal tests) remain CI-only � no pytest in .venv or
 system python. Plan status already correct; no plan change.
 ---
 
-# Session 20 � Phase 4 PRDs (2026-10-05)
+# Session 20 � Phase 4 PRDs (2026-10-05)
 
 The flagship: intake ? triage gate ? drafting ? review queue ? kanban, with
 intelligence concentrated in triage (never a PRD per conversation) and the
 Phase-5 form seam designed in, not on.
 
-Backend � new `hermes_cli/prd_store.py` (intake log with cited-first prune
+Backend � new `hermes_cli/prd_store.py` (intake log with cited-first prune
 cap + PRDs + triage cases under `<home>/prds/`), `prd_triage.py`
 (scalar-strength judge, thresholds in config not prompts, LLM dedupe against
-capped PRD titles � no embedding client exists in-tree; unparseable fails to
+capped PRD titles � no embedding client exists in-tree; unparseable fails to
 watch), `prd_drafting.py` (writer with strict schema + citation validation;
 section_sources ride the triage case, schema frozen), `prd_pipeline.py` (ONE
-`ingest_intake` every surface shares � gateway hook, dashboard REST, future
+`ingest_intake` every surface shares � gateway hook, dashboard REST, future
 portal; sync-store/async-triage split for the Phase-5 latency budget;
 `review_prd` with auto-hop approve/reject; `dispatch_approved`
 approved-only, idempotent via case link + history note + kanban
@@ -1232,7 +1232,7 @@ drafts once). Config: `prds` section (thresholds, debounce, writer tokens)
 + `auxiliary.prd_drafter`; triage rides the goal_judge transport (same
 short-JSON shape). Privacy: no intake content in logs, enforced by construction.
 
-Frontend � new `minerva-prds` plugin (auto-discovered): review section,
+Frontend � new `minerva-prds` plugin (auto-discovered): review section,
 watching section, history, inline reject-reason + revise forms, paste-intake
 form, dispatch button; `src/api/prds.ts`; `common.prds` in core catalog
 (en + 6). File upload stays API-level (tested at REST); pane injects text.
@@ -1241,22 +1241,22 @@ Verified: Python 84/84 (pipeline incl. triage fixtures per outcome, drafting
 citation rejects, review paths, dispatch idempotency x2, ingest seam, observe
 gate, router E2E incl. file upload, registry suites unregressed); renderer
 tsc 0; vitest minerva-prds + i18n 88/88; desktop-slash 24/24. Gateway/TUI
-handler bodies compile-checked (no pytest in .venv � live suites are CI-only).
+handler bodies compile-checked (no pytest in .venv � live suites are CI-only).
 Follow-ups noted, not done: TUI turn-hook coverage (gateway only + manual),
 pane file-picker, CLI turn-hook coverage.
 ---
 
-# Session 21 � Phase 5 website form intake (2026-10-05)
+# Session 21 � Phase 5 website form intake (2026-10-05)
 
 The external funnel: agency-web form ? proxy ? portal upstream ? async drain
 into the Phase-4 pipeline. Found the proxy + form already posting to a
-nonexistent upstream � Phase 5 built the missing end, not a parallel one.
+nonexistent upstream � Phase 5 built the missing end, not a parallel one.
 
 Portal (new `app/api/v1/intake/`): `_lib.ts` holds every decision
 (validation matrix with per-field errors, site-key auth, per-key throttle,
 store, queued list, ack) behind an injected store seam; three thin routes
 (POST intake, GET queued, POST [id]/ack) only resolve the service client.
-Keys REUSE `agency_api_keys` (purpose server, status/expiry enforced) � no
+Keys REUSE `agency_api_keys` (purpose server, status/expiry enforced) � no
 new key table, no mint UI; mint via existing POST /api/portal/keys. Throttle
 5/hour/key + honeypot accept-and-discard mirror contact-sales. Migration 041
 (`portal_intake_submissions`, RLS-locked, drain + throttle indexes) applied;
@@ -1264,7 +1264,7 @@ RLS gate green (41 migrations). Test runner: tsx + node:test per router
 precedent (`test` scripts added to portal + agency-web package.json).
 
 Agency-web: honeypot input (off-screen, unfocusable) + payload line; proxy
-itself unchanged (forwards whole body � verified by test, plus a doc line on
+itself unchanged (forwards whole body � verified by test, plus a doc line on
 the key requirement).
 
 Python drain (new `hermes_cli/prd_forms.py`): queued ? ingest as
@@ -1273,7 +1273,7 @@ thread context; media_url ? attachment ref) ? triage now ? ack done/failed,
 per-submission isolation, silent skips (no key, lapsed premium, portal down).
 Background job mirrors feeds_cron (own shim/script/schedule/reason); REST
 status/enable/run on the prds router (literals registered before `/{prd_id}`
-� FastAPI matches in order; that clash cost one debug round).
+� FastAPI matches in order; that clash cost one debug round).
 `MINERVA_INTAKE_API_KEY` registered in OPTIONAL_ENV_VARS (secret); base URL
 is const + `MINERVA_INTAKE_BASE_URL` bridge.
 
@@ -1286,7 +1286,7 @@ Deliberately deferred: portal console key-management page (API exists), pane
 forms-sync toggle + file picker (REST exists).
 ---
 
-# Session 22 � optional phone on form intake (2026-10-05)
+# Session 22 � optional phone on form intake (2026-10-05)
 
 Contact form gained an optional phone field, threaded through the whole
 funnel: `ContactHero.tsx` input (`Phone (optional)`, `data-optional` so
@@ -1294,13 +1294,13 @@ the shared validator skips empties but checks format when filled) + payload
 line; proxy forwards untouched (interface documents the field); portal
 validates leniently (digits/spaces/+-.() only, empty omits) and stores it
 (migration 042 applied); drain appends `tel <phone>` to the intake contact
-line (no IntakeEvent schema change � rides thread_context like the email).
+line (no IntakeEvent schema change � rides thread_context like the email).
 
 Verified: portal 11/11 + tsc/eslint clean; agency-web 5/5 + eslint clean;
 Python forms 10/10.
 ---
 
-# Session 23 � LEADS Phase 1 directory backend (2026-10-05)
+# Session 23 � LEADS Phase 1 directory backend (2026-10-05)
 
 New `hermes_cli/leads.py`: contacts DERIVED (sessions + pairing names +
 website-form intake), never captured. Channel keys per plan (WhatsApp digit
@@ -1318,7 +1318,7 @@ empty-directory read). Plan doc advanced to Phase 1 done. Next: read REST +
 reply endpoint (Phase 2/3).
 ---
 
-# Session 24 � LEADS Phases 2+3 read REST + reply (2026-10-05)
+# Session 24 � LEADS Phases 2+3 read REST + reply (2026-10-05)
 
 `hermes_cli/web_routers/leads.py` mounted in web_server: GET /api/leads
 (+ platform filter), GET /api/leads/{id} (contact + bounded recent messages
@@ -1329,7 +1329,7 @@ across DM channels), PATCH override (mute/pin/note, real meta writes), POST
 reused, target from OUR rows never the client); groups 400 read-only, form
 leads 400 (reply by email), unknown platform 409, delivery failure 502 with
 sanitized detail; success touches last_read_at. Literals registered with
-param routes in safe order (no /{id} swallow � reply/list are method+shape
+param routes in safe order (no /{id} swallow � reply/list are method+shape
 distinct, verified by route inspection).
 
 Verified: 22/22 (15 derivation + 7 router: gate, filter, 404s, override
@@ -1337,7 +1337,7 @@ persist, newest-DM send + mark-read, validation matrix, relay/config/send
 failure mapping); web_server imports clean. Pane (Phase 4) next.
 ---
 
-# Session 25 � LEADS Phase 4 pane + cross-channel hints (2026-10-05)
+# Session 25 � LEADS Phase 4 pane + cross-channel hints (2026-10-05)
 
 `minerva-prds`-pattern `minerva-leads` plugin (auto-discovered): list with
 search + channel chips + unread dots, muted section, master-detail with
@@ -1346,7 +1346,7 @@ contact info with mute/pin/note editing; `src/api/leads.ts`;
 `common.leads` in core catalog (en + 6); pane hardened with `?? []` reads
 against older backends. Plus cross-channel `also_on` hints: backend matches
 shared emails/phones (WhatsApp key digits populate phones, making WA?form
-links real), REST + pane display, i18n � 4.
+links real), REST + pane display, i18n � 4.
 
 Verified: Python 24/24, tsc 0, vitest 87/87 (incl. i18n completeness).
 Repairs along the way: three test-query bugs, one eaten test-def line, one
@@ -1354,7 +1354,7 @@ removal-instead-of-harden edit (all caught before green). Remaining plan
 Phase 5: manual merge, intake deep links.
 ---
 
-# Session 26 � LEADS Phase 5 merge + intake links (2026-10-05)
+# Session 26 � LEADS Phase 5 merge + intake links (2026-10-05)
 
 Manual merge (explicit, lossless, reversible): `merge_contacts`/
 `unmerge_contact` validate (self/empty/target-merged rejected; cycles
@@ -1364,7 +1364,7 @@ snippet, summed unread, widest span; sources vanish, targets gain
 unmerge restores source; merged-away ids 404 with the target named; re-link
 idempotent). Form deep link: GET intake events per contact (bounded, capped).
 Pane: merge picker (excludes self), unmerge rows, intake viewer for form
-contacts; hardened `?? []` reads; 8 i18n keys � 4.
+contacts; hardened `?? []` reads; 8 i18n keys � 4.
 
 Verified: Python 30/30, tsc 0, vitest 90/90. LEADS plan closed (all 5
 phases). Repairs: merged-away 404 vs unmerge action (restructured PATCH),
@@ -1372,7 +1372,7 @@ re-link idempotency expectation, two eaten test-def lines, one
 removal-instead-of-harden, TS/backend contact_id shape alignment.
 ---
 
-# Session 27 � portal device approve without agency (2026-10-06)
+# Session 27 � portal device approve without agency (2026-10-06)
 
 Auth debugging (localhost:3000/?code= loop) traced to Supabase project Site
 URL still on localhost (fixed in dashboard, not code). Follow-up product fix
@@ -1385,7 +1385,7 @@ qqbot adapter) already degrade without pilk/keys, untouched. tsc/eslint clean.
 Needs portal redeploy to take effect; verify via device-code sign-in E2E.
 ---
 
-# Session 28 � portal signed-in UI state (2026-10-06)
+# Session 28 � portal signed-in UI state (2026-10-06)
 
 Site now reflects auth state. New `app/components/account-button.tsx`
 (variants sidebar/folded-signup/folded-login/nav/loginlink; session from
@@ -1403,7 +1403,7 @@ no-html-link error in layout.tsx mobile nav left alone); 3/3 new tsx tests.
 Needs portal redeploy to take effect.
 ---
 
-# Session 29 � router Cloudflare Workers target (2026-10-07)
+# Session 29 � router Cloudflare Workers target (2026-10-07)
 
 Vercel output investigation (green builds, total 404s incl. branch URLs)
 closed in favor of porting: same Hono app, third target. New
@@ -1422,11 +1422,11 @@ deploy, workers.dev verify, custom-domain cutover of minrouter.abbble.co.za.
 Vercel files left intact as fallback.
 ---
 
-# Session 30 � router per-agency velocity limiting (2026-10-07)
+# Session 30 � router per-agency velocity limiting (2026-10-07)
 
 Adopted the rate-limit half of the gateway proposal, rejected the rest.
 Already existed (kept): agency client keys, tier-filtered catalog, credits +
-monthly quota gates, Supabase ledger billing � no D1, no second billing store.
+monthly quota gates, Supabase ledger billing � no D1, no second billing store.
 New `apps/router/src/velocity.ts`: sliding-window RPM per agencyId, free 20
 / paid 100 per minute via MINERVA_RPM_FREE/_PAID, checked AFTER billing gates
 (denied requests never consume budget), 429 + retry-after on exceed,
@@ -1467,14 +1467,14 @@ deploy needed beyond this change.
 # Session 32 - welcome-api Cloudflare Workers target (2026-10-07)
 
 Vercel total-404s hit welcome-api too, so it got the same third-target port as
-the router (Session 29) � simpler this time: no ledger drain, so src/worker.ts
+the router (Session 29) � simpler this time: no ledger drain, so src/worker.ts
 is a one-line re-export of the Hono app (no ALS/waitUntil bridge), plus
 wrangler.toml (name minerva-welcome, nodejs_compat, workers_dev=true),
 deploy/dev:worker scripts, README section. Untouched: src/app.ts, policy.ts,
 index.ts (Node/Docker), api/[[...route]].ts (Vercel fallback). Port is safe
 because every dependency was already Workers-clean: lazy process.env reads,
 global fetch, node:crypto (compat polyfill, same as router embeddings),
-fetch-based supabase-js. No MINERVA_ROUTER_URL secret needed � the default is
+fetch-based supabase-js. No MINERVA_ROUTER_URL secret needed � the default is
 already the live router workers.dev URL. One known shape limit, shared with
 the router: the 300s relay AbortSignal exceeds Workers request wall-clock on
 very long generations; consistent posture, not redesigned.
@@ -1484,3 +1484,424 @@ wrangler deploy --dry-run bundles clean (811 KiB, no bindings). NOT yet done
 (needs operator): 2 secrets (SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY),
 deploy, workers.dev verify, Custom Domain welcome-api.abbble.co.za (the
 Python DEFAULT_NOUS_WELCOME_URL target).
+
+---
+
+# Session 30 — ABBBLE Portal sign-in runtime resolution (2026-10-07)
+
+Desktop `pnpm dev` sign-in to ABBBLE Portal reported "Connected, but Minerva
+still cannot resolve a usable provider. Minerva is not logged into ABBBLE
+Portal. setup.status reports configured credentials, but runtime resolution
+still failed." Root cause was a vehicle/model id split: the device flow
+(`abbble` + legacy `nous` OAuth rows) persists `MINERVA_ROUTER_KEY` for the
+`minerva` model provider, but explicit runtime resolution for `abbble` (and
+`minerva` itself) aliased to `nous` via the Nous profile's aliases, so the
+strict `setup.runtime_check {provider}` checked Nous OAuth (missing) while
+`setup.status` (router key present) passed. Additionally both OAuth ids
+created `abbble` sessions, so `nous` polls failed provider mismatch.
+
+- `plugins/model-providers/nous/__init__.py` — removed `abbble`, `minerva`
+  from Nous aliases (now only `nous-portal`, `nousresearch`); `nous` keeps
+  its legacy OAuth identity.
+- `plugins/model-providers/minerva/__init__.py` — added `abbble` to Minerva
+  aliases (`minerva-router`, `abbble`); `abbble` vehicle now resolves to the
+  `minerva` provider that consumes the router key. Old → new: `abbble` was
+  `nous`, `minerva` was `nous`; now both are `minerva`, `nous` stays `nous`.
+- `hermes_cli/web_routers/oauth.py` — `_start_abbble_device_code` takes
+  `provider_id` and creates the session with it; `_DEVICE_CODE_STARTERS`
+  preserves the requested id for both `abbble` and `nous` so poll matching
+  succeeds.
+- `apps/desktop/src/store/onboarding.ts` (+ test) — new
+  `resolveModelSlugsForOAuth` maps both `abbble` and `nous` vehicles to
+  `minerva` for `fetchProviderDefaultModel` + `setup.runtime_check`; the
+  confirm card persists `minerva` and the strict check verifies the router
+  key instead of Nous OAuth.
+- `apps/desktop/src/store/onboarding.test.ts` — `nous` sign-in mock now
+  returns/expects `minerva` provider + `minerva` runtime_check.
+
+Deliberately not changed: the duplicate `nous` OAuth catalog row stays (old
+installs need its disconnect for stored Nous tokens; both rows now complete
+via the router key); `resolve_provider("auto")` already preferred `minerva`
+when the router key exists.
+
+Verify:
+- `.venv\Scripts\python.exe -c "from hermes_cli.auth import _plugin_aliases; ..."` → `abbble:minerva`, no `minerva:nous`.
+- `.venv\Scripts\python.exe` with clean `HERMES_HOME` + router key → `resolve_provider(abbble/minerva/auto)=minerva`, `resolve_runtime_provider(requested=abbble/minerva)` ok with `env:MINERVA_ROUTER_KEY`.
+- `pnpm --dir apps/desktop vitest run src/store/onboarding.test.ts` → 27 passed; `src/lib/runtime-readiness.test.ts` + `src/store/onboarding-owner.test.ts` → 14 passed.
+
+---
+
+# Session 31 — Nous→router fallback for strict checks (2026-10-07)
+
+Follow-up to Session 30: with old frontend code (or old `model.provider: nous`
+configs) the failure moved from `setup.runtime_check` to `POST /api/model/set`:
+`ABBBLE Portal is not connected: no API key or login was found for it. Add one
+with 'minerva auth add nous'` with detail `Minerva is not logged into ABBBLE
+Portal.` The assignment requested `nous` (fallback `providers[0]` when the
+vehicle id matched no model slug), whose OAuth is gone, while only the router
+key exists.
+
+- `hermes_cli/runtime_provider.py` — new `_nous_missing_falls_back_to_router`
+  + `_minerva_router_runtime_for_nous`; `_ladder_rungs` serves the Minerva
+  router for explicit `nous` requests on missing/revoked Nous states when the
+  router key exists, then returns (no re-raise). Live Nous sessions still
+  resolve via OAuth above; with no credentials at all the original
+  `nous_auth_missing` still raises (no silent OpenRouter reroute).
+
+Deliberately not changed: `nous` stays a separate provider (old tokens keep
+working); the frontend `nous→minerva` map from Session 30 remains the primary
+path for new sign-ins — this is the safety net for stale callers/configs.
+
+Verify:
+- Router key only → `resolve_runtime_provider(requested=nous)` returns
+  `provider=minerva, source=env:MINERVA_ROUTER_KEY` (was `nous_auth_missing`).
+- No credentials → `requested=nous` still raises `nous_auth_missing`.
+- `pnpm --dir apps/desktop vitest run src/store/onboarding.test.ts` → 27 passed.
+
+---
+
+# Session 32 — Dynamic router catalog + openrouter-free default (2026-10-07)
+
+Two directives from the ABBBLE owner after sign-in started working: (1) the
+onboarding default must be `minerva/openrouter-free` — landing on Opus failed
+with "Model 'minerva/anthropic-claude-opus-4.6' was not found in this provider's
+model listing" on free keys; (2) no fixed models in the router — OpenRouter
+rotates frequently, so the pinned 9-model catalog is a no-go.
+
+Default fix (engine):
+- `hermes_cli/web_routers/models.py` — `GET /api/model/recommended-default`
+  for `minerva` returns `minerva/openrouter-free` when listed (present on
+  every tier), else the generic pick. Old → new: free keys got Opus (absent
+  from their listing → set failed); now they get the free meta-router.
+- `hermes_cli/models.py::get_default_model_for_provider` — `minerva` returns
+  `minerva/openrouter-free` unconditionally (non-interactive fallback used by
+  gateway/CLI hot paths when no model was ever selected).
+
+Dynamic catalog (router):
+- NEW `minerva-monorepo/apps/router/src/live-models.ts` — fetches OpenRouter's
+  public `/models`, maps to wire shape (`minerva/<flattened>`), per-1M prices,
+  `free` = both legs zero; drops unpriced entries (unmeterable = unservable)
+  and wire-ID dupes. Cache TTL `MINERVA_MODELS_TTL_SECONDS` (default 3600,
+  min 60); stale cache serves immediately while a background refresh runs;
+  total failure → `null` so callers serve pinned. Singleflight dedupes.
+- `src/app.ts` — `GET /v1/models` serves live tier-filtered with pinned
+  fallback; chat resolves live-first, pinned fallback, omitted model still
+  defaults to pinned `DEFAULT_FREE_MODEL`; `upgrade_required` denials name
+  the live free list when reachable. Billing untouched (`chatCostUsd` uses the
+  resolving entry's prices), so rotations never rewrite ledger history.
+- `src/catalog.ts` — header rewritten: pinned list is now documented as the
+  offline fallback + stub source, not the live catalog.
+- `README.md` — new `MINERVA_MODELS_TTL_SECONDS` row, catalog section
+  (live-first design, billing note, engine default).
+- `tests/live-models.test.ts` (new, 6 tests) — transform/prices/dedupe,
+  tier filter, spellings, failure→null, empty→null, stale-serve + background
+  refresh (Date.now mock).
+
+Deliberately not changed: stub router stays pinned (deterministic tests);
+portal `/api/portal/models` was already live-first (OpenRouter → router →
+pinned); engine `FALLBACK_MODELS` stays (offline fallback only, not a
+catalog); `recommended_nous_default_model` untouched (legacy nous path);
+`DEFAULT_MODEL` (Opus) kept for the stub fallback only.
+
+Verify:
+- `pnpm --filter @minerva/router typecheck` → exit 0.
+- `pnpm --filter @minerva/router test` → 81 pass / 0 fail (75 existing + 6 new).
+- Engine: `get_default_model_for_provider('minerva')` →
+  `minerva/openrouter-free`; `GET /api/model/recommended-default?provider=minerva`
+  with mocked payload → `minerva/openrouter-free` when listed, first model
+  otherwise.
+- `pnpm --dir apps/desktop vitest run src/store/onboarding.test.ts` → 27 passed.
+
+Operator note: deploy the router for `/v1/models` to go live-dynamic; until
+then the engine still reads the pinned 9 (free keys see 4 + 2 fallback = 6 in
+the picker). After deploy, free keys see all live zero-price models, paid keys
+the full upstream list; onboarding lands on the free meta-router on every tier.
+
+---
+
+# Session 33 — Free-only fallback trio (2026-10-07)
+
+Owner directive: drop the two Anthropic paid flagships from the Minerva
+fallback, then add Nemotron free. Fallbacks are now free-only so every
+fallback row validates on every tier:
+`openrouter-free`, `google/gemma-4-31b-it:free` (verified live: price 0/0,
+ctx 262144), `nvidia/nemotron-3-ultra-550b-a55b:free` (verified live:
+price 0/0, ctx 1000000).
+
+- `plugins/model-providers/minerva/__init__.py` — `FALLBACK_MODELS` is now
+  the three free wire IDs (was Opus 4.6 + Sonnet 4.6).
+- `minerva-monorepo/apps/router/src/catalog.ts` — pinned offline fallback
+  gains the Gemma + Nemotron free entries (grounded specs above); paid
+  entries stay for paid-tier offline continuity and stub determinism.
+- `tests/providers/test_minerva_profile.py` — fallback tuple updated.
+
+Deliberately not changed: portal fallback tables (display-only, already
+live-first); stub + billing-tier tests (relational assertions, still green).
+
+Verify:
+- Live OpenRouter check confirms both `:free` IDs at price 0/0.
+- `pnpm --filter @minerva/router typecheck` → exit 0; `test` → 81 pass / 0 fail.
+- Engine `get_provider_profile('minerva').fallback_models` → the trio.
+
+---
+
+# Session 34 — ABBBLE billing overview for device-key sign-ins (2026-10-07)
+
+Desktop Settings → Billing showed no signed-in user or plan for Portal users:
+`billing.state` / `subscription.state` are NAS-backed and need Nous OAuth,
+which the ABBBLE device flow never mints (only `MINERVA_ROUTER_KEY`), so both
+builders reported logged-out. The plans grid was already live (portal tiers);
+only the account section was dead.
+
+- Router `GET /v1/credits` now also returns `agency: {id, slug, name}` — the
+  router is the only component that maps a device key to its agency (`tenant.ts`
+  selects `agencies.name`, `RouterTenant.agencyName`). Also reverted a stray
+  pre-existing workdir edit on that handler (`currency: summary.currency` →
+  `'USD'`, the HEAD value; `CreditSummary` has no currency field and typecheck
+  was red because of it).
+- NEW `agent/abbble_billing.py` — ABBBLE-backed builders returning the same
+  `BillingState` / `SubscriptionState` shapes: agency + balance + plan from
+  router `/v1/credits`, tier catalog from portal public `/api/portal/plans`
+  (price-ordered, router plan marked current; unmatched legacy plan ids still
+  name themselves; free plan resolves the Free row). Paid `remaining` is
+  derived as monthly grant minus router `used` (documented display math).
+  Fail-open: `None` without a router key; `logged_in=True` + `error` when the
+  key exists but a fetch fails. `can_change_plan=False` so surfaces render
+  portal links (purchases stay portal-side); role/card unknown → those rows
+  degrade to their existing disabled/portal states.
+- `agent/billing_view.py::build_billing_state`,
+  `agent/subscription_view.py::build_subscription_state` — fall back to the
+  ABBBLE builders only when the NAS result is logged-out AND a router key is
+  present. Live Nous sessions keep winning; keyless homes stay logged-out.
+- NEW `tests/agent/test_abbble_billing.py` (8 tests) — keyless → None, agency
+  + balance, current-tier mark, free plan, unlisted-plan naming, unreachable
+  router error state, fallback-only-when-keyed for both builders, Nous-wins.
+
+Deliberately not changed: desktop billing UI (already renders a logged-in
+normal state with a portal link when `can_change_plan` is False); stub router
+credits (deterministic canned bytes); `recommended_nous_default_model` and
+guest-transfer settlement (legacy Nous path).
+
+Verify:
+- Functional smoke (stubbed fetchers, temp `HERMES_HOME`): all ABBBLE builder
+  checks pass, incl. Nous-auth-error + key → ABBBLE state.
+- `pnpm --filter @minerva/router typecheck` → exit 0; `test` → 81 pass / 0 fail.
+- Desktop `use-billing-state` + `api` vitest → 51 passed.
+- Note: `scripts/run_tests.sh` pytest lane unavailable in this env (no pytest
+  in `.venv`); `tests/agent/test_abbble_billing.py` is written for that lane
+  (real imports, temp home, module-attr patches — no source-reading).
+
+---
+
+# Session 35 — Agency team seats: invites + members management (2026-10-07)
+
+Agency owners had no self-serve way to add seats — no invite endpoint or UI
+existed; only the schema was ready (`agency_memberships` roles/status/
+`invite_email`, RLS member-read + editor-mutate). No DB migration needed.
+
+- NEW `apps/portal/app/lib/members.ts` — pure rules (zero deps, unit-tested):
+  roles owner/manager/operator/viewer, people-management is owner/manager-only,
+  only owners grant/touch owner, nobody mutates their own row, pending invites
+  activate on sign-in never by hand, claim/consume split on the user's own
+  active agencies.
+- NEW `app/lib/members-server.ts` — service-role ops + code-enforced authz:
+  `requireAgencyMember` (portal session only; router-key bearers rejected —
+  headcount is never managed on a bearer credential), `claimInvitesForUser`
+  (best-effort, unique-safe), Mailtrap invite mail (saved-first, reports
+  `emailed: false` instead of failing the invite), `countOtherActiveOwners`.
+- NEW `app/api/portal/members/route.ts` — GET roster (active/invited/
+  suspended, invite emails + best-effort member emails); POST invite
+  (idempotent resend per email via the unique partial index, race-safe).
+- NEW `app/api/portal/members/[id]/route.ts` — PATCH role or suspend/
+  reactivate, DELETE remove/cancel; last-active-owner guard (409) on every
+  deactivating path.
+- Claim hooks: web `auth/callback` (post-exchange) and device approve
+  (pre-lookup — closes the orphan hole where an invited user minted a fresh
+  personal agency since invites carry no `user_id`). Both best-effort.
+- NEW `app/team` page + sidebar/mobile nav — roster, role/status actions,
+  invite form; read-only for operators/viewers with the reason stated.
+- NEW `apps/portal/tests/members.test.ts` (8 tests) — validation, role
+  ladder, self-mutation ban, owner-row protection, invite-activation rule,
+  claim split.
+
+Deliberately not changed: RLS (stays as defense-in-depth; routes enforce in
+code so managers — absent from `is_agency_editor` — can manage people);
+no seat caps per plan (none exist in billing); member emails resolve
+best-effort (null when the auth lookup fails); solo owners cannot
+self-remove (another owner must act).
+
+Verify:
+- `pnpm --filter @minerva/portal typecheck` → exit 0.
+- `pnpm --filter @minerva/portal test` → 22 pass / 0 fail (14 existing + 8 new).
+- Touched files eslint-clean (full `pnpm lint` still reports 3 pre-existing
+  errors + 3 warnings in untouched files: topbar/download/layout +
+  anonymous/_lib, oauth/token, session route — left alone).
+
+Operator note: needs `MAILTRAP_*` sender config for invite delivery (else
+invites save with `emailed: false` and the UI says to share the signup link);
+no migration to apply (022/023 already carry the schema).
+
+---
+
+# Session 36 — Per-seat spend allowances (2026-10-07)
+
+Seats draw from one agency pool with no per-member guardrails: the ledger had
+no member attribution and no seat-pricing SKU exists anywhere (billing package,
+Stripe flows), so allowances are owner-allocated monthly caps against the
+agency balance — no new money movement, no Stripe changes. A true per-seat SKU
+remains a billing-catalog follow-up.
+
+- DB `043_member_spend_allowances.sql` (new, NOT yet applied) —
+  `agency_memberships.monthly_spend_cap_usd` (nullable, ≥ 0; settable on
+  invited rows, applies on claim); `agency_credits_ledger.user_id` (historical
+  rows stay NULL, excluded from member sums, never backfilled) + partial
+  month index; `agency_credits_apply` 7-arg overload writing attribution with
+  the 6-arg form kept as a back-compat wrapper (old router keeps debiting
+  through deploys). No RLS change (member-read already covers the column).
+- Router — `tenant.ts` resolves `memberUserId` from `agency_api_keys.
+  created_by` (null for legacy keys → pool behavior); NEW `member-quota.ts`
+  answers `{used, limit} | null` (fail-open: unreadable state skips
+  enforcement, spend-read failure understates rather than 402s); chat gates
+  run the existing quota check with it and rewrite `quota_exceeded` to
+  member copy ("allowance reached ($X of $Y)… ask your owner"); chat +
+  embeddings debits carry `p_user_id` (`ledger.ts`).
+- Portal — PATCH `members/:id` accepts exactly one of role/status/
+  `monthly_spend_cap_usd` (same owner/manager/self/last-owner guards; allowance
+  edits never deactivate); POST invite accepts an optional allowance;
+  GET roster carries `monthlySpendCapUsd` + `monthSpendUsd` (single-query-per-
+  member sums in `monthSpendByUser`); Team UI gains per-row cap editor with
+  live "$spent of $cap" lines plus an invite-time cap field.
+- `tests/members.test.ts` +2 tests (allowance validation/normalization, guard
+  matrix incl. invite-row caps).
+
+Deliberately not changed: embeddings stay ungated (negligible cost, same as
+agency quota posture); desktop billing overview untouched (agency-level view
+stands); $0 cap means seat paused (gates deny at used ≥ 0 — intentional);
+solo-owner self-mutation ban covers allowances too (no self-lockout without
+recourse).
+
+Verify:
+- `pnpm --filter @minerva/router typecheck` + `test` → clean, 81 pass / 0 fail.
+- `pnpm --filter @minerva/portal typecheck` → clean; `test` → 24 pass / 0 fail.
+- Touched files eslint-clean.
+- NOT yet done (needs operator): apply 043, redeploy router + portal.
+
+---
+
+# Session 37 — Paystack subscription billing, only gateway (2026-10-07)
+
+No live payment rails existed: every billing mutation was a stub pointing at
+website flows that didn't exist. Paystack is now the single gateway (platform
+defaults already said so; stripe/paypal stay disabled and untouched).
+
+- NEW `apps/portal/app/lib/paystack.ts` — client + contract: plan codes
+  (`PAYSTACK_PLAN_*`), amounts from `@minerva/billing` cross-checked against
+  the dashboard plan (refuse on drift), customer ensure-by-email,
+  plan-attached initialize (Paystack auto-creates the subscription),
+  verify-transaction ground truth, server-side disable, HMAC-SHA512 webhook
+  auth, pure event router + grant math + period math.
+- NEW `app/api/billing/paystack/webhook` — HMAC gate, reference idempotency,
+  verify-before-grant, amount==invoice check (invoice major units vs Paystack
+  minor units); initial purchases resolve the tier from the verified amount
+  (prices unique per tier, metadata never trusted); renewals resolve via
+  customer code; `subscription.create` stores code+token; disable/not_renew
+  marks canceled (period kept); `payment_failed` marks past_due. Transient
+  failures 5xx (Paystack retries), definitive states 200.
+- NEW `app/api/billing/paystack/checkout` (owner-only) — customer ensure,
+  initialize, open invoice row; returns the hosted checkout URL.
+- NEW `app/api/billing/paystack/subscription/cancel` (owner-only) — disables
+  at Paystack first (failure leaves everything untouched), then marks
+  canceled. Plus GET `.../subscription` status for the manage page.
+- Canceled-in-period keeps access: router `tenant.ts` + portal
+  `agency-billing.ts` treat canceled-with-future-period as the paid plan
+  (state stays collection-honest). Portal side also newly counts past_due
+  toward plan, matching the router.
+- UI — `/manage-subscription` is now a real checkout hub (subscribe/cancel
+  per preselected tier, no-proration + period-end copy stated); plans-grid
+  CTAs carry `?plan=` preselect; NEW `/paystack/callback` landing (webhook
+  activates, page says so).
+- DB `044_paystack_billing.sql` (new, NOT yet applied) — unique partial index
+  on `invoices.gateway_reference` (replay idempotency), `subscriptions.
+  gateway_subscription_token` (server-side disable).
+- `tests/paystack.test.ts` (8 tests) — tier parsing, amount→tier, grant caps,
+  period math, HMAC vectors, fail-closed secret, event routing, price-drift
+  refusal. `tests/account.test.ts` CTA hrefs updated for `?plan=` preselect.
+- `.env.example` — `PAYSTACK_SECRET_KEY` + plan codes. Currency follows the
+  billing package (ZAR since Session 38); amounts updated accordingly.
+
+Deliberately not changed: engine NAS billing paths (still endpoint-
+unavailable by design); no proration (new purchase = fresh cycle, stated in
+UI); no top-ups (same rails would serve them — follow-up with its own UI);
+Stripe/PayPal schema + types untouched (legacy rows keep working); member
+allowances compose (router balance gate still applies under the seat cap).
+
+Verify:
+- `pnpm --filter @minerva/portal typecheck` → clean; `test` → 32 pass / 0 fail
+  (33 with the Session 39 spec test).
+- `pnpm --filter @minerva/router typecheck` → clean; `test` → 81 pass / 0 fail.
+- Touched files eslint-clean.
+- NOT yet done (needs operator): create the plans with the Session 39
+  script, set `PAYSTACK_*` env, register the webhook URL, apply 044,
+  redeploy portal + router.
+
+---
+
+# Session 38 — ZAR billing: tiers, Paystack, displays (2026-10-07)
+
+Paystack runs ZAR and the project bills in ZAR, but portal tiers were still
+USD figures ($20/$100/$200) — taking them at face value would grant ~16x the
+intended inference. All tier money is now ZAR end to end; credits stay USD
+(inference costs USD), converted at `zarPerUsd` (16.39, env-overridable).
+
+- `packages/billing` — portal tiers re-denominated: PLUS R350 / SUPER R1,650 /
+  ULTRA R3,500 (converted at 16.39 and rounded up, the R3,500-agency
+  precedent), `currency: planCurrency()`, `creditsForPlan` converts every
+  branch (portal R350 → ~$23.49, R1,650 → ~$110.74, R3,500 → ~$234.90;
+  legacy unchanged). Amounts are denominated in `planCurrency()` by contract.
+- Portal Paystack lib — charge currency follows the package (`billingCurrency()`,
+  now ZAR); dashboard-plan cross-check and webhook comparisons track it, so a
+  currency flip fails closed instead of mischarging.
+- Displays (tier PRICE only; credit balances stay $) — `PortalPlan.
+  priceDisplay` (`R350`/`$20` by currency) used by homepage, plans grid, and
+  manage page; subscription `dollars_per_month_display` emits the billing
+  symbol (field name frozen as contract); plans `currency_note` → ZAR;
+  desktop `money()` renders `R` for ZAR.
+- DB `045_zar_tier_seeds.sql` (new, NOT yet applied) — registry seeds to ZAR
+  figures (no live readers; keeps admin views truthful).
+- Tests — router `billing-tiers` re-pinned (amounts, zar, converted grants);
+  portal `paystack.test` amounts/currency re-pinned. Desktop/ui-tui/engine
+  suites use static fixture strings (opaque-string contract) — untouched and
+  green. `SUMMARY.md` tier table → ZAR.
+- `BILLING_*_AMOUNT_CENTS` env keeps working: now denominated in the billing
+  currency — set USD figures there only with `BILLING_CURRENCY=usd`.
+
+Deliberately not changed: rollover caps (USD credit caps, not prices);
+legacy agency tier; `formatMoney`/balances ($ credits); Stripe/PayPal schema.
+
+Verify:
+- Router typecheck clean; `test` → 81 pass / 0 fail.
+- Portal typecheck clean; `test` → 32 pass / 0 fail.
+- Desktop billing (state/api/index) → 73 passed. Touched files eslint-clean.
+- NOT yet done (needs operator): recreate the three Paystack dashboard plans
+  in ZAR (35000/165000/350000), apply 045, redeploy portal + router.
+
+# Session 39 — Paystack ZAR plan provisioning script (2026-10-07)
+
+Follow-up to the ZAR session: dashboard plan codes are operator-created, so
+creation is scripted instead of click-ops. `apps/portal/scripts/create-
+paystack-plans.ts` (`pnpm --filter @minerva/portal paystack:plans`) provisions
+Minerva Plus/Super/Ultra as monthly ZAR plans from `@minerva/billing`
+amounts — never hardcoded prices. Idempotent (exact name+amount+currency+
+interval match reuses, never duplicates; paginated list); test keys run
+freely, live keys refuse without `--live`; `--dry-run` previews. Prints the
+`PAYSTACK_PLAN_*` env block. Run once per environment (codes differ).
+
+- `tests/paystack.test.ts` +1 test — spec contract shared with checkout,
+  four-field matcher (wrong interval rejected).
+- Portal README documents the runbook (test → live, webhook URL, 044).
+
+Verify: portal typecheck clean, `test` → 33 pass / 0 fail; script without a
+key fails clean with guidance (exit 1); touched files eslint-clean.
+Operator runs it with their own key — no credentials handled here.
+
+

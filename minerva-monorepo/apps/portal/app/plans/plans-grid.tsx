@@ -77,7 +77,7 @@ export default function PlansGrid({ plans }: { plans: PortalPlan[] }) {
                   </span>
                 )}
               </div>
-              <p className="nous-display mt-3 text-[56px]">${p.price}</p>
+              <p className="nous-display mt-3 text-[56px]">{p.priceDisplay}</p>
               <p className="text-[11px] tracking-widest text-white/60 uppercase">Per month</p>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

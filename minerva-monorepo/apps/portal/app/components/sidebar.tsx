@@ -9,6 +9,7 @@ const EXPLORE = [
   { href: "/", label: "Overview", icon: "▦" },
   { href: "/models", label: "Models", icon: "♣" },
   { href: "/plans", label: "Plans", icon: "$" },
+  { href: "/team", label: "Team", icon: "◈" },
 ];
 
 const RESOURCES = [

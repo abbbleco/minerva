@@ -174,12 +174,24 @@ def build_subscription_state(*, timeout: float = 15.0) -> SubscriptionState:
     fixture = dev_fixture_subscription_state()
     if fixture is not None:
         return fixture
-    return fetch_portal_state(
+    state = fetch_portal_state(
         "get_subscription_state", "subscription",
         failed=lambda **kw: SubscriptionState(logged_in=False, **kw),
         parse=lambda payload, portal_url: subscription_state_from_payload(payload, portal_url=portal_url),
         portal_fallback=lambda base: base, timeout=timeout, log=logger,
     )
+    if not state.logged_in:
+        # Same ABBBLE fallback as billing state (no Nous OAuth on device-key
+        # sign-ins): serve the plan from the router + portal plans catalog.
+        try:
+            from agent import abbble_billing as _ab
+
+            abbble = _ab.build_abbble_subscription_state(timeout=timeout)
+        except Exception:
+            abbble = None
+        if abbble is not None:
+            return abbble
+    return state
 
 
 def subscription_manage_url(state: SubscriptionState, tier_id: Optional[str] = None) -> Optional[str]:

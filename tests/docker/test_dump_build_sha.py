@@ -37,7 +37,7 @@ def _run_dump(image: str) -> str:
     """Return the stdout of ``docker run <image> dump``.
 
     Relies on Docker's anonymous VOLUME for ``/opt/data`` (declared by the
-    Dockerfile) so the container's hermes user (UID 10000) can bootstrap
+    Dockerfile) so the container's minerva user (UID 10000) can bootstrap
     its config.  Anonymous volumes are auto-cleaned by ``--rm``, so unlike
     a host bind-mount we don't have to chown anything to UID 10000 (which
     would break cleanup on non-root hosts).
@@ -47,7 +47,7 @@ def _run_dump(image: str) -> str:
         capture_output=True, text=True, timeout=120,
     )
     assert r.returncode == 0, (
-        f"hermes dump exited {r.returncode}: "
+        f"minerva dump exited {r.returncode}: "
         f"stderr={r.stderr[-1000:]!r}\nstdout={r.stdout[-1000:]!r}"
     )
     return r.stdout

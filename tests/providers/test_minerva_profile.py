@@ -38,9 +38,12 @@ class TestMinervaProfile:
         assert plugin.router_base_url() == "http://127.0.0.1:8090/v1"
 
     def test_fallback_models_are_minerva_wire_ids(self):
+        # Free models only: the fallback is served when the live list is
+        # unreachable, and a paid flagship would fail validation on free keys.
         assert _profile().fallback_models == (
-            "minerva/anthropic-claude-opus-4.6",
-            "minerva/anthropic-claude-sonnet-4.6",
+            "minerva/openrouter-free",
+            "minerva/google-gemma-4-31b-it:free",
+            "minerva/nvidia-nemotron-3-ultra-550b-a55b:free",
         )
 
     def test_metered_reasoning_default(self):

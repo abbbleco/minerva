@@ -59,7 +59,7 @@ Python, Node, supported dependencies, and prebuilt interfaces. It does not clone
 a checkout or build the base runtime on first launch.
 
 The MSIX execution aliases expose `hermes`, `hermes-agent`, and `hermes-acp`.
-If another installation shadows an alias, inspect `Get-Command hermes -All`.
+If another installation shadows an alias, inspect `Get-Command minerva -All`.
 Windows Settings → Apps → Advanced app settings → App execution aliases
 controls the aliases.
 
@@ -280,7 +280,7 @@ The installer adds `%LOCALAPPDATA%\hermes\bin` to your **User PATH** via `[Envir
 Verify:
 
 ```powershell
-Get-Command hermes        # should print C:\Users\<you>\AppData\Local\hermes\bin\hermes.exe
+Get-Command minerva        # should print C:\Users\<you>\AppData\Local\hermes\bin\hermes.exe
 hermes --version
 ```
 

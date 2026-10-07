@@ -452,7 +452,7 @@ def build_debug_share(
     bundle = collect_share_bundle(log_lines=log_lines, redact=redact)
     if redact:
         logger.info(
-            "hermes debug share: applied force-mode redaction to log snapshots before upload")
+            "minerva debug share: applied force-mode redaction to log snapshots before upload")
     report = bundle["report"]
     failures: list[str] = []
     # The summary report is required (raises so callers can fall back); full logs are optional.
@@ -556,7 +556,7 @@ def run_debug_share(args):
               "\nShare these links with the Minerva team for support.")
     else:
         print(f"\n⏱  Pastes will auto-delete in {result.auto_delete_seconds // 3600} hours.\n"
-              "To delete now:  hermes debug delete <url>\n"
+              "To delete now:  minerva debug delete <url>\n"
               "\nShare these links with the Minerva team for support.")
 
 
@@ -589,7 +589,7 @@ def _run_debug_share_nous(args, *, log_lines: int, redact: bool) -> None:
     _best_effort_sweep_expired_pastes()
     bundle = collect_share_bundle(log_lines=log_lines, redact=redact)
     if redact:
-        logger.info("hermes debug share --nous: applied force-mode redaction before upload")
+        logger.info("minerva debug share --nous: applied force-mode redaction before upload")
     print("Uploading to Nous diagnostics storage...")
     try:
         res = share_to_nous(build_nous_bundle(bundle, redact=redact))
@@ -618,8 +618,8 @@ def run_debug_delete(args):
     """Delete one or more paste URLs uploaded by /debug."""
     urls = getattr(args, "urls", [])
     if not urls:
-        print("Usage: hermes debug delete <url> [<url> ...]\n"
-              "  Deletes paste.rs pastes uploaded by 'hermes debug share'.")
+        print("Usage: minerva debug delete <url> [<url> ...]\n"
+              "  Deletes paste.rs pastes uploaded by 'minerva debug share'.")
         return
     for url in urls:
         try:
@@ -645,7 +645,7 @@ def run_debug(args):
 
 
 _DEBUG_USAGE = """\
-Usage: hermes debug <command>
+Usage: minerva debug <command>
 
 Commands:
   share    Upload debug report to a paste service and print URL

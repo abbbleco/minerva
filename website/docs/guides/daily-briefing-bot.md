@@ -33,10 +33,10 @@ Before starting, make sure you have:
 - **Minerva Agent installed** — see the [Installation guide](../getting-started/installation.md)
 - **Gateway running** — the gateway daemon handles cron execution:
   ```bash
-  hermes gateway install   # Install as a user service
-  sudo hermes gateway install --system   # Linux servers: boot-time system service
+  minerva gateway install   # Install as a user service
+  sudo minerva gateway install --system   # Linux servers: boot-time system service
   # or
-  hermes gateway           # Run in foreground
+  minerva gateway           # Run in foreground
   ```
 - **Firecrawl API key** — set `FIRECRAWL_API_KEY` in your environment for web search
 - **Messaging configured** (optional but recommended) — [Telegram](../user-guide/messaging/telegram.md) or Discord set up with a home channel
@@ -254,7 +254,7 @@ If the gateway isn't running, your jobs won't execute. Install it as a backgroun
 ```bash
 hermes gateway install
 # or on Linux servers
-sudo hermes gateway install --system
+sudo minerva gateway install --system
 ```
 
 ## Going Further

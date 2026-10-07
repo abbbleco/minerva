@@ -4,16 +4,25 @@
 // CTAs, bonus badge) lives here. NOTE: FREE shows $0 credits per the design; free keys
 // are restricted to cost-$0 models, so the package's flat free grant never debits.
 
-import { creditsForPlan, paidPlan, rolloverCapForPlan } from "@minerva/billing";
+import { creditsForPlan, paidPlan, planCurrency, rolloverCapForPlan } from "@minerva/billing";
 
 export interface PortalPlan {
   id: "FREE" | "PLUS" | "SUPER" | "ULTRA";
   price: number;
+  /** Rendered tier price (`R350` / `$20`) — tiers bill in the billing currency. */
+  priceDisplay: string;
   bonus?: string;
   image: string;
   features: string[];
   cta: string;
   highlight?: boolean;
+}
+
+/** Major-units tier price with the billing currency's symbol. */
+export function tierPriceDisplay(price: number, currency?: string): string {
+  const code = (currency ?? planCurrency()).toLowerCase();
+  const whole = Number.isInteger(price) ? String(price) : price.toFixed(2);
+  return code === "zar" ? `R${whole}` : `$${whole}`;
 }
 
 function paidFeatures(tier: "plus" | "super" | "ultra"): string[] {
@@ -30,6 +39,7 @@ export const PORTAL_PLANS: PortalPlan[] = [
   {
     id: "FREE",
     price: 0,
+    priceDisplay: tierPriceDisplay(0),
     image: "/placeholders/images.jpg",
     features: ["Free models only", "Standard rate limits", "$0 monthly credits"],
     cta: "Try Minerva",
@@ -37,6 +47,7 @@ export const PORTAL_PLANS: PortalPlan[] = [
   {
     id: "PLUS",
     price: paidPlan("plus").amountCents / 100,
+    priceDisplay: tierPriceDisplay(paidPlan("plus").amountCents / 100, paidPlan("plus").currency),
     bonus: "10%",
     image: "/placeholders/img_7895.jpg",
     features: paidFeatures("plus"),
@@ -46,6 +57,7 @@ export const PORTAL_PLANS: PortalPlan[] = [
   {
     id: "SUPER",
     price: paidPlan("super").amountCents / 100,
+    priceDisplay: tierPriceDisplay(paidPlan("super").amountCents / 100, paidPlan("super").currency),
     bonus: "10%",
     image: "/placeholders/Minerva.jpg",
     features: paidFeatures("super"),
@@ -54,6 +66,7 @@ export const PORTAL_PLANS: PortalPlan[] = [
   {
     id: "ULTRA",
     price: paidPlan("ultra").amountCents / 100,
+    priceDisplay: tierPriceDisplay(paidPlan("ultra").amountCents / 100, paidPlan("ultra").currency),
     bonus: "10%",
     image: "/placeholders/images.jpg",
     features: paidFeatures("ultra"),

@@ -743,7 +743,7 @@ Plugins (1):
 If your plugin doesn't show up — or shows up but isn't loading — set `HERMES_PLUGINS_DEBUG=1` to get verbose discovery logs on stderr:
 
 ```bash
-HERMES_PLUGINS_DEBUG=1 hermes plugins list
+HERMES_PLUGINS_DEBUG=1 minerva plugins list
 ```
 
 You'll see, for every plugin source (bundled, user, project, entry-points):
@@ -1319,17 +1319,17 @@ Plugins can add their own `minerva <plugin>` subcommand tree:
 
 ```python
 def _my_command(args):
-    """Handler for hermes my-plugin <subcommand>."""
+    """Handler for minerva my-plugin <subcommand>."""
     sub = getattr(args, "my_command", None)
     if sub == "status":
         print("All good!")
     elif sub == "config":
         print("Current config: ...")
     else:
-        print("Usage: hermes my-plugin <status|config>")
+        print("Usage: minerva my-plugin <status|config>")
 
 def _setup_argparse(subparser):
-    """Build the argparse tree for hermes my-plugin."""
+    """Build the argparse tree for minerva my-plugin."""
     subs = subparser.add_subparsers(dest="my_command")
     subs.add_parser("status", help="Show plugin status")
     subs.add_parser("config", help="Show plugin config")
@@ -1461,7 +1461,7 @@ def register(ctx):
     ctx.register_hook("kanban_task_blocked", on_blocked)
 ```
 
-For running a full `minerva <subcommand>` (e.g. `minerva kanban show`), shell out with the `terminal` tool via `ctx.dispatch_tool("terminal", {"command": "hermes kanban show ..."})` — there is no in-process slash-command bridge for headless worker sessions, and tools are the supported way to drive Minerva from a hook.
+For running a full `minerva <subcommand>` (e.g. `minerva kanban show`), shell out with the `terminal` tool via `ctx.dispatch_tool("terminal", {"command": "minerva kanban show ..."})` — there is no in-process slash-command bridge for headless worker sessions, and tools are the supported way to drive Minerva from a hook.
 
 ### Handle Slack Block Kit button clicks
 

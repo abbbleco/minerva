@@ -145,4 +145,4 @@ post_install: |
   source URL above.
 
   Re-run the tool checklist any time with:
-    hermes mcp configure cloudflare
+    minerva mcp configure cloudflare

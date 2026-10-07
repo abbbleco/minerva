@@ -218,7 +218,7 @@ def test_cli_register_includes_node_subcommand():
     import argparse
     from plugins.google_meet.cli import register_cli
 
-    parser = argparse.ArgumentParser(prog="hermes meet")
+    parser = argparse.ArgumentParser(prog="minerva meet")
     register_cli(parser)
 
     # Parse a known-good node invocation to prove the subtree is wired.
@@ -240,7 +240,7 @@ def test_looks_like_human_speaker():
     from plugins.google_meet.meet_bot import _looks_like_human_speaker
 
     # Blank, "unknown", "you", and the bot's own name → not human (no barge-in)
-    for s in ("", "   ", "Unknown", "unknown", "You", "you", "Minerva Agent", "hermes agent"):
+    for s in ("", "   ", "Unknown", "unknown", "You", "you", "Minerva Agent", "minerva agent"):
         assert not _looks_like_human_speaker(s, "Minerva Agent"), f"{s!r} should NOT be human"
     # Real names → human (barge-in)
     for s in ("Alice", "Bob Lee", "@teknium"):
@@ -389,7 +389,7 @@ def test_realtime_session_cancel_response_when_disconnected():
 
 
 # ---------------------------------------------------------------------------
-# hermes meet install CLI
+# minerva meet install CLI
 # ---------------------------------------------------------------------------
 
 
@@ -410,7 +410,7 @@ def test_cmd_install_uses_declared_dependencies_and_pm_chromium(monkeypatch, cap
     from pm.features import declared_extras
 
     assert set(calls[0][1]) <= set(declared_extras(Path(__file__).resolve().parents[2]))
-    assert "hermes meet setup" in capsys.readouterr().out
+    assert "minerva meet setup" in capsys.readouterr().out
 
 
 @pytest.mark.platforms("linux", "macos")

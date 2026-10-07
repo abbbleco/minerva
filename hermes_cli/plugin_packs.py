@@ -547,7 +547,7 @@ def cmd_pack_install(source: str, *, force: bool = False) -> None:
         console.print(f"  [red]✗[/red] {r.display}: {r.error}")
     if ok:
         console.print("[dim]Restart the gateway for the plugins to take effect:[/dim]")
-        console.print("[dim]  hermes gateway restart[/dim]")
+        console.print("[dim]  minerva gateway restart[/dim]")
     if failed:
         sys.exit(1)
 
@@ -571,7 +571,7 @@ def pack_command(args) -> None:
     handler = _PACK_ACTIONS.get(getattr(args, "pack_action", None))
     if handler is None:
         from hermes_cli.plugins_cmd import _console, _fail
-        _fail(_console(), "[red]Error:[/red] Usage: hermes plugins pack {install|export|show}")
+        _fail(_console(), "[red]Error:[/red] Usage: minerva plugins pack {install|export|show}")
     handler(args)
 
 

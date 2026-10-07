@@ -27,6 +27,21 @@ import type { OAuthProvider, OAuthStartResponse } from '@/types/minerva'
 type PkceStart = Extract<OAuthStartResponse, { flow: 'pkce' }>
 type DeviceStart = Extract<OAuthStartResponse, { flow: 'device_code' }>
 
+// OAuth vehicle id -> model provider slug(s) for post-sign-in verification.
+// The ABBBLE Portal device flow (both `abbble` and legacy `nous` OAuth rows)
+// persists MINERVA_ROUTER_KEY for the `minerva` model provider, not Nous OAuth
+// tokens. Requesting runtime_check with the vehicle id would alias to `nous`
+// and fail with "not logged in" while setup.status (router key present) passes.
+const OAUTH_VEHICLE_TO_MODEL_SLUGS: Record<string, string[]> = {
+  abbble: ['minerva'],
+  nous: ['minerva']
+}
+
+export function resolveModelSlugsForOAuth(providerId: string): string[] {
+  const lower = providerId.trim().toLowerCase()
+  return OAUTH_VEHICLE_TO_MODEL_SLUGS[lower] ?? [providerId]
+}
+
 export type OnboardingMode = 'apikey' | 'oauth'
 
 export type OnboardingFlow =
@@ -961,7 +976,7 @@ async function pollSession(provider: OAuthProvider, start: DeviceStart, ctx: Onb
     if (status === 'approved') {
       clearPoll()
       setFlow({ status: 'success', provider })
-      await completeWithModelConfirm(ctx, provider.name, [provider.id], reason =>
+      await completeWithModelConfirm(ctx, provider.name, resolveModelSlugsForOAuth(provider.id), reason =>
         setFlow({
           status: 'error',
           provider,
@@ -1012,7 +1027,7 @@ export async function submitOnboardingCode(ctx: OnboardingContext) {
 
     if (resp.ok && resp.status === 'approved') {
       setFlow({ status: 'success', provider })
-      await completeWithModelConfirm(ctx, provider.name, [provider.id], reason =>
+      await completeWithModelConfirm(ctx, provider.name, resolveModelSlugsForOAuth(provider.id), reason =>
         setFlow({
           status: 'error',
           provider,
@@ -1099,7 +1114,7 @@ export async function recheckExternalSignin(ctx: OnboardingContext) {
   }
 
   const { provider } = flow
-  await completeWithModelConfirm(ctx, provider.name, [provider.id], reason =>
+  await completeWithModelConfirm(ctx, provider.name, resolveModelSlugsForOAuth(provider.id), reason =>
     setFlow({
       status: 'error',
       provider,

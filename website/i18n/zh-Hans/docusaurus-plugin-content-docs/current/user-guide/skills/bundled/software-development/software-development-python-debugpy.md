@@ -315,7 +315,7 @@ import debugpy
 debugpy.listen(("127.0.0.1", 5678))
 debugpy.wait_for_client()
 ```
-从准备好的调试检出启动 `python hermes --tui`。TUI 将显示为冻结状态（其后端正在等待）。
+从准备好的调试检出启动 `python minerva --tui`。TUI 将显示为冻结状态（其后端正在等待）。
 附加客户端后，执行在你 `continue` 时恢复。先检查子进程的解释器和导入路径，
 不要假定它继承了调试环境。
 

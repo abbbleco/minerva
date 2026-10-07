@@ -68,7 +68,7 @@ Agent 每个目录每轮**最多创建一个检查点**，因此长时间运行�
 
 ```mermaid
 flowchart LR
-  user["User command\n(hermes, gateway)"]
+  user["User command\n (minerva, gateway)"]
   agent["AIAgent\n(run_agent.py)"]
   tools["File & terminal tools"]
   cpMgr["CheckpointManager"]
@@ -161,7 +161,7 @@ Projects:        12
 Legacy archives (1):
   legacy-20260506-050616                           4.2 MB
 
-Clear with: hermes checkpoints clear-legacy
+Clear with: minerva checkpoints clear-legacy
 ```
 
 强制执行完整清理（忽略 24h 幂等性标记）：

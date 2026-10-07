@@ -229,7 +229,7 @@ Each entry supports:
 
 4. **Manual setup:** Users can also set values directly:
    ```bash
-   hermes config set skills.config.myplugin.path ~/my-data
+   minerva config set skills.config.myplugin.path ~/my-data
    ```
 
 :::tip When to use which

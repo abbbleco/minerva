@@ -242,7 +242,7 @@ Per-run overrides (no mutation to `~/.hermes/config.yaml`):
 ```bash
 hermes -z "…" --provider openrouter --model openai/gpt-5.5
 # or:
-HERMES_INFERENCE_MODEL=anthropic/claude-sonnet-4.6 hermes -z "…"
+HERMES_INFERENCE_MODEL=anthropic/claude-sonnet-4.6 minerva -z "…"
 ```
 
 Same agent, same tools, same skills — just strips every interactive / cosmetic layer. If you need tool output in the transcript too, use `minerva chat --oneshot -q` instead; `-z` is explicitly for "I only want the final answer".
@@ -282,7 +282,7 @@ Use this when you want to:
 - configure a custom/self-hosted endpoint
 - save the new default into config
 
-:::warning hermes model vs /model — know the difference
+:::warning minerva model vs /model — know the difference
 **`minerva model`** (run from your terminal, outside any Minerva session) is the **full provider setup wizard**. It can add new providers, run OAuth flows, prompt for API keys, and configure endpoints.
 
 **`/model`** (typed inside an active Minerva chat session) can only **switch between providers and models you've already set up**. It cannot add new providers, run OAuth, or prompt for API keys.
@@ -360,7 +360,7 @@ stopped.
 `minerva gateway enroll` accepts `--token`, `--connector-url`, `--gateway-id`, and `--wake-url`. It exchanges the enrollment token with the connector and writes the resulting `GATEWAY_RELAY_ID`, `GATEWAY_RELAY_SECRET`, `GATEWAY_RELAY_DELIVERY_KEY`, optional `GATEWAY_RELAY_URL`, and (when `--wake-url` is given) `GATEWAY_RELAY_WAKE_URL` values to the active profile's `.env`.
 
 :::tip WSL users
-Use `minerva gateway run` instead of `minerva gateway start` — WSL's systemd support is unreliable. Wrap it in tmux for persistence: `tmux new -s hermes 'hermes gateway run'`. See [WSL FAQ](./faq.md#wsl-gateway-keeps-disconnecting-or-hermes-gateway-start-fails) for details.
+Use `minerva gateway run` instead of `minerva gateway start` — WSL's systemd support is unreliable. Wrap it in tmux for persistence: `tmux new -s minerva 'minerva gateway run'`. See [WSL FAQ](./faq.md#wsl-gateway-keeps-disconnecting-or-hermes-gateway-start-fails) for details.
 :::
 
 ## `minerva lsp`
@@ -441,7 +441,7 @@ For configuration of the gateway itself, see [Tool Gateway](../user-guide/featur
 ## `minerva whatsapp`
 
 ```bash
-hermes whatsapp
+minerva whatsapp
 ```
 
 Runs the WhatsApp pairing/setup flow, including mode selection and QR-code pairing.
@@ -481,7 +481,7 @@ up any new commands.
 ```bash
 hermes send --to <target> "message text"
 hermes send --to <target> --file <path>
-echo "message" | hermes send --to <target>
+echo "message" | minerva send --to <target>
 hermes send --list [platform]
 ```
 
@@ -520,7 +520,7 @@ Examples:
 
 ```bash
 hermes send --to telegram "deploy finished"
-echo "RAM 92%" | hermes send --to telegram:-1001234567890
+echo "RAM 92%" | minerva send --to telegram:-1001234567890
 hermes send --to discord:#ops --file ~/.hermes/cache/scratch/report.md
 hermes send --to slack:#eng --subject "[CI]" --file build.log
 hermes send --list                  # all platforms
@@ -884,7 +884,7 @@ hermes egress config                   # print the path to proxy.yaml for inspec
 ```bash
 # First-time setup
 export OPENROUTER_API_KEY=…
-hermes egress setup && hermes egress start
+hermes egress setup && minerva egress start
 hermes config set terminal.backend docker   # if not already
 
 # Switching credential source after the fact
@@ -1023,7 +1023,7 @@ Outputs a compact, plain-text summary of your entire Minerva setup. Designed to 
 ### Example output
 
 ```
---- hermes dump ---
+--- minerva dump ---
 version:          0.8.0 (2026.4.8) [af4abd2f]
 os:               Linux 6.14.0-37-generic x86_64
 python:           3.11.14
@@ -1205,7 +1205,7 @@ Importing an older backup over newer work is still allowed, but it is no longer 
   ⚠ Session data replaced by older backup contents:
     state.db: 12 session(s) / 8912 message(s) -> 3 / 24
     Anything recorded after the backup was taken is not in it.
-    Recover from a newer backup or snapshot: hermes snapshot list
+    Recover from a newer backup or snapshot: minerva snapshot list
 ```
 
 ### Examples

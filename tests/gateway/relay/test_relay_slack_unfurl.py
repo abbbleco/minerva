@@ -281,7 +281,7 @@ class TestFreshFinalForForceOnUnfurl:
         )
 
     def test_force_on_string_true_prefers_fresh_final(self):
-        # hermes config set / Railway knobs persist YAML strings.
+        # minerva config set / Railway knobs persist YAML strings.
         a = self._adapter({"unfurl_links": "true"})
         assert a.prefers_fresh_final_streaming("see https://x.dev") is True
 

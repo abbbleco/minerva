@@ -1,4 +1,4 @@
-"""Driver-side spawn interception for hermes desktop E2E legs.
+"""Driver-side spawn interception for minerva desktop E2E legs.
 
 Pre-PM ``hermes`` is a venv console script that imports this module at
 startup via ``PYTHONPATH``. PM launchers use -I and instead load it via

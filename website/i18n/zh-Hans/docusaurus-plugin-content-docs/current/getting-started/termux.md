@@ -58,8 +58,8 @@ Minerva 的 Termux 软件包适用于 aarch64（arm64-v8a）设备，目前处�
    ```bash
    pkg update
    pkg install hermes-agent
-   hermes setup
-   hermes --tui
+   minerva setup
+   minerva --tui
    ```
 
 ## 数据、更新和卸载

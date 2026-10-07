@@ -8,7 +8,7 @@ version = "0.0.0"
 description = "The self-improving AI agent — creates skills from experience, improves them during use, and runs anywhere"
 readme = "README.md"
 # 3.14 is the newest python we know we have wheels for.
-# we *only* support 3.14, BUT we need to allow old hermes installs on <3.14
+# we *only* support 3.14, BUT we need to allow old minerva installs on <3.14
 # to get thru their update step on old python.
 # Shortly after they do, we update to our latest python.
 # See tests/compat/README.md for the updater contract this keeps.
@@ -31,7 +31,7 @@ dependencies = [
   # stays consistent. Do not introduce ranges
   # without a written justification.
   #
-  # Scope rule: only packages used by EVERY hermes session belong here.
+  # Scope rule: only packages used by EVERY minerva session belong here.
   # Anything that's provider-specific (`anthropic`, `firecrawl-py`,
   # `exa-py`, `fal-client`, `edge-tts`, `parallel-web`) belongs in an
   # extra and gets prepared through PM when the

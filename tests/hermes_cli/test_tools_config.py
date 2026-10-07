@@ -459,7 +459,7 @@ class TestAgentBrowserPostSetup:
             _run_post_setup("agent_browser")
 
         assert any(str(error) in c.args[0] for c in warn.call_args_list)
-        assert any("hermes tools post-setup agent_browser" in c.args[0] for c in info.call_args_list)
+        assert any("minerva tools post-setup agent_browser" in c.args[0] for c in info.call_args_list)
 
 
 class TestBrowserUseCliInstalledForAllNonCamofoxBackends:
@@ -497,7 +497,7 @@ class TestBrowserUseCliInstalledForAllNonCamofoxBackends:
             _ensure_browser_use_cli()  # must not raise
 
         assert any("browser-harness" in c.args[0] for c in warn.call_args_list)
-        assert any("hermes update" in c.args[0] for c in info.call_args_list)
+        assert any("minerva update" in c.args[0] for c in info.call_args_list)
 
 
 class TestImagegenBackendRegistry:

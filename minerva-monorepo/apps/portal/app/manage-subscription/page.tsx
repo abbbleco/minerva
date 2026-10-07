@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Topbar from "../components/topbar";
 import Footer from "../components/footer";
+import ManageClient from "./manage-client";
 import { PORTAL_PLANS } from "../lib/plans";
 
 export const metadata: Metadata = { title: "Manage Subscription | ABBBLE Portal" };
@@ -36,8 +37,8 @@ export default async function ManageSubscriptionPage({
           {tier ? `Manage your ${tier.id} plan` : "Manage your subscription"}
         </h1>
         <p className="mt-4 max-w-[80ch] text-[15px] leading-relaxed text-white/70">
-          {tier
-            ? `You are looking at the ${tier.id} tier — $${tier.price} per month. Change or cancel it from the agency you are signed in to; the change applies to your next invoice and the current cycle runs to its end.`
+              {tier
+                ? `You are looking at the ${tier.id} tier — ${tier.priceDisplay} per month. Change or cancel it from the agency you are signed in to; the change applies to your next invoice and the current cycle runs to its end.`
             : "Change or cancel your plan from the agency you are signed in to. A change applies to your next invoice and the current cycle runs to its end."}
         </p>
 
@@ -52,17 +53,15 @@ export default async function ManageSubscriptionPage({
                   {tier.bonus} BONUS
                 </span>
               )}
-              <span className="nous-display ml-auto text-[40px]">${tier.price}</span>
+              <span className="nous-display ml-auto text-[40px]">{tier.priceDisplay}</span>
             </div>
             <ul className="mt-4 space-y-1.5 text-[13px] text-white/80">
               {tier.features.map((f) => (
                 <li key={f}>— {f}</li>
               ))}
             </ul>
+            <ManageClient tierId={tier.id} />
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link href="/signup" className="nous-btn-outline !border-white/40 !text-white">
-                Change plan
-              </Link>
               <Link href="/plans" className="nous-btn-outline !border-white/40 !text-white">
                 Compare all tiers
               </Link>

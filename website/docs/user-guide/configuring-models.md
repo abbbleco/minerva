@@ -365,8 +365,8 @@ hermes config set model.aliases.grok x-ai/grok-4
 > `minerva config set` also accepts inline **list/mapping literals** (JSON/YAML flow style). Quote them so your shell passes them through intact:
 >
 > ```bash
-> hermes config set platform_toolsets.line '["clarify", "file", "web"]'
-> hermes config set display.tool_progress_overrides '{"terminal": "off"}'
+> minerva config set platform_toolsets.line '["clarify", "file", "web"]'
+> minerva config set display.tool_progress_overrides '{"terminal": "off"}'
 > ```
 
 Both paths feed the same loader (`hermes_cli/model_switch.py`). Entries declared in `model_aliases:` take precedence over `model.aliases:` entries with the same name.

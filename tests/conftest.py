@@ -156,7 +156,7 @@ if _hermes_home_points_at_production(os.environ.get("HERMES_HOME", "")):
 # bundled desktop app exports it as %LOCALAPPDATA%\hermes\pycache),
 # importlib/pytest write .pyc files to <prefix>/<absolute source path>
 # instead of next to the sources. Un-scrubbed, that mirror lands under
-# the REAL hermes home and trips the real-home tripwire on any module
+# the REAL minerva home and trips the real-home tripwire on any module
 # imported after sandboxing (test_find_shell was the first to bite).
 # Clear it so bytecode goes back beside the (already sandboxed) sources.
 os.environ.pop("PYTHONPYCACHEPREFIX", None)
@@ -848,7 +848,7 @@ def tmp_dir(tmp_path):
 
 @pytest.fixture()
 def mock_config():
-    """Return a minimal hermes config dict suitable for unit tests."""
+    """Return a minimal minerva config dict suitable for unit tests."""
     return {
         "model": "test/mock-model",
         "toolsets": ["terminal", "file"],
@@ -1353,7 +1353,7 @@ def _moa_caches_isolated():
 # deployment review caught in pm/plugins_state.py), and (b) imports freezing
 # real-home paths before fixtures run. The kanban guard (#69283) covers one
 # subsystem; this covers EVERY file operation: any open()/mkdir/stat-family
-# call resolving under the REAL hermes root fails the test immediately
+# call resolving under the REAL minerva root fails the test immediately
 # with a message naming the path — reads AND writes (a read of production
 # state is as much a leak as a write: it drags fixture rows and real config
 # into test assertions).

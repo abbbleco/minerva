@@ -1171,7 +1171,7 @@ def _invalidate_tokens_on_client_change(
     if removed:
         logger.warning(
             "MCP OAuth '%s': configured OAuth client changed (client_id %r -> %r); discarded tokens minted under "
-            "the previous client. Re-authorize with: hermes mcp login %s",
+            "the previous client. Re-authorize with: minerva mcp login %s",
             storage._server_name, old_client_id, new_client_id, storage._server_name)
 
 
@@ -1214,7 +1214,7 @@ def humanize_oauth_registration_error(
             f"'{server_name}' is Figma's remote MCP — DCR is allowlisted by exact client_name "
             f"(\"{_FIGMA_DCR_CLIENT_NAME}\" and \"Codex\" work; most other names 403). Minerva defaults to "
             f"client_name: {_FIGMA_DCR_CLIENT_NAME!r} automatically. If you set oauth.client_name yourself, "
-            f"change it to one of those, or clear it and re-run:\n  hermes mcp login {server_name}")
+            f"change it to one of those, or clear it and re-run:\n  minerva mcp login {server_name}")
     return (
         f"'{server_name}' only allows pre-approved OAuth clients — it rejected client registration (403), so no "
         "browser flow can start. Options: set oauth.client_name to a name the provider allowlists, add a "

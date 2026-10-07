@@ -105,7 +105,7 @@ class TestRelaunch:
     def test_windows_uses_subprocess_not_execvp(self, monkeypatch):
         """On Windows, os.execvp raises OSError "Exec format error" when the
         target is a .cmd shim or console-script wrapper (both common for
-        hermes).  relaunch() must detect win32 and use subprocess.run +
+        minerva).  relaunch() must detect win32 and use subprocess.run +
         sys.exit instead.
 
         ``platforms("windows")``: the bug is that ``os.execvp`` cannot exec a Windows

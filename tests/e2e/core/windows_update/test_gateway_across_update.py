@@ -96,7 +96,7 @@ def test_update_with_running_gateway_succeeds(journey: Journey) -> None:
     journey["state_before"]  # the precondition: a gateway was running when the update began
     failure = _RESTART_FAILURE.search(run.stdout)
     assert run.returncode == 0 and failure is None, fail_with(
-        m, f"hermes update with a running gateway reported a failed gateway restart "
+        m, f"minerva update with a running gateway reported a failed gateway restart "
            f"(rc={run.returncode}): {failure.group(0).strip() if failure else '<no restart message>'}", run)
 
 
@@ -121,7 +121,7 @@ def test_next_update_is_not_blocked(journey: Journey) -> None:
     journey["state_after"]  # a gateway was running (the relaunched one)
     blocked = "Could not map Windows gateway PIDs" in run.stdout
     assert run.returncode == 0 and not blocked, fail_with(
-        m, f"the next hermes update is blocked at the gateway pause step (rc={run.returncode}, "
+        m, f"the next minerva update is blocked at the gateway pause step (rc={run.returncode}, "
            f"'Could not map Windows gateway PIDs' printed={blocked})", run)
 
 
@@ -131,4 +131,4 @@ def test_gateway_stop_after_update(journey: Journey) -> None:
     assert pid, fail_with(m, f"no gateway recorded before stop: {state}")
     assert journey["stopped"], fail_with(
         m, f"after update `minerva gateway stop` left the serving gateway (pid {pid}) running", stop)
-    assert stop.returncode == 0, fail_with(m, f"hermes gateway stop exited {stop.returncode}", stop)
+    assert stop.returncode == 0, fail_with(m, f"minerva gateway stop exited {stop.returncode}", stop)

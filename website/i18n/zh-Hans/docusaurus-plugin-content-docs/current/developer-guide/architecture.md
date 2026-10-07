@@ -85,12 +85,12 @@ hermes-agent/
 │   ├── model_switch.py       # /model 命令逻辑（CLI + gateway 共用）
 │   ├── setup.py              # 交互式设置向导（大文件）
 │   ├── skin_engine.py        # CLI 主题引擎
-│   ├── skills_config.py      # hermes skills——按平台启用/禁用
+│   ├── skills_config.py      # minerva skills——按平台启用/禁用
 │   ├── skills_hub.py         # /skills 斜杠命令
-│   ├── tools_config.py       # hermes tools——按平台启用/禁用
+│   ├── tools_config.py       # minerva tools——按平台启用/禁用
 │   ├── plugins.py            # PluginManager——发现、加载、hook
 │   ├── callbacks.py          # 终端回调（clarify、sudo、approval）
-│   └── gateway.py            # hermes gateway 启动/停止
+│   └── gateway.py            # minerva gateway 启动/停止
 │
 ├── tools/                    # 工具实现（每个工具一个文件）
 │   ├── registry.py           # 中央工具注册表

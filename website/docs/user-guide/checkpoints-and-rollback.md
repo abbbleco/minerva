@@ -69,7 +69,7 @@ At a high level:
 
 ```mermaid
 flowchart LR
-  user["User command\n(hermes, gateway)"]
+  user["User command\n (minerva, gateway)"]
   agent["AIAgent\n(run_agent.py)"]
   tools["File & terminal tools"]
   cpMgr["CheckpointManager"]
@@ -167,7 +167,7 @@ Projects:        12
 Legacy archives (1):
   legacy-20260506-050616                           4.2 MB
 
-Clear with: hermes checkpoints clear-legacy
+Clear with: minerva checkpoints clear-legacy
 ```
 
 Force a full sweep (ignores the 24h idempotency marker):

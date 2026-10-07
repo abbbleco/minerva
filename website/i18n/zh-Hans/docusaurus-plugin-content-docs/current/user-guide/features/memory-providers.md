@@ -357,7 +357,7 @@ echo "HINDSIGHT_API_KEY=your-key" >> ~/.hermes/.env
 
 安装向导会自动安装依赖，并仅安装所选模式所需的内容（云端用 `hindsight-client`，本地用 `hindsight-all`）。需要 `hindsight-client >= 0.4.22`（会话启动时若版本过旧则自动升级）。
 
-**本地模式 UI：** `hindsight-embed -p hermes ui start`
+**本地模式 UI：** `hindsight-embed -p minerva ui start`
 
 **配置：** `$HERMES_HOME/hindsight/config.json`
 

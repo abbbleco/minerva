@@ -394,7 +394,7 @@ def test_exec_uses_known_wrapper_when_path_lookup_misses(
 
     # The wrapper exists at the known location but is NOT on PATH.
     # Realistic installer shim: execs this checkout's venv python on the
-    # checkout's hermes script (the aidiyet check requires it to target
+    # checkout's minerva script (the aidiyet check requires it to target
     # the writing checkout).
     known_wrapper = tmp_path / "known-home" / ".local" / "bin" / "hermes"
     known_wrapper.parent.mkdir(parents=True)
@@ -1263,7 +1263,7 @@ def test_install_places_1024_png_in_256x256_not_scalable(
 
 
 def test_install_removes_stale_scalable_png(tmp_path, xdg_home, monkeypatch):
-    """v2026.8.31 wrote the PNG into scalable/. A later hermes desktop
+    """v2026.8.31 wrote the PNG into scalable/. A later minerva desktop
     must delete that leftover so Cinnamon does not keep using it."""
     root = _make_project(tmp_path)
     lde.icon_path(root).write_bytes(_png_ihdr(1024, 1024))

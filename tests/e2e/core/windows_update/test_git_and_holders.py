@@ -104,7 +104,7 @@ def test_update_fetches_into_the_installers_partial_clone(journey: Journey) -> N
     fetch_bug = next((ln.strip() for ln in run.stdout.splitlines() if "BUG:" in ln or "fatal:" in ln),
                      failure_line(run))
     assert run.returncode == 0 and m.installed_head() == m.next, fail_with(
-        m, f"hermes update over the installer's partial clone failed: rc={run.returncode}, checkout at "
+        m, f"minerva update over the installer's partial clone failed: rc={run.returncode}, checkout at "
            f"{m.installed_head()} (NEXT {m.next}); {fetch_bug or 'no git error printed'}", run)
 
 

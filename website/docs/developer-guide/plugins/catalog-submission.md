@@ -35,7 +35,7 @@ for word, and a test fails the build if the two drift apart.
   checkout at the commit you are about to pin:
 
   ```bash
-  hermes plugins validate /path/to/your-plugin --install-deps
+  minerva plugins validate /path/to/your-plugin --install-deps
   ```
 
   It checks the manifest and `requires_hermes`, that the plugin loads, that the

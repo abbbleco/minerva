@@ -66,7 +66,7 @@ ENV PLAYWRIGHT_BROWSERS_PATH=/opt/hermes/tools
 # ran as PID 1. See #15012. Phase 2 of the s6-overlay supervision plan
 # replaces tini with s6-overlay's /init (PID 1 = s6-svscan), which reaps
 # zombies non-blockingly on SIGCHLD and additionally supervises the main
-# hermes process, the dashboard, and per-profile gateways.
+# minerva process, the dashboard, and per-profile gateways.
 # The second package list is the shared libraries the pinned Chromium links
 # against. `npx playwright install --with-deps` used to apt-install them as
 # a side effect; pm stages the pinned browser instead (below), so the libs
@@ -116,7 +116,7 @@ sys.exit('SQLite FTS5 trigram self-test failed') if db.execute(\"SELECT count(*)
 db.close()"
 
 # ---------- s6-overlay install ----------
-# s6-overlay provides supervision for the main hermes process, the dashboard,
+# s6-overlay provides supervision for the main minerva process, the dashboard,
 # and per-profile gateways. /init becomes PID 1 below — see ENTRYPOINT.
 #
 # Multi-arch: BuildKit auto-populates TARGETARCH (amd64 / arm64). s6-overlay
@@ -347,7 +347,7 @@ RUN mkdir -p /tmp/hermes-runtime && chmod 0700 /tmp/hermes-runtime
 # the final read-only permissions at copy time so we skip the separate
 # `chmod -R` pass that previously walked ~30k files across the venv +
 # node_modules + source (21s amd64 / 222s arm64 — #49113).  `a+rX,go-w`
-# gives the non-root hermes user read + traverse but no write; root retains
+# gives the non-root minerva user read + traverse but no write; root retains
 # write so the build steps below don't need chmod u+w dances.
 COPY --link --chmod=a+rX,go-w . .
 
@@ -356,7 +356,7 @@ RUN /opt/hermes/.venv/bin/python -m docker.build_agent
 
 # Wire the exec shim and install-method stamp.  Files under /opt/hermes are
 # already root-owned (COPY, dep assembly, npm install all run as root) and
-# read-only for the hermes user (go-w from the --chmod above).
+# read-only for the minerva user (go-w from the --chmod above).
 
 USER root
 RUN mkdir -p /opt/hermes/bin && \
@@ -370,9 +370,9 @@ RUN mkdir -p /opt/hermes/bin && \
 # host install's marker and wrongly block its ``minerva update``. A code-scoped
 # stamp is read first by detect_install_method() and is immune to the share.
 # Start as root so the s6-overlay stage2 hook can usermod/groupmod and chown
-# the data volume. Each supervised service then drops to the hermes user via
+# the data volume. Each supervised service then drops to the minerva user via
 # `s6-setuidgid hermes` in its run script. If HERMES_UID is unset, services
-# run as the default hermes user (UID 10000).
+# run as the default minerva user (UID 10000).
 
 # ---------- Image provenance + install stamp ----------
 # CI (.github/workflows/docker.yml) runs scripts/write_install_stamp.py
@@ -459,7 +459,7 @@ ENV HERMES_WRITE_SAFE_ROOT=/opt/data
 ENV XDG_RUNTIME_DIR=/tmp/hermes-runtime
 
 # `docker exec` privilege-drop shim. When operators run
-# `docker exec <c> hermes ...` they default to root, and any file the
+# `docker exec <c> minerva ...` they default to root, and any file the
 # command writes under $HERMES_HOME (auth.json, .env, config.yaml) ends
 # up root-owned and unreadable to the supervised gateway (UID 10000).
 # The shim lives at /opt/hermes/bin/hermes, sits earliest on PATH, and
@@ -476,7 +476,7 @@ COPY --chmod=0755 docker/entrypoint-dispatch.sh /opt/hermes/docker/entrypoint-di
 # the venv bin onto PATH; Architecture B's main-wrapper.sh does the
 # same for the container's main process, but `docker exec` and our
 # cont-init.d scripts don't pass through the wrapper. Expose the venv
-# bin globally so `docker exec <container> hermes ...` and any
+# bin globally so `docker exec <container> minerva ...` and any
 # subprocess that doesn't activate the venv first still find hermes.
 #
 # /opt/hermes/bin is prepended ahead of the venv so the privilege-drop
@@ -520,7 +520,7 @@ VOLUME [ "/opt/data" ]
 #   docker run <image> --tui            → entrypoint-dispatch.sh --tui
 #
 # main-wrapper.sh handles arg routing (bare-exec vs. hermes
-# subcommand vs. no-args), drops to the hermes user via s6-setuidgid,
+# subcommand vs. no-args), drops to the minerva user via s6-setuidgid,
 # and exec's the final program so its exit code becomes the container
 # exit code. The dispatcher preserves that contract across both the
 # supervised PID-1 path and the non-PID-1 fallback path. Without the

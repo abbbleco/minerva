@@ -65,7 +65,7 @@ test('Update now while a terminal update runs is refused, and the panel is truth
     const explain = (extra = '') =>
       diagnostics(
         facts,
-        `${extra}\n── terminal hermes update (tail) ──\n${readText(cliLog).split('\n').slice(-40).join('\n')}\n${logTail()}`
+        `${extra}\n── terminal minerva update (tail) ──\n${readText(cliLog).split('\n').slice(-40).join('\n')}\n${logTail()}`
       )
 
     try {
@@ -123,7 +123,7 @@ test('Update now while a terminal update runs is refused, and the panel is truth
           interval: 1_000,
           explain
         })
-        expect(cliExit, `terminal hermes update exits 0\n${explain()}`).toBe(0)
+        expect(cliExit, `terminal minerva update exits 0\n${explain()}`).toBe(0)
         expect(git(facts.checkout, 'rev-parse', 'HEAD'), 'the checkout is on the new commit').toBe(target)
       })
 

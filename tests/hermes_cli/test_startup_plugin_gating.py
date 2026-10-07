@@ -53,7 +53,7 @@ def test_deferred_platform_loader_registers_cli_command_before_parser_table():
 
     def _fake_loader():
         # Mirrors what a real platform adapter does on import: register its
-        # top-level hermes <name> CLI command via PluginContext.
+        # top-level minerva <name> CLI command via PluginContext.
         ctx = PluginContext(manifest, mgr)
         ctx.register_cli_command(
             name=command_name,

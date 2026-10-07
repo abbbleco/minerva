@@ -63,7 +63,7 @@ Run every command through `terminal` with the skill-relative script path:
 ```bash
 python3 scripts/reddit.py doctor                                  # which backend, current rate-limit window
 python3 scripts/reddit.py sub LocalLLaMA --sort hot --limit 15
-python3 scripts/reddit.py search "hermes agent" --sub LocalLLaMA --sort new
+python3 scripts/reddit.py search "minerva agent" --sub LocalLLaMA --sort new
 python3 scripts/reddit.py thread https://www.reddit.com/r/x/comments/abc123/slug/ --limit 40
 python3 scripts/reddit.py user spez --limit 10
 python3 scripts/reddit.py --json search "topic"                  # machine-readable

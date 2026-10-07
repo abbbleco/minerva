@@ -18,7 +18,7 @@ Use it for:
 - CI/CD notifications (deploy done, test failure)
 - Cron scripts that need to ping you with results
 - Quick one-shot messages from a terminal
-- Piping any tool's output anywhere (`make | hermes send --to slack:#builds`)
+- Piping any tool's output anywhere (`make | minerva send --to slack:#builds`)
 
 The command reuses the same credentials and platform adapters that `hermes
 gateway` already uses, so there's no second configuration surface to
@@ -33,7 +33,7 @@ maintain.
 hermes send --to telegram "deploy finished"
 
 # Pipe in stdout from anything
-echo "RAM 92%" | hermes send --to telegram:-1001234567890
+echo "RAM 92%" | minerva send --to telegram:-1001234567890
 
 # Send a file
 hermes send --to discord:#ops --file ~/.hermes/cache/scratch/report.md
@@ -100,7 +100,7 @@ branch on them the same way they would on `curl` or `grep`.
 
 1. **Positional argument** — `minerva send --to telegram "hi"`
 2. **`--file PATH`** — `minerva send --to telegram --file msg.txt`
-3. **Piped stdin** — `echo hi | hermes send --to telegram`
+3. **Piped stdin** — `echo hi | minerva send --to telegram`
 
 When stdin is a TTY (no pipe), Minerva does **not** wait for input — you'll
 get a clear usage error instead. This keeps scripts from hanging if they
@@ -119,7 +119,7 @@ with a single portable line:
 #!/usr/bin/env bash
 ram_pct=$(free | awk '/^Mem:/ {printf "%d", $3 * 100 / $2}')
 if [ "$ram_pct" -ge 85 ]; then
-  hermes send --to telegram --subject "⚠ MEMORY WARNING" \
+  minerva send --to telegram --subject "⚠ MEMORY WARNING" \
     "RAM ${ram_pct}% on $(hostname)"
 fi
 ```
@@ -140,9 +140,9 @@ thrashing, you still want that alert to go out.
 ```bash
 # In .github/workflows/deploy.yml or any CI script
 if ./scripts/deploy.sh; then
-  hermes send --to slack:#deploys "✅ ${CI_COMMIT_SHA:0:7} deployed"
+  minerva send --to slack:#deploys "✅ ${CI_COMMIT_SHA:0:7} deployed"
 else
-  tail -n 100 deploy.log | hermes send \
+  tail -n 100 deploy.log | minerva send \
     --to slack:#deploys --subject "❌ deploy failed"
   exit 1
 fi
@@ -161,8 +161,8 @@ fi
 
 ```bash
 ./train.py --epochs 200 && \
-  hermes send --to telegram "training done" || \
-  hermes send --to telegram "training failed (exit $?)"
+  minerva send --to telegram "training done" || \
+  minerva send --to telegram "training failed (exit $?)"
 ```
 
 ### Scripting with `--json` and `--quiet`

@@ -83,7 +83,7 @@ def container_name(request) -> Iterator[str]:
 
 
 # ---------------------------------------------------------------------------
-# docker_exec — default to the unprivileged hermes user
+# docker_exec — default to the unprivileged minerva user
 # ---------------------------------------------------------------------------
 #
 # Background: every Minerva runtime path inside the container drops to UID
@@ -108,7 +108,7 @@ def docker_exec(
     timeout: int = 30,
     extra_docker_args: tuple[str, ...] = (),
 ) -> subprocess.CompletedProcess[str]:
-    """Run a command inside ``container`` as ``user`` (default: hermes).
+    """Run a command inside ``container`` as ``user`` (default: minerva).
 
     Returns the CompletedProcess with text=True, capture_output=True.
 

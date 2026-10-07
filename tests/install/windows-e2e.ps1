@@ -216,7 +216,7 @@ function Invoke-Git([string[]]$GitArgs) {
     #
     # ALWAYS the real git.exe, never the shim we ship.
     # annoying bug where .bat files eat ^ args.
-    # if hermes ever adds a git command that calls something with ^ this will break, lol.
+    # if minerva ever adds a git command that calls something with ^ this will break, lol.
     $prevEap = $ErrorActionPreference
     $ErrorActionPreference = "Continue"
     try {
@@ -231,7 +231,7 @@ function Invoke-Git([string[]]$GitArgs) {
 }
 
 function Set-GitRedirect {
-    # we redirect to our own repo so we can play around with what commit hermes thinks we're on.
+    # we redirect to our own repo so we can play around with what commit minerva thinks we're on.
     # MECHANISM: a driver-owned global gitconfig selected via
     # GIT_CONFIG_GLOBAL. Do NOT use GIT_CONFIG_COUNT/KEY_n/VALUE_n env
     # config here -- install.ps1 SETS those itself (GIT_CONFIG_COUNT=1,
@@ -436,14 +436,14 @@ function Test-HermesRuns([string]$Label) {
         $env:HERMES_DISABLE_LAZY_INSTALLS = '1'
         $env:PYTHONDONTWRITEBYTECODE = '1'
         $ErrorActionPreference = 'Continue'
-        & $hermesExe --version 2>&1 | ForEach-Object { Write-Host "    hermes --version| $_" }
+        & $hermesExe --version 2>&1 | ForEach-Object { Write-Host "    minerva --version| $_" }
         $versionExit = $LASTEXITCODE
     } finally {
         $env:HERMES_DISABLE_LAZY_INSTALLS = $prevLazy
         $env:PYTHONDONTWRITEBYTECODE = $prevBytecode
         $ErrorActionPreference = $prevEap
     }
-    Assert-True ($versionExit -eq 0) "$Label -- hermes --version exits 0"
+    Assert-True ($versionExit -eq 0) "$Label -- minerva --version exits 0"
 }
 
 # ----------------------------------------------------------------------------
@@ -538,12 +538,12 @@ function Invoke-HermesUpdate {
         $ErrorActionPreference = $prevEap
         Stop-HangWatchdog $watchdog
     }
-    Write-LogGroup "hermes update transcript" $log
+    Write-LogGroup "minerva update transcript" $log
     if (Test-Path -LiteralPath $hangLog) {
-        Write-LogGroup "hermes update hang evidence (process table, Python stacks)" $hangLog
-        throw "E2E ASSERTION FAILED: hermes update was still running after $UpdateDeadlineMinutes minutes (its output pipe never closed); the process table above shows which process held it"
+        Write-LogGroup "minerva update hang evidence (process table, Python stacks)" $hangLog
+        throw "E2E ASSERTION FAILED: minerva update was still running after $UpdateDeadlineMinutes minutes (its output pipe never closed); the process table above shows which process held it"
     }
-    Assert-True ($updateExit -eq 0) "hermes update exited $updateExit (expected 0)"
+    Assert-True ($updateExit -eq 0) "minerva update exited $updateExit (expected 0)"
 }
 
 # install.ps1 (with -IncludeDesktop) and `minerva update` normally finish in
@@ -609,7 +609,7 @@ function Stop-HangWatchdog($Job) {
 function Invoke-ManualCardUpdate([string]$ReceiptPath, [string]$TargetSha) {
     Assert-True (Test-Path -LiteralPath $ReceiptPath) "manual update card produced a receipt"
     $manual = Get-Content -LiteralPath $ReceiptPath -Raw | ConvertFrom-Json
-    Assert-True ($manual.command -match '^hermes update(?:\s|$)') "manual update card instructed hermes update"
+    Assert-True ($manual.command -match '^hermes update(?:\s|$)') "manual update card instructed minerva update"
     Invoke-HermesUpdate
     Assert-True ((Get-InstalledHead) -eq $TargetSha) "manual update landed on target commit"
     Test-HermesRuns "post-manual-update"
@@ -701,8 +701,8 @@ function Invoke-HermesDesktopAppUpdate([string]$TargetSha) {
         $env:PYTHONPATH = $prevPy
         $env:HERMES_E2E_CAPTURE_LAUNCH = $prevCap
     }
-    Write-LogGroup "hermes desktop (launch capture) transcript" $log
-    Assert-True ($capExit -eq 0) "hermes desktop exited 0 during launch capture"
+    Write-LogGroup "minerva desktop (launch capture) transcript" $log
+    Assert-True ($capExit -eq 0) "minerva desktop exited 0 during launch capture"
     Assert-True (Test-Path -LiteralPath "$spec.captured") "a launch was actually captured (exit 0 without a launch must not pass)"
     Clear-HistoricalInstallerChurn
 
@@ -732,7 +732,7 @@ function Invoke-HermesDesktopAppUpdate([string]$TargetSha) {
         Invoke-ManualCardUpdate $manualReceipt $TargetSha
         return
     }
-    Assert-True ($driveExit -eq 0) "app driven via captured hermes desktop spec; update completed"
+    Assert-True ($driveExit -eq 0) "app driven via captured minerva desktop spec; update completed"
 
     # The production updater relaunches Minerva. Close that verified window
     # normally so the test-owned checkpoint starts and owns its own backend.
@@ -1380,7 +1380,7 @@ function Invoke-UserStateActions {
             # limitation, not a preservation failure.
             & $hermes auth add --help *> $null
             if ($LASTEXITCODE -ne 0) {
-                Write-Host '  SKIP hermes auth add does not exist on this ref; auth.json is not covered by this leg'
+                Write-Host '  SKIP minerva auth add does not exist on this ref; auth.json is not covered by this leg'
             }
             else {
             # The provider id and the flags are vintage surfaces, so probe them
@@ -1396,7 +1396,7 @@ function Invoke-UserStateActions {
             }
             $added = $false
             foreach ($provider in @('openrouter', 'anthropic')) {
-                Add-Content -LiteralPath $authLog -Value "=== hermes auth add $provider ==="
+                Add-Content -LiteralPath $authLog -Value "=== minerva auth add $provider ==="
                 & $hermes auth add $provider --type api-key `
                     --api-key 'e2e-preservation-not-a-real-key' @labelFlags 2>&1 |
                     Out-File -Encoding UTF8 -Append $authLog
@@ -1406,7 +1406,7 @@ function Invoke-UserStateActions {
                 }
             }
             if (-not $added) {
-                throw "hermes auth add failed for openrouter and anthropic; see $authLog"
+                throw "minerva auth add failed for openrouter and anthropic; see $authLog"
             }
             Write-Host '  a pooled credential exists (auth.json)'
             }
@@ -1418,14 +1418,14 @@ function Invoke-UserStateActions {
             # not a preservation failure.
             & $hermes profile create --help *> $null
             if ($LASTEXITCODE -ne 0) {
-                Write-Host '  SKIP hermes profile create does not exist on this ref; profiles/e2e-second is not covered by this leg'
+                Write-Host '  SKIP minerva profile create does not exist on this ref; profiles/e2e-second is not covered by this leg'
             }
             else {
             & $hermes profile create e2e-second 2>&1 |
                 Out-File -Encoding UTF8 (Join-Path $WorkRoot 'logs\user-state-profile.log')
-            if ($LASTEXITCODE -ne 0) { throw 'hermes profile create failed' }
+            if ($LASTEXITCODE -ne 0) { throw 'minerva profile create failed' }
             if (-not (Test-Path -LiteralPath (Join-Path $HermesHome 'profiles\e2e-second'))) {
-                throw 'hermes profile create produced no profile dir'
+                throw 'minerva profile create produced no profile dir'
             }
             # Factory templates migrate intentionally; preserve an authored profile instead.
             Add-Content -LiteralPath (Join-Path $HermesHome 'profiles\e2e-second\SOUL.md') `
@@ -1518,7 +1518,7 @@ function Assert-UserShims {
 
 function Invoke-PhaseInstall {
     # Dispatch on the install axis. Each arm ends with the same contract:
-    # checkout at OLD, hermes runs, and state carries how OLD landed so any
+    # checkout at OLD, minerva runs, and state carries how OLD landed so any
     # update arm can follow any install arm.
     $state = Read-State
     $script:ExpectedDesktop = if ($InstallMethod -eq 'installer-script') { 'absent' } else { 'present' }

@@ -37,9 +37,9 @@ description: "构建一个自动化 AI 代码审查器，监控你的仓库、�
 - **已安装 Minerva Agent** — 参见[安装指南](../getting-started/installation.md)
 - **Gateway 已运行**（用于 cron 任务）：
   ```bash
-  hermes gateway install   # Install as a service
+  minerva gateway install   # Install as a service
   # or
-  hermes gateway           # Run in foreground
+  minerva gateway           # Run in foreground
   ```
 - **已安装并认证 GitHub CLI（`gh`）**：
   ```bash

@@ -175,7 +175,7 @@ def cmd_whatsapp(args):
             # Older installs may have lost WHATSAPP_ENABLED; a kept pairing re-asserts it.
             if (get_env_value("WHATSAPP_ENABLED") or "").lower() != "true":
                 save_env_value("WHATSAPP_ENABLED", "true")
-            _say("\n✓ WhatsApp is configured and paired!", "  Start the gateway with: hermes gateway")
+            _say("\n✓ WhatsApp is configured and paired!", "  Start the gateway with: minerva gateway")
             return
 
     # QR code pairing
@@ -205,23 +205,23 @@ def cmd_whatsapp(args):
 
     print()
     if not (session_dir / "creds.json").exists():
-        print("⚠ Pairing may not have completed. Run 'hermes whatsapp' to try again.")
+        print("⚠ Pairing may not have completed. Run 'minerva whatsapp' to try again.")
         return
     # Only enable WhatsApp now that pairing actually succeeded (see above).
     save_env_value("WHATSAPP_ENABLED", "true")
     _say("✓ WhatsApp paired successfully!", "")
     if wa_mode == "bot":
-        _say("  Next steps:", "    1. Start the gateway:  hermes gateway",
+        _say("  Next steps:", "    1. Start the gateway:  minerva gateway",
              "    2. Send a message to the bot's WhatsApp number",
              "    3. The agent will reply automatically", "",
              "  Tip: Agent responses are prefixed with '☤ Minerva Agent'")
     else:
-        _say("  Next steps:", "    1. Start the gateway:  hermes gateway",
+        _say("  Next steps:", "    1. Start the gateway:  minerva gateway",
              "    2. Open WhatsApp → Message Yourself",
              "    3. Type a message — the agent will reply", "",
              "  Tip: Agent responses are prefixed with '☤ Minerva Agent'",
              "  so you can tell them apart from your own messages.")
-    _say("", "  Or install as a service: hermes gateway install")
+    _say("", "  Or install as a service: minerva gateway install")
 
 
 def cmd_whatsapp_cloud(args):
@@ -234,7 +234,7 @@ def cmd_whatsapp_cloud(args):
 
 
 _SYNC_USAGE = (
-    "usage: hermes sync "
+    "usage: minerva sync "
     "<status|pull|push|now|enable|disable|device|propose>\n"
     "\n"
     "Your skills, across your devices:\n"
@@ -351,9 +351,9 @@ def _sync_pull(ssc, identity):
 # gated (identity-checked) sync subcommands: name -> (ssc, identity) -> result
 _SYNC_GATED = {
     "pull": _sync_pull,
-    "push": lambda ssc, identity: ssc.push_skills(identity=identity, message="hermes sync push"),
+    "push": lambda ssc, identity: ssc.push_skills(identity=identity, message="minerva sync push"),
     "now": lambda ssc, identity: {"pull": ssc.pull_skills(identity=identity),
-                                  "push": ssc.push_skills(identity=identity, message="hermes sync now")}}
+                                  "push": ssc.push_skills(identity=identity, message="minerva sync now")}}
 
 
 def cmd_sync(args):
@@ -405,7 +405,7 @@ def cmd_slack(args):
     every gateway command registered as a first-class slash."""
     sub = getattr(args, "slack_command", None)
     if sub in {None, ""}:
-        _err("usage: hermes slack <subcommand>\n"
+        _err("usage: minerva slack <subcommand>\n"
              "\n"
              "subcommands:\n"
              "  manifest   Generate a Slack app manifest with every gateway\n"

@@ -82,7 +82,7 @@ def test_record_verify_run_marks_workspace_passed(hermes_home):
     assert event["kind"] == "verify"
     status = verification_status(session_id="s1", cwd=project)
     assert status["status"] == "passed"
-    assert status["evidence"]["canonical_command"] == "hermes verify"
+    assert status["evidence"]["canonical_command"] == "minerva verify"
 
 
 def test_record_verify_run_records_failure(hermes_home):
@@ -127,7 +127,7 @@ def test_cli_run_uses_hermes_session_id_env(hermes_home, capsys, monkeypatch):
 
 
 # ---------------------------------------------------------------------------
-# closed loop: edit -> stop guard nudge -> hermes verify -> guard satisfied
+# closed loop: edit -> stop guard nudge -> minerva verify -> guard satisfied
 # ---------------------------------------------------------------------------
 
 
@@ -153,7 +153,7 @@ def test_nudge_mentions_hermes_verify_when_recipe_has_start(hermes_home):
     mark_workspace_edited(session_id="s1", cwd=project, paths=[changed])
     nudge = build_verify_on_stop_nudge(session_id="s1", changed_paths=[changed])
     assert nudge is not None
-    assert "hermes verify --json" in nudge
+    assert "minerva verify --json" in nudge
     # The cheap verify commands are still listed first.
     assert "npm run test" in nudge
 
@@ -169,7 +169,7 @@ def test_nudge_mentions_hermes_verify_when_manifest_exists(hermes_home):
     mark_workspace_edited(session_id="s1", cwd=project, paths=[changed])
     nudge = build_verify_on_stop_nudge(session_id="s1", changed_paths=[changed])
     assert nudge is not None
-    assert "hermes verify --json" in nudge
+    assert "minerva verify --json" in nudge
 
 
 def test_nudge_keeps_plain_wording_without_recipe_start(hermes_home):
@@ -179,7 +179,7 @@ def test_nudge_keeps_plain_wording_without_recipe_start(hermes_home):
     mark_workspace_edited(session_id="s1", cwd=project, paths=[changed])
     nudge = build_verify_on_stop_nudge(session_id="s1", changed_paths=[changed])
     assert nudge is not None
-    assert "hermes verify" not in nudge
+    assert "minerva verify" not in nudge
 
 
 def test_nudge_recipe_detection_failure_is_silent(hermes_home, monkeypatch):
@@ -195,7 +195,7 @@ def test_nudge_recipe_detection_failure_is_silent(hermes_home, monkeypatch):
     mark_workspace_edited(session_id="s1", cwd=project, paths=[changed])
     nudge = build_verify_on_stop_nudge(session_id="s1", changed_paths=[changed])
     assert nudge is not None
-    assert "hermes verify" not in nudge
+    assert "minerva verify" not in nudge
 
 
 # ---------------------------------------------------------------------------

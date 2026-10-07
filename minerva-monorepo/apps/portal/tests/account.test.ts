@@ -35,7 +35,7 @@ test("current tier locks, free users get plan CTAs, paid users get switch", () =
   const plusSub = { logged_in: true, current: { tier_id: "plus", name: "Plus", monthly_credits: 10 } };
 
   assert.deepEqual(planActionForTier(plus, freeSub), {
-    kind: "link", text: "Get Minerva", href: "/manage-subscription",
+    kind: "link", text: "Get Minerva", href: "/manage-subscription?plan=PLUS",
   });
   assert.deepEqual(planActionForTier(plus, plusSub), { kind: "current", text: "Current plan" });
   // Case-insensitive: API tier_ids are lowercase, display ids upper.
@@ -45,6 +45,6 @@ test("current tier locks, free users get plan CTAs, paid users get switch", () =
   );
   assert.deepEqual(
     planActionForTier({ id: "FREE", cta: "Try Minerva" }, plusSub),
-    { kind: "link", text: "Switch plan", href: "/manage-subscription" },
+    { kind: "link", text: "Switch plan", href: "/manage-subscription?plan=FREE" },
   );
 });

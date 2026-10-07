@@ -210,7 +210,7 @@ fi
 # Publish user-facing launchers
 # ============================================================================
 
-echo -e "${CYAN}→${NC} Setting up hermes command..."
+echo -e "${CYAN}→${NC} Setting up minerva command..."
 
 # Reuse the bootstrap interpreter only to run the shared launcher writer.
 bin_dir="$HOME/.local/bin"
@@ -293,14 +293,14 @@ echo "  1. Activate the dev environment (venv-style, in THIS shell):"
 echo "     source ./activate"
 echo ""
 echo "  2. Run the setup wizard to configure API keys:"
-echo "     hermes setup"
+echo "     minerva setup"
 echo ""
 echo "  3. Start chatting:"
 echo "     hermes"
 echo ""
 echo "Other commands:"
-echo "  hermes pm install     # Re-run the tool + dependency install"
-echo "  hermes status         # Check configuration"
-echo "  hermes doctor         # Diagnose issues"
+echo "  minerva pm install     # Re-run the tool + dependency install"
+echo "  minerva status         # Check configuration"
+echo "  minerva doctor         # Diagnose issues"
 echo "  deactivate            # Undo the activation (restore PATH etc.)"
 echo ""

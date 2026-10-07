@@ -1042,13 +1042,13 @@ def _ollama_configured_base() -> tuple[dict, str]:
 
 def _unknown_provider_message(explicit_provider: str) -> str:
     msg = (
-        f"Unknown provider '{explicit_provider}'. Check 'hermes model' for available "
+        f"Unknown provider '{explicit_provider}'. Check 'minerva model' for available "
         f"providers, or define it in config.yaml under 'providers:'.")
     try:  # Surface common config issues that cause provider resolution failures
         from hermes_cli.config import validate_config_structure
         issues = validate_config_structure()
         if issues:
-            msg += "\n\nRun 'hermes doctor' — config issues detected:" + "".join(f"\n  • {ci.message}" for ci in issues[:3])
+            msg += "\n\nRun 'minerva doctor' — config issues detected:" + "".join(f"\n  • {ci.message}" for ci in issues[:3])
     except Exception:
         pass
     return msg

@@ -95,7 +95,7 @@ def rebuilt(tmp_path_factory, provider):
 
 def test_update_rebuild_keeps_installed_extra_and_mcp(rebuilt):
     sb, up, after = rebuilt["sb"], rebuilt["update"], rebuilt["after_update"]
-    assert up.returncode == 0, "hermes update failed:\n" + P.diagnostics(sb, up)
+    assert up.returncode == 0, "minerva update failed:\n" + P.diagnostics(sb, up)
     assert after["generation"] != rebuilt["before"]["generation"], (
         "harness: the dependency release did not make the update build a new generation\n" + P.diagnostics(sb, up))
     assert after["imports"]["telegram"] == "ok", (
@@ -107,7 +107,7 @@ def test_update_rebuild_keeps_installed_extra_and_mcp(rebuilt):
 
 def test_repair_keeps_installed_extra_and_mcp(rebuilt):
     sb, rp, after = rebuilt["sb"], rebuilt["repair"], rebuilt["after_repair"]
-    assert rp.returncode == 0, "hermes pm repair failed on a healthy install:\n" + P.diagnostics(sb, rp)
+    assert rp.returncode == 0, "minerva pm repair failed on a healthy install:\n" + P.diagnostics(sb, rp)
     assert after["generation"] != rebuilt["after_update"]["generation"], (
         "`minerva pm repair` reported success but did not rebuild the environment\n" + P.diagnostics(sb, rp))
     assert after["imports"]["telegram"] == "ok", (
@@ -162,7 +162,7 @@ def migrated(tmp_path_factory, provider):
 def test_legacy_venv_features_carry_into_the_first_pm_generation(migrated):
     leg, up = migrated["leg"], migrated["update"]
     assert migrated["pre"].returncode == 0, "harness: N-1 venv cannot import its features:\n" + H.describe(migrated["pre"])
-    assert up.returncode == 0, "hermes update from a main-era venv failed:\n" + H.describe(up)
+    assert up.returncode == 0, "minerva update from a main-era venv failed:\n" + H.describe(up)
     assert I.git("rev-parse", "HEAD", cwd=leg.install) == _refs().head, H.describe(up)
     selected = Path(leg.python)
     assert "installs" in selected.parts, f"update left the install on the legacy venv: {selected}\n{H.describe(up)}"

@@ -73,12 +73,12 @@ a human in a browser.
    ```
 3. Select provider + model:
    ```bash
-   hermes config set model.provider actual
-   hermes config set model.default "MODEL_ID_FROM_DISCOVERY"
+   minerva config set model.provider actual
+   minerva config set model.default "MODEL_ID_FROM_DISCOVERY"
    ```
 4. Verify end-to-end:
    ```bash
-   hermes chat -Q -q "Reply with exactly: ACTUAL_OK" --provider actual -m MODEL_ID
+   minerva chat -Q -q "Reply with exactly: ACTUAL_OK" --provider actual -m MODEL_ID
    ```
 
 ### Local mode
@@ -96,12 +96,12 @@ a human in a browser.
    built-in provider into local no-auth mode automatically — no key needed:
    append `ACTUAL_BASE_URL=http://127.0.0.1:8080` to `~/.hermes/.env`, then:
    ```bash
-   hermes config set model.provider actual
-   hermes config set model.default "INSTALLED_MODEL_NAME"
+   minerva config set model.provider actual
+   minerva config set model.default "INSTALLED_MODEL_NAME"
    ```
 4. Verify (reduced toolset — see context-window pitfall below):
    ```bash
-   hermes chat -Q -q "Reply with exactly: LOCAL_OK" --provider actual -m INSTALLED_NAME -t file,web
+   minerva chat -Q -q "Reply with exactly: LOCAL_OK" --provider actual -m INSTALLED_NAME -t file,web
    ```
 
 ## Quick Reference

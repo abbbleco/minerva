@@ -341,8 +341,8 @@ def do_search(query: str, source: str = "all", limit: int = 10, console: Optiona
         table.add_row(r.name, _truncate(r.description, 60), _display_source(r),
                       _trust_cell(r.trust_level, r.source), r.identifier)
     c.print(table)
-    c.print("[dim]Use: hermes skills inspect <identifier> to preview, "
-            "hermes skills install <identifier> to install "
+    c.print("[dim]Use: minerva skills inspect <identifier> to preview, "
+            "minerva skills install <identifier> to install "
             "(--json for scripting)[/]\n")
 
 
@@ -410,9 +410,9 @@ def _render_browse_page(c: Console, deduped, page_items, page: int, total_pages:
     if timed_out:
         c.print(f"  [yellow]⚡ Slow sources skipped: {', '.join(timed_out)} "
                 f"— run again for cached results[/]")
-    c.print("[dim]Tip: 'hermes skills inspect <identifier>' to preview, "
-            "'hermes skills install <identifier>' to install, "
-            "'hermes skills search <query>' to search deeper[/]\n")
+    c.print("[dim]Tip: 'minerva skills inspect <identifier>' to preview, "
+            "'minerva skills install <identifier>' to install, "
+            "'minerva skills search <query>' to search deeper[/]\n")
 
 
 def do_browse(page: int = 1, page_size: int = 20, source: str = "all",
@@ -473,7 +473,7 @@ def do_inspect(identifier: str, console: Optional[Console] = None) -> None:
     c.print(Panel("\n".join(info_lines), title=f"Skill: {meta.name}"))
     preview = _skill_md_preview(bundle)
     if preview is not None:
-        c.print(Panel(preview, title="SKILL.md Preview", subtitle="hermes skills install <id> to install"))
+        c.print(Panel(preview, title="SKILL.md Preview", subtitle="minerva skills install <id> to install"))
     c.print()
 
 
@@ -881,7 +881,7 @@ def do_check(name: Optional[str] = None, console: Optional[Console] = None) -> N
     if orphaned:
         c.print(f"[yellow]Orphaned:[/] {', '.join(orphaned)} — lock-file entries whose local "
                 "directory is missing or replaced by a non-directory. For missing directories, "
-                "remove the stale entry with: hermes skills uninstall <name>\n")
+                "remove the stale entry with: minerva skills uninstall <name>\n")
 
 
 def _has_local_edits(installed: dict) -> bool:
@@ -942,7 +942,7 @@ def do_update(name: Optional[str] = None, console: Optional[Console] = None,
     if skipped_local:
         c.print(f"[dim]{len(skipped_local)} skill(s) kept your local edits: "
                 f"{', '.join(sorted(skipped_local))}.[/]")
-        c.print("[dim]Overwrite with: hermes skills update <name> --force[/]\n")
+        c.print("[dim]Overwrite with: minerva skills update <name> --force[/]\n")
 
 
 def do_audit(name: Optional[str] = None, console: Optional[Console] = None,
@@ -1022,9 +1022,9 @@ def do_list_modified(console: Optional[Console] = None, as_json: bool = False) -
     for entry in modified:
         c.print(f"  [yellow]~[/] {entry['name']}")
     c.print()
-    c.print("[dim]See changes:   hermes skills diff <name>[/]")
-    c.print("[dim]Resume updates: hermes skills reset <name>          (keep your copy, re-baseline)[/]")
-    c.print("[dim]Revert to stock: hermes skills reset <name> --restore[/]\n")
+    c.print("[dim]See changes:   minerva skills diff <name>[/]")
+    c.print("[dim]Resume updates: minerva skills reset <name>          (keep your copy, re-baseline)[/]")
+    c.print("[dim]Revert to stock: minerva skills reset <name> --restore[/]\n")
 
 
 def _print_diff_line(c: Console, line: str) -> None:
@@ -1061,7 +1061,7 @@ def do_diff(name: str, console: Optional[Console] = None) -> None:
             line = _DIFF_STATUS_LINE.get(entry["status"], _DIFF_STATUS_LINE["binary"])
             c.print(line.format(**entry))
     c.print()
-    c.print(f"[dim]Revert with: hermes skills reset {name} --restore[/]\n")
+    c.print(f"[dim]Revert with: minerva skills reset {name} --restore[/]\n")
 
 
 def do_opt_out(remove: bool = False, console: Optional[Console] = None, skip_confirm: bool = False,
@@ -1166,7 +1166,7 @@ def do_tap(action: str, repo: str = "", console: Optional[Console] = None) -> No
     elif action in _TAP_OPS:
         method, ok_line, fail_line = _TAP_OPS[action]
         if not repo:
-            _print_error(c, f"Repo required. Usage: hermes skills tap {action} owner/repo")
+            _print_error(c, f"Repo required. Usage: minerva skills tap {action} owner/repo")
             return
         c.print((ok_line if getattr(mgr, method)(repo) else fail_line).format(repo=repo))
     else:
@@ -1213,7 +1213,7 @@ def do_publish(skill_path: str, target: str = "github", repo: str = "",
     if target == "github":
         if not repo:
             _print_error(c, "--repo required for GitHub publish.\n"
-                            "Usage: hermes skills publish <path> --to github --repo owner/repo")
+                            "Usage: minerva skills publish <path> --to github --repo owner/repo")
             return
         auth = GitHubAuth()
         if not auth.is_authenticated():
@@ -1364,13 +1364,13 @@ def _snapshot_cli(args) -> None:
     elif snap_action == "import":
         do_snapshot_import(args.input, force=getattr(args, "force", False))
     else:
-        _console.print("Usage: hermes skills snapshot [export|import]\n")
+        _console.print("Usage: minerva skills snapshot [export|import]\n")
 
 
 def _tap_cli(args) -> None:
     tap_action = getattr(args, "tap_action", None)
     if not tap_action:
-        _console.print("Usage: hermes skills tap [list|add|remove]\n")
+        _console.print("Usage: minerva skills tap [list|add|remove]\n")
         return
     do_tap(tap_action, repo=getattr(args, "repo", "") or getattr(args, "name", ""))
 
@@ -1409,8 +1409,8 @@ def skills_command(args) -> None:
     """Router for `minerva skills <subcommand>` — called from hermes_cli/main.py."""
     handler = _CLI_ACTIONS.get(getattr(args, "skills_action", None))
     if handler is None:
-        _console.print("Usage: hermes skills [browse|search|install|inspect|list|list-modified|diff|check|update|audit|uninstall|reset|opt-out|opt-in|publish|snapshot|tap]\n")
-        _console.print("Run 'hermes skills <command> --help' for details.\n")
+        _console.print("Usage: minerva skills [browse|search|install|inspect|list|list-modified|diff|check|update|audit|uninstall|reset|opt-out|opt-in|publish|snapshot|tap]\n")
+        _console.print("Run 'minerva skills <command> --help' for details.\n")
         return
     handler(args)
 

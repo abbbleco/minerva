@@ -1553,7 +1553,7 @@ class TestExplicitOpenaiSelectionError:
 
     def test_dispatch_returns_selection_specific_error(self, monkeypatch):
         """The final transcription result carries the managed-route error and
-        its hermes tools remediation instead of the all-provider install
+        its minerva tools remediation instead of the all-provider install
         hint."""
         self._no_openai_credentials(monkeypatch)
         monkeypatch.setattr(
@@ -1576,7 +1576,7 @@ class TestExplicitOpenaiSelectionError:
 
         assert result["success"] is False
         assert "managed route down" in result["error"]
-        assert "hermes tools" in result["error"]
+        assert "minerva tools" in result["error"]
         assert "No STT provider available" not in result["error"]
 
     def test_auto_detect_none_keeps_generic_hint(self, monkeypatch):

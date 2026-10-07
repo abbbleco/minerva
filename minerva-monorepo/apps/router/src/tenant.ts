@@ -19,6 +19,11 @@ import { hashApiKey, isPaidPlanId, type BillingState, type PlanId } from "@miner
 export interface RouterTenant {
   agencyId: string;
   agencySlug: string;
+  /** Agency display name, or `null` when unset — shown as the signed-in account. */
+  agencyName: string | null;
+  /** `agency_api_keys.created_by`: the member this device key was minted for,
+   *  or `null` for legacy/unattributed keys (agency-pool behavior). */
+  memberUserId: string | null;
   plan: PlanId;
   billingState: BillingState;
   /** USD, or `null` when the read failed -> credits gate skipped. */
@@ -46,11 +51,13 @@ interface KeyRow {
   purpose: string;
   status: string;
   expires_at: string | null;
+  created_by: string | null;
 }
 
 interface AgencyRow {
   id: string;
   slug: string;
+  name: string | null;
   plan: string;
   status: string;
   credits_balance_usd: number | string | null;
@@ -88,7 +95,7 @@ export async function resolveTenant(authorization: string | undefined): Promise<
     // owned by the upstream APIs (owner decision 2026-09-30) — the router's job is to surface
     // their 429 faithfully, not to impose a second, diverging limit. The web app's intake route
     // still enforces this column for form submissions, which upstream never sees.
-    .select("id, agency_id, name, purpose, status, expires_at")
+    .select("id, agency_id, name, purpose, status, expires_at, created_by")
     .eq("key_hash", hashApiKey(token))
     .maybeSingle();
 
@@ -108,7 +115,7 @@ export async function resolveTenant(authorization: string | undefined): Promise<
 
   const { data: agency, error: agencyError } = await client
     .from("agencies")
-    .select("id, slug, plan, status, credits_balance_usd")
+    .select("id, slug, name, plan, status, credits_balance_usd")
     .eq("id", keyRow.agency_id)
     .maybeSingle();
 
@@ -147,6 +154,19 @@ export async function resolveTenant(authorization: string | undefined): Promise<
   } else if (pastDue && isPaidPlanId(pastDue.plan)) {
     plan = pastDue.plan;
     billingState = "past_due";
+  } else {
+    // Canceled means no future charges — not no access. A paid period already
+    // bought still serves to its end; `state` stays collection-honest (free,
+    // not active) while `plan` keeps the entitlement the gates tier on.
+    const canceled = rows.find(
+      (s) =>
+        s.status === "canceled" &&
+        s.current_period_end &&
+        new Date(s.current_period_end).getTime() > now
+    );
+    if (canceled && isPaidPlanId(canceled.plan)) {
+      plan = canceled.plan;
+    }
   }
 
   if (billingState === "past_due") {
@@ -171,6 +191,8 @@ export async function resolveTenant(authorization: string | undefined): Promise<
     tenant: {
       agencyId: agencyRow.id,
       agencySlug: agencyRow.slug,
+      agencyName:
+        typeof agencyRow.name === 'string' && agencyRow.name.trim() ? agencyRow.name.trim() : null,
       plan,
       billingState,
       balanceUsd,
@@ -178,6 +200,8 @@ export async function resolveTenant(authorization: string | undefined): Promise<
       // the router's binding limit is the credit balance. Left null so the gate is skipped
       // rather than double-counting a metric the router does not own.
       quota: null,
+      memberUserId:
+        typeof keyRow.created_by === "string" && keyRow.created_by ? keyRow.created_by : null,
       keyId: keyRow.id,
       keyName: keyRow.name,
     },

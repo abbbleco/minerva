@@ -76,7 +76,7 @@ _LAUNCHD_JOB_UNLOADED_EXIT_CODES = frozenset({3, 113, 125})
 # services (macOS 26+). Only when the retry ALSO fails do callers degrade to a detached process.
 # launchctl returns 5 ("Input/output error") or a persistent 125 in two very different situations, so exit 5
 # is NOT on its own proof the domain is broken: 1. See #42914. 2. Here launchd cannot supervise the gateway
-# at all and we degrade to a detached background process (the `nohup hermes gateway run` workaround). See
+# at all and we degrade to a detached background process (the `nohup minerva gateway run` workaround). See
 # #23387.
 _LAUNCHCTL_DOMAIN_UNSUPPORTED_CODES = frozenset({5, 125})
 
@@ -279,7 +279,7 @@ def _spawn_detached_gateway() -> bool:
     stdout → gateway.log, timestamped stderr → gateway.error.log, PID via gateway.pid so stop/status work.
 
     Used when launchctl can no longer bootstrap/kickstart the gateway on macOS 26+ (issue #23387). Mirrors
-    the `nohup hermes gateway run --replace` workaround but keeps it CLI-managed: stdout goes to
+    the `nohup minerva gateway run --replace` workaround but keeps it CLI-managed: stdout goes to
     gateway.log, stderr is timestamped into gateway.error.log, and the PID is tracked via the gateway.pid
     file that `run_gateway` writes, so stop/status/restart keep working.
     """
@@ -315,10 +315,10 @@ def _launchd_fallback_to_detached(reason: str, *, exit_on_failure: bool = True) 
         print("✓ Started gateway as a background process instead")
         print("  It will NOT auto-start at login or auto-restart on crash.")
         print(f"  Logs: {_dhh()}/logs/gateway.log")
-        print("  Stop it with: hermes gateway stop")
+        print("  Stop it with: minerva gateway stop")
         return True
     _gw().print_error("Failed to start the gateway as a background process.")
-    print(f"  Try manually: nohup hermes gateway run --replace > {_dhh()}/logs/gateway.log 2>&1 &")
+    print(f"  Try manually: nohup minerva gateway run --replace > {_dhh()}/logs/gateway.log 2>&1 &")
     if exit_on_failure:
         sys.exit(1)
     return False
@@ -342,7 +342,7 @@ def _launchd_degrade_or_raise(exc: subprocess.CalledProcessError, what: str) -> 
     if _gw()._launchctl_label_supervising_process(label):
         print(f"⚠ {what} failed (exit {exc.returncode}), but launchd still supervises {label}")
         print("  Not switching to the detached fallback — this host manages the job.")
-        print("  Apply the definition with: hermes gateway stop && hermes gateway install --force")
+        print("  Apply the definition with: minerva gateway stop && minerva gateway install --force")
         raise exc
     _launchd_fallback_to_detached(f"{what} exit {exc.returncode}")
 
@@ -621,7 +621,7 @@ def launchd_install(force: bool = False, *, start_now: bool = True):
                 from hermes_constants import display_hermes_home
                 print(
                     "⚠ Service definition could not be reloaded with launchd. "
-                    "Run 'hermes gateway install --force' or check "
+                    "Run 'minerva gateway install --force' or check "
                     f"{display_hermes_home()}/logs/launchd-reload.log for details."
                 )
             return
@@ -644,8 +644,8 @@ def launchd_install(force: bool = False, *, start_now: bool = True):
         print("✓ Service installed, not started (launchd starts it at your next login)")
         print()
         print("Next steps:")
-        print("  hermes gateway start              # Start it now")
-        print("  hermes gateway status             # Check status")
+        print("  minerva gateway start              # Start it now")
+        print("  minerva gateway status             # Check status")
         return
 
     try:
@@ -659,7 +659,7 @@ def launchd_install(force: bool = False, *, start_now: bool = True):
     _gw()._clear_launchd_unsupported_marker()
     print()
     print("Next steps:")
-    print("  hermes gateway status             # Check status")
+    print("  minerva gateway status             # Check status")
     from hermes_constants import display_hermes_home as _dhh
     print(f"  tail -f {_dhh()}/logs/gateway.log  # View logs")
 
@@ -915,12 +915,12 @@ def launchd_status(deep: bool = False):
         print("✓ Service definition matches the current Minerva install")
     else:
         print("⚠ Service definition is stale relative to the current Minerva install")
-        print("  Run: hermes gateway start")
+        print("  Run: minerva gateway start")
 
     if not service_listed:
         print("✗ Gateway service is not loaded")
         print("  Service definition exists locally but launchd has not loaded it.")
-        print("  Run: hermes gateway start")
+        print("  Run: minerva gateway start")
         if fallback_pid:
             print(f"  Note: a detached gateway process is running (PID {fallback_pid})")
     elif launchd_pid is not None:
@@ -933,10 +933,10 @@ def launchd_status(deep: bool = False):
         print("  launchd cannot manage the gateway on this macOS version.")
         if fallback_pid:
             print(f"✓ Detached fallback process is running (PID {fallback_pid})")
-            print("  Cron jobs will fire. Stop with: hermes gateway stop")
+            print("  Cron jobs will fire. Stop with: minerva gateway stop")
         else:
             print("✗ No fallback process is running")
-            print("  Run: hermes gateway start")
+            print("  Run: minerva gateway start")
         print("  ⚠ Auto-start at login and auto-restart on crash are NOT available.")
     else:
         print("✓ Gateway service is registered with launchd")

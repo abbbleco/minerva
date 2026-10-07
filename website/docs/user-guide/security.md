@@ -518,7 +518,7 @@ cannot read them — the approval is silently ignored ([#10270][i10270]).
 Always pass `-u hermes`:
 
 ```bash
-docker exec -u hermes hermes-agent hermes pairing approve telegram ABC12DEF
+docker exec -u minerva hermes-agent minerva pairing approve telegram ABC12DEF
 ```
 
 If you already ran the command as root and the user is still unauthorized,

@@ -45,9 +45,9 @@ Connect the plugin to a standalone Mem0 server you run yourself — the Docker-s
 1. Run the Mem0 server (FastAPI + pgvector) from its Docker image and note its URL and `ADMIN_API_KEY`.
 2. Point the plugin at it — via the setup wizard:
    ```bash
-   hermes memory setup    # select "mem0" → "Self-hosted server"
+   minerva memory setup    # select "mem0" → "Self-hosted server"
    # Or non-interactive:
-   hermes memory setup mem0 --mode selfhosted --host http://localhost:8888 --api-key your-admin-api-key
+   minerva memory setup mem0 --mode selfhosted --host http://localhost:8888 --api-key your-admin-api-key
    ```
    or via env vars:
    ```bash

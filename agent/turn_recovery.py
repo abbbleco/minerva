@@ -345,7 +345,7 @@ def _print_nous_401_diagnostics(agent: Any, api_error: Exception) -> None:
     _plines(
         agent,
         "   Troubleshooting:",
-        "     • Re-authenticate: hermes auth add nous",
+        "     • Re-authenticate: minerva auth add nous",
         "     • Check credits / billing: https://portal.nousresearch.com",
         f"     • Verify stored credentials: {display_hermes_home()}/auth.json",
         "     • Switch providers temporarily: /model <model> --provider openrouter",
@@ -381,10 +381,10 @@ def _print_anthropic_401_diagnostics(agent: Any, key: Any) -> None:
         f"     • Check ANTHROPIC_TOKEN in {_dhh}/.env for Minerva-managed OAuth/setup tokens",
         f"     • Check ANTHROPIC_API_KEY in {_dhh}/.env for API keys or legacy token values",
         "     • For API keys: verify at https://platform.claude.com/settings/keys",
-        "     • Minerva login (OAuth): run 'hermes auth add anthropic' to sign in again, then retry",
-        "     • Inspect what Minerva holds: hermes auth list anthropic",
-        "     • Legacy cleanup: hermes config set ANTHROPIC_TOKEN \"\"",
-        "     • Clear stale keys: hermes config set ANTHROPIC_API_KEY \"\"",
+        "     • Minerva login (OAuth): run 'minerva auth add anthropic' to sign in again, then retry",
+        "     • Inspect what Minerva holds: minerva auth list anthropic",
+        "     • Legacy cleanup: minerva config set ANTHROPIC_TOKEN \"\"",
+        "     • Clear stale keys: minerva config set ANTHROPIC_API_KEY \"\"",
     )
 
 
@@ -889,7 +889,7 @@ def _print_nonretryable_auth_guidance(
                 agent,
                 "   💡 ABBBLE Portal OAuth token was rejected (HTTP 401). Your token may be",
                 "      expired, revoked, or your account may be out of credits. To fix:",
-                "      1. Re-authenticate: hermes portal",
+                "      1. Re-authenticate: minerva portal",
                 "      2. Check your portal account: https://portal.nousresearch.com",
             )
             # ``:free`` is OpenRouter slug syntax; ABBBLE Portal will reject the model
@@ -905,7 +905,7 @@ def _print_nonretryable_auth_guidance(
     _vlines(
         agent,
         "   💡 Your API key was rejected by the provider. Check:",
-        "      • Is the key valid? Run: hermes setup",
+        "      • Is the key valid? Run: minerva setup",
         f"      • Does your account have access to {model}?",
     )
     if base_url_host_matches(str(base_url), "openrouter.ai"):
@@ -1057,7 +1057,7 @@ def nonretryable_client_error_result(
         _vlines(
             agent,
             f"   💡 {CONTENT_POLICY_NEXT_STEPS}",
-            "      To route future blocks to another provider automatically: hermes fallback add",
+            "      To route future blocks to another provider automatically: minerva fallback add",
         )
     # TLS certificate failures are environment problems — name the knobs for each cause.
     if classified.reason == FailoverReason.ssl_cert_verification:

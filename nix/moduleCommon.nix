@@ -420,7 +420,7 @@ let
         type = types.listOf types.package;
         default = [ ];
         description = ''
-          Directory-based plugin packages to symlink into the hermes plugins
+          Directory-based plugin packages to symlink into the minerva plugins
           directory. Each package must contain a plugin.yaml and __init__.py
           at its root. Minerva discovers these automatically on startup.
         '';
@@ -447,7 +447,7 @@ let
           with the same Python interpreter as hermes. The interpreter
           major.minor is derived from pm/lock.json by nix/pythonLock.nix —
           take packages from config.services.hermes-agent.package.python.pkgs so the set always
-          matches the interpreter hermes was built with.
+          matches the interpreter minerva was built with.
         '';
         example = literalExpression ''
           [
@@ -668,7 +668,7 @@ let
       separates the installation from the services, which is the
       Home Manager convention:
 
-        programs.hermes-agent.enable = ${lib.boolToString (value != false)};  # the hermes CLI, and HERMES_HOME for your shells
+        programs.hermes-agent.enable = ${lib.boolToString (value != false)};  # the minerva CLI, and HERMES_HOME for your shells
         programs.hermes-agent.desktop.enable = true;  # the desktop application
 
       `services.hermes-agent` keeps the state, the configuration and
@@ -943,7 +943,7 @@ let
   # start time. launchd has no EnvironmentFile, so a script is the one shape
   # that works on both hosts.
   #
-  # `exec` on the last line keeps hermes as the MainPID of the unit. No shell
+  # `exec` on the last line keeps minerva as the MainPID of the unit. No shell
   # stays in the cgroup, and the restart logic of systemd sees the real
   # process.
   backendLauncher =

@@ -651,7 +651,7 @@ def main() -> int:
     args = _arguments()
     hermes_repo = args.hermes_repo.resolve()
     relay_python = args.relay_python.resolve() if args.relay_python else None
-    hermes = _resolve_hermes_executable(hermes_repo)
+    minerva = _resolve_hermes_executable(hermes_repo)
     if relay_python is not None and not any(
         (relay_python / "nemo_relay").glob("_native.*")
     ):

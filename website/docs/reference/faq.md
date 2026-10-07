@@ -486,11 +486,11 @@ hermes config show
 hermes gateway run
 
 # Option 2: Persistent via tmux (survives terminal close)
-tmux new -s hermes 'hermes gateway run'
+tmux new -s minerva 'minerva gateway run'
 # Reattach later: tmux attach -t hermes
 
 # Option 3: Background via nohup
-nohup hermes gateway run > ~/.hermes/logs/gateway.log 2>&1 &
+nohup minerva gateway run > ~/.hermes/logs/gateway.log 2>&1 &
 ```
 
 If you want to try systemd anyway, make sure it's enabled:
@@ -507,7 +507,7 @@ If you want to try systemd anyway, make sure it's enabled:
 
 :::tip Auto-start on Windows boot
 For reliable auto-start, use Windows Task Scheduler to launch WSL + the gateway on login:
-1. Create a task that runs `wsl -d Ubuntu -- bash -lc 'hermes gateway run'`
+1. Create a task that runs `wsl -d Ubuntu -- bash -lc 'minerva gateway run'`
 2. Set it to trigger on user logon
 :::
 
@@ -807,7 +807,7 @@ Skills with very long descriptions are truncated to 40 characters in the Telegra
 
 2. On the **source machine**, create a full backup:
    ```bash
-   hermes backup
+   minerva backup
    ```
    This saves a zip archive at `~/hermes-backup-<timestamp>.zip`.
    The full backup covers configuration, credentials, memories, skills, sessions,
@@ -819,7 +819,7 @@ Skills with very long descriptions are truncated to 40 characters in the Telegra
    scp ~/hermes-backup-<timestamp>.zip newmachine:~/
 
    # On the new machine
-   hermes import ~/hermes-backup-<timestamp>.zip
+   minerva import ~/hermes-backup-<timestamp>.zip
    ```
 
 4. On the new machine, run `minerva setup` to verify API keys and provider config are working.

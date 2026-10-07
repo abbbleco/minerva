@@ -1,4 +1,4 @@
-# Minerva Agent bootstrap: git checkout + venv + hermes command on PATH.
+# Minerva Agent bootstrap: git checkout + venv + minerva command on PATH.
 # Heavy dependencies (tool binaries, browsers, node) are pm's job after
 # this: `minerva pm install`. Stage protocol kept for Minerva-Setup:
 #   -Manifest             print the stage list as JSON
@@ -986,13 +986,13 @@ function Invoke-SourceCompletion([bool]$Desktop) {
     if ($Desktop) { $completionArgs += '--desktop' }
     Push-Location $InstallDir
     try {
-        Invoke-Logged "Building the hermes command and apps" { & $bootPy @completionArgs }
+        Invoke-Logged "Building the minerva command and apps" { & $bootPy @completionArgs }
         $code = $LASTEXITCODE
     } finally {
         Pop-Location
     }
     if ($code) { Fail "app products or command publication failed (exit $code)" }
-    Write-Ok "app products and hermes command ready"
+    Write-Ok "app products and minerva command ready"
 }
 
 function Publish-UserCommand {
@@ -1004,14 +1004,14 @@ function Publish-UserCommand {
     $bootPy = Get-BootstrapPython
     Push-Location $InstallDir
     try {
-        Invoke-Logged "Publishing the hermes command" { & $bootPy -I -X utf8 hermes_cli/_launchers.py $binDir }
+        Invoke-Logged "Publishing the minerva command" { & $bootPy -I -X utf8 hermes_cli/_launchers.py $binDir }
         $code = $LASTEXITCODE
     } finally {
         Pop-Location
     }
     if ($code) { Fail "launcher staging failed" }
     Set-LauncherUserPath $binDir
-    Write-Ok "hermes command installed at $binDir"
+    Write-Ok "minerva command installed at $binDir"
 }
 
 function Test-DesktopProductPresent {
@@ -1091,7 +1091,7 @@ function Invoke-InstalledHermes([string[]]$CommandArgs) {
     $runtimeCommand = @(Get-HermesRuntimeCommand -InstallRoot $InstallDir)
     $runtimeArgs = @($runtimeCommand | Select-Object -Skip 1) + $CommandArgs
     Invoke-Native { & $runtimeCommand[0] @runtimeArgs }
-    if ($LASTEXITCODE) { Fail "hermes $($CommandArgs -join ' ') failed (exit $LASTEXITCODE)" }
+    if ($LASTEXITCODE) { Fail "minerva $($CommandArgs -join ' ') failed (exit $LASTEXITCODE)" }
 }
 
 function Stage-Setup {

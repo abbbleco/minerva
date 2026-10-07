@@ -25,7 +25,7 @@ refusal exists precisely so nothing gets lost.
 1. **Quit every Minerva process on that profile.** Desktop app, gateway, dashboard, cron:
 
    ```bash
-   hermes gateway stop          # add -p <profile> for a named profile
+   minerva gateway stop          # add -p <profile> for a named profile
    ```
 
    then quit the Desktop app from its menu and stop any dashboard (`minerva dashboard --stop`)
@@ -35,7 +35,7 @@ refusal exists precisely so nothing gets lost.
 2. **Ask doctor who is still holding the log.**
 
    ```bash
-   hermes doctor                # add -p <profile> for a named profile
+   minerva doctor                # add -p <profile> for a named profile
    ```
 
    While anything still holds the retired log, doctor prints each holder as

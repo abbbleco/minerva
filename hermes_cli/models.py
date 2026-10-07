@@ -497,6 +497,11 @@ def recommended_nous_default_model() -> dict[str, Any]:
 def get_default_model_for_provider(provider: str) -> str:
     """Cost-safe default model for a provider, or "" — the NON-INTERACTIVE fallback when a provider
     is configured but no model was ever selected."""
+    if provider == "minerva":
+        # The free meta-router is listed on every tier (paid listings include
+        # free models); paid flagships may be absent from a free key's live
+        # listing, so they fail validation as a silent default.
+        return "minerva/openrouter-free"
     models = _PROVIDER_MODELS.get(provider, [])
     if provider in _SILENT_DEFAULT_PROVIDERS:
         preferred = get_preferred_silent_default_model(provider)

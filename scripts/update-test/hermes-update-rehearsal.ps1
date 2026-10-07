@@ -302,7 +302,7 @@ function Invoke-Pre {
   if (-not (Test-Path -LiteralPath (Join-Path $P.Install '.git'))) { Fail "no git checkout at $($P.Install) -- this tool covers source installs" }
   Assert-Elevated
   $hermesExe = Resolve-HermesExe $P
-  if (-not $hermesExe) { Fail "no hermes executable found under $($P.Install)\venv\Scripts or $($P.Home)\bin" }
+  if (-not $hermesExe) { Fail "no minerva executable found under $($P.Install)\venv\Scripts or $($P.Home)\bin" }
 
   $volumes = @(Get-VolumeRoot $P.Home)
   $userDataExists = Test-Path -LiteralPath $P.UserData
@@ -313,7 +313,7 @@ function Invoke-Pre {
   $procs = @(Get-Process -Name 'Minerva', 'hermes' -ErrorAction SilentlyContinue)
   if ($procs.Count) {
     Warn 'Minerva looks like it is running -- close the desktop app and the gateway'
-    Warn "before you run 'hermes update', or the dependency sync may fail:"
+    Warn "before you run 'minerva update', or the dependency sync may fail:"
     $procs | ForEach-Object { Write-Host "    $($_.ProcessName) (pid $($_.Id))" }
   }
   else { Ok 'no Minerva processes running' }
@@ -347,11 +347,11 @@ function Invoke-Pre {
   $elapsed = [int]((Get-Date) - $started).TotalSeconds
   if ($code -eq 1 -and (Test-Path -LiteralPath $zip)) {
     $out | ForEach-Object { Write-Host "    $_" }
-    Warn "hermes backup finished INCOMPLETE (${elapsed}s): the files listed above are not in $zip"
+    Warn "minerva backup finished INCOMPLETE (${elapsed}s): the files listed above are not in $zip"
   }
   elseif ($code -ne 0 -or -not (Test-Path -LiteralPath $zip)) {
     $out | ForEach-Object { Write-Host "    $_" }
-    Fail "hermes backup failed (exit $code) -- nothing else was done"
+    Fail "minerva backup failed (exit $code) -- nothing else was done"
   }
   else { Ok "hermes-backup.zip ($([math]::Round((Get-Item $zip).Length / 1MB, 1)) MB, ${elapsed}s)" }
 
@@ -500,8 +500,8 @@ function Invoke-Post {
     Say 'Nothing was changed. An exact rollback is no longer possible, but your data is'
     Say "backed up in $zip. To put your config, keys, sessions, memories and"
     Say 'skills back, either:'
-    Say "  hermes import `"$zip`""
-    Say 'or, if hermes itself no longer starts, extract the zip over your home:'
+    Say "  minerva import `"$zip`""
+    Say 'or, if minerva itself no longer starts, extract the zip over your home:'
     Say "  tar -xf `"$zip`" -C `"$($P.Home)`""
     Say 'then reinstall Minerva to get the program back.'
     Restore-ShadowStorage
@@ -555,7 +555,7 @@ function Invoke-Post {
 
   Step 'done'
   Say "Your HERMES_HOME and the desktop app's data are back exactly as they were."
-  Say "Open the desktop app once and run 'hermes doctor' to confirm."
+  Say "Open the desktop app once and run 'minerva doctor' to confirm."
   Say "Nothing was judged or changed by this script; the backup at $($script:Snap)"
   Say 'is yours to keep or delete.'
 }

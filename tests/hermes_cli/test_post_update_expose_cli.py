@@ -79,7 +79,7 @@ def test_registered_as_a_home_step():
 class TestExposeCli:
     @posix_only
     @pytest.mark.parametrize("hermes", ["missing", "foreign"])
-    def test_repair_only_preserves_missing_and_foreign_commands(self, fake_install, monkeypatch, hermes):
+    def test_repair_only_preserves_missing_and_foreign_commands(self, fake_install, monkeypatch, minerva):
         home, root = fake_install
         monkeypatch.setattr("hermes_cli.config.load_config", lambda: pytest.fail("repair read config"))
         wrapper_dir = home / ".local" / "bin"
@@ -97,7 +97,7 @@ class TestExposeCli:
         acp.symlink_to(dangling)
         assert not acp.exists() and acp.is_symlink()
         foreign = b"#!/bin/sh\n# user-owned caf\xc3\xa9 command\nexit 19\n"
-        if hermes == "foreign":
+        if minerva == "foreign":
             (extra / "hermes").write_bytes(foreign)
         wrapper_dir.mkdir(parents=True)
         (wrapper_dir / "hermes").write_bytes(foreign)
@@ -111,7 +111,7 @@ class TestExposeCli:
         assert not dangling.exists()
         assert not (extra / "hermes-agent").exists()
         assert not (wrapper_dir / "hermes-agent").exists()
-        if hermes == "foreign":
+        if minerva == "foreign":
             assert (extra / "hermes").read_bytes() == foreign
         else:
             assert not (extra / "hermes").exists()

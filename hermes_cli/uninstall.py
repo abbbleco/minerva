@@ -124,7 +124,7 @@ def remove_path_from_shell_configs():
             content = config_path.read_text(encoding="utf-8-sig")
             original_content = content
             
-            # Remove lines containing hermes-agent or hermes PATH entries
+            # Remove lines containing hermes-agent or minerva PATH entries
             new_lines = []
             skip_next = False
             
@@ -163,7 +163,7 @@ def remove_path_from_shell_configs():
 
 
 def remove_wrapper_script():
-    """Remove the hermes wrapper script if it exists."""
+    """Remove the minerva wrapper script if it exists."""
     wrapper_paths = [
         Path.home() / ".local" / "bin" / "hermes",
         Path.home() / ".local" / "bin" / "hermes-acp",
@@ -749,7 +749,7 @@ def run_gui_uninstall(args):
     _print_box("│            ✓ Chat GUI Uninstalled!                      │", Colors.GREEN)
     print()
     print("The Minerva agent is still installed. Run 'hermes' to use the CLI,")
-    print("or 'hermes uninstall' to remove the agent too.")
+    print("or 'minerva uninstall' to remove the agent too.")
     print()
 
 
@@ -1033,9 +1033,9 @@ def _perform_uninstall(
          "Removed from User PATH: {}", "No Minerva-owned PATH entries in User environment"),
         (windows, "Removing HERMES_HOME / HERMES_GIT_BASH_PATH User env vars...",
          remove_hermes_env_vars_windows, "Removed User env var: {}", "No Minerva-set User env vars to remove"),
-        (True, "Removing hermes command...", remove_wrapper_script, "Removed {}", "No wrapper script found"),
-        (windows, "Removing Windows hermes launchers...",
-         remove_windows_bin_launchers, "Removed {}", "No Windows hermes launchers found"),
+        (True, "Removing minerva command...", remove_wrapper_script, "Removed {}", "No wrapper script found"),
+        (windows, "Removing Windows minerva launchers...",
+         remove_windows_bin_launchers, "Removed {}", "No Windows minerva launchers found"),
         (True, "Removing Minerva-managed node/npm/npx symlinks...",
          lambda: remove_node_symlinks(hermes_home), "Removed {}", "No Minerva-managed node/npm/npx symlinks found"),
     ):

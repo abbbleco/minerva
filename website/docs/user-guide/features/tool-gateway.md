@@ -149,7 +149,7 @@ browser:
 The runtime **always uses the stored selection** — credential presence never selects or reroutes a category. A `FAL_KEY` sitting in `.env` is ignored while `image_gen.provider: nous`; conversely, `image_gen.provider: fal` with no `FAL_KEY` set produces a clear error instead of silently falling back to the gateway:
 
 ```
-image_gen is configured to use fal (set via hermes tools), but FAL_KEY is not set. Run 'hermes tools' to change it.
+image_gen is configured to use fal (set via minerva tools), but FAL_KEY is not set. Run 'minerva tools' to change it.
 ```
 
 Categories you have **never configured** (no selection key ever written) autodetect from available credentials, same as before. But once a selection exists, adding a key to `.env` does not change the route — only `minerva tools` (or editing the selection key) does.

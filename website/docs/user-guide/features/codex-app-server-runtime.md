@@ -377,7 +377,7 @@ If you want per-profile Codex isolation (separate auth, separate installed plugi
 
 ```bash
 # Inside the work profile, you might wrap hermes:
-CODEX_HOME=~/.hermes/profiles/work/codex hermes chat
+CODEX_HOME=~/.hermes/profiles/work/codex minerva chat
 ```
 
 You'll need to re-run `codex login` once with that `CODEX_HOME` set so the OAuth tokens land in the profile-scoped location. After that, `minerva -p work` will operate on isolated Codex state.

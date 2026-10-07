@@ -46,7 +46,7 @@ hermes config get delegation.max_concurrent_children
 grep -E "Truncated.*delegate_task|Too many tasks" ~/.hermes/logs/agent.log | tail
 # If neither line appears, neither cap path executed.
 
-# 3. Confirm the resolver returns what config says (in venv with hermes on path)
+# 3. Confirm the resolver returns what config says (in venv with minerva on path)
 python -c "from tools.delegate_tool import _get_max_concurrent_children; \
            print(_get_max_concurrent_children())"
 ```

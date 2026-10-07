@@ -38,7 +38,7 @@ _GATEWAY_LIFECYCLE_PATTERN = re.compile(
     # Windows spells the CLI with a launcher suffix (`hermes.exe`, npm-style `hermes.cmd`/`.ps1`);
     # same command, so the suffix is optional here.
     r"(?:(?<![/\w.\-])hermes(?:\.(?:exe|cmd|bat|com|ps1))?\s+gateway\s+(?:restart|stop|uninstall)\b)"
-    # Branch B: launchctl ops anchored on a hermes-gateway label so unrelated hermes services stay
+    # Branch B: launchctl ops anchored on a hermes-gateway label so unrelated minerva services stay
     # unblocked. `submit`/`bootstrap` register a NEW keepalive job wrapping an arbitrary helper (a
     # laundered restart); neutral-label submissions are caught by
     # `contains_launchctl_submit_command`. `bootout`/`remove`/`disable` are the
@@ -417,7 +417,7 @@ def contains_gateway_lifecycle_command(text: str) -> bool:
     # are documentation, not commands. The stripper fails open on ANY ambiguity (unquoted delimiter,
     # shell consumer, unterminated body), so executable heredocs are still scanned.
     # Heredoc bodies that are provably inert data (quoted delimiter, data-sink consumer like `cat > file
-    # <<'EOF'`) are masked before scanning (#88336): a runbook line "a human can run: hermes gateway
+    # <<'EOF'`) are masked before scanning (#88336): a runbook line "a human can run: minerva gateway
     # restart" inside such a body is documentation, not a command this shell will execute.
     from tools.shell_heredoc import strip_inert_heredoc_bodies
 

@@ -34,7 +34,9 @@ export async function fetchAbbblePlans(origin: string = ABBBLE_PORTAL_ORIGIN): P
 
 function money(price: number, currency: string): string {
   const code = currency.toUpperCase()
-  return code === 'USD' ? `$${price}` : `${price} ${code}`
+  if (code === 'USD') return `$${price}`
+  if (code === 'ZAR') return `R${price}`
+  return `${price} ${code}`
 }
 
 /** ABBBLE Portal plans — OUR tiers, fetched live from the portal (offline → hidden). */

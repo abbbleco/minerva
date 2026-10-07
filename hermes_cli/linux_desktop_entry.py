@@ -423,7 +423,7 @@ def _launcher_tree(path: Path) -> Path:
 def _tree_desktop_state(tree: Path) -> Optional[bool]:
     """``True`` when *tree* can serve ``minerva desktop``, ``False`` when it provably cannot, else ``None``.
 
-    ``False`` is reserved for a tree that IS a hermes code tree (carries ``hermes_cli``) yet has no
+    ``False`` is reserved for a tree that IS a minerva code tree (carries ``hermes_cli``) yet has no
     desktop app beside it — the managed runtime env layout, whose launcher runs but dies with
     "Desktop GUI source not found". Unfamiliar shapes stay ``None`` (accepted) so no install
     method is rejected for looking exotic.

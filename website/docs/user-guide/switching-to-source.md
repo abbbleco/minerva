@@ -147,7 +147,7 @@ Inspect which CLI command resolves before using `hermes` again:
 command -v hermes
 ```
 
-On Windows, use `Get-Command hermes -All`. Do not replace an unrelated command
+On Windows, use `Get-Command minerva -All`. Do not replace an unrelated command
 or execution alias without checking its owner.
 
 A newer source revision can change data formats. Returning to an older package

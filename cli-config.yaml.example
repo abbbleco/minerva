@@ -77,10 +77,10 @@ model:
   # Inference provider selection:
   #   "auto"         - Auto-detect from credentials (default)
   #   "openrouter"   - OpenRouter (requires: OPENROUTER_API_KEY or OPENAI_API_KEY)
-  #   "nous"         - ABBBLE Portal OAuth (requires: hermes auth add nous)
+  #   "nous"         - ABBBLE Portal OAuth (requires: minerva auth add nous)
   #   "nous-api"     - ABBBLE Portal API key (requires: NOUS_API_KEY)
   #   "anthropic"    - Direct Anthropic API (requires: ANTHROPIC_API_KEY)
-  #   "openai-codex" - OpenAI Codex (requires: hermes auth)
+  #   "openai-codex" - OpenAI Codex (requires: minerva auth)
   #   "copilot"      - GitHub Copilot / GitHub Models (requires: GITHUB_TOKEN)
   #   "gemini"      - Use Google AI Studio direct (requires: GOOGLE_API_KEY or GEMINI_API_KEY)
   #   "zai"         - Use z.ai / ZhipuAI GLM models (requires: GLM_API_KEY)
@@ -413,7 +413,7 @@ kanban:
 # Commands run directly on your machine in the current directory
 # -----------------------------------------------------------------------------
 # Working directory behavior:
-#   - CLI (`hermes` command): Uses "." (current directory where you run hermes)
+#   - CLI (`hermes` command): Uses "." (current directory where you run minerva)
 #   - Gateway/messaging/cron: Uses terminal.cwd here; legacy .env cwd values are deprecated
 cron:
   catch_up_missed: true  # False skips past-grace recurring misses after planned downtime.
@@ -746,7 +746,7 @@ compression:
   # agent owns the real thread context on this runtime, so Minerva' summarizer
   # cannot shrink it — compaction goes through the app server instead.
   #   native = let Codex decide when to compact its own thread (default)
-  #   hermes = let Minerva threshold trigger Codex thread/compact/start
+  #   minerva = let Minerva threshold trigger Codex thread/compact/start
   #   off    = Minerva will not auto-trigger compaction; Codex may still compact natively
   codex_app_server_auto: native
 
@@ -879,10 +879,10 @@ prompt_caching:
 # Provider options:
 #   "auto"       - Best available: OpenRouter → ABBBLE Portal → main endpoint (default)
 #   "openrouter" - Force OpenRouter (requires OPENROUTER_API_KEY)
-#   "nous"       - Force ABBBLE Portal (requires: hermes auth add nous)
+#   "nous"       - Force ABBBLE Portal (requires: minerva auth add nous)
 #   "gemini"      - Force Google AI Studio direct (requires: GOOGLE_API_KEY or GEMINI_API_KEY)
 #   "ollama-cloud" - Ollama Cloud (requires: OLLAMA_API_KEY)
-#   "codex"       - Force Codex OAuth (requires: hermes model → Codex).
+#   "codex"       - Force Codex OAuth (requires: minerva model → Codex).
 #                  Uses gpt-5.3-codex which supports vision.
 #   "main"       - Use your custom endpoint (OPENAI_BASE_URL + OPENAI_API_KEY).
 #                  Works with OpenAI API, local models, or any OpenAI-compatible
@@ -1545,7 +1545,7 @@ platform_toolsets:
 # Tool configuration is managed per-platform via platform_toolsets above.
 # Use `minerva tools` to configure interactively, or edit platform_toolsets directly.
 #
-# CLI override: hermes chat --toolsets terminal,web,file
+# CLI override: minerva chat --toolsets terminal,web,file
 
 # =============================================================================
 # MCP (Model Context Protocol) Servers
@@ -1825,7 +1825,7 @@ delegation:
 # Builds a deeper understanding of the user across sessions and tools.
 # Runs alongside USER.md — additive, not a replacement.
 #
-# Requires: hermes plugins install honcho (Plastic Labs' plugin from the catalog)
+# Requires: minerva plugins install honcho (Plastic Labs' plugin from the catalog)
 # Config: ~/.honcho/config.json (shared with Claude Code, Cursor, etc.)
 # API key: HONCHO_API_KEY in ~/.hermes/.env or ~/.honcho/config.json
 #

@@ -121,7 +121,7 @@ HERMES_UID=$(id -u) HERMES_GID=$(id -g) docker compose up -d gateway
 
 ```bash
 hermes gateway restart
-# or foreground: hermes gateway run
+# or foreground: minerva gateway run
 ```
 
 The Teams SDK is optional. When policy permits, the gateway requests the

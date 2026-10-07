@@ -1,4 +1,4 @@
-"""hermes desktop forwards an explicit profile into the packaged Electron launch.
+"""minerva desktop forwards an explicit profile into the packaged Electron launch.
 
 Electron boots from active-profile.json. ``minerva -p <name> desktop`` used to
 set only the CLI HERMES_HOME, so the packaged app still started the stored

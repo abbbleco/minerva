@@ -578,7 +578,7 @@ async function connectWindowsRemote(deps) {
   runtime.hermesPath = inspection.path
   const hermesVersion = inspection.version || ''
   rememberLog(`[ssh-lifecycle] remote platform Windows/${runtime.arch}`)
-  rememberLog(`[ssh-lifecycle] located hermes at ${runtime.hermesPath}`)
+  rememberLog(`[ssh-lifecycle] located minerva at ${runtime.hermesPath}`)
 
   await assertWindowsRemoteInstallUpdateClear(ssh, runtime.hermesHome)
   const lock = await helper(ssh, runtime, 'read-lock', [ownershipId])

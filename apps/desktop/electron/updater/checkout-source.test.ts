@@ -469,7 +469,7 @@ urllib.request.build_opener = local_build
       expect.arrayContaining([process.platform === 'win32' ? '-Branch' : '--branch', 'feature/gui'])
     )
     fs.rmSync(scriptDirectory, { recursive: true, force: true })
-    expect(await strategy.apply()).toMatchObject({ manual: true, command: 'hermes update --branch feature/gui' })
+    expect(await strategy.apply()).toMatchObject({ manual: true, command: 'minerva update --branch feature/gui' })
     // apply() forces a fresh check; under the R2 protocol that re-resolution
     // touches exactly the channel record — no GitHub or artifact chatter.
     expect(requests.slice(count)).toEqual(['/releases/channels/main.json', '/releases/channels/main.json'])

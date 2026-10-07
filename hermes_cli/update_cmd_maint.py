@@ -100,8 +100,8 @@ def _print_curator_first_run_notice() -> None:
         f"~{days}d after installation; only agent-created skills are in "
         f"scope and nothing is ever auto-deleted (archive is recoverable)."
     )
-    print("  Preview now:  hermes curator run --dry-run")
-    print("  Pause it:     hermes curator pause")
+    print("  Preview now:  minerva curator run --dry-run")
+    print("  Pause it:     minerva curator pause")
     print("  Docs:         https://hermes-agent.nousresearch.com/docs/user-guide/features/curator")
 
 
@@ -176,7 +176,7 @@ def _print_fts_optimize_available_notice() -> None:
             "interrupted. Search still works; re-run the command to resume "
             "and finish reclaiming disk:"
         )
-        print("    hermes sessions optimize-storage")
+        print("    minerva sessions optimize-storage")
         return
 
     est_reclaim = size_gb * 0.6
@@ -196,7 +196,7 @@ def _print_fts_optimize_available_notice() -> None:
             f"typically frees ~60% of state.db — about {est_reclaim:.1f} GB "
             f"of your current {size_gb:.1f} GB."
         )
-    print("  Run when convenient:  hermes sessions optimize-storage")
+    print("  Run when convenient:  minerva sessions optimize-storage")
     print(
         "  It runs in the foreground with a progress bar, is safe to "
         "interrupt/re-run, and never changes your conversations."
@@ -227,7 +227,7 @@ def _print_curator_recent_run_notice() -> None:
         print(f"ℹ Skill curator — last run {_format_time_ago(last_run_at)}")
         for line in summary.splitlines():
             print(f"  {line}")
-        print("  (This message shows once per curator run. View anytime: hermes curator status)")
+        print("  (This message shows once per curator run. View anytime: minerva curator status)")
 
     with suppress(Exception):
         state["last_run_summary_shown_at"] = last_run_at
@@ -295,7 +295,7 @@ def _refresh_dashboard_after_update(*, already_restarted_units: set[str] | None 
         print()
         print(f"⚠ Could not refresh running dashboard/serve process(es): {exc}")
         print("  If one is still running, restart it so it serves the updated code:")
-        print("    hermes dashboard --port <port>   (or: systemctl --user restart hermes-dashboard)")
+        print("    minerva dashboard --port <port>   (or: systemctl --user restart hermes-dashboard)")
         return set()
     unrecovered = {int(pid) for pid in stop_result.get("unrecovered") or ()}
     if not unrecovered:
@@ -304,7 +304,7 @@ def _refresh_dashboard_after_update(*, already_restarted_units: set[str] | None 
     print()
     print("⚠ A web dashboard/serve process was stopped during update and could not be auto-restarted.")
     print("  Re-launch it when you want the web UI back:")
-    print("    hermes dashboard --port <port>")
+    print("    minerva dashboard --port <port>")
     return unrecovered
 
 
@@ -532,7 +532,7 @@ def _print_bundled_skills_sync_report() -> None:
         print(f"  ↑ {len(result['updated'])} updated: {', '.join(result['updated'])}")
     if result.get("user_modified"):
         print(f"  ~ {len(result['user_modified'])} user-modified (kept)")
-        print("    → see them: hermes skills list-modified  (diff/reset to resume updates)")
+        print("    → see them: minerva skills list-modified  (diff/reset to resume updates)")
     if result.get("cleaned"):
         print(f"  − {len(result['cleaned'])} removed from manifest")
     if result.get("relocated"):
@@ -758,7 +758,7 @@ def _run_full_backup() -> None:
         display_path = str(out_path)
 
     print(f"  Saved:    {display_path} ({format_bytes(size_bytes)}, {elapsed:.1f}s)")
-    print(f"  Restore:  hermes import {out_path}")
+    print(f"  Restore:  minerva import {out_path}")
     print("  Disable:  set updates.pre_update_backup: quick (or off) in config.yaml")
     print()
 
@@ -918,7 +918,7 @@ def _install_default_tools_after_update() -> None:
             pm.ensure(name, explicit=True)
         except (pm.InstallError, OSError) as exc:
             print(f"  ⚠ {name} was not installed: {exc}")
-            print(f"    Retry with: hermes pm install {name}")
+            print(f"    Retry with: minerva pm install {name}")
 
 
 def _print_checkpoint_footprint_notice() -> None:

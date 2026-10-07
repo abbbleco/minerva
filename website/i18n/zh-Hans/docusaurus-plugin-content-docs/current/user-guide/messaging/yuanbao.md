@@ -301,7 +301,7 @@ platforms:
 启用 debug 日志以排查连接问题：
 
 ```bash
-HERMES_LOG_LEVEL=debug hermes gateway
+HERMES_LOG_LEVEL=debug minerva gateway
 ```
 
 ## 与其他功能集成

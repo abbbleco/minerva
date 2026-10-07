@@ -23,7 +23,7 @@ use tokio::process::Command;
 use crate::events::{BootstrapEvent, LogStream, StageInfo, StageState};
 use crate::powershell::{pump_child, DRAIN_GRACE};
 
-/// `minerva update` exit code meaning "another hermes process is holding the
+/// `minerva update` exit code meaning "another minerva process is holding the
 /// venv shim open / dirty precondition" — see _cmd_update_impl in
 /// hermes_cli/main.py (sys.exit(2)). We surface a targeted message for this.
 const UPDATE_EXIT_CONCURRENT: i32 = 2;
@@ -390,9 +390,9 @@ async fn run_update(app: AppHandle) -> Result<()> {
     };
 
     let legacy_install = !install_root.join("pm").is_dir();
-    let hermes = resolve_hermes(&install_root).await.ok_or_else(|| {
+    let minerva = resolve_hermes(&install_root).await.ok_or_else(|| {
         let msg = format!(
-            "Could not find the hermes CLI under {}. Is Minerva installed? \
+            "Could not find the minerva CLI under {}. Is Minerva installed? \
              Re-run the installer to repair the install.",
             install_root.display()
         );
@@ -429,7 +429,7 @@ async fn run_update(app: AppHandle) -> Result<()> {
         None,
     );
 
-    // ---- stage 2: hermes update -----------------------------------------
+    // ---- stage 2: minerva update -----------------------------------------
     // Pass --branch so `minerva update` targets the branch this installer was
     // built/pinned against (BUILD_PIN_BRANCH), NOT its built-in default of
     // `main`. The install was a detached-HEAD checkout of a specific commit;
@@ -556,7 +556,7 @@ async fn run_update(app: AppHandle) -> Result<()> {
         }
         other => {
             let msg = format!(
-                "hermes update failed (exit {:?}). See {} for details.",
+                "minerva update failed (exit {:?}). See {} for details.",
                 other,
                 crate::paths::hermes_home()
                     .join("logs")
@@ -1319,7 +1319,7 @@ mod tests {
         assert!(
             envs.iter().any(|(k, v)| k == "HERMES_UPDATE_HANDOFF_PID"
                 && v.to_str() == Some(std::process::id().to_string().as_str())),
-            "the hermes update child claims the same marker we hold; without our pid \
+            "the minerva update child claims the same marker we hold; without our pid \
              it refuses its own parent's lock and every GUI update dead-ends on exit 2"
         );
     }

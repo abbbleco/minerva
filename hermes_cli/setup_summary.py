@@ -14,21 +14,21 @@ _TTS_SUMMARY_ROWS = {
     "openai": ("OpenAI", ("VOICE_TOOLS_OPENAI_KEY", "OPENAI_API_KEY")),
     "minimax": ("MiniMax", ("MINIMAX_API_KEY",)), "mistral": ("Mistral Voxtral", ("MISTRAL_API_KEY",)),
     "gemini": ("Google Gemini", ("GEMINI_API_KEY", "GOOGLE_API_KEY")),
-    "neutts": ("NeuTTS", "neutts", "run 'hermes setup tts'"),
-    "kittentts": ("KittenTTS", "kittentts", "run 'hermes setup tts'")}
+    "neutts": ("NeuTTS", "neutts", "run 'minerva setup tts'"),
+    "kittentts": ("KittenTTS", "kittentts", "run 'minerva setup tts'")}
 _TTS_SUMMARY_DEFAULT = ("Edge TTS", ())
 _STT_SUMMARY_ROWS = {
     "openai": ("OpenAI", ("VOICE_TOOLS_OPENAI_KEY", "OPENAI_API_KEY")), "groq": ("Groq Whisper", ("GROQ_API_KEY",)),
     "elevenlabs": ("ElevenLabs Scribe", ("ELEVENLABS_API_KEY",)), "xai": ("xAI", ()),
     "deepinfra": ("DeepInfra", ("DEEPINFRA_API_KEY",))}
-_STT_SUMMARY_DEFAULT = ("Local Whisper", "faster_whisper", "run 'hermes tools' → Speech-to-Text")
+_STT_SUMMARY_DEFAULT = ("Local Whisper", "faster_whisper", "run 'minerva tools' → Speech-to-Text")
 
 # Browser "missing" hint keyed by the configured provider; anything else gets the generic hint.
 _BROWSER_MISSING_HINTS = {
     "Browserbase": "npm install -g agent-browser and set BROWSERBASE_API_KEY/BROWSERBASE_PROJECT_ID",
     "Browser Use": "npm install -g agent-browser and set BROWSER_USE_API_KEY",
     "Camofox": "CAMOFOX_URL",
-    "Local browser": "hermes pm install agent-browser"}
+    "Local browser": "minerva pm install agent-browser"}
 _BROWSER_MISSING_DEFAULT = "npm install -g agent-browser, set CAMOFOX_URL, or configure Browser Use or Browserbase"
 _WEB_MISSING = ("EXA_API_KEY, PARALLEL_API_KEY, FIRECRAWL_API_KEY/FIRECRAWL_API_URL, TAVILY_API_KEY, "
                 "PERPLEXITY_API_KEY, KEENABLE_API_KEY, or SEARXNG_URL")
@@ -39,15 +39,15 @@ _DONE_BANNER = (
     "└─────────────────────────────────────────────────────────┘")
 # (command, description) rows; the description carries its own alignment padding.
 _EDIT_WIZARD_ROWS = (
-    ("hermes setup", "          Re-run the full wizard"), ("hermes setup model", "    Change model/provider"),
-    ("hermes setup terminal", " Change terminal backend"), ("hermes setup gateway", "  Configure messaging"),
-    ("hermes setup tools", "    Configure tool providers"))
+    ("minerva setup", "          Re-run the full wizard"), ("minerva setup model", "    Change model/provider"),
+    ("minerva setup terminal", " Change terminal backend"), ("minerva setup gateway", "  Configure messaging"),
+    ("minerva setup tools", "    Configure tool providers"))
 _EDIT_CONFIG_ROWS = (
-    ("hermes config", "         View current settings"), ("hermes config edit", "    Open config in your editor"),
-    ("hermes config set <key> <value>", ""))
+    ("minerva config", "         View current settings"), ("minerva config edit", "    Open config in your editor"),
+    ("minerva config set <key> <value>", ""))
 _READY_ROWS = (
-    ("hermes", "              Start chatting"), ("hermes gateway", "      Start messaging gateway"),
-    ("hermes doctor", "       Check for issues"))
+    ("hermes", "              Start chatting"), ("minerva gateway", "      Start messaging gateway"),
+    ("minerva doctor", "       Check for issues"))
 
 
 def _voice_provider_status(kind: str, provider: str, rows: dict, default: tuple) -> tuple:
@@ -94,7 +94,7 @@ def _vision_row(config, feats):
         ok = bool(get_available_vision_backends())
     except Exception:
         ok = False
-    return ("Vision (image analysis)", ok, None if ok else "run 'hermes setup' to configure")
+    return ("Vision (image analysis)", ok, None if ok else "run 'minerva setup' to configure")
 
 
 def _managed_or_provider_row(feature, name: str, managed_label: str, missing_hint: str):
@@ -161,7 +161,7 @@ def _modal_row(config, feats):
     if _setup.cfg_get(config, "terminal", "backend") == "modal":
         if feats.modal.direct_override:
             return ("Modal Execution (direct Modal)", True, None)
-        return ("Modal Execution", False, "run 'hermes setup terminal'")
+        return ("Modal Execution", False, "run 'minerva setup terminal'")
     if tool_backend_helpers.managed_nous_tools_enabled() and feats.nous_auth_present:
         return ("Modal Execution (optional via Nous subscription)", True, None)
     return None
@@ -172,7 +172,7 @@ def _home_assistant_row(config, feats):
 
 
 def _spotify_row(config, feats):
-    # OAuth via hermes auth spotify — check auth.json, not env vars
+    # OAuth via minerva auth spotify — check auth.json, not env vars
     try:
         from hermes_cli.auth import get_provider_auth_state
         state = get_provider_auth_state("spotify") or {}
@@ -222,8 +222,8 @@ def _print_setup_summary(config: dict, hermes_home):
         print()
         _setup.print_warning("No inference provider is configured — Minerva cannot chat yet.")
         _setup._info("  Finish this one step with either of:",
-              "    hermes model            (pick any provider/model)",
-              "    hermes setup --portal   (ABBBLE Portal OAuth, no API key)")
+              "    minerva model            (pick any provider/model)",
+              "    minerva setup --portal   (ABBBLE Portal OAuth, no API key)")
 
     print()
     _setup.print_header("Tool Availability Summary")
@@ -243,7 +243,7 @@ def _print_setup_summary(config: dict, hermes_home):
     print()
 
     if available_count < len(tool_status):
-        _setup.print_warning("Some tools are disabled. Run 'hermes setup tools' to configure them,")
+        _setup.print_warning("Some tools are disabled. Run 'minerva setup tools' to configure them,")
         _setup.print_warning(f"or edit {_dhh()}/.env directly to add the missing API keys.")
         print()
 

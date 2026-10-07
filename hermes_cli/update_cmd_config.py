@@ -151,7 +151,7 @@ def _ask_configure_new_options(*, assume_yes: bool, gateway_mode: bool) -> str:
         # Non-UTF-8 locales / embedded terminals can make input() raise this.
         print(
             "  ⚠ Could not read input (encoding issue). Skipping. "
-            "Run 'hermes config migrate' manually to configure.")
+            "Run 'minerva config migrate' manually to configure.")
         return "n"
 
 
@@ -179,7 +179,7 @@ def _check_and_apply_config_migration(
     except Exception as exc:
         logger.debug("Config check during update failed: %s", exc)
         print("  ⚠️  Could not check config version.")
-        print("     Run 'hermes config migrate' to check manually.")
+        print("     Run 'minerva config migrate' to check manually.")
         return
 
     has_new_options = bool(missing_env or missing_config)
@@ -204,7 +204,7 @@ def _check_and_apply_config_migration(
                 print(f"  ⚠️  {_warn}")
         except Exception as _mig_err:
             print(f"  ⚠️  Config format update failed: {_mig_err}")
-            print("     Run 'hermes config migrate' to retry.")
+            print("     Run 'minerva config migrate' to retry.")
     elif needs_migration:
         print()
         # Show WHAT changed, not just a count, for an informed yes/no.
@@ -227,10 +227,10 @@ def _check_and_apply_config_migration(
                 print()
                 print("✓ Configuration updated!")
             if unattended and missing_env:
-                print("  ℹ API keys require manual entry: hermes config migrate")
+                print("  ℹ API keys require manual entry: minerva config migrate")
         else:
             print()
-            print("Skipped. Run 'hermes config migrate' later to configure.")
+            print("Skipped. Run 'minerva config migrate' later to configure.")
     else:
         print("  ✓ Configuration is up to date")
 

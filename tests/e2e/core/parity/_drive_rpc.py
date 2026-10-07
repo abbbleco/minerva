@@ -173,7 +173,7 @@ def drive_tui_gateway(ph: ParityHome, srv: FakeLLMServer, prompt: str) -> DriveR
                        extra={"exit_code": proc.returncode, "stderr_tail": cap.stderr[-2000:]})
 
 
-# hermes serve (Desktop backend) ------------------------------------------------------
+# minerva serve (Desktop backend) ------------------------------------------------------
 
 
 @dataclass

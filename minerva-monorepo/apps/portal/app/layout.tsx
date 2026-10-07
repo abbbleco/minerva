@@ -27,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <a href="/" className="text-white">ABBBLE Portal</a>
               <a href="/models" className="text-white/60">Models</a>
               <a href="/plans" className="text-white/60">Plans</a>
+              <a href="/team" className="text-white/60">Team</a>
               <a href="/minerva" className="text-white/60">Minerva</a>
               <a href="/download" className="text-white/60">Download</a>
               <AccountButton variant="nav" />

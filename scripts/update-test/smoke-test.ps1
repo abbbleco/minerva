@@ -196,7 +196,7 @@ con.close()
   & git -C $Install -c commit.gpgsign=false commit -qm initial | Out-Null
   & git -C $Install remote add origin https://github.com/abbbleco/minerva.git
   New-Item -ItemType Directory -Force -Path (Join-Path $Install '.hermes\bin'), (Join-Path $Install '.hermes-runtime\python') | Out-Null
-  Set-Content -LiteralPath (Join-Path $Install '.hermes\bin\hermes.cmd') -Value "@echo off`r`necho hermes 0.0.0"
+  Set-Content -LiteralPath (Join-Path $Install '.hermes\bin\hermes.cmd') -Value "@echo off`r`necho minerva 0.0.0"
   Set-Content -LiteralPath (Join-Path $Install '.hermes-runtime\python\interpreter.bin') -Value 'big'
   New-Item -ItemType Directory -Force -Path (Join-Path $H 'bin') | Out-Null
   # A fake launcher that understands `backup -o <zip>`: pre calls it for the data backup.

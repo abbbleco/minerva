@@ -35,7 +35,7 @@ from typing import Callable, Iterator, Optional
 logger = logging.getLogger(__name__)
 
 MANIFEST_NAME = "gateway_migration.json"
-MIGRATE_COMMAND = "hermes gateway migrate --multiplex"
+MIGRATE_COMMAND = "minerva gateway migrate --multiplex"
 _SERVED_WAIT_SECONDS = 90.0
 
 

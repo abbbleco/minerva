@@ -5164,8 +5164,8 @@ async def _start_gateway_replace_existing_instance(existing_pid: int, replace: b
             f"   One gateway per host serves every profile, so there is nothing to start here.\n"
             f"   Attach is impossible: PID {existing_pid} published no usable host record\n"
             f"   (an older build, or an unwritable lock directory).\n"
-            f"   Take the host over:  hermes gateway run --replace\n"
-            f"   Or stop it first:    hermes gateway stop\n")
+            f"   Take the host over:  minerva gateway run --replace\n"
+            f"   Or stop it first:    minerva gateway stop\n")
         return False
 
     # Never signal a process not provably ours (a poisoned PID record → cross-profile restart loop).
@@ -5281,7 +5281,7 @@ def _start_gateway_make_restart_signal_handler(runner):
         # systemd's `reload` verb (ExecReload=kill -USR1) lands here too; say so, because operators
         # expect `reload` to mean an in-process config reload, not a drain-and-relaunch (#117267).
         logger.info(
-            "SIGUSR1 received (systemctl reload / hermes gateway restart): performing a graceful "
+            "SIGUSR1 received (systemctl reload / minerva gateway restart): performing a graceful "
             "gateway restart — drain active turns, exit, supervisor relaunches. Not an in-process "
             "config reload.")
         runner.request_restart(detached=False, via_service=True)
@@ -5524,7 +5524,7 @@ def _refuse_second_host_gateway(owner) -> None:
         f"   second one (it would double-bind this profile's platforms).\n"
         f"   Fold every profile onto the owner:  {_migrate_command()}\n"
         f"   Or stop the other gateway first, then start this one.\n"
-        f"   Or start one anyway (skips the host-lock check):  hermes gateway run --force\n"
+        f"   Or start one anyway (skips the host-lock check):  minerva gateway run --force\n"
         f"   (--replace does not skip this check; it only replaces an owner that serves this profile.)")
     logger.error("Refusing to start a second gateway on this host: %s", who)
     print(message)

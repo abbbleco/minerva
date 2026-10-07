@@ -1,8 +1,8 @@
-# testing the bundles branch against your normal hermes install
+# testing the bundles branch against your normal minerva install
 
 instructions:
 
-1. close hermes, the gateway, etc. make sure you have no running hermes processes.
+1. close hermes, the gateway, etc. make sure you have no running minerva processes.
 
 2. apply my updater override:
    macos/linux:
@@ -21,15 +21,15 @@ instructions:
    & ([scriptblock]::Create((irm $scriptUrl))) pre
    ```
 
-   this backs up your entire hermes home and any desktop app settings, then points your install's updates at the test fork's `main` (no local mirror: `minerva update` fetches straight from the fork, so it needs network). _from this point on, nothing you do in hermes will be preserved, until you restore your backup at the end._
+   this backs up your entire minerva home and any desktop app settings, then points your install's updates at the test fork's `main` (no local mirror: `minerva update` fetches straight from the fork, so it needs network). _from this point on, nothing you do in minerva will be preserved, until you restore your backup at the end._
 
-3. boot hermes up to ensure everything is working, still. if you normally have a background service, gateway, etc, make sure it's running.
+3. boot minerva up to ensure everything is working, still. if you normally have a background service, gateway, etc, make sure it's running.
 
-4. update hermes like you normally do.
+4. update minerva like you normally do.
 
 5. test hermes. make sure nothing breaks, everything you use still works, etc.
 
-6. close hermes, the gateway, etc. make sure you have no running hermes processes.
+6. close hermes, the gateway, etc. make sure you have no running minerva processes.
 
 7. restore your backup:
 
@@ -49,7 +49,7 @@ instructions:
    & ([scriptblock]::Create((irm $scriptUrl))) post -Yes
    ```
 
-   this puts hermes back to exactly how it was beforehand.
+   this puts minerva back to exactly how it was beforehand.
 
 # testing the bundles branch from a fresh install
 

@@ -284,12 +284,25 @@ def build_billing_state(*, timeout: float = 15.0) -> BillingState:
     fixture = _dev_fixture_billing_state()
     if fixture is not None:
         return fixture
-    return fetch_portal_state(
+    state = fetch_portal_state(
         "get_billing_state", "billing", timeout=timeout, log=logger,
         failed=lambda **kw: BillingState(logged_in=False, **kw),
         parse=lambda payload, portal_url: billing_state_from_payload(payload, portal_url=portal_url),
         portal_fallback=lambda base: f"{base.rstrip('/')}/billing?topup=open",
     )
+    if not state.logged_in:
+        # ABBBLE device sign-ins mint no Nous OAuth, so the NAS fetch above
+        # reports logged-out for Portal users. Serve the account from ABBBLE
+        # sources when a router key exists; otherwise keep logged-out.
+        try:
+            from agent import abbble_billing as _ab
+
+            abbble = _ab.build_abbble_billing_state(timeout=timeout)
+        except Exception:
+            abbble = None
+        if abbble is not None:
+            return abbble
+    return state
 
 
 # ── Dev fixtures (env-var driven, no live portal) ────────────────────────────

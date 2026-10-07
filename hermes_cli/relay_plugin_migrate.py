@@ -233,7 +233,7 @@ def run_relay_migration_after_update() -> None:
     print_relay_migration_report(migrate_all_profile_relay_envs())
 
 
-RELAY_MIGRATE_COMMAND = "hermes migrate relay"
+RELAY_MIGRATE_COMMAND = "minerva migrate relay"
 
 
 def cmd_migrate_relay(args) -> None:

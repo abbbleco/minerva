@@ -33,7 +33,7 @@ _OFFER_DESCRIPTION = "\n".join((
     "setting values or error text. Collection stays on this machine; sending to Nous is",
     "a separate choice, and data from before you opt in is never sent.",
     f"Details: {DOCS_URL}",
-    "Change it any time: hermes setup telemetry",
+    "Change it any time: minerva setup telemetry",
 ))
 
 

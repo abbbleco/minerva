@@ -70,7 +70,7 @@ so to recolor *only* tool calls (the classic "change the gold `●`") set `ui_to
 3. **Apply it yourself — never hand-edit `config.yaml`.** Run the safe writer via
    `terminal`:
    ```
-   hermes config set display.skin <name>
+   minerva config set display.skin <name>
    ```
    The gateway's skin watcher notices the change and **repaints every surface live
    within ~a second** — CLI, TUI, and desktop — and the skin appears in
@@ -87,7 +87,7 @@ background"), use the one deterministic command — it edits the ACTIVE skin's O
 key in place, so everything else (background included) is untouched:
 
 ```
-hermes skin set <key> <hex>      # e.g. hermes skin set ui_tool "#00FFFF"
+hermes skin set <key> <hex>      # e.g. minerva skin set ui_tool "#00FFFF"
 ```
 
 It edits the active skin's file (a built-in is forked into an editable copy that

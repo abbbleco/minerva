@@ -332,7 +332,7 @@ display:
 
 ```
 Resume this session with:
-  hermes --resume 20260225_143052_a1b2c3
+  minerva --resume 20260225_143052_a1b2c3
 
 Session:        20260225_143052_a1b2c3
 Duration:       12m 34s

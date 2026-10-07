@@ -280,7 +280,7 @@ function PluginCard({
               <span className={styles.metaLabel}>Pinned</span>
               <span
                 className={styles.metaValue}
-                title={plugin.requiresMinerva ? `${plugin.sha} · requires hermes ${plugin.requiresHermes}` : plugin.sha}
+                title={plugin.requiresMinerva ? `${plugin.sha} · requires minerva ${plugin.requiresHermes}` : plugin.sha}
               >
                 <a
                   href={pinUrl(plugin)}

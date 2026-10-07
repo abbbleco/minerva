@@ -40,7 +40,7 @@ Plugin 系统允许你在不修改任何 Minerva 核心代码的情况下添加�
 
 ### plugin.yaml
 
-Plugin 元数据。`requires_env` 和 `optional_env` 块会自动填充 `minerva config` UI 条目（参见下方[在 hermes config 中暴露环境变量](#surfacing-env-vars-in-hermes-config)）。
+Plugin 元数据。`requires_env` 和 `optional_env` 块会自动填充 `minerva config` UI 条目（参见下方[在 minerva config 中暴露环境变量](#surfacing-env-vars-in-hermes-config)）。
 
 ```yaml
 name: my-platform
@@ -122,7 +122,7 @@ def register(ctx):
         check_fn=check_requirements,
         validate_config=validate_config,
         required_env=["MY_PLATFORM_TOKEN"],
-        install_hint="Declare my-platform-sdk in this plugin's Python dependencies, then retry hermes plugins enable my-platform",
+        install_hint="Declare my-platform-sdk in this plugin's Python dependencies, then retry minerva plugins enable my-platform",
         # 环境变量驱动的自动配置 — 在适配器构建前从环境变量
         # 填充 PlatformConfig.extra。参见下方"环境变量驱动的自动配置"章节。
         env_enablement_fn=_env_enablement,

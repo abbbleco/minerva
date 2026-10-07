@@ -41,7 +41,7 @@ Lists all profiles. The currently active profile is marked with `*`.
 **Example:**
 
 ```bash
-$ hermes profile list
+$ minerva profile list
   default
 * work
   dev
@@ -185,7 +185,7 @@ This shows the profile's Minerva home directory, not the terminal working direct
 **Example:**
 
 ```bash
-$ hermes profile show work
+$ minerva profile show work
 Profile: work
 Path:    ~/.hermes/profiles/work
 Model:   anthropic/claude-sonnet-4 (anthropic)
@@ -279,7 +279,7 @@ while the other succeeds), naming the database and error.
 hermes profile rename mybot assistant
 # ⚠ Profile was renamed, but the live gateway could not migrate session identity (…).
 #   Restart the gateway, then run:
-#     hermes profile migrate-identity mybot assistant
+#     minerva profile migrate-identity mybot assistant
 
 hermes profile migrate-identity mybot assistant
 # ✓ Session/routing identity migrated: mybot → assistant
@@ -313,7 +313,7 @@ a database rejects the delete (a lock, or a partial failure).
 hermes profile delete mybot
 # ⚠ Profile was deleted, but the live gateway could not purge its session identity (…).
 #   Restart the gateway, then run:
-#     hermes profile purge-identity mybot
+#     minerva profile purge-identity mybot
 
 hermes profile purge-identity mybot
 # ✓ Session/routing identity purged: mybot

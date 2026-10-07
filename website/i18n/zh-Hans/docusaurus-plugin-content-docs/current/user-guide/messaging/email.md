@@ -81,7 +81,7 @@ EMAIL_HOME_ADDRESS=your@email.com      # cron 任务的默认投递目标
 ```bash
 hermes gateway              # 在前台运行
 hermes gateway install      # 安装为用户服务
-sudo hermes gateway install --system   # 仅 Linux：开机自启的系统服务
+sudo minerva gateway install --system   # 仅 Linux：开机自启的系统服务
 ```
 
 启动时，适配器会：

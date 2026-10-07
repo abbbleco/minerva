@@ -42,7 +42,7 @@ WhatsApp 会定期更新其 Web 协议，这可能导致第三方桥接暂时失
 ## 第一步：运行配置向导
 
 ```bash
-hermes whatsapp
+minerva whatsapp
 ```
 
 向导将：
@@ -125,7 +125,7 @@ whatsapp:
 ```bash
 hermes gateway              # 前台运行
 hermes gateway install      # 安装为用户服务
-sudo hermes gateway install --system   # 仅 Linux：开机启动系统服务
+sudo minerva gateway install --system   # 仅 Linux：开机启动系统服务
 ```
 
 Gateway 会使用已保存的会话自动启动 WhatsApp 桥接。
@@ -147,7 +147,7 @@ Baileys 桥接将会话保存在 `~/.hermes/platforms/whatsapp/session` 目录�
 如果会话中断（手机重置、WhatsApp 更新、手动取消关联），你将在 gateway 日志中看到连接错误。修复方法：
 
 ```bash
-hermes whatsapp
+minerva whatsapp
 ```
 
 这将生成新的二维码。重新扫描后会话即恢复。Gateway 会通过重连逻辑自动处理**临时**断线（网络抖动、手机短暂离线）。

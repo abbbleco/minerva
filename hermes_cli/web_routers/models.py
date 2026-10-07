@@ -206,6 +206,12 @@ def get_recommended_default_model(provider: str = "", profile: Optional[str] = N
         for row in payload.get("providers", []):
             if str(row.get("slug", "")).lower() == slug:
                 models = [str(m) for m in (row.get("models") or [])]
+                if slug == "minerva" and "minerva/openrouter-free" in models:
+                    # The free meta-router works on every tier (paid listings
+                    # include free models); paid flagships may be absent from a
+                    # free key's listing, so defaulting onto one fails
+                    # validation at /api/model/set.
+                    return {"provider": slug, "model": "minerva/openrouter-free", "free_tier": None}
                 return {"provider": slug, "model": pick_silent_default_model(models, provider=slug), "free_tier": None}
         return {"provider": slug, "model": "", "free_tier": None}
     except HTTPException:

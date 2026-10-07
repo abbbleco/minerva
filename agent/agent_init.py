@@ -74,7 +74,7 @@ def _warn_memory_provider_unavailable(name: str, reason: str = "", say=None) -> 
     message = (
         f"⚠ Memory provider {name!r} is selected but reports unavailable — external memory "
         "is disabled for this session (built-in memory still works). Check the "
-        "provider's credentials/config with 'hermes memory status'. Note: "
+        "provider's credentials/config with 'minerva memory status'. Note: "
         "systemd/gateway services do not inherit ~/.hermes/.env automatically; set "
         f"any required variables in the service environment.{f' {reason}' if reason else ''}"
     )
@@ -189,7 +189,7 @@ def _build_codex_gpt5_autoraise_notice(
         f"ℹ Codex {model} caps context at {cap}, so auto-compaction was raised "
         f"to {to_pct}% (from {from_pct}%) to use more of the window before "
         f"summarizing.\n"
-        f"  Opt back out: hermes config set compression.codex_gpt55_autoraise false"
+        f"  Opt back out: minerva config set compression.codex_gpt55_autoraise false"
     )
 
 

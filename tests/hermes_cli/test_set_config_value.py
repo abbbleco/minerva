@@ -287,7 +287,7 @@ class TestConfigGetPhantomKeyNotice:
 # ---------------------------------------------------------------------------
 
 class TestListNavigation:
-    """hermes config set must preserve YAML list fields when using numeric
+    """minerva config set must preserve YAML list fields when using numeric
     indices.  Before #17876, _set_nested would silently replace the entire
     list with a dict, destroying every sibling entry.
     """
@@ -657,7 +657,7 @@ class TestMappingGuard:
         (tmp_path / "config.yaml").write_text(_yaml.safe_dump(data))
 
     def test_bare_model_shorthand_preserves_siblings(self, _isolated_hermes_home):
-        """hermes config set model <id> → model.default, siblings survive."""
+        """minerva config set model <id> → model.default, siblings survive."""
         self._write_config(_isolated_hermes_home, {
             "model": {
                 "default": "gpt-4o",
@@ -681,7 +681,7 @@ class TestMappingGuard:
         assert "gpt-5.6-sol" in _read_config(_isolated_hermes_home)
 
     def test_non_model_mapping_is_refused(self, _isolated_hermes_home):
-        """hermes config set terminal bash → refuse, terminal has sub-keys."""
+        """minerva config set terminal bash → refuse, terminal has sub-keys."""
         self._write_config(_isolated_hermes_home, {
             "terminal": {
                 "backend": "docker",
@@ -694,7 +694,7 @@ class TestMappingGuard:
         assert exc.value.code == 1
 
     def test_non_model_mapping_force_overwrites(self, _isolated_hermes_home):
-        """hermes config set --force terminal bash → proceed, section wiped."""
+        """minerva config set --force terminal bash → proceed, section wiped."""
         self._write_config(_isolated_hermes_home, {
             "terminal": {
                 "backend": "docker",
@@ -721,7 +721,7 @@ class TestMappingGuard:
         assert parsed["model"]["provider"] == "openai-api"
 
     def test_model_force_overwrites_entire_section(self, _isolated_hermes_home):
-        """hermes config set --force model <id> → overwrite entire section."""
+        """minerva config set --force model <id> → overwrite entire section."""
         self._write_config(_isolated_hermes_home, {
             "model": {
                 "default": "gpt-4o",

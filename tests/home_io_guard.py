@@ -138,7 +138,7 @@ class HomeIOGuard:
     @staticmethod
     def refuse(value):
         raise AssertionError(
-            f"TEST BUG: file I/O against the REAL hermes home: {value}\n"
+            f"TEST BUG: file I/O against the REAL minerva home: {value}\n"
             "Use the isolated HERMES_HOME or a temporary fixture instead."
         )
 

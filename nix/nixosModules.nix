@@ -10,13 +10,13 @@
 #   container.enable = false (default) → native systemd service
 #   container.enable = true            → OCI container (persistent writable layer)
 #
-# Container mode: hermes runs from /nix/store bind-mounted read-only into a
+# Container mode: minerva runs from /nix/store bind-mounted read-only into a
 # plain Ubuntu container. The writable layer (apt/pip/npm installs) persists
 # across restarts and agent updates. Only image/volume/options changes trigger
 # container recreation. Environment variables are written to $HERMES_HOME/.env
-# and read by hermes at startup — no container recreation needed for env changes.
+# and read by minerva at startup — no container recreation needed for env changes.
 #
-# Tool resolution: the hermes wrapper uses --suffix PATH for nix store tools,
+# Tool resolution: the minerva wrapper uses --suffix PATH for nix store tools,
 # so apt/uv-installed versions take priority. The container entrypoint provisions
 # extensible tools on first boot: nodejs/npm via apt, uv via curl, and a Python
 # 3.11 venv (bootstrapped entirely by uv) at ~/.venv with pip seeded. Agents get
@@ -70,7 +70,7 @@
           "${pkgs.podman}/bin/podman";
 
       # Runs as root inside the container on every start. Provisions the
-      # hermes user + sudo on first boot (writable layer persists), then
+      # minerva user + sudo on first boot (writable layer persists), then
       # drops privileges. Supports arbitrary base images (Debian, Alpine, etc).
       containerEntrypoint = pkgs.writeShellScript "hermes-container-entrypoint" ''
         set -eu
@@ -219,7 +219,7 @@
         RestartSec = cfg.restartSec;
 
         # Shared-state: files created by the service should be group-writable
-        # so interactive users in the hermes group can read/write them.
+        # so interactive users in the minerva group can read/write them.
         UMask = "0007";
 
         # Hardening
@@ -289,7 +289,7 @@
               type = types.bool;
               default = false;
               description = ''
-                Add the hermes CLI to environment.systemPackages and export
+                Add the minerva CLI to environment.systemPackages and export
                 HERMES_HOME system-wide (via environment.variables) so interactive
                 shells share state with the gateway service.
               '';
@@ -332,7 +332,7 @@
                 default = [ ];
                 description = ''
                   Interactive users who get a ~/.hermes symlink to the service
-                  stateDir. These users are automatically added to the hermes group.
+                  stateDir. These users are automatically added to the minerva group.
                 '';
                 example = [ "sidbin" ];
               };
@@ -371,7 +371,7 @@
           })
 
           # ── Host CLI ──────────────────────────────────────────────────────
-          # Add the hermes CLI to system PATH and export HERMES_HOME system-wide
+          # Add the minerva CLI to system PATH and export HERMES_HOME system-wide
           # so interactive shells share state (sessions, skills, cron) with the
           # gateway service instead of creating a separate ~/.hermes/.
           (lib.mkIf cfg.addToSystemPackages {
@@ -414,7 +414,7 @@
           }
 
           # ── Per-user profile for extraPackages ───────────────────────────
-          # Wire extraPackages into the hermes user's per-user profile so the
+          # Wire extraPackages into the minerva user's per-user profile so the
           # login-shell snapshot (which rebuilds PATH from NixOS profiles) sees
           # them.  The systemd service PATH also includes them for direct access.
           (lib.mkIf (cfg.extraPackages != [ ]) {
@@ -433,7 +433,7 @@
                   services.hermes-agent: container.enable is true and container.hostUsers
                   is set, but addToSystemPackages is false. Without a host-installed hermes
                   binary, container routing will not work for interactive users.
-                  Set addToSystemPackages = true or ensure hermes is on PATH.
+                  Set addToSystemPackages = true or ensure minerva is on PATH.
                 ''
               ];
             }
@@ -610,7 +610,7 @@
             };
           })
 
-          # ── The backend: hermes serve or hermes dashboard ─────────────────
+          # ── The backend: minerva serve or minerva dashboard ─────────────────
           # This is a different process from the gateway. Both use one
           # HERMES_HOME.
           (lib.mkIf (!cfg.container.enable && cfg.backend.mode != "none") {

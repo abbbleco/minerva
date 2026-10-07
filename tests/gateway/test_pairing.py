@@ -58,7 +58,7 @@ class TestProfileScopedDiscovery:
         global_dir = tmp_path / "global-pairing"
         global_dir.mkdir(parents=True)
 
-        # A profile's store anchors to the hermes ROOT, not the current
+        # A profile's store anchors to the minerva ROOT, not the current
         # HERMES_HOME — the current home may itself be a profile, and nesting
         # profiles inside profiles is how a `-p work` CLI and its gateway end
         # up reading different files. Patch that seam, not get_hermes_home.

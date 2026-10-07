@@ -2,10 +2,10 @@
 """Minerva CLI - Main entry point.
 
 Usage:
-    hermes                     # Interactive chat (default)
-    hermes chat / gateway / setup / status / cron / doctor / update / ...
-    hermes --version           # Show version and update status
-    hermes <cmd> --help        # Per-command help
+    minerva                     # Interactive chat (default)
+    minerva chat / gateway / setup / status / cron / doctor / update / ...
+    minerva --version           # Show version and update status
+    minerva <cmd> --help        # Per-command help
 """
 
 # hermes_bootstrap must be the very first import — it sets up UTF-8 stdio on
@@ -185,8 +185,8 @@ def _warn_if_unsupervised_pid1(pid: "int | None" = None) -> None:
 
     The official image's ENTRYPOINT (``docker/entrypoint-dispatch.sh`` -> s6-overlay's
     ``/init``) is the reaper for orphaned grandchildren (browser tooling, MCP servers, shell
-    children). A Compose service that overrides ``entrypoint:`` to invoke hermes directly makes
-    hermes itself PID 1 — nothing then ``wait()``s on those orphans and they accumulate as
+    children). A Compose service that overrides ``entrypoint:`` to invoke minerva directly makes
+    minerva itself PID 1 — nothing then ``wait()``s on those orphans and they accumulate as
     zombies without bound (#111577). Outside a container a user process is never PID 1, so
     this is quiet everywhere else; it mirrors the dispatcher's own non-PID-1 warning.
     """
@@ -409,7 +409,7 @@ def _require_tty(command_name: str) -> None:
     """Exit 1 if stdin is not a terminal: curses/input() prompts spin at 100% CPU on a pipe."""
     if not sys.stdin.isatty():
         print(
-            f"Error: 'hermes {command_name}' requires an interactive terminal.\n"
+            f"Error: 'minerva {command_name}' requires an interactive terminal.\n"
             f"It cannot be run through a pipe or non-interactive subprocess.\n"
             f"Run it directly in your terminal instead.",
             file=sys.stderr,
@@ -421,7 +421,7 @@ PROJECT_ROOT = Path(_startup_fast.project_root_str())
 _startup_fast.ensure_project_root_on_path()
 
 
-# Profile override — MUST happen before any hermes module import: many modules
+# Profile override — MUST happen before any minerva module import: many modules
 # cache HERMES_HOME at import time. --profile/-p is pre-parsed from sys.argv,
 # HERMES_HOME set, and the flag stripped so argparse never sees it. Falls back
 # to ~/.hermes/active_profile for the sticky default.
@@ -513,7 +513,7 @@ def _scan_profile_flag(argv: list) -> tuple:
 
 
 def _resolve_sudo_user_profile_env(name: str) -> str | None:
-    """Resolve `sudo hermes -p <name>` against the invoking user's home.
+    """Resolve `sudo minerva -p <name>` against the invoking user's home.
 
     This runs before argparse, so `--run-as-user` is not available yet. For
     sudo invocations the best signal is SUDO_USER: root is only doing the
@@ -597,7 +597,7 @@ def _apply_profile_override() -> None:
 
     # HERMES_HOME already set with no explicit flag: trust it only when it
     # points at a specific profile dir ("profiles" as immediate parent). If it
-    # points at the hermes root (systemd hardcodes HERMES_HOME=/root/.hermes)
+    # points at the minerva root (systemd hardcodes HERMES_HOME=/root/.hermes)
     # we must still read active_profile — the user may have run
     # `minerva profile use` and the gateway should honour it (#22502).
     hermes_home_env = os.environ.get("HERMES_HOME", "")
@@ -639,7 +639,7 @@ def _apply_profile_override() -> None:
                     file=sys.stderr,
                 )
             else:
-                error = f"Saved profile '{profile_name}' no longer exists. Switch back with: hermes profile use default"
+                error = f"Saved profile '{profile_name}' no longer exists. Switch back with: minerva profile use default"
         if not hermes_home:
             print(f"Error: {error}", file=sys.stderr)
             sys.exit(1)
@@ -647,7 +647,7 @@ def _apply_profile_override() -> None:
         print(f"Error: {exc}", file=sys.stderr)
         sys.exit(1)
     except Exception as exc:
-        # A bug in profiles.py must NEVER prevent hermes from starting
+        # A bug in profiles.py must NEVER prevent minerva from starting
         print(f"Warning: profile override failed ({exc}), using default", file=sys.stderr)
         return
     os.environ["HERMES_HOME"] = hermes_home
@@ -681,7 +681,7 @@ if sys.argv[1:2] == ["pm"]:
 # venv\Scripts must stay off PATH as it shadows the user's ``python``).
 # Re-staging at process start reaches already-broken installs via the desktop
 # app's ``python -m hermes_cli.main`` spawn. Gates fail toward inaction. Sits
-# AFTER the profile override on purpose — no hermes module may import before
+# AFTER the profile override on purpose — no minerva module may import before
 # profiles resolve; the helper anchors on the DEFAULT root, so profile
 # sessions heal the same shared dir.
 # That dir lives OUTSIDE the git checkout precisely because an earlier layout staged the copies at
@@ -1403,7 +1403,7 @@ def _exec_in_container(container_info: dict, cli_args: list):
         if not sudo_path:
             print(
                 f"Error: container '{container_name}' not found via {backend}.\n"
-                f"The container may be running under root. Try: sudo hermes {' '.join(cli_args)}",
+                f"The container may be running under root. Try: sudo minerva {' '.join(cli_args)}",
                 file=sys.stderr,
             )
             sys.exit(1)
@@ -1424,7 +1424,7 @@ def _exec_in_container(container_info: dict, cli_args: list):
                 f'    commands = [{{ command = "{runtime}"; options = [ "NOPASSWD" ]; }}];\n'
                 f"  }}];\n"
                 f"\n"
-                f"Or run: sudo hermes {' '.join(cli_args)}",
+                f"Or run: sudo minerva {' '.join(cli_args)}",
                 file=sys.stderr,
             )
             sys.exit(1)
@@ -1537,7 +1537,7 @@ def _resolve_continue_arg(args, *, use_tui: bool) -> None:
             else:
                 print(f"No session found matching '{continue_val}'.", file=sys.stderr)
                 print(
-                    "Use 'hermes sessions list' to see available sessions, or "
+                    "Use 'minerva sessions list' to see available sessions, or "
                     "pass --create-if-missing to start a new session with that title.",
                     file=sys.stderr,
                 )
@@ -1622,7 +1622,7 @@ def _import_foreign_resume(args) -> None:
         print(f"Error: {e}")
         sys.exit(1)
     print(f"✓ Imported as {_imported_id} — resuming it now.")
-    print(f"  (later: hermes --resume {_imported_id})")
+    print(f"  (later: minerva --resume {_imported_id})")
     args.resume = _imported_id
 
 
@@ -1648,7 +1648,7 @@ def _resolve_chat_session_args(args, use_tui: bool) -> None:
         else:
             kind = "TUI" if use_tui else "CLI"
             print(f"No previous {kind} session found to resume.")
-            print("Use 'hermes sessions list' to see available sessions.")
+            print("Use 'minerva sessions list' to see available sessions.")
             sys.exit(1)
 
     _resolve_continue_arg(args, use_tui=use_tui)
@@ -1696,7 +1696,7 @@ def _warn_retired_xai_models() -> None:
             for _ref in _retired_xai_refs:
                 sys.stderr.write(f"  \033[33m⚠\033[0m {format_issue(_ref)}\n")
             sys.stderr.write(f"  \033[2mMigration guide: {MIGRATION_GUIDE_URL}\033[0m\n")
-            sys.stderr.write("  \033[2mRun 'hermes doctor' for details.\033[0m\n\n")
+            sys.stderr.write("  \033[2mRun 'minerva doctor' for details.\033[0m\n\n")
     except Exception:
         pass
 
@@ -1759,7 +1759,7 @@ def _first_run_setup_guard(args) -> None:
         "It looks like Minerva isn't configured yet -- no API keys or providers found."
     )
     print()
-    print("  Run:  hermes setup")
+    print("  Run:  minerva setup")
     print()
 
     from hermes_cli.setup import (
@@ -1781,7 +1781,7 @@ def _first_run_setup_guard(args) -> None:
         cmd_setup(args)
         return
     print()
-    print("You can run 'hermes setup' at any time to configure.")
+    print("You can run 'minerva setup' at any time to configure.")
     sys.exit(1)
 
 
@@ -2071,8 +2071,8 @@ def _resolve_active_provider(config, model_cfg, effective_provider, custom_provi
                 )
         else:
             print(
-                f"Warning: Unknown provider '{effective_provider}'. Check 'hermes model' for "
-                "available providers, or run 'hermes doctor' to diagnose config "
+                f"Warning: Unknown provider '{effective_provider}'. Check 'minerva model' for "
+                "available providers, or run 'minerva doctor' to diagnose config "
                 "issues. Falling back to auto provider detection."
             )
     if not active:
@@ -2615,7 +2615,7 @@ def _dashboard_lifecycle_flags(args, token_file) -> None:
 
         own_home = str(get_hermes_home())
         if not _find_stale_dashboard_pids(scope_home=own_home):
-            print("No hermes dashboard processes running for this profile.")
+            print("No minerva dashboard processes running for this profile.")
             sys.exit(0)
         # Reuse the same SIGTERM-grace-SIGKILL path used after `minerva update`;
         # it prints outcomes itself. Exit 1 only if a pid was unkillable — judged
@@ -2650,7 +2650,7 @@ def _dashboard_validate_serve_args(args, headless_backend, token_file):
     if ssh_owner_nonce and not re.fullmatch(r"[0-9a-f]{16}", ssh_owner_nonce):
         raise SystemExit("--ssh-owner-nonce must be 16 lowercase hex characters")
     if token_file and not headless_backend:
-        raise SystemExit("--ssh-session-token-file is only valid with hermes serve")
+        raise SystemExit("--ssh-session-token-file is only valid with minerva serve")
     return ssh_owner_nonce
 
 
@@ -3599,7 +3599,7 @@ def _default_to_chat(args) -> None:
 
 
 def main():
-    """Main entry point for hermes CLI."""
+    """Main entry point for minerva CLI."""
     _set_process_title()
     _warn_if_unsupervised_pid1()
     _advertise_agent_env()

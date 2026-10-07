@@ -28,6 +28,8 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { DEFAULT_FREE_MODEL, FREE_MODELS, modelsForTier, resolveModel, type CatalogEntry } from './catalog.js';
+import { liveFreeWireIds, liveModelsForTier, resolveLiveModel } from './live-models.js';
+import { readMemberQuota } from './member-quota.js';
 import { evaluateGates } from './gates.js';
 import { checkVelocity } from './velocity.js';
 import { chatCostUsd, embeddingCostUsd } from './pricing.js';
@@ -124,11 +126,13 @@ app.get('/v1/models', async (c) => {
   if (!tenant.ok) return c.json({ error: { code: tenant.code, message: tenant.message } }, tenant.status);
 
   // Tier filtering is the security boundary: a free key must never see a priced model, because
-  // `minerva model` reads this list.
+  // `minerva model` reads this list. Served live from OpenRouter (cached) with
+  // the pinned catalog as the offline fallback.
   const isPaid = tenant.tenant.plan !== 'free';
+  const list = (await liveModelsForTier(isPaid)) ?? modelsForTier(isPaid);
   return c.json({
     object: 'list',
-    data: modelsForTier(isPaid).map((e) => ({ id: e.wireId, object: 'model', created: 0, owned_by: 'minerva' })),
+    data: list.map((e) => ({ id: e.wireId, object: 'model', created: 0, owned_by: 'minerva' })),
   });
 });
 
@@ -149,6 +153,13 @@ app.get('/v1/credits', async (c) => {
     currency: 'USD',
     reset_at: summary.resetAt,
     plan: tenant.tenant.plan,
+    // Agency identity for billing overviews (desktop Settings → Billing):
+    // the router is the only component that can map a device key to its agency.
+    agency: {
+      id: tenant.tenant.agencyId,
+      slug: tenant.tenant.agencySlug,
+      name: tenant.tenant.agencyName,
+    },
   });
 });
 
@@ -192,6 +203,7 @@ app.post('/v1/embeddings', async (c) => {
     afterWork(
       debitInference({
         agencyId: tenant.tenant.agencyId,
+        userId: tenant.tenant.memberUserId,
         costUsd: cost,
         model: 'text-embedding-004',
         promptTokens,
@@ -236,7 +248,10 @@ app.post('/v1/chat/completions', async (c) => {
   //
   // A model that IS named but unknown still fails loudly below: that is a caller bug, and
   // silently substituting a different model would make the response unattributable.
-  const entry = requested ? resolveModel(requested) : resolveModel(DEFAULT_FREE_MODEL);
+  // Live first so rotated models resolve; pinned as the offline fallback.
+  const entry = requested
+    ? ((await resolveLiveModel(requested)) ?? resolveModel(requested))
+    : (resolveModel(DEFAULT_FREE_MODEL) ?? null);
 
   if (STUB) {
     const wireId = entry?.wireId ?? stubResolveModel(requested);
@@ -268,8 +283,27 @@ app.post('/v1/chat/completions', async (c) => {
   const tenant = await resolveTenant(c.req.header('authorization'));
   if (!tenant.ok) return c.json({ error: { code: tenant.code, message: tenant.message } }, tenant.status);
 
-  const denied = evaluateGates(gateInput(tenant.tenant, entry), FREE_MODELS);
+  // Per-member allowance (null when the seat has none): enforced through the
+  // existing quota gate, which already denies at used >= limit and stays
+  // skipped otherwise.
+  const memberQuota = await readMemberQuota(tenant.tenant.agencyId, tenant.tenant.memberUserId);
+  const denied = evaluateGates(
+    { ...gateInput(tenant.tenant, entry), quota: memberQuota },
+    FREE_MODELS
+  );
   if (denied) {
+    if (denied.code === 'upgrade_required') {
+      // Name the live free set when reachable so the suggestion tracks rotation.
+      const liveFree = await liveFreeWireIds();
+      if (liveFree) denied.allowedModels = [...liveFree];
+    }
+    if (denied.code === 'quota_exceeded' && memberQuota) {
+      // Router-level quota is never set (see tenant quota comment), so a
+      // quota denial here is always the member's allowance — say so.
+      denied.message =
+        `Member spend allowance reached ($${memberQuota.used.toFixed(2)} of ` +
+        `$${memberQuota.limit.toFixed(2)} this month). Ask your agency owner to raise it.`;
+    }
     return c.json(
       { error: { code: denied.code, message: denied.message, allowed_models: denied.allowedModels } },
       denied.status
@@ -304,6 +338,7 @@ app.post('/v1/chat/completions', async (c) => {
     afterWork(
       debitInference({
         agencyId: tenant.tenant.agencyId,
+        userId: tenant.tenant.memberUserId,
         costUsd: chatCostUsd(entry, {
           promptTokens: usage.promptTokens,
           completionTokens: usage.completionTokens,

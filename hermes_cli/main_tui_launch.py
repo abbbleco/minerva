@@ -64,9 +64,9 @@ def _print_tui_exit_summary(session_id: Optional[str], active_session_file: Opti
     from hermes_cli.profiles import get_active_profile_name
     active_profile = get_active_profile_name()
     profile_flag = "" if active_profile in ("default", "custom") else f" -p {active_profile}"
-    print(f"\n{t('cli.session.exit_resume_hint')}\n  hermes --tui --resume {target}{profile_flag}")
+    print(f"\n{t('cli.session.exit_resume_hint')}\n  minerva --tui --resume {target}{profile_flag}")
     if title:
-        print(f'  hermes --tui -c "{title}"{profile_flag}')
+        print(f'  minerva --tui -c "{title}"{profile_flag}')
     print(f"\nSession:        {target}")
     if title:
         print(f"Title:          {title}")
@@ -359,7 +359,7 @@ def _launch_tui(
     tui_dir = PROJECT_ROOT / "ui-tui"
 
     import tempfile
-    # TUI child is a hermes process: propagate the profile-home contract via
+    # TUI child is a minerva process: propagate the profile-home contract via
     # the single factory; keep secrets (the TUI/agent needs provider creds).
     from tools.environments.local import build_subprocess_env
     env = build_subprocess_env(scrub_secrets=False, inherit_profile_home=True)

@@ -74,7 +74,7 @@ mkdir -p "$U/fakebin"
 echo "=============== $LABEL ($REF) ==============="
 
 # ---- A: SIGKILL before git wrote anything; user re-applies edits, upstream moves on, user fetches -------
-echo; echo "--- A: kill before git wrote anything, then user edits + fetch, then any hermes command"
+echo; echo "--- A: kill before git wrote anything, then user edits + fetch, then any minerva command"
 setup clone >/dev/null
 cat > "$U/fakebin/git" <<'EOF'
 #!/usr/bin/env bash

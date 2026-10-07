@@ -23,7 +23,7 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 
 try:
     import httpx
-except ImportError:  # pragma: no cover - httpx is a hermes dependency
+except ImportError:  # pragma: no cover - httpx is a minerva dependency
     httpx = None  # type: ignore[assignment]
 
 from gateway.platforms._shared import get_scoped_secret as _get_scoped_secret

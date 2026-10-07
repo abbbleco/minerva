@@ -143,7 +143,7 @@ For a persistent deployment that survives reboots:
 
 ```bash
 hermes gateway install
-sudo hermes gateway install --system   # Linux only: boot-time system service
+sudo minerva gateway install --system   # Linux only: boot-time system service
 ```
 
 This creates a background service: a user-level **systemd** service on Linux by default, a **launchd** service on macOS, or a boot-time Linux system service if you pass `--system`.
@@ -161,8 +161,8 @@ journalctl --user -u hermes-gateway -f
 sudo loginctl enable-linger $USER
 
 # Linux servers — explicit system-service commands
-sudo hermes gateway start --system
-sudo hermes gateway status --system
+sudo minerva gateway start --system
+sudo minerva gateway status --system
 journalctl -u hermes-gateway -f
 ```
 
@@ -203,7 +203,7 @@ TELEGRAM_ALLOWED_USERS=123456789,987654321,555555555
 Restart the gateway after changes:
 
 ```bash
-hermes gateway stop && hermes gateway start
+hermes gateway stop && minerva gateway start
 ```
 
 ### Approach B: DM Pairing (Recommended for Teams)
@@ -220,7 +220,7 @@ DM pairing is more flexible — you don't need to collect user IDs upfront. Here
 
 3. **You approve it** on the server:
    ```bash
-   hermes pairing approve telegram XKGH5N7P
+   minerva pairing approve telegram XKGH5N7P
    ```
 
 4. **They're in** — the bot immediately starts responding to their messages
@@ -409,7 +409,7 @@ From Telegram, send `/update` to the bot — it will pull the latest version and
 
 ```bash
 hermes update
-hermes gateway stop && hermes gateway start
+hermes gateway stop && minerva gateway start
 ```
 
 ### Log Locations

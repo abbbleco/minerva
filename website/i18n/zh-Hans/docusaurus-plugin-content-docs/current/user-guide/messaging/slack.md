@@ -31,7 +31,7 @@ description: "使用 Socket Mode 将 Minerva Agent 设置为 Slack 机器人"
 
 1. 生成 manifest：
    ```bash
-   hermes slack manifest --write
+   minerva slack manifest --write
    ```
    此命令会将 `~/.hermes/slack-manifest.json` 写入磁盘并打印粘贴说明。
 2. 前往 [https://api.slack.com/apps](https://api.slack.com/apps) →
@@ -195,7 +195,7 @@ hermes gateway setup    # 提示时选择 Slack
 ```bash
 hermes gateway              # 前台运行
 hermes gateway install      # 安装为用户服务
-sudo hermes gateway install --system   # 仅 Linux：开机启动系统服务
+sudo minerva gateway install --system   # 仅 Linux：开机启动系统服务
 ```
 
 ---

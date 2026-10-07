@@ -18,7 +18,7 @@ def cmd_migrate(args: Any) -> int:
     if getattr(args, "migrate_type", None) == "xai":
         return cmd_migrate_xai(args)
 
-    print("usage: hermes migrate xai [--apply] [--no-backup]", file=sys.stderr)
+    print("usage: minerva migrate xai [--apply] [--no-backup]", file=sys.stderr)
     return 2
 
 

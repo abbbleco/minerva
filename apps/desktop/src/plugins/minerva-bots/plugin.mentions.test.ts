@@ -466,7 +466,7 @@ describe('the mention middleware', () => {
 
   it('keeps a poisoned bot title inert prose', async () => {
     // Nothing here is a command line, so there is nothing to break out of —
-    // the invariant that matters is that no hermes command is ever emitted.
+    // the invariant that matters is that no minerva command is ever emitted.
     const { handler } = await contributions({
       focused: 'ops',
       profiles: [

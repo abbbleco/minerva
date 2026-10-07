@@ -79,4 +79,4 @@ post_install: |
   A curated 20-tool subset is enabled by default (discovery, generation, job
   lifecycle, billing). Batch jobs, saved/shared workflow management, and App
   Mode tools are available but unchecked — enable them any time with:
-    hermes mcp configure comfy-cloud
+    minerva mcp configure comfy-cloud

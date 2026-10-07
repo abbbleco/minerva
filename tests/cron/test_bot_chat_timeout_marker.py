@@ -43,7 +43,7 @@ def test_timeout_queues_degraded_marker(cli_lane, monkeypatch):
     assert kw.get("degraded") is True
     assert "DELIVERY DEGRADED" in marker and "job-1" in marker
     assert not marker.startswith("[")  # a plain body: the standard cronjob header wraps it
-    assert "hermes cron runs" in marker
+    assert "minerva cron runs" in marker
     assert "P1 findings: everything on fire" in marker  # short excerpt only...
     assert payload.strip() not in marker  # ...never the full payload
     assert result is not None and "degraded-delivery notice was queued" in result

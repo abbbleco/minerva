@@ -107,7 +107,7 @@ def _gateway(tmp_path, session_key="tg:123", agent=None):
 
 
 # ---------------------------------------------------------------------------
-# Core no-op regression: hermes mode + live thread => thread/compact runs
+# Core no-op regression: minerva mode + live thread => thread/compact runs
 # ---------------------------------------------------------------------------
 
 def test_hermes_mode_compacts_live_thread_at_rpc_boundary(tmp_path):

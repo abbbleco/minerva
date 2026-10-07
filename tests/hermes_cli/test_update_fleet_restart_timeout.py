@@ -88,7 +88,7 @@ class TestFleetRestartTimeoutIsolation:
         assert seen == ["hermes-gateway-coder"]
 
     def test_hermes_serve_units_are_included(self):
-        # #83438 — hermes update restarted hermes-gateway* units but left
+        # #83438 — minerva update restarted hermes-gateway* units but left
         # hermes-serve* (the Desktop app's backend) on stale pre-update code.
         seen: list[str] = []
 

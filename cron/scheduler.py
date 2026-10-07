@@ -4040,7 +4040,7 @@ _worktree_maintenance_lock = threading.Lock()
 
 
 def _worktree_maintenance_repos() -> List[str]:
-    """Repos whose ``.worktrees/`` to keep pruned: the hermes checkout plus job workdir repo roots,
+    """Repos whose ``.worktrees/`` to keep pruned: the minerva checkout plus job workdir repo roots,
     filtered to those that actually have a ``.worktrees/`` dir."""
     repos: set = set()
 

@@ -70,7 +70,7 @@ def _stop_all_lightpanda() -> None:
 
 def _emergency_cleanup_all_sessions():
     """atexit: close this process's sessions, then sweep orphans left by crashed
-    hermes processes — every clean exit reaps accumulated orphans, not only
+    minerva processes — every clean exit reaps accumulated orphans, not only
     processes that used the browser tool."""
     try:
         if _bt._cleanup_done:
@@ -101,7 +101,7 @@ def _emergency_cleanup_all_sessions():
     # Lightpanda servers we spawned that fell out of ``_active_sessions``.
     _best_effort("Lightpanda cleanup on exit", _stop_all_lightpanda)
     # Safe even if we never used the browser — owner_pid liveness protects daemons
-    # owned by other live hermes processes.
+    # owned by other live minerva processes.
     _best_effort("Orphan reap on exit", _reap_orphaned_browser_sessions)
 
 
@@ -199,7 +199,7 @@ def _human_holds_shared_browser(task_id: str) -> bool:
 
 
 def _write_owner_pid(socket_dir: str, session_name: str) -> None:
-    """Record this hermes PID in ``<socket_dir>/<session>.owner_pid`` so the orphan
+    """Record this minerva PID in ``<socket_dir>/<session>.owner_pid`` so the orphan
     reaper can tell live-owner daemons from crashed-owner ones. Best-effort: an
     OSError falls back to the legacy ``tracked_names`` heuristic."""
     try:
@@ -322,7 +322,7 @@ def _terminate_verified_daemon(daemon_pid: int, session_name: str, log) -> bool:
 def _reap_socket_dir(socket_dir: str, session_name: str, tracked_names: set) -> bool:
     """Reap one ``agent-browser-<session>`` dir if orphaned; True when a daemon was killed.
 
-    A live ``owner_pid`` means another hermes process owns it — leave it UNLESS untracked
+    A live ``owner_pid`` means another minerva process owns it — leave it UNLESS untracked
     here and idle past ``BROWSER_ORPHAN_GRACE_SECONDS`` (owner-alive alone made leaked
     daemons immortal); no owner_pid (legacy) falls back to this process's tracking. A
     pidless dir is only stale after the grace period (deleting it immediately races the
@@ -374,7 +374,7 @@ def _reap_socket_dir(socket_dir: str, session_name: str, tracked_names: set) -> 
 
 
 def _reap_orphaned_browser_sessions():
-    """Kill agent-browser daemons whose owning hermes process is gone (an unclean exit loses
+    """Kill agent-browser daemons whose owning minerva process is gone (an unclean exit loses
     ``_active_sessions`` but node + Chromium keep running). Scans the tmp dir for
     ``agent-browser-*`` socket dirs; safe from any context."""
     import glob

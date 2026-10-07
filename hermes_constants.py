@@ -612,7 +612,7 @@ def secure_parent_dir(path: Path) -> None:
         logging.getLogger(__name__).warning(
             "Not restricting permissions on %s: it is inside the "
             "hermes-agent install directory (%s). Credential files are "
-            "normally stored under the hermes home directory instead.", parent, _INSTALL_ROOT,
+            "normally stored under the minerva home directory instead.", parent, _INSTALL_ROOT,
         )
         return
     with contextlib.suppress(OSError):
@@ -1375,7 +1375,7 @@ def partial_update_hint(exc: BaseException) -> list[str]:
         "This looks like a partially-updated install: one module was refreshed "
         "and a related one was not.",
         "Re-run the update to bring the whole tree to the same version:",
-        "    hermes update",
+        "    minerva update",
         "If that also fails, reinstall: https://hermes-agent.nousresearch.com",
     ]
 

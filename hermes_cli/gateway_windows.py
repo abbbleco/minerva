@@ -875,7 +875,7 @@ def _install_startup_fallback(script_path: Path, start_now: bool, detail: str) -
         # An earlier task survives (UAC declined, access denied on re-create) and still fires at
         # logon; adding the fallback beside it would start the gateway twice (#80569).
         print("⚠ Scheduled Task is still registered — skipped the Startup fallback to avoid a duplicate autostart.")
-        print("  If that task is disabled or broken, run 'hermes gateway uninstall', then install again.")
+        print("  If that task is disabled or broken, run 'minerva gateway uninstall', then install again.")
     else:
         entry = _install_startup_entry(script_path)
         print(f"✓ Installed Windows login item: {entry}")
@@ -890,7 +890,7 @@ def _install_startup_fallback(script_path: Path, start_now: bool, detail: str) -
         from hermes_cli.gateway import _profile_arg
 
         profile_arg = _profile_arg()
-        start_cmd = f"hermes {profile_arg} gateway start" if profile_arg else "hermes gateway start"
+        start_cmd = f"minerva {profile_arg} gateway start" if profile_arg else "minerva gateway start"
         print("ℹ Startup fallback installed; gateway not started now.")
         print(f"  Start manually with: {start_cmd}")
     _print_next_steps()
@@ -908,7 +908,7 @@ def _offer_elevated_install(headline: str, force: bool, start_now: bool, start_o
             if start_now:
                 print("  Approve the Windows UAC prompt; the elevated install will start the gateway afterwards.")
             else:
-                print("  Approve the Windows UAC prompt, then run: hermes gateway status")
+                print("  Approve the Windows UAC prompt, then run: minerva gateway status")
             return True
         print("⚠ Falling back to Startup folder because elevation was unavailable or cancelled.")
     else:
@@ -931,7 +931,7 @@ def install(
             _start_or_report_running()
         else:
             print("ℹ Gateway not started and no auto-start service installed.")
-            print("  Run in the foreground later with: hermes gateway run")
+            print("  Run in the foreground later with: minerva gateway run")
         return
 
     task_name = get_task_name()
@@ -974,7 +974,7 @@ def install(
             _start_or_report_running()
         else:
             print("ℹ Gateway not started now.")
-            print("  Start manually with: hermes gateway start")
+            print("  Start manually with: minerva gateway start")
         _print_next_steps()
         return
 
@@ -1308,7 +1308,7 @@ def _report_gateway_start(via: str) -> None:
 
 
 def _print_next_steps() -> None:
-    print("\nNext steps:\n  hermes gateway status                      # Check status")
+    print("\nNext steps:\n  minerva gateway status                      # Check status")
     print(f"  type {_hermes_home()}\\logs\\gateway.log       # View logs")
 
 
@@ -1333,7 +1333,7 @@ def uninstall() -> None:
             if prompt_yes_no("  Open the UAC prompt now?", False):
                 if _launch_elevated_gateway_command("uninstall"):
                     print("✓ Launched elevated Minerva gateway uninstall prompt.")
-                    print("  Approve the Windows UAC prompt, then run: hermes gateway status")
+                    print("  Approve the Windows UAC prompt, then run: minerva gateway status")
                     return
                 print("⚠ Elevated uninstall prompt was unavailable or cancelled.")
             else:
@@ -1446,7 +1446,7 @@ def _print_scheduled_task_drift(task_name: str) -> None:
     drift = scheduled_task_drift(task_name)
     if drift:
         print(f"⚠ Scheduled Task registration predates the current template ({'; '.join(drift)})")
-        print("  Repair: hermes gateway start  (or: hermes gateway install)")
+        print("  Repair: minerva gateway start  (or: minerva gateway install)")
 
 
 def reconcile_scheduled_task(task_name: str) -> bool:
@@ -1461,7 +1461,7 @@ def reconcile_scheduled_task(task_name: str) -> bool:
     ok, detail = _install_scheduled_task(task_name, _write_task_script())
     print(f"{'✓' if ok else '⚠'} {detail}")
     if not ok:
-        print("  Repair manually: hermes gateway install")
+        print("  Repair manually: minerva gateway install")
     return ok
 
 
@@ -1648,7 +1648,7 @@ def status(deep: bool = False) -> None:
         _print_deep_probes()
 
     if not task_installed and not startup_installed and not pids:
-        print("\nTo install:\n  hermes gateway install")
+        print("\nTo install:\n  minerva gateway install")
 
 
 def start() -> None:
@@ -1680,7 +1680,7 @@ def start() -> None:
             # hand-off to an elevated child — so there is nothing left to spawn or to warn about here.
             install(force=False, start_now=True, start_on_login=True)
             return
-        print("ℹ Login auto-start not installed; add it later with: hermes gateway install")
+        print("ℹ Login auto-start not installed; add it later with: minerva gateway install")
     elif is_task_registered():
         reconcile_scheduled_task(get_task_name())   # like systemd's regenerate-on-stale before a start
 

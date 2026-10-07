@@ -31,7 +31,7 @@ Every layer may be **partial**: a pack or overlay only needs the keys it changes
 are refused with the list of available languages:
 
 ```
-$ hermes config set display.language pl
+$ minerva config set display.language pl
 ✗ Unknown language 'pl' for display.language. Available: en, af, ar, de, es, ...
   Install a language pack plugin (hermes plugins install <pack>) or drop <HERMES_HOME>/locales/<id>.yaml to add one.
 ```
@@ -56,7 +56,7 @@ hermes-lang-pl/
   plugin.yaml
   locales/
     pl.yaml            # core: Python-side strings (approval.*, gateway.*, cli.*, display.*, slash.*, tips.*, ...)
-    pl.tui.yaml        # optional: hermes --tui strings
+    pl.tui.yaml        # optional: minerva --tui strings
     pl.desktop.yaml    # optional: Minerva Desktop strings
 ```
 

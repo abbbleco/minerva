@@ -1,4 +1,4 @@
-"""Tests for hermes backup and import commands."""
+"""Tests for minerva backup and import commands."""
 
 import json
 import os
@@ -971,7 +971,7 @@ class TestBackupEdgeCases:
         assert run_backup(Namespace(output=str(tmp_path / "out4.zip"))) is True
 
     def test_empty_hermes_home(self, tmp_path, monkeypatch):
-        """Backup handles empty hermes home (no files to back up)."""
+        """Backup handles empty minerva home (no files to back up)."""
         hermes_home = tmp_path / ".hermes"
         hermes_home.mkdir()
         # Only excluded dirs, no actual files
@@ -1243,7 +1243,7 @@ class TestImportAtomicWrites:
         """A root-run import must not re-own the user's files to root.
 
         ``os.replace`` swaps in a temp file owned by the *writing* user, so a
-        ``sudo hermes import`` onto a user-owned (or Docker/NAS volume-owned)
+        ``sudo minerva import`` onto a user-owned (or Docker/NAS volume-owned)
         HERMES_HOME would hand every restored file to root. The uid/gid is
         forced so the assertion does not require running as root.
         """

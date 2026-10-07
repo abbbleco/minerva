@@ -129,7 +129,7 @@ pub fn run() {
                     // exit (mirrors launch_hermes_desktop).
                     std::thread::sleep(std::time::Duration::from_millis(200));
                     tracing::info!(
-                        "hermes already installed — relaunched desktop; exiting installer"
+                        "minerva already installed — relaunched desktop; exiting installer"
                     );
                     return;
                 }

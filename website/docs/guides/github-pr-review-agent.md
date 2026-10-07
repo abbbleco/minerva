@@ -37,9 +37,9 @@ If you have a public endpoint available, check out [Automated GitHub PR Comments
 - **Minerva Agent installed** — see the [Installation guide](../getting-started/installation.md)
 - **Gateway running** for cron jobs:
   ```bash
-  hermes gateway install   # Install as a service
+  minerva gateway install   # Install as a service
   # or
-  hermes gateway           # Run in foreground
+  minerva gateway           # Run in foreground
   ```
 - **GitHub CLI (`gh`) installed and authenticated**:
   ```bash

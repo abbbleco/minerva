@@ -51,7 +51,7 @@ def is_cancelled(exc: BaseException) -> bool:
         isinstance(exc, SystemExit) and exc.code in (130, None, 0))
 
 
-def device_flow_error(code: str, description: str, *, retry_command: str = "hermes portal") -> SignInCopyError:
+def device_flow_error(code: str, description: str, *, retry_command: str = "minerva portal") -> SignInCopyError:
     """Exception for an OAuth device-flow error code whose text is already user-facing.
 
     Unknown codes keep the server's description as the lead (it is the only information available)
@@ -78,7 +78,7 @@ def _classify(exc: BaseException, rules: Sequence[_Rule], other: str) -> str:
 
 
 def sign_in_failure_lines(
-    exc: BaseException, *, service_host: str = "portal.nousresearch.com", retry_command: str = "hermes portal",
+    exc: BaseException, *, service_host: str = "portal.nousresearch.com", retry_command: str = "minerva portal",
 ) -> list:
     """Lines to print when a device-code / browser sign-in fails for any non-timeout reason."""
     from hermes_cli.observability.shared_metrics_setup import note_sign_in_failure
@@ -101,7 +101,7 @@ def sign_in_failure_lines(
     return lines
 
 
-def provider_setup_failure_lines(exc: BaseException, *, retry_command: str = "hermes model") -> list:
+def provider_setup_failure_lines(exc: BaseException, *, retry_command: str = "minerva model") -> list:
     """Lines to print when the setup wizard's provider step fails: reason, that nothing was saved,
     and how to retry."""
     nothing_saved = (

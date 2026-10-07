@@ -68,7 +68,7 @@ In all cases, do not put sensitive data through ntfy unless the underlying topic
    ```bash
    echo 'NTFY_TOPIC=hermes-myname-2026' >> ~/.hermes/.env
    echo 'NTFY_ALLOWED_USERS=hermes-myname-2026' >> ~/.hermes/.env
-   hermes gateway restart
+   minerva gateway restart
    ```
 4. From the ntfy app, send a message to the topic. The agent's reply lands as a push notification.
 

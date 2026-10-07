@@ -205,7 +205,7 @@ def _read_container_argv() -> tuple[str, ...]:
 
 
 def _strip_container_argv_prefix(argv: Sequence[str]) -> list[str]:
-    """Strip the s6/wrapper prefix off the container argv, leaving the hermes args.
+    """Strip the s6/wrapper prefix off the container argv, leaving the minerva args.
 
     Drops everything through the ``main-wrapper.sh`` token — the stable boundary the image
     owns — rather than peeling tokens positionally (which broke on the s6 v2→v3 bump).
@@ -310,8 +310,8 @@ def _register_service(scandir: Path, profile: str, *, start: bool) -> None:
         _write_exec(tmp_dir / "log" / "run", S6ServiceManager._render_log_run(profile))
         if not start:  # `minerva -p <profile> gateway start` brings it up later (s6-svc -u)
             (tmp_dir / "down").touch()
-        # Pre-create supervise/ with hermes ownership BEFORE publishing so s6-supervise inherits
-        # it and runtime s6-svc calls as the hermes user won't EACCES.
+        # Pre-create supervise/ with minerva ownership BEFORE publishing so s6-supervise inherits
+        # it and runtime s6-svc calls as the minerva user won't EACCES.
         _seed_supervise_skeleton(tmp_dir)
         if service_dir.exists():
             shutil.rmtree(service_dir)

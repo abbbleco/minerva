@@ -358,15 +358,15 @@ scripts/run_tests.sh tests/ -q
 
 ```bash
 source ./activate
-python hermes chat -q "Say hello" --provider your-provider --model your-model
+python minerva chat -q "Say hello" --provider your-provider --model your-model
 ```
 
 如果你修改了菜单，也测试交互式流程：
 
 ```bash
 source ./activate
-python hermes model
-python hermes setup
+python minerva model
+python minerva setup
 ```
 
 对于原生 provider，至少也验证一次工具调用，而不仅仅是纯文本响应。

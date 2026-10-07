@@ -465,10 +465,10 @@ def my_command(args):
     elif sub == "config":
         print("Showing config...")
     else:
-        print("Usage: hermes my-provider <status|config>")
+        print("Usage: minerva my-provider <status|config>")
 
 def register_cli(subparser) -> None:
-    """Build the hermes my-provider argparse tree.
+    """Build the minerva my-provider argparse tree.
 
     Called by discover_plugin_cli_commands() at argparse setup time.
     """

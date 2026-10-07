@@ -9,21 +9,21 @@
 #
 # Usage:
 #   scripts/dev-sandbox.sh python -m hermes_cli.main
-#   scripts/dev-sandbox.sh hermes desktop
+#   scripts/dev-sandbox.sh minerva desktop
 #   scripts/dev-sandbox.sh electron .
 #   scripts/dev-sandbox.sh -- npm run dev   # from apps/desktop/
-#   scripts/dev-sandbox.sh --persistent hermes desktop
+#   scripts/dev-sandbox.sh --persistent minerva desktop
 #   scripts/dev-sandbox.sh --persistent -- npm run dev
 #
 # Seed the sandbox HERMES_HOME from an existing directory (e.g. your main
 # ~/.hermes) so config, sessions, skills, etc. are pre-populated:
-#   scripts/dev-sandbox.sh --from ~/.hermes hermes desktop
+#   scripts/dev-sandbox.sh --from ~/.hermes minerva desktop
 #
 # Override the app name (default: HermesSandbox):
-#   HERMES_DEV_SANDBOX_NAME=Staging scripts/dev-sandbox.sh hermes desktop
+#   HERMES_DEV_SANDBOX_NAME=Staging scripts/dev-sandbox.sh minerva desktop
 #
 # Override the persistent sandbox dir name (default: .hermes-sandbox):
-#   HERMES_DEV_SANDBOX_DIR=.staging-sandbox scripts/dev-sandbox.sh --persistent hermes desktop
+#   HERMES_DEV_SANDBOX_DIR=.staging-sandbox scripts/dev-sandbox.sh --persistent minerva desktop
 
 set -euo pipefail
 
@@ -62,9 +62,9 @@ Environment:
   HERMES_DEV_SANDBOX_DIR   Override the persistent dir name (default: $DEFAULT_DIR)
 
 Examples:
-  $ENTRYPOINT hermes desktop
-  $ENTRYPOINT --persistent hermes desktop
-  $ENTRYPOINT --from ~/.hermes hermes desktop
+  $ENTRYPOINT minerva desktop
+  $ENTRYPOINT --persistent minerva desktop
+  $ENTRYPOINT --from ~/.hermes minerva desktop
   $ENTRYPOINT -- npm run dev
 EOF
 }

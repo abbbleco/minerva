@@ -65,7 +65,7 @@ Once configured, run the container in the background as a persistent gateway (Te
 
 ```sh
 docker run -d \
-  --name hermes \
+  --name minerva \
   --restart unless-stopped \
   -v ~/.hermes:/opt/data \
   -p 8642:8642 \
@@ -99,7 +99,7 @@ Note: the API server is gated on `API_SERVER_ENABLED=true`. To expose it beyond 
 
 ```sh
 docker run -d \
-  --name hermes \
+  --name minerva \
   --restart unless-stopped \
   -v ~/.hermes:/opt/data \
   -p 8642:8642 \
@@ -118,7 +118,7 @@ The built-in web dashboard runs as a supervised s6-rc service alongside the gate
 
 ```sh
 docker run -d \
-  --name hermes \
+  --name minerva \
   --restart unless-stopped \
   -v ~/.hermes:/opt/data \
   -p 8642:8642 \
@@ -219,20 +219,20 @@ What Minerva does about it (since v2026.9.14):
 
 - A **fresh** database whose directory is on a virtiofs/9p mount is created in rollback (`DELETE`) journal mode and a one-time warning is logged. Nothing to do.
 - An **existing** WAL database on such a mount is never live-downgraded — other Minerva processes may hold it open, and a live switch destroys their uncheckpointed commits. Instead, every process logs a one-time error at startup and `minerva doctor` flags the database. Fix it one of two ways:
-  1. Stop every Minerva process that uses the database, then run a one-time offline conversion with the Python that ships in the image (it has no `sqlite3` shell): `docker exec hermes python3 -c "import sqlite3; print(sqlite3.connect('/opt/data/state.db').execute('PRAGMA journal_mode=DELETE').fetchone()[0])"`. Set `database.journal_mode: delete` in `config.yaml` so a later open does not switch it back to WAL.
+  1. Stop every Minerva process that uses the database, then run a one-time offline conversion with the Python that ships in the image (it has no `sqlite3` shell): `docker exec minerva python3 -c "import sqlite3; print(sqlite3.connect('/opt/data/state.db').execute('PRAGMA journal_mode=DELETE').fetchone()[0])"`. Set `database.journal_mode: delete` in `config.yaml` so a later open does not switch it back to WAL.
   2. Move the data directory onto a native volume — a named Docker volume (`-v hermes-data:/opt/data`) lives on the VM's own ext4 filesystem and supports WAL normally.
 
 Detection reads `/proc/self/mountinfo` inside the container, so it works regardless of the host operating system. It does not classify NFS, SMB, or generic FUSE mounts; on those, set `database.journal_mode: delete` explicitly. Minerva does not offer SQLite's `locking_mode=EXCLUSIVE` as an alternative because the gateway, cron, and worker processes open the database concurrently.
 
 ### Immutable install tree
 
-In hosted and published Docker images, `/opt/hermes` is the installed application tree. It is root-owned and read-only to the runtime `hermes` user, so agent turns, gateway sessions, dashboard actions, and normal `docker exec hermes hermes ...` commands cannot edit the core source, bundled `.venv`, `node_modules`, or TUI bundle in place.
+In hosted and published Docker images, `/opt/hermes` is the installed application tree. It is root-owned and read-only to the runtime `hermes` user, so agent turns, gateway sessions, dashboard actions, and normal `docker exec minerva hermes ...` commands cannot edit the core source, bundled `.venv`, `node_modules`, or TUI bundle in place.
 
 All mutable Minerva state belongs under `/opt/data`: config, `.env`, profiles, skills, memories, sessions, logs, dashboard uploads, plugins, and other user-managed files. The image also disables runtime `.pyc` writes and Minerva lazy dependency installs into `/opt/hermes`; optional platform dependencies needed by the published image should be baked into the image or installed through a new image build.
 
 On hosted/published images, agent self-improvement is scoped to skills, memory, plugins, and config under `/opt/data`. The installed core source under `/opt/hermes` is immutable; core changes are made via PRs to the repo and shipped by updating the image, not by live-editing the running install.
 
-If an operator needs to repair or inspect files outside `/opt/data`, use a root shell intentionally. The `hermes` shim normally drops `docker exec hermes hermes ...` back to the runtime user; set `HERMES_DOCKER_EXEC_AS_ROOT=1` for a one-off root invocation when you explicitly need root semantics.
+If an operator needs to repair or inspect files outside `/opt/data`, use a root shell intentionally. The `hermes` shim normally drops `docker exec minerva hermes ...` back to the runtime user; set `HERMES_DOCKER_EXEC_AS_ROOT=1` for a one-off root invocation when you explicitly need root semantics.
 
 Skill CLIs that store credentials under `~` must be initialized against the subprocess HOME, not just the data-volume root. For example, the [xurl skill](./skills/bundled/social-media/social-media-xurl.md) stores OAuth state in `~/.xurl`; in the official Docker layout, Minerva tool calls read that as `/opt/data/home/.xurl`, so run manual xurl auth with `HOME=/opt/data/home` and verify with `HOME=/opt/data/home xurl auth status`.
 
@@ -257,18 +257,18 @@ The lifecycle commands you'd run on the host work the same way from inside the c
 
 ```sh
 # Create a profile — registers the gateway-<name> s6 slot.
-docker exec hermes hermes profile create coder
+docker exec minerva hermes profile create coder
 
 # Start / stop / restart — dispatches s6-svc; the gateway lifecycle survives docker restart.
-docker exec hermes hermes -p coder gateway start
-docker exec hermes hermes -p coder gateway stop
-docker exec hermes hermes -p coder gateway restart
+docker exec minerva hermes -p coder gateway start
+docker exec minerva hermes -p coder gateway stop
+docker exec minerva hermes -p coder gateway restart
 
 # Status — reports `Manager: s6 (container supervisor)` inside the container.
-docker exec hermes hermes -p coder gateway status
+docker exec minerva hermes -p coder gateway status
 
 # Remove a profile — tears down the s6 slot too.
-docker exec hermes hermes profile delete coder
+docker exec minerva hermes profile delete coder
 ```
 
 Under the hood, `minerva gateway start/stop/restart` inside the container is intercepted and routed to `s6-svc` against the right service directory; you don't need to learn the s6 commands directly. For raw supervisor state, use `/command/s6-svstat /run/service/gateway-<name>` (note `/command/` is on PATH only for processes spawned by the supervision tree — when calling from `docker exec`, pass the absolute path).
@@ -283,7 +283,7 @@ Two different surfaces reach a profile's gateway from outside, and they behave d
 
 ```sh
 # Create the profile (registers its gateway-<name> s6 slot)
-docker exec hermes hermes profile create work
+docker exec minerva hermes profile create work
 
 # Point its API server at a free port (write to the profile's own .env)
 cat >> /opt/data/profiles/work/.env <<'EOF'
@@ -291,7 +291,7 @@ API_SERVER_ENABLED=true
 API_SERVER_PORT=8643
 EOF
 
-docker exec hermes hermes -p work gateway restart
+docker exec minerva hermes -p work gateway restart
 ```
 
 Keep `API_SERVER_PORT` in each profile's **own** `.env`, never in the container-wide `environment:` block — a global value would force every profile onto the same port and they would collide. With bridge networking, publish the extra port in `docker-compose.yml` (`- "8643:8643"`); with `network_mode: host` it is already reachable on the host. The default profile's 8642 connection is untouched.
@@ -304,7 +304,7 @@ Before the s6 migration, "one container per profile" was the recommended pattern
 |---|---|---|
 | Disk overhead | One image, one bundled venv, one Playwright cache | N images / N caches |
 | Memory overhead | Shared Python interpreter cache, shared node_modules | Duplicated per container |
-| Profile creation | `docker exec ... hermes profile create <name>` (seconds) | New `docker run` invocation + port allocation + bind-mount config |
+| Profile creation | `docker exec ... minerva profile create <name>` (seconds) | New `docker run` invocation + port allocation + bind-mount config |
 | Per-profile crash recovery | `s6-supervise` auto-restart | Docker's `--restart unless-stopped` (slower, kills sibling work) |
 | Logs | Per-profile rotated file via `s6-log`, plus container-boot audit log | `docker logs <name>` per container — no built-in rotation |
 | Backup | One `~/.hermes` directory | N directories to coordinate |
@@ -356,7 +356,7 @@ The s6 container has four distinct log surfaces, and "why isn't my gateway showi
 | **Per-profile gateway** (`minerva gateway run` and per-profile gateways under s6) | Tee'd to two places: `docker logs <container>` (real time, no extra prefix) **and** `${HERMES_HOME}/logs/gateways/<profile>/current` (rotated, ISO-8601 timestamped, 10 archives × 1 MB each) | `docker logs -f hermes` or `tail -F ~/.hermes/logs/gateways/default/current` on the host |
 | **Dashboard** (when `HERMES_DASHBOARD=1`) | `docker logs <container>` (no prefix) | `docker logs -f hermes` — interleaved with gateway lines |
 | **Boot reconciler** (records which profile gateways were restored on each container start) | `${HERMES_HOME}/logs/container-boot.log` (append-only audit log) | `tail -F ~/.hermes/logs/container-boot.log` |
-| **Generic Minerva logs** (`agent.log`, `errors.log`) | `${HERMES_HOME}/logs/` (profile-aware) | `docker exec hermes hermes logs --follow [--level WARNING] [--session <id>]` |
+| **Generic Minerva logs** (`agent.log`, `errors.log`) | `${HERMES_HOME}/logs/` (profile-aware) | `docker exec minerva hermes logs --follow [--level WARNING] [--session <id>]` |
 
 Two practical consequences worth knowing:
 
@@ -489,7 +489,7 @@ docker compose up -d --build
 To verify what PortAudio sees inside the container:
 
 ```sh
-docker exec hermes /opt/hermes/.venv/bin/python -c "import sounddevice as sd; print(sd.query_devices())"
+docker exec minerva /opt/hermes/.venv/bin/python -c "import sounddevice as sd; print(sd.query_devices())"
 ```
 
 ## Resource limits
@@ -508,7 +508,7 @@ Set limits in Docker:
 
 ```sh
 docker run -d \
-  --name hermes \
+  --name minerva \
   --restart unless-stopped \
   --memory=4g --cpus=2 \
   -v ~/.hermes:/opt/data \
@@ -577,7 +577,7 @@ Do not override the image entrypoint unless you keep `/init` (or, equivalently, 
 :::
 
 :::warning Overriding `entrypoint:` also removes the zombie reaper
-`/init` is what reaps orphaned grandchildren (headless browsers, MCP servers, `git`/`npm` helpers spawned by tools). A Compose service that overrides `entrypoint:` to call `hermes` directly — for example to run the dashboard as a non-root user — makes the hermes process itself PID 1, and nothing above it ever calls `wait()`: every orphan stays a `<defunct>` entry forever (one deployment reached 284 zombies in under three hours). Minerva prints `[hermes] WARNING: this process is PID 1 with no init above it` at startup in that configuration.
+`/init` is what reaps orphaned grandchildren (headless browsers, MCP servers, `git`/`npm` helpers spawned by tools). A Compose service that overrides `entrypoint:` to call `hermes` directly — for example to run the dashboard as a non-root user — makes the minerva process itself PID 1, and nothing above it ever calls `wait()`: every orphan stays a `<defunct>` entry forever (one deployment reached 284 zombies in under three hours). Minerva prints `[hermes] WARNING: this process is PID 1 with no init above it` at startup in that configuration.
 
 If you must override the entrypoint, add Docker's init as PID 1 so orphans are reaped:
 
@@ -595,15 +595,15 @@ services:
 
 ### `docker exec` automatically drops to the `hermes` user
 
-`docker exec hermes <cmd>` defaults to running as root inside the container, but the image ships a thin shim at `/opt/hermes/bin/hermes` (earliest on PATH) that detects root callers and transparently re-execs through `s6-setuidgid hermes`. So `docker exec hermes hermes login`, `docker exec hermes hermes profile create …`, `docker exec hermes hermes setup`, etc. all write files owned by UID 10000 — i.e. readable by the supervised gateway — with no extra `--user` flag needed. Non-root callers (the supervised processes themselves, `docker exec --user hermes`, kanban subagents inside the container) hit a short-circuit that exec's the venv binary directly, so there's no overhead on the hot paths.
+`docker exec minerva <cmd>` defaults to running as root inside the container, but the image ships a thin shim at `/opt/hermes/bin/hermes` (earliest on PATH) that detects root callers and transparently re-execs through `s6-setuidgid hermes`. So `docker exec minerva hermes login`, `docker exec minerva hermes profile create …`, `docker exec minerva hermes setup`, etc. all write files owned by UID 10000 — i.e. readable by the supervised gateway — with no extra `--user` flag needed. Non-root callers (the supervised processes themselves, `docker exec --user hermes`, kanban subagents inside the container) hit a short-circuit that exec's the venv binary directly, so there's no overhead on the hot paths.
 
 If you specifically need a `docker exec` that retains root semantics (diagnostic sessions, inspecting root-only state, files outside `/opt/data` that root happens to own), opt out per invocation:
 
 ```sh
-docker exec -e HERMES_DOCKER_EXEC_AS_ROOT=1 hermes <cmd>
+docker exec -e HERMES_DOCKER_EXEC_AS_ROOT=1 minerva <cmd>
 ```
 
-The shim accepts `1` / `true` / `yes` (case-insensitive). Anything else — including typos like `=0` — falls through to the drop, so silent opt-outs aren't possible. If `s6-setuidgid` isn't available (custom builds that stripped s6-overlay), the shim refuses to run as root and exits 126 instead, surfacing the broken privilege model loudly rather than regressing to the historical footgun where `docker exec hermes login` would write `auth.json` as `root:root` and break the supervised gateway's auth on every chat platform message.
+The shim accepts `1` / `true` / `yes` (case-insensitive). Anything else — including typos like `=0` — falls through to the drop, so silent opt-outs aren't possible. If `s6-setuidgid` isn't available (custom builds that stripped s6-overlay), the shim refuses to run as root and exits 126 instead, surfacing the broken privilege model loudly rather than regressing to the historical footgun where `docker exec minerva login` would write `auth.json` as `root:root` and break the supervised gateway's auth on every chat platform message.
 
 ### Per-profile gateway supervision
 
@@ -630,7 +630,7 @@ When a migration is needed, Minerva writes timestamped backups next to
 docker pull abbbleco/minerva:latest
 docker rm -f hermes
 docker run -d \
-  --name hermes \
+  --name minerva \
   --restart unless-stopped \
   -v ~/.hermes:/opt/data \
   abbbleco/minerva gateway run
@@ -691,7 +691,7 @@ Build it and use it in place of the official image:
 ```sh
 docker build -t my-hermes:latest .
 docker run -d \
-  --name hermes \
+  --name minerva \
   --restart unless-stopped \
   -v ~/.hermes:/opt/data \
   -p 8642:8642 \
@@ -806,7 +806,7 @@ If your inference server runs directly on the host (not in Docker), use `host.do
 
 ```sh
 docker run -d \
-  --name hermes \
+  --name minerva \
   -v ~/.hermes:/opt/data \
   -p 8642:8642 \
   abbbleco/minerva gateway run
@@ -825,7 +825,7 @@ model:
 
 ```sh
 docker run -d \
-  --name hermes \
+  --name minerva \
   --network host \
   -v ~/.hermes:/opt/data \
   abbbleco/minerva gateway run
@@ -848,7 +848,7 @@ model:
 From inside the Minerva container, confirm the inference server is reachable:
 
 ```sh
-docker exec hermes curl -s http://vllm:8000/v1/models
+docker exec minerva curl -s http://vllm:8000/v1/models
 ```
 
 You should see a JSON response listing your served model. If this fails, check:
@@ -888,13 +888,13 @@ On a NAS (UGOS, Synology, unRAID) the data directory is typically a **bind mount
 
 ```sh
 docker run -d \
-  --name hermes \
+  --name minerva \
   -e PUID=1000 -e PGID=10 \
   -v /volume1/docker/hermes:/opt/data \
   abbbleco/minerva gateway run
 ```
 
-`docker exec hermes <cmd>` automatically drops to UID 10000 too — see [`docker exec` automatically drops to the `hermes` user](#docker-exec-automatically-drops-to-the-hermes-user) for details and the per-invocation opt-out.
+`docker exec minerva <cmd>` automatically drops to UID 10000 too — see [`docker exec` automatically drops to the `hermes` user](#docker-exec-automatically-drops-to-the-hermes-user) for details and the per-invocation opt-out.
 
 ### Shared data directory keeps resetting to `0700`
 
@@ -907,12 +907,12 @@ Images built before late August 2026 had a bug where writing a credential file d
 Pulling a newer image and recreating the container fixes it permanently (the install dir ships as `0755` and current releases no longer restrict it). If you need to recover a running container in place without recreating it:
 
 ```sh
-docker exec -u root hermes chmod 0755 /opt/hermes
+docker exec -u root minerva chmod 0755 /opt/hermes
 ```
 
 ### Zombie (`<defunct>`) processes piling up under PID 1
 
-`ps -eo stat,ppid,comm | awk '$1 ~ /^Z/'` inside the container lists dead children that were never reaped. This happens when hermes itself is PID 1 — almost always because a Compose service overrides `entrypoint:` and so skips `docker/entrypoint-dispatch.sh` → `/init`. Minerva also warns about it at startup (`this process is PID 1 with no init above it`). Restore the default entrypoint, or add `init: true` (Compose) / `docker run --init` so `docker-init` reaps orphans; see [What the Dockerfile does](#what-the-dockerfile-does). Recreating the container clears the existing zombies.
+`ps -eo stat,ppid,comm | awk '$1 ~ /^Z/'` inside the container lists dead children that were never reaped. This happens when minerva itself is PID 1 — almost always because a Compose service overrides `entrypoint:` and so skips `docker/entrypoint-dispatch.sh` → `/init`. Minerva also warns about it at startup (`this process is PID 1 with no init above it`). Restore the default entrypoint, or add `init: true` (Compose) / `docker run --init` so `docker-init` reaps orphans; see [What the Dockerfile does](#what-the-dockerfile-does). Recreating the container clears the existing zombies.
 
 ### Browser tools not working
 
@@ -920,7 +920,7 @@ Playwright needs shared memory. Add `--shm-size=1g` to your Docker run command:
 
 ```sh
 docker run -d \
-  --name hermes \
+  --name minerva \
   --shm-size=1g \
   -v ~/.hermes:/opt/data \
   abbbleco/minerva gateway run
@@ -937,7 +937,7 @@ docker restart hermes
 ### Checking container health
 
 ```sh
-docker logs --tail 50 hermes          # Recent logs
+docker logs --tail 50 minerva          # Recent logs
 docker run -it --rm abbbleco/minerva:latest --version   # Verify version
-docker stats hermes                    # Resource usage
+docker stats minerva                    # Resource usage
 ```

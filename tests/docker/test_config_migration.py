@@ -13,7 +13,7 @@ def test_config_migration_runs_on_boot(
     built_image: str, container_name: str,
 ) -> None:
     """A config.yaml in $HERMES_HOME must be migrated on boot by
-    docker_config_migrate.py, running as the hermes user."""
+    docker_config_migrate.py, running as the minerva user."""
     # Start container
     start_container(built_image, container_name)
 
@@ -27,14 +27,14 @@ def test_config_migration_runs_on_boot(
         f"config.yaml not found in $HERMES_HOME: {r.stdout}"
     )
 
-    # Verify config.yaml is owned by hermes (migration ran as hermes)
+    # Verify config.yaml is owned by minerva (migration ran as minerva)
     r = docker_exec_sh(
         container_name,
         'stat -c "%U" /opt/data/config.yaml',
         timeout=10,
     )
     assert r.stdout.strip() == "hermes", (
-        f"config.yaml not owned by hermes (migration may have run as root): "
+        f"config.yaml not owned by minerva (migration may have run as root): "
         f"{r.stdout.strip()}"
     )
 

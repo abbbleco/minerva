@@ -216,7 +216,7 @@ def _validate_backup_zip(zf: zipfile.ZipFile) -> tuple[bool, str]:
     if not names:
         return False, "zip archive is empty"
 
-    # Look for telltale files that a hermes home would have
+    # Look for telltale files that a minerva home would have
     markers = {"config.yaml", ".env", "state.db"}
     found = set()
     for n in names:
@@ -251,7 +251,7 @@ def _detect_prefix(zf: zipfile.ZipFile) -> str:
     first_parts = {p[0] for p in parts_list if len(p) > 1}
     if len(first_parts) == 1:
         prefix = first_parts.pop()
-        # Only strip if it looks like a hermes dir name
+        # Only strip if it looks like a minerva dir name
         if prefix in {".hermes", "hermes"}:
             return prefix + "/"
 
@@ -309,7 +309,7 @@ def _extract_member_atomically(
     Permission bits *and* ownership are carried across the replace so routing
     through mkstemp does not change the file the caller would otherwise have
     produced.  ``os.replace`` swaps in a temp file owned by the *writing* user,
-    so without the chown a ``sudo hermes import`` would silently re-own every
+    so without the chown a ``sudo minerva import`` would silently re-own every
     restored file to root — on the disaster-recovery path, and on exactly the
     Docker/NAS installs ``utils._restore_file_owner`` documents.  Both concerns
     delegate to the shared ``utils`` helpers rather than being re-derived here.

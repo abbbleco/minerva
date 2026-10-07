@@ -169,7 +169,7 @@ ok "serve.git main = $OLD_SHA ($INSTALL_REF), update target $TARGET_SHA ($TARGET
 
 arm_source_redirect "$REPO_ROOT" "$WORK_ROOT" "$SERVE_REPO"
 
-# Isolated HOME: the runner's real one may carry a preinstalled hermes or a
+# Isolated HOME: the runner's real one may carry a preinstalled minerva or a
 # developer config, and old installer scripts hardcode $HOME/.hermes (the
 # HERMES_HOME env override is newer than tags we sample). GIT_CONFIG_GLOBAL
 # above keeps working -- an explicit path wins over $HOME/.gitconfig.
@@ -232,8 +232,8 @@ assert_checkout() {
     --root "$INSTALL_DIR" --launcher "$hermes" --desktop "$EXPECT_DESKTOP" \
     || fail "read-only verification failed at $2; no repair was attempted"
   HERMES_DISABLE_LAZY_INSTALLS=1 PYTHONDONTWRITEBYTECODE=1 source_build_env "$hermes" --version 2>&1 | ts_prefix > "$LOG_DIR/version-$2.log" \
-    || fail "hermes --version failed after $2; log in $LOG_DIR/version-$2.log"
-  ok "hermes --version works: $(head -c 120 "$LOG_DIR/version-$2.log" | tr -d '\n')"
+    || fail "minerva --version failed after $2; log in $LOG_DIR/version-$2.log"
+  ok "minerva --version works: $(head -c 120 "$LOG_DIR/version-$2.log" | tr -d '\n')"
 }
 
 desktop_checkpoint() { # phase, expected commit, selected method
@@ -309,7 +309,7 @@ assert_redirect_is_transport_only() {
 # left pointing at a vanished tree is exactly the "update lost something" shape
 # a checkout-hash assertion cannot see.
 assert_user_shims() {
-  local hermes user_shim
+  local minerva user_shim
   hermes="$(source_hermes "$INSTALL_DIR")" || fail "no usable launcher after the upgrade"
   [ -x "$hermes" ] || fail "launcher is not executable: $hermes"
   user_shim="$HOME/.local/bin/hermes"
@@ -430,8 +430,8 @@ case "$UPDATE_METHOD" in
     build_source_update_command "$HERMES" "$help"
     rc=0
     (cd "$INSTALL_DIR" && source_build_env "${update_cmd[@]}" < /dev/null 2>&1 | ts_prefix > "$LOG_DIR/update.log") || rc=$?
-    log_group "hermes update transcript" "$LOG_DIR/update.log"
-    [ "$rc" -eq 0 ] || fail "hermes update exited $rc; transcript above, log at $LOG_DIR/update.log"
+    log_group "minerva update transcript" "$LOG_DIR/update.log"
+    [ "$rc" -eq 0 ] || fail "minerva update exited $rc; transcript above, log at $LOG_DIR/update.log"
     ;;
   installer-script)
     # A user re-running the one-liner today gets the CURRENT script.
@@ -471,7 +471,7 @@ case "$UPDATE_METHOD" in
     source "$ASSETS/mock-provider.sh"
     trap mock_stop EXIT
 
-    step "capturing the hermes desktop launch spec (build runs for real)"
+    step "capturing the minerva desktop launch spec (build runs for real)"
     rc=0
     if [ "$HERMES" = "$INSTALL_DIR/.hermes/bin/hermes" ]; then
       # The PM launcher uses -I: PYTHONPATH/sitecustomize cannot reach it.
@@ -486,11 +486,11 @@ case "$UPDATE_METHOD" in
         HERMES_E2E_CAPTURE_LAUNCH="$SPEC" \
         source_build_env "$HERMES" desktop < /dev/null 2>&1 | ts_prefix > "$LOG_DIR/desktop-launch-capture.log") || rc=$?
     fi
-    log_group "hermes desktop (launch capture) transcript" "$LOG_DIR/desktop-launch-capture.log"
-    [ "$rc" -eq 0 ] || fail "hermes desktop exited $rc during launch capture; transcript above"
+    log_group "minerva desktop (launch capture) transcript" "$LOG_DIR/desktop-launch-capture.log"
+    [ "$rc" -eq 0 ] || fail "minerva desktop exited $rc during launch capture; transcript above"
     # Exit 0 without a capture means a version that never reached its
     # launch - that must fail loudly, not pass as a no-op.
-    [ -f "$SPEC.captured" ] || fail "hermes desktop exited 0 but no launch was captured at $SPEC"
+    [ -f "$SPEC.captured" ] || fail "minerva desktop exited 0 but no launch was captured at $SPEC"
     ok "captured $(cat "$SPEC.captured") launch spec"
 
     close_running_desktop

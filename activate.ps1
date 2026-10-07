@@ -121,7 +121,7 @@ function global:hermes {
             }
         }
         if (-not $py) { $py = 'python' }
-        & $py hermes @args
+        & $py minerva @args
     } finally {
         Pop-Location
     }

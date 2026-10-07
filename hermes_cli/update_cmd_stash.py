@@ -163,7 +163,7 @@ def _unrestored_autostash_notice() -> Optional[str]:
     if _pending_autostash is None:
         return None
     stash_ref, file_count = _pending_autostash
-    return (f"⚠ hermes update stashed {file_count} local modification(s) and did NOT restore them.\n"
+    return (f"⚠ minerva update stashed {file_count} local modification(s) and did NOT restore them.\n"
             f"  Stash ref: {stash_ref}\n"
             f"  Review with: git stash show --stat {stash_ref}\n"
             f"  Re-apply with: git stash show -p {stash_ref} | git apply --3way")
@@ -405,7 +405,7 @@ def _apply_stash(git_cmd: list[str], cwd: Path, stash_ref: str) -> list[str] | N
             print(f"  • {f}")
     print("\nYour stashed changes are preserved — nothing is lost.")
     print(f"  Stash ref: {stash_ref}")
-    _reset_hard(git_cmd, cwd)  # conflict markers make hermes unrunnable; changes stay in the stash
+    _reset_hard(git_cmd, cwd)  # conflict markers make minerva unrunnable; changes stay in the stash
     print("Working tree reset to clean state.")
     print(f"Restore your changes later with: git stash apply {stash_ref}")
     _record_stash_disposition("parked", stash_ref, "restore hit conflicts")

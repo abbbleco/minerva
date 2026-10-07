@@ -675,7 +675,7 @@ function applyActive(profile: string, activationEpoch: number): boolean {
   const gateway = activeGateway()
   g.$gateway.set(gateway)
   setGatewayState(gateway?.connectionState ?? 'closed')
-  // Push the active scope's registry connection into the hermes module (null
+  // Push the active scope's registry connection into the minerva module (null
   // for the local pool) so connection-building WS calls (pluginSocket) resolve
   // through the same source of truth every activation path maintains here —
   // registry-agent activations included, not just profile switches.

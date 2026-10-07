@@ -428,7 +428,7 @@ def _setup_worktree(repo_root: str = None, sync_base: bool = True,
     repo_root = repo_root or _git_repo_root()
     if not repo_root:
         _cprint("\033[31m✗ --worktree requires being inside a git repository.\033[0m")
-        print("  cd into your project repo first, then run hermes -w")
+        print("  cd into your project repo first, then run minerva -w")
         return None
 
     wt_name = ((name and re.sub(r"[^A-Za-z0-9._-]+", "-", name).strip("-._")[:40])
@@ -459,7 +459,7 @@ def _setup_worktree(repo_root: str = None, sync_base: bool = True,
 
     # Lock so other processes (and `git worktree remove`) see it is in use; fail-soft.
     try:
-        _git(["worktree", "lock", "--reason", f"hermes pid={os.getpid()}", str(wt_path)], repo_root)
+        _git(["worktree", "lock", "--reason", f"minerva pid={os.getpid()}", str(wt_path)], repo_root)
         logger.debug("Worktree locked: %s (pid=%s)", wt_path, os.getpid())
     except Exception as e:
         logger.debug("git worktree lock failed (non-fatal): %s", e)
@@ -812,7 +812,7 @@ def _worktree_lock_is_live(repo_root: str, worktree_path: str, timeout: int = 10
             if current != target:
                 continue
             reason = line[len("locked"):].strip()
-            m = re.search(r"hermes pid=(\d+)", reason)
+            m = re.search(r"minerva pid=(\d+)", reason)
             if not m:
                 # A foreign lock here is a leftover; the age/dirty/unpushed gates already passed.
                 return "dead"

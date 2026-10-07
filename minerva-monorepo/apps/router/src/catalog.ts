@@ -1,14 +1,15 @@
 /**
- * Minerva Router model catalog — the single source of truth for model IDs and prices.
+ * Minerva Router pinned model catalog — the offline fallback, not the live list.
  *
- * Why a pinned catalog instead of proxying OpenRouter's live list:
- *   - price is what we bill, so it must not drift under a ledger that already recorded it;
- *   - the router filters `/v1/models` per key tier, and a free key must never see a paid model;
- *   - `minerva model` reads this list, so an unstable catalog makes the picker nondeterministic.
+ * `/v1/models` and chat resolution serve OpenRouter's live list via
+ * `live-models.ts` (cached, tier-filtered); this pinned snapshot is served
+ * only when the live fetch fails, and the stub router uses it so tests stay
+ * deterministic. Ledger rows record the cost computed at request time, so a
+ * price rotation never rewrites history.
  *
  * Prices are USD per 1M tokens, snapshotted from `GET https://openrouter.ai/api/v1/models`
- * on 2026-09-29. Re-snapshot and re-run the cost model (`QONTXT_V2_COST_MODEL.md`) whenever
- * a price or a pinned ID changes — the ledger bills at these numbers.
+ * on 2026-09-29. Refresh the snapshot when the fallback looks stale — the live
+ * path bills live prices, so this file only matters offline.
  */
 
 export type CatalogEntry = {
@@ -72,6 +73,8 @@ export const CATALOG: readonly CatalogEntry[] = [
   // `openrouter/free` served the same request from `liquid/lfm-2.5-2.6b:free` at cost 0.
   // Prefer it as the default free model; keep the pinned ids for callers that need a specific one.
   entry('openrouter/free', 'Free Models Router (auto)', 0, 0, true, 128_000),
+  entry('google/gemma-4-31b-it:free', 'Gemma 4 31B (free)', 0, 0, true, 262_144),
+  entry('nvidia/nemotron-3-ultra-550b-a55b:free', 'Nemotron 3 Ultra (free)', 0, 0, true, 1_000_000),
   entry('qwen/qwen3.8-27b:free', 'Qwen3.8 27B (free)', 0, 0, true, 262_144),
   entry('liquid/lfm-2.5-2.6b:free', 'LFM 2.5 2.6B (free)', 0, 0, true, 65_536),
   entry('thinkingmachines/inkling-small:free', 'Inkling Small (free)', 0, 0, true, 1_048_576),

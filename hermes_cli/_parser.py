@@ -1,4 +1,4 @@
-"""Top-level argparse construction for the hermes CLI.
+"""Top-level argparse construction for the minerva CLI.
 
 Only the top-level parser and the ``chat`` subparser live here. Every other subparser (model,
 gateway, sessions, …) is built by ``hermes_cli/subcommands/<group>.py`` and wired in
@@ -119,55 +119,55 @@ def _inherited_flag(parser, *args, **kwargs):
 
 _EPILOGUE = """
 Examples:
-    hermes                        Start interactive chat
-    hermes chat -q "Hello"        Single query mode
-    hermes --tui                  Launch the modern TUI (or set display.interface: tui)
-    hermes --cli                  Force the classic REPL (overrides display.interface: tui)
-    hermes -c                     Resume the most recent session
-    hermes -c "my project"        Resume a session by name (latest in lineage)
-    hermes --resume <session_id>  Resume a specific session by ID
-    hermes --resume latest        Resume the most recent session (same as -c)
-    hermes --tui --resume latest --in ./dir   Resume ./dir's latest session in the TUI
-    hermes setup                  Run setup wizard
-    hermes logout                 Clear stored authentication
-    hermes auth add <provider>    Add a pooled credential
-    hermes auth list              List pooled credentials
-    hermes auth remove <p> <t>    Remove pooled credential by index, id, or label
-    hermes auth reset <p> [t]     Clear exhaustion status for a provider, or one credential
-    hermes auth priority <p> <t> <n>  Move a pooled credential to priority n (0 = tried first)
-    hermes auth refresh <p> [t]   Refresh a pooled OAuth credential and clear its cooldown
-    hermes model                  Select default model
-    hermes fallback [list]        Show fallback provider chain
-    hermes fallback add           Add a fallback provider (same picker as `minerva model`)
-    hermes fallback remove        Remove a fallback provider from the chain
-    hermes config                 View configuration
-    hermes config edit            Edit config in $EDITOR
-    hermes config set model gpt-4 Set a config value
-    hermes gateway                Run messaging gateway
-    hermes gateway install        Install gateway background service
-    hermes gateway start          Start the installed gateway service
-    hermes gateway stop           Stop the gateway service
-    hermes gateway status         Show gateway status
-    hermes -p <profile> <cmd>     Run any command against a named profile's
-                                  home (also --profile) — e.g. hermes -p coder gateway stop
-    hermes -s hermes-agent-dev,github-auth
-    hermes -w                     Start in isolated git worktree
-    hermes sessions list          List past sessions
-    hermes sessions browse        Interactive session picker
-    hermes sessions rename ID T   Rename/title a session
-    hermes logs                   View agent.log (last 50 lines)
-    hermes logs -f                Follow agent.log in real time
-    hermes logs errors            View errors.log
-    hermes logs --since 1h        Lines from the last hour
-    hermes debug share             Upload debug report for support
-    hermes console                Open the safe Minerva command console
-    hermes update                 Update to latest version
-    hermes dashboard              Start web UI dashboard (port 9119)
-    hermes dashboard --stop       Stop running dashboard processes
-    hermes dashboard --status     List running dashboard processes
+    minerva                        Start interactive chat
+    minerva chat -q "Hello"        Single query mode
+    minerva --tui                  Launch the modern TUI (or set display.interface: tui)
+    minerva --cli                  Force the classic REPL (overrides display.interface: tui)
+    minerva -c                     Resume the most recent session
+    minerva -c "my project"        Resume a session by name (latest in lineage)
+    minerva --resume <session_id>  Resume a specific session by ID
+    minerva --resume latest        Resume the most recent session (same as -c)
+    minerva --tui --resume latest --in ./dir   Resume ./dir's latest session in the TUI
+    minerva setup                  Run setup wizard
+    minerva logout                 Clear stored authentication
+    minerva auth add <provider>    Add a pooled credential
+    minerva auth list              List pooled credentials
+    minerva auth remove <p> <t>    Remove pooled credential by index, id, or label
+    minerva auth reset <p> [t]     Clear exhaustion status for a provider, or one credential
+    minerva auth priority <p> <t> <n>  Move a pooled credential to priority n (0 = tried first)
+    minerva auth refresh <p> [t]   Refresh a pooled OAuth credential and clear its cooldown
+    minerva model                  Select default model
+    minerva fallback [list]        Show fallback provider chain
+    minerva fallback add           Add a fallback provider (same picker as `minerva model`)
+    minerva fallback remove        Remove a fallback provider from the chain
+    minerva config                 View configuration
+    minerva config edit            Edit config in $EDITOR
+    minerva config set model gpt-4 Set a config value
+    minerva gateway                Run messaging gateway
+    minerva gateway install        Install gateway background service
+    minerva gateway start          Start the installed gateway service
+    minerva gateway stop           Stop the gateway service
+    minerva gateway status         Show gateway status
+    minerva -p <profile> <cmd>     Run any command against a named profile's
+                                  home (also --profile) — e.g. minerva -p coder gateway stop
+    minerva -s hermes-agent-dev,github-auth
+    minerva -w                     Start in isolated git worktree
+    minerva sessions list          List past sessions
+    minerva sessions browse        Interactive session picker
+    minerva sessions rename ID T   Rename/title a session
+    minerva logs                   View agent.log (last 50 lines)
+    minerva logs -f                Follow agent.log in real time
+    minerva logs errors            View errors.log
+    minerva logs --since 1h        Lines from the last hour
+    minerva debug share             Upload debug report for support
+    minerva console                Open the safe Minerva command console
+    minerva update                 Update to latest version
+    minerva dashboard              Start web UI dashboard (port 9119)
+    minerva dashboard --stop       Stop running dashboard processes
+    minerva dashboard --status     List running dashboard processes
 
 For more help on a command:
-    hermes <command> --help
+    minerva <command> --help
 """
 
 

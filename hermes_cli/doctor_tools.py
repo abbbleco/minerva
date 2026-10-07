@@ -1,4 +1,4 @@
-"""External-tool checks for hermes doctor: terminal backends, git/rg, Node + agent-browser, npm audit, tool availability.
+"""External-tool checks for minerva doctor: terminal backends, git/rg, Node + agent-browser, npm audit, tool availability.
 Split out of ``hermes_cli/doctor.py``, which re-exports every name so ``hermes_cli.doctor.<name>`` keeps resolving (and monkeypatching)."""
 
 from __future__ import annotations
@@ -165,7 +165,7 @@ def _enabled_cli_toolsets_for_doctor() -> set[str] | None:
 # `requires_env`, so the generic branch would call a missing credential a "system dependency".
 # Name the real fix instead (#9516).
 _TOOLSET_SETUP_HINTS: dict[str, str] = {
-    "image_gen": "(image generation unavailable — check the provider selection and its key or SDK with 'hermes tools')",
+    "image_gen": "(image generation unavailable — check the provider selection and its key or SDK with 'minerva tools')",
 }
 
 
@@ -249,7 +249,7 @@ def _check_daytona_backend(issues: list[str]) -> None:
         from daytona import Daytona  # noqa: F401 — SDK presence check
         check_ok("daytona SDK", "(installed)")
     except ImportError:
-        _fail_and_issue("daytona SDK not installed", "(run hermes setup terminal)", "Run hermes setup terminal and select Daytona, then restart Minerva", issues)
+        _fail_and_issue("daytona SDK not installed", "(run minerva setup terminal)", "Run minerva setup terminal and select Daytona, then restart Minerva", issues)
 
 
 def _check_vercel_backend(issues: list[str]) -> None:
@@ -262,8 +262,8 @@ def _check_vercel_backend(issues: list[str]) -> None:
              ("Vercel disk setting", "(uses platform default)"), ("Vercel custom disk unsupported", "(reset terminal.container_disk to 51200)"),
              "Vercel Sandbox does not support custom container_disk; use the shared default 51200", issues)
     _require(importlib.util.find_spec("vercel") is not None, ("vercel SDK", "(installed)"),
-             ("vercel SDK not installed", "(run hermes setup terminal)"),
-             "Run hermes setup terminal and select Vercel Sandbox, then restart Minerva", issues)
+             ("vercel SDK not installed", "(run minerva setup terminal)"),
+             "Run minerva setup terminal and select Vercel Sandbox, then restart Minerva", issues)
     auth_status = describe_vercel_auth()
     if auth_status.ok:
         check_ok("Vercel auth", f"({auth_status.label})")
@@ -339,7 +339,7 @@ def _check_agent_browser(should_fix: bool) -> bool:
         _termux_browser_hints("agent-browser is not installed (expected in the tested Termux path)",
                               "Install it manually later with: npm install -g agent-browser && agent-browser install", node_installed=True)
     else:
-        check_warn("agent-browser not installed", "(run: hermes pm install agent-browser)")
+        check_warn("agent-browser not installed", "(run: minerva pm install agent-browser)")
     return False
 
 
@@ -369,7 +369,7 @@ def _check_chromium() -> None:
         return
     if not check_bool(_chromium_installed(), ("Playwright Chromium", "(browser engine)"),
                       ("Playwright Chromium not installed", "(browser_* tools will be hidden from the agent)")):
-        check_info("Install with: hermes pm install chromium")
+        check_info("Install with: minerva pm install chromium")
 
 
 def _check_lightpanda() -> None:
@@ -521,4 +521,4 @@ def _check_tool_availability(should_fix: bool, f: Finding) -> None:
     # disabled toolsets may warn above but must not pollute it.
     api_disabled = _missing_api_key_toolsets_for_summary(unavailable)
     if api_disabled or any(status != "ok" for status, _, _ in web_rows):
-        f.issues.append("Run 'hermes setup' to configure missing API keys for full tool access")
+        f.issues.append("Run 'minerva setup' to configure missing API keys for full tool access")

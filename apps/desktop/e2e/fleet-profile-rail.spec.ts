@@ -56,7 +56,7 @@ function findHermesBinary(): string {
     return result.stdout.trim()
   }
 
-  throw new Error('hermes binary not found: create the repo venv (uv sync) or put hermes on PATH')
+  throw new Error('minerva binary not found: create the repo venv (uv sync) or put minerva on PATH')
 }
 
 async function freePort(): Promise<number> {
@@ -122,7 +122,7 @@ async function startRemoteGateway(root: string, mockUrl: string, profiles: strin
 
   while (Date.now() < deadline) {
     if (child.exitCode !== null) {
-      throw new Error(`remote hermes serve exited early (${child.exitCode}):\n${log}`)
+      throw new Error(`remote minerva serve exited early (${child.exitCode}):\n${log}`)
     }
 
     try {
@@ -141,7 +141,7 @@ async function startRemoteGateway(root: string, mockUrl: string, profiles: strin
   }
 
   if (Date.now() >= deadline) {
-    throw new Error(`remote hermes serve never became ready:\n${log}`)
+    throw new Error(`remote minerva serve never became ready:\n${log}`)
   }
 
   return {

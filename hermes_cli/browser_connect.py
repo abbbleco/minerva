@@ -664,7 +664,7 @@ def _copy_profile_tree(src: str, dst: str, source_profile: str) -> None:
 
 
 def snapshot_real_profile(browser: str, src: str | None = None) -> tuple[str | None, str | None]:
-    """Snapshot ``browser``'s real ACTIVE profile into the hermes copy dir; returns ``(dst, err)``.
+    """Snapshot ``browser``'s real ACTIVE profile into the minerva copy dir; returns ``(dst, err)``.
     Copies ``Local State`` plus the active profile's auth files into the copy's ``Default``. The
     completion marker is written only after full success, so a torn first copy (disk full, Ctrl+C)
     never looks "already populated" — it is redone from scratch."""
@@ -803,7 +803,7 @@ def _ensure_chrome_debug_data_dir(data_dir: str) -> None:
     rules pre-create — it is made lazily at runtime, so a hardcoded 0700 here
     would be the only thing setting its mode and would silently override that
     design. On such a host the gateway and a hostUsers CLI share one
-    ``$HERMES_HOME`` through the hermes group, so a 0700 profile created by
+    ``$HERMES_HOME`` through the minerva group, so a 0700 profile created by
     whichever ran first locks the other out of the browser entirely.
     Omitting the explicit mode there lets the inherited setgid + umask decide,
     matching ``ensure_hermes_home``'s managed branch.
@@ -860,7 +860,7 @@ def _open_launch_stderr_log(path: str):
     the profile directory had. This log is created lazily at runtime and is
     not covered by the module's ``systemd.tmpfiles`` rules; the gateway and an
     interactive ``hostUsers`` CLI share one ``$HERMES_HOME`` at two uids
-    through the hermes group, and a 0600 log created by whichever ran first
+    through the minerva group, and a 0600 log created by whichever ran first
     makes the other's truncating open fail with ``EACCES`` — and because every
     candidate binary reuses this one path, that fails *the whole launch*.
     There the inherited ``UMask = "0007"`` decides, like the merge base's
