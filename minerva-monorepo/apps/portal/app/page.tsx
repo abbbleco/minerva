@@ -14,7 +14,21 @@ function Duo({ src, alt, className = "" }: { src: string; alt: string; className
   return <img src={src} alt={alt} className={`nous-duo h-full w-full object-cover ${className}`} draggable={false} />;
 }
 
-export default function OverviewPage() {
+export default async function OverviewPage() {
+  // Session-aware hero: a signed-in visitor gets a way in, not another signup
+  // pitch. Fail-open — any auth failure renders the signed-out hero as before.
+  let signedIn = false;
+  try {
+    const { getSupabaseServer } = await import("./lib/supabase-server");
+    const supabase = await getSupabaseServer();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    signedIn = user !== null;
+  } catch {
+    signedIn = false;
+  }
+
   return (
     <div className="xl:pr-12">
       <DesktopRail />
@@ -31,9 +45,15 @@ export default function OverviewPage() {
           Sign in once and never think about it again.
         </p>
         <div className="mt-6 flex flex-wrap items-center gap-4">
-          <Link href="/signup" className="nous-btn">
-            Create Account
-          </Link>
+          {signedIn ? (
+            <Link href="/minerva" className="nous-btn">
+              Go to your agency
+            </Link>
+          ) : (
+            <Link href="/signup" className="nous-btn">
+              Create Account
+            </Link>
+          )}
           <Link href="/download" className="nous-btn-ghost">
             Download Minerva
           </Link>

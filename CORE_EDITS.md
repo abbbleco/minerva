@@ -1917,3 +1917,12 @@ Deliberately not changed: desktop and website sessions stay separate (a desktop 
 
 Verify: portal typecheck clean, test 33 pass / 0 fail.
 
+
+# Session 41 — Session-aware overview hero (2026-10-07)
+
+The overview hero hardcoded Create Account next to Download Minerva, so signed-in visitors were pitched signup on every visit. OverviewPage is now async and reads the Supabase session server-side (fail-open to the signed-out hero): signed in renders Go to your agency (/minerva), signed out keeps Create Account. Download Minerva unchanged.
+
+Also kept: the account-button session-presence fix from the same investigation (email-less Discord/wallet sessions rendered the sidebar signed-out UI) — same symptom class, verified harmless.
+
+Verify: portal typecheck clean; touched files eslint-clean.
+
