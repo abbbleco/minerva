@@ -110,7 +110,7 @@ def _migrate_stale_nous_portal_url(providers: Dict[str, Any]) -> None:
 # user set it themselves).
 _ALLOWED_NOUS_INFERENCE_HOSTS: FrozenSet[str] = frozenset({
     "minrouter.abbbleco.workers.dev",
-    "welcome-api.abbble.co.za",
+    "welcome-api.abbbleco.workers.dev",
     "inference-api.nousresearch.com",
     # Free-tier (anonymous) host: serves the single ``nous/welcome`` model.
     "welcome-api.nousresearch.com"})

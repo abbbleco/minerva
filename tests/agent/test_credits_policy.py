@@ -325,8 +325,8 @@ class TestIsFreeTierModel:
         from hermes_cli import models_pricing
 
         monkeypatch.setattr(models_pricing, "_pricing_cache", {})
-        assert is_free_tier_model("nous/welcome", "https://welcome-api.abbble.co.za/v1") is True
-        assert is_free_tier_model("some/other", "https://welcome-api.abbble.co.za") is True
+        assert is_free_tier_model("nous/welcome", "https://welcome-api.abbbleco.workers.dev/v1") is True
+        assert is_free_tier_model("some/other", "https://welcome-api.abbbleco.workers.dev") is True
 
     def test_paid_nous_host_still_needs_pricing_evidence(self, monkeypatch):
         """The free-tier rule is the host, not the model name: the paid inference host can serve

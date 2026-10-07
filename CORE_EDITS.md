@@ -1464,3 +1464,23 @@ tests/upstream-keys.test.ts: env parsing x4, classification x2, pool mechanics x
 chatOnce failover/sad/terminal x3, chatStream failover x1). Operator still to do: set
 OPENROUTER_API_KEYS (Wrangler secret or host env) alongside the singular; no code
 deploy needed beyond this change.
+# Session 32 - welcome-api Cloudflare Workers target (2026-10-07)
+
+Vercel total-404s hit welcome-api too, so it got the same third-target port as
+the router (Session 29) — simpler this time: no ledger drain, so src/worker.ts
+is a one-line re-export of the Hono app (no ALS/waitUntil bridge), plus
+wrangler.toml (name minerva-welcome, nodejs_compat, workers_dev=true),
+deploy/dev:worker scripts, README section. Untouched: src/app.ts, policy.ts,
+index.ts (Node/Docker), api/[[...route]].ts (Vercel fallback). Port is safe
+because every dependency was already Workers-clean: lazy process.env reads,
+global fetch, node:crypto (compat polyfill, same as router embeddings),
+fetch-based supabase-js. No MINERVA_ROUTER_URL secret needed — the default is
+already the live router workers.dev URL. One known shape limit, shared with
+the router: the 300s relay AbortSignal exceeds Workers request wall-clock on
+very long generations; consistent posture, not redesigned.
+
+Verified: tsc --noEmit 0, smoke.mjs 13/13 live-server checks green,
+wrangler deploy --dry-run bundles clean (811 KiB, no bindings). NOT yet done
+(needs operator): 2 secrets (SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY),
+deploy, workers.dev verify, Custom Domain welcome-api.abbble.co.za (the
+Python DEFAULT_NOUS_WELCOME_URL target).

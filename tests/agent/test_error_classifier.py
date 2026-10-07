@@ -2087,7 +2087,7 @@ class TestNousWelcomeTier:
         assert "welcome_refusal" not in result.error_context
 
     def test_anonymous_jwt_on_the_paid_host_is_deterministic(self):
-        body = {"status": 400, "message": "Anonymous accounts must use https://welcome-api.abbble.co.za for inference."}
+        body = {"status": 400, "message": "Anonymous accounts must use https://welcome-api.abbbleco.workers.dev for inference."}
         err = MockAPIError(f"Error code: 400 - {body}", status_code=400, body=body)
         result = classify_api_error(err, provider="nous", api_key=make_jwt(), model="nous/welcome")
         assert result.reason == FailoverReason.format_error

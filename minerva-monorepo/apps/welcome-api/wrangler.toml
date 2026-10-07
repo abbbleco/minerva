@@ -1,0 +1,21 @@
+# Minerva Welcome API on Cloudflare Workers.
+#
+# The Hono app (src/app.ts) is platform-agnostic: the same code runs as a
+# long-lived Node server (src/index.ts, Docker), a Vercel function
+# (api/[[...route]].ts), and here. This file only declares the Workers
+# target — no app logic lives in worker-specific code beyond src/worker.ts,
+# which itself is a one-line re-export (no ledger drain to bridge, unlike the
+# router).
+#
+# nodejs_compat is load-bearing: the app reads process.env lazily per
+# request (vars/secrets land there), and policy.ts uses node:crypto.
+# wrangler dev/prod parity: `wrangler dev` serves src/worker.ts locally.
+
+name = "welcome-api"
+main = "src/worker.ts"
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+# No workers.dev subdomain surprises: the route is attached explicitly
+# (dashboard or `workers_dev = true` during initial verification).
+workers_dev = true

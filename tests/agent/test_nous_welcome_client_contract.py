@@ -11,7 +11,7 @@ import pytest
 
 from hermes_cli import anon_auth
 
-WELCOME = "https://welcome-api.abbble.co.za/v1"
+WELCOME = "https://welcome-api.abbbleco.workers.dev/v1"
 PAID = "https://inference-api.nousresearch.com/v1"
 
 
