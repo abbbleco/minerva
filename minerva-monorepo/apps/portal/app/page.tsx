@@ -46,7 +46,7 @@ export default async function OverviewPage() {
         </p>
         <div className="mt-6 flex flex-wrap items-center gap-4">
           {signedIn ? (
-            <Link href="/minerva" className="nous-btn">
+            <Link href="/team" className="nous-btn">
               Go to your agency
             </Link>
           ) : (
