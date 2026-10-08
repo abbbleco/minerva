@@ -83,10 +83,10 @@ def staged_candidate(tmp_path, r2_server, https_origin):
             if platform == 'windows':
                 row.update(version=WINDOWS_VERSION, executableVersion=WINDOWS_VERSION,
                            publisher='CN=Test', applicationId='App')
-                package = f'HermesBundled-1.2.3-win-{arch}.msix'
+                package = f'MinervaBundled-1.2.3-win-{arch}.msix'
                 handoff_name = f'win32-{arch}'
             elif platform == 'macos':
-                package = f'HermesBundled-1.2.3-mac-{arch}.zip'
+                package = f'MinervaBundled-1.2.3-mac-{arch}.zip'
                 row.update(version='1.2.3', teamId='ABCDEFGHIJ', filename=package)
                 handoff_name = f'darwin-{arch}'
             else:
@@ -253,8 +253,8 @@ def test_promote_writes_the_stable_mac_feed_from_the_attempt_archive(tmp_path, m
     assert feed['version'] != manifest['archive']
     urls = [entry['url'] for entry in feed['files']]
     assert urls and all(url.startswith(f"/releases/tag/{manifest['archive']}/") for url in urls)
-    assert f"/releases/tag/{manifest['archive']}/HermesBundled-1.2.3-mac-arm64.zip" in urls
-    assert f"/releases/tag/{manifest['archive']}/HermesBundled-1.2.3-mac-x64.zip" in urls
+    assert f"/releases/tag/{manifest['archive']}/MinervaBundled-1.2.3-mac-arm64.zip" in urls
+    assert f"/releases/tag/{manifest['archive']}/MinervaBundled-1.2.3-mac-x64.zip" in urls
 
 
 def test_promote_refuses_when_one_macos_arch_is_missing(tmp_path, monkeypatch, r2_server, https_origin, staged_candidate):
@@ -365,7 +365,7 @@ def test_candidate_smoke_survives_real_promotion_and_renderer(tmp_path, r2_serve
     stored = json.loads(r2_server.store[f"releases/tag/{manifest['archive']}/release-candidates.json"][0])
     assert stored['smoke_results'] == SMOKE_RESULTS
     # An unrelated orphan object must not acquire the candidate's Passed label.
-    orphan = f"releases/tag/{manifest['archive']}/HermesBundled-1.2.3-linux-x64.AppImage"
+    orphan = f"releases/tag/{manifest['archive']}/MinervaBundled-1.2.3-linux-x64.AppImage"
     r2_server.store[orphan] = (b'orphan transport fixture', '"e"')
     for step in jobs['controller-promote']['steps']:
         if 'run' in step:
@@ -378,7 +378,7 @@ def test_candidate_smoke_survives_real_promotion_and_renderer(tmp_path, r2_serve
         assert output.count('Passed') == len(SMOKE_RESULTS)
         assert 'Not run' not in output and 'Build incomplete' not in output
         assert orphan not in output
-        assert base + f"/releases/tag/{manifest['archive']}/HermesBundled-1.2.3-win-x64.msix" in output
+        assert base + f"/releases/tag/{manifest['archive']}/MinervaBundled-1.2.3-win-x64.msix" in output
     with https_origin.opener(base + '/releases/stable/index.html', timeout=5) as response:
         assert response.read().decode() == page
 

@@ -82,7 +82,7 @@ def test_failed_commit_summary_publishes_downloads_or_run_links(tmp_path, r2_ser
                RELEASE_NEEDS=json.dumps({name: {'result': 'success' if name == 'validate' else 'failure'}
                                          for name in needs_of(jobs[summary_job])}))
     if has_download:
-        artifact = tmp_path / 'apps/desktop/release/HermesBundled-0.33.0-win-x64.msix'
+        artifact = tmp_path / 'apps/desktop/release/MinervaBundled-0.33.0-win-x64.msix'
         artifact.parent.mkdir(parents=True)
         artifact.write_bytes(b'inert downloadable fixture')
         producer = jobs[native_builds(jobs)[('win32-x64', 'commit')]]
@@ -138,15 +138,15 @@ def test_commit_staging_and_summary_bind_every_produced_file_without_channels(tm
     gates = selection_gates(jobs)
     summary_job = commit_summary(jobs)
     producers = [
-        (legs[('win32-x64', 'commit')], 'win32-x64', ['HermesBundled-0.33.0-win-x64.msix']),
-        (legs[('win32-arm64', 'commit')], 'win32-arm64', ['HermesBundled-0.33.0-win-arm64.msix']),
+        (legs[('win32-x64', 'commit')], 'win32-x64', ['MinervaBundled-0.33.0-win-x64.msix']),
+        (legs[('win32-arm64', 'commit')], 'win32-arm64', ['MinervaBundled-0.33.0-win-arm64.msix']),
         (legs[('darwin-arm64', 'commit')], 'darwin-arm64', [
-            'HermesBundled-0.33.0-mac-arm64.dmg', 'HermesBundled-0.33.0-mac-arm64.zip',
-            'HermesBundled-0.33.0-mac-arm64.zip.blockmap']),
+            'MinervaBundled-0.33.0-mac-arm64.dmg', 'MinervaBundled-0.33.0-mac-arm64.zip',
+            'MinervaBundled-0.33.0-mac-arm64.zip.blockmap']),
         (legs[('darwin-x64', 'commit')], 'darwin-x64', [
-            'HermesBundled-0.33.0-mac-x64.dmg', 'HermesBundled-0.33.0-mac-x64.zip',
-            'HermesBundled-0.33.0-mac-x64.zip.blockmap']),
-        (universal_assembler(jobs), 'windows-universal', ['HermesBundled-0.33.0.0-win.msixbundle']),
+            'MinervaBundled-0.33.0-mac-x64.dmg', 'MinervaBundled-0.33.0-mac-x64.zip',
+            'MinervaBundled-0.33.0-mac-x64.zip.blockmap']),
+        (universal_assembler(jobs), 'windows-universal', ['MinervaBundled-0.33.0.0-win.msixbundle']),
     ]
     artifact_keys = set()
     for job, target, names in producers:
