@@ -1001,7 +1001,7 @@ function SidebarSystemActions({
       spin: true,
     },
   ];
-  if (canUpdateHermes) {
+  if (canUpdateMinerva) {
     items.push({
       action: "update",
       icon: Download,
