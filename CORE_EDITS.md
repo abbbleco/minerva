@@ -1948,3 +1948,24 @@ exist on this fork — no runner ever picks the job up.
 
 Verify: grep `.github` for `windows-latest-32` → 0 matches.
 
+
+# Session 43 — Signing gates: fork commit builds go unsigned (2026-10-08)
+
+Commit/channel desktop build failed at `Require Azure signing when
+publishing` — `release-signing` on this fork holds only `CLOUDFLARE_R2_*`
+(verified via `gh api`), so the hard `exit 1` on missing `AZURE_SIGN_*` /
+`AZURE_CLIENT_ID` / `AZURE_TENANT_ID` killed every test build.
+
+- `.github/workflows/desktop-bundled-release.yml`: both gates (`Require Azure
+  signing when publishing`, `Require signing credentials when publishing`)
+  now hard-fail only for real publishes (`upload_release == true` or
+  `release-phase == candidate`); commit/channel test builds emit `::warning::`
+  and continue UNSIGNED. `Azure login (OIDC)` already skips when
+  `AZURE_CLIENT_ID` is unset, so no login hang.
+- Deliberately not changed: real publish path still refuses to ship unsigned;
+  no signing creds added; install still requires sideload/unsigned-allow for
+  the resulting MSIX.
+
+Verify: `git diff` shows +19/-4 in `desktop-bundled-release.yml` only; re-run
+the commit build and expect a warning instead of exit 1 at the signing gate.
+
