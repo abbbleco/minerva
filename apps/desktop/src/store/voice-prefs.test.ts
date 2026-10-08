@@ -5,8 +5,8 @@ vi.mock('@/minerva', () => ({
   saveHermesConfig: vi.fn(async () => undefined)
 }))
 
-import { saveHermesConfig } from '@/minerva'
 import { isVoiceStopCommand } from '@/lib/voice-stop-word'
+import { saveHermesConfig } from '@/minerva'
 
 import {
   $bargeInEnabled,

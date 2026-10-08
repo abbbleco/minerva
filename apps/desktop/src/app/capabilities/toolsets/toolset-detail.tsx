@@ -2,8 +2,8 @@ import { compactNumber } from '@hermes/shared'
 import { useNavigate } from 'react-router'
 
 import { Button } from '@/components/ui/button'
-import { type ProfileScope, profileScopeKey } from '@/minerva'
 import { useI18n } from '@/i18n'
+import { type ProfileScope, profileScopeKey } from '@/minerva'
 import type { ToolsetInfo } from '@/types/minerva'
 
 import { ToolChip } from '../../master-detail'

@@ -7,8 +7,8 @@ import {
   TERMINAL_FONT_SUGGESTIONS
 } from '@/app/right-sidebar/terminal/terminal-font'
 import { Button } from '@/components/ui/button'
-import { saveHermesConfig } from '@/minerva'
 import { useI18n } from '@/i18n'
+import { saveHermesConfig } from '@/minerva'
 import { notifyError } from '@/store/notifications'
 import type { HermesConfigRecord } from '@/types/minerva'
 

@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { I18nProvider } from '@/i18n'
 
-import { AbbblePlansSection, type AbbblePlan } from './abbble-plans-section'
+import { type AbbblePlan, AbbblePlansSection } from './abbble-plans-section'
 
 const PLANS: AbbblePlan[] = [
   {
@@ -37,11 +37,13 @@ const PLANS: AbbblePlan[] = [
 function renderSection(fetchImpl: () => Promise<Response>) {
   vi.stubGlobal('fetch', fetchImpl as unknown as typeof fetch)
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+
   const tree = (children: ReactNode) => (
     <I18nProvider configClient={null} initialLocale="en">
       <QueryClientProvider client={client}>{children}</QueryClientProvider>
     </I18nProvider>
   )
+
   render(tree(<AbbblePlansSection />))
 }
 

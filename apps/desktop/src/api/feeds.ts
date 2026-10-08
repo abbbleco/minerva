@@ -47,6 +47,7 @@ export interface FeedPollResult {
 
 export function getFeedSources(profile?: string): Promise<{ sources: FeedSourceView[]; providers: string[] }> {
   const suffix = profile ? `?profile=${encodeURIComponent(profile)}` : ''
+
   return hermesApi({
     ...profileScoped(),
     ...connectionScoped(),
@@ -96,10 +97,14 @@ export function getFeedItems(options?: {
   limit?: number
 }): Promise<{ items: FeedItemView[]; unread: number }> {
   const params = new URLSearchParams()
-  if (options?.source_id) params.set('source_id', options.source_id)
-  if (options?.unread_only) params.set('unread_only', 'true')
-  if (options?.limit) params.set('limit', String(options.limit))
+
+  if (options?.source_id) {params.set('source_id', options.source_id)}
+
+  if (options?.unread_only) {params.set('unread_only', 'true')}
+
+  if (options?.limit) {params.set('limit', String(options.limit))}
   const suffix = params.size ? `?${params}` : ''
+
   return hermesApi({
     ...profileScoped(),
     ...connectionScoped(),

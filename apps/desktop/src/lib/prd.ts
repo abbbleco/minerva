@@ -40,7 +40,8 @@ function isStringArray(value: unknown): value is string[] {
 }
 
 export function isPrdTransition(value: unknown): value is PrdTransition {
-  if (!isRecord(value)) return false
+  if (!isRecord(value)) {return false}
+
   return (
     typeof value.at === 'number' &&
     typeof value.from_status === 'string' &&
@@ -51,7 +52,8 @@ export function isPrdTransition(value: unknown): value is PrdTransition {
 }
 
 export function isPrdDocument(value: unknown): value is PrdDocument {
-  if (!isRecord(value)) return false
+  if (!isRecord(value)) {return false}
+
   return (
     typeof value.id === 'string' &&
     value.id !== '' &&

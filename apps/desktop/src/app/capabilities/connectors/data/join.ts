@@ -9,9 +9,9 @@ import type {
   McpServerSummary
 } from '@hermes/shared'
 
-import type { McpCatalogEntry } from '@/minerva'
 import { connectorTitle } from '@/lib/connector-tools'
 import { type McpServers, serverEnabled } from '@/lib/mcp-servers'
+import type { McpCatalogEntry } from '@/minerva'
 
 import { canAuthenticate } from '../../mcp/mcp-status'
 import { toolRows } from '../derive-tools'

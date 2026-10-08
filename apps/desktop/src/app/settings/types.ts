@@ -1,7 +1,7 @@
 import type { Dispatch, SetStateAction } from 'react'
 
-import type { HermesGateway } from '@/minerva'
 import type { IconComponent } from '@/lib/icons'
+import type { HermesGateway } from '@/minerva'
 import type { EnvVarInfo } from '@/types/minerva'
 
 export type SettingsView =

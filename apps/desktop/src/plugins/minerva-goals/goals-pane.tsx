@@ -1,9 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 
-import { hasPremiumAccess } from '@/lib/entitlement'
-import { useSubscriptionState } from '@/app/settings/billing/use-billing-state'
-import { requestBillingSettings } from '@/store/billing-block'
 import {
   abandonGoal,
   completeGoal,
@@ -12,13 +9,16 @@ import {
   dismissGoal,
   dispatchGoal,
   getGoals,
+  type GoalView,
   pauseGoal,
   reopenGoal,
   resumeGoal,
-  type GoalView,
 } from '@/api/goals'
+import { useSubscriptionState } from '@/app/settings/billing/use-billing-state'
+import { hasPremiumAccess } from '@/lib/entitlement'
+import { requestBillingSettings } from '@/store/billing-block'
 
-import { useGoals, type GoalsMessages } from './i18n'
+import { type GoalsMessages, useGoals } from './i18n'
 
 /**
  * Goals pane: the tracked-goal registry docked beside Bots/Feeds. Shows plural
@@ -46,6 +46,7 @@ const STATUS_TONE: Record<string, string> = {
 export function statusLabel(pane: GoalsMessages['pane'], status: string): string {
   const key = STATUS_LABEL_KEY[status]
   const label = key ? pane[key] : undefined
+
   return typeof label === 'string' ? label : status
 }
 
@@ -69,9 +70,9 @@ export function GoalsPane() {
         <p className="text-sm font-medium">{goals.pane.premiumTitle}</p>
         <p className="text-xs opacity-70">{goals.pane.premiumDesc}</p>
         <button
-          type="button"
-          onClick={() => requestBillingSettings()}
           className="mt-1 rounded border border-white/15 px-2 py-1 text-xs"
+          onClick={() => requestBillingSettings()}
+          type="button"
         >
           {goals.pane.viewPlans}
         </button>
@@ -82,10 +83,13 @@ export function GoalsPane() {
   const refresh = () => queryClient.invalidateQueries({ queryKey: ['goals'] })
   const all = goalsQuery.data?.goals ?? []
   const q = query.trim().toLowerCase()
+
   const match = (goal: GoalView) =>
     !q || goal.title.toLowerCase().includes(q) ||
     String(goal.contract?.verification ?? '').toLowerCase().includes(q)
+
   const pending = useMemo(() => all.filter(g => g.status === 'pending-confirmation' && match(g)), [all, q])
+
   const visible = useMemo(
     () => all.filter(g => g.status !== 'pending-confirmation' && match(g)),
     [all, q]
@@ -95,17 +99,17 @@ export function GoalsPane() {
     <div className="flex h-full flex-col gap-2 overflow-hidden p-3">
       <div className="flex items-center gap-2">
         <input
-          type="search"
-          value={query}
-          onChange={event => setQuery(event.target.value)}
-          placeholder={goals.pane.searchPlaceholder}
           aria-label={goals.pane.searchPlaceholder}
           className="min-w-0 flex-1 rounded border border-white/10 bg-white/5 px-2 py-1.5 text-sm"
+          onChange={event => setQuery(event.target.value)}
+          placeholder={goals.pane.searchPlaceholder}
+          type="search"
+          value={query}
         />
         <button
-          type="button"
-          onClick={() => setCreating(value => !value)}
           className="rounded border border-white/15 px-2 py-1.5 text-xs"
+          onClick={() => setCreating(value => !value)}
+          type="button"
         >
           {goals.pane.newGoal}
         </button>
@@ -113,11 +117,11 @@ export function GoalsPane() {
 
       {creating && (
         <NewGoalForm
+          onCancel={() => setCreating(false)}
           onDone={() => {
             setCreating(false)
             void refresh()
           }}
-          onCancel={() => setCreating(false)}
         />
       )}
 
@@ -135,7 +139,7 @@ export function GoalsPane() {
             <p className="text-xs font-medium">{goals.pane.inboxTitle}</p>
             <p className="text-[11px] opacity-70">{goals.pane.inboxDesc}</p>
             {pending.map(goal => (
-              <GoalRow key={goal.id} goal={goal} onChanged={refresh} />
+              <GoalRow goal={goal} key={goal.id} onChanged={refresh} />
             ))}
           </section>
         )}
@@ -148,7 +152,7 @@ export function GoalsPane() {
             {!query && <p className="text-xs opacity-60">{goals.pane.emptyDesc}</p>}
           </div>
         ) : (
-          visible.map(goal => <GoalRow key={goal.id} goal={goal} onChanged={refresh} />)
+          visible.map(goal => <GoalRow goal={goal} key={goal.id} onChanged={refresh} />)
         )}
       </div>
     </div>
@@ -259,10 +263,10 @@ function ActionButton({
 }) {
   return (
     <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
       className="rounded border border-white/15 px-1.5 py-0.5 text-[11px] disabled:opacity-50"
+      disabled={disabled}
+      onClick={onClick}
+      type="button"
     >
       {children}
     </button>
@@ -281,8 +285,10 @@ function NewGoalForm({ onDone, onCancel }: { onDone: () => void; onCancel: () =>
     setSaving(true)
     setError(null)
     const contract: Record<string, string> = {}
-    if (objective.trim()) contract.objective = objective.trim()
-    if (verification.trim()) contract.verification = verification.trim()
+
+    if (objective.trim()) {contract.objective = objective.trim()}
+
+    if (verification.trim()) {contract.verification = verification.trim()}
     void createGoal({ title: title.trim(), contract })
       .then(onDone)
       .catch((err: unknown) => setError(err instanceof Error ? err.message : String(err)))
@@ -294,28 +300,28 @@ function NewGoalForm({ onDone, onCancel }: { onDone: () => void; onCancel: () =>
       <label className="flex flex-col gap-1 text-xs">
         {goals.pane.titleLabel}
         <input
-          value={title}
+          className="rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs"
           onChange={event => setTitle(event.target.value)}
           placeholder={goals.pane.titlePlaceholder}
-          className="rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs"
+          value={title}
         />
       </label>
       <label className="flex flex-col gap-1 text-xs">
         {goals.pane.objectiveLabel}
         <input
-          value={objective}
+          className="rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs"
           onChange={event => setObjective(event.target.value)}
           placeholder={goals.pane.objectivePlaceholder}
-          className="rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs"
+          value={objective}
         />
       </label>
       <label className="flex flex-col gap-1 text-xs">
         {goals.pane.verificationLabel}
         <input
-          value={verification}
+          className="rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs"
           onChange={event => setVerification(event.target.value)}
           placeholder={goals.pane.verificationPlaceholder}
-          className="rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs"
+          value={verification}
         />
       </label>
       {error && (
@@ -325,14 +331,14 @@ function NewGoalForm({ onDone, onCancel }: { onDone: () => void; onCancel: () =>
       )}
       <div className="flex gap-1">
         <button
-          type="button"
-          onClick={save}
-          disabled={saving || !title.trim()}
           className="rounded border border-white/15 px-2 py-1 text-xs disabled:opacity-50"
+          disabled={saving || !title.trim()}
+          onClick={save}
+          type="button"
         >
           {saving ? goals.pane.creating : goals.pane.create}
         </button>
-        <button type="button" onClick={onCancel} className="rounded border border-white/15 px-2 py-1 text-xs">
+        <button className="rounded border border-white/15 px-2 py-1 text-xs" onClick={onCancel} type="button">
           {goals.pane.cancel}
         </button>
       </div>
@@ -343,9 +349,12 @@ function NewGoalForm({ onDone, onCancel }: { onDone: () => void; onCancel: () =>
 /** Newest evidence string in a goal's audit history, if any. */
 function latestEvidence(goal: GoalView): string {
   const history = goal.history ?? []
+
   for (let i = history.length - 1; i >= 0; i -= 1) {
     const evidence = history[i]?.evidence
-    if (evidence) return evidence
+
+    if (evidence) {return evidence}
   }
+
   return ''
 }

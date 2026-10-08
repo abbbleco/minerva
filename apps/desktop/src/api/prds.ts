@@ -56,8 +56,10 @@ export interface PrdIntakeEventView {
 
 export function getPrds(options?: { status?: string }): Promise<{ prds: PrdView[] }> {
   const params = new URLSearchParams()
-  if (options?.status) params.set('status', options.status)
+
+  if (options?.status) {params.set('status', options.status)}
   const suffix = params.size ? `?${params}` : ''
+
   return hermesApi({
     ...profileScoped(),
     ...connectionScoped(),
@@ -81,8 +83,10 @@ export function getPrd(prdId: string): Promise<{
 
 export function getPrdCases(options?: { status?: string }): Promise<{ cases: PrdCaseView[] }> {
   const params = new URLSearchParams()
-  if (options?.status) params.set('status', options.status)
+
+  if (options?.status) {params.set('status', options.status)}
   const suffix = params.size ? `?${params}` : ''
+
   return hermesApi({
     ...profileScoped(),
     ...connectionScoped(),

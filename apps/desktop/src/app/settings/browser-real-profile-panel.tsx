@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 
-import { type ProfileScope, saveHermesConfigRecord } from '@/minerva'
 import { useI18n } from '@/i18n'
+import { type ProfileScope, saveHermesConfigRecord } from '@/minerva'
 import { notify, notifyError } from '@/store/notifications'
 
 import { hermesConfigCacheWriter, useHermesConfigRecord } from '../hooks/use-config-record'

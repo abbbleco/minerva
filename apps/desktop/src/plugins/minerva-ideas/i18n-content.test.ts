@@ -12,12 +12,14 @@ describe('ideas English content completeness', () => {
   const en = IDEAS_LOCALES.en as {
     cards: Record<string, { title?: string; pitch?: string; starter?: string }>
   } | undefined
-  if (!en) throw new Error('en bundle missing')
+
+  if (!en) {throw new Error('en bundle missing')}
 
   for (const card of IDEA_CARDS) {
     it(`covers ${card.id}`, () => {
       const copy = en.cards[card.id]
       expect(copy, `missing cards.${card.id} in en bundle`).toBeDefined()
+
       for (const field of ['title', 'pitch', 'starter'] as const) {
         const text = copy?.[field]
         expect(typeof text === 'string' && text.trim() !== '', `cards.${card.id}.${field} must be non-blank`).toBe(true)
@@ -28,6 +30,7 @@ describe('ideas English content completeness', () => {
   it('covers every category label', () => {
     const categories = (IDEAS_LOCALES.en as { categories: Record<string, { label?: string }> }).categories
     const used = new Set(IDEA_CARDS.map(card => card.category))
+
     for (const category of used) {
       expect(categories[category]?.label?.trim(), `missing categories.${category}.label`).toBeTruthy()
     }

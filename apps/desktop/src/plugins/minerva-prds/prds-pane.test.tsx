@@ -85,6 +85,7 @@ vi.mock('@/api/prds', () => ({
 
 function renderPane() {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+
   return render(
     <QueryClientProvider client={client}>
       <PrdsPane />
@@ -121,6 +122,7 @@ describe('PrdsPane', () => {
     mocks.prds = []
     mocks.cases = []
     mocks.requestBillingSettings.mockClear()
+
     for (const fn of [mocks.getPrds, mocks.getPrdCases, mocks.injectPrdIntake, mocks.reviewPrd, mocks.dispatchPrd]) {
       fn.mockClear()
     }

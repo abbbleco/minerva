@@ -26,16 +26,22 @@ export interface AbbblePlan {
 
 export async function fetchAbbblePlans(origin: string = ABBBLE_PORTAL_ORIGIN): Promise<AbbblePlan[]> {
   const res = await fetch(`${origin.replace(/\/+$/, '')}/api/portal/plans`)
-  if (!res.ok) throw new Error(`portal plans ${res.status}`)
+
+  if (!res.ok) {throw new Error(`portal plans ${res.status}`)}
   const json = (await res.json()) as { plans?: AbbblePlan[] }
-  if (!Array.isArray(json.plans)) throw new Error('portal plans malformed')
+
+  if (!Array.isArray(json.plans)) {throw new Error('portal plans malformed')}
+
   return json.plans
 }
 
 function money(price: number, currency: string): string {
   const code = currency.toUpperCase()
-  if (code === 'USD') return `$${price}`
-  if (code === 'ZAR') return `R${price}`
+
+  if (code === 'USD') {return `$${price}`}
+
+  if (code === 'ZAR') {return `R${price}`}
+
   return `${price} ${code}`
 }
 
@@ -43,6 +49,7 @@ function money(price: number, currency: string): string {
 export function AbbblePlansSection() {
   const { t } = useI18n()
   const pp = t.settings.billing.portalPlans
+
   const plans = useQuery({
     queryKey: ['abbble', 'plans'],
     queryFn: () => fetchAbbblePlans(),
@@ -75,13 +82,13 @@ export function AbbblePlansSection() {
         <div className="grid gap-3 @2xl:grid-cols-2 @4xl:grid-cols-4">
           {plans.data.map(tier => (
             <div
-              key={tier.id}
               className={cn(
                 'flex flex-col gap-1.5 rounded-xl border p-4',
                 tier.highlight
                   ? 'border-transparent bg-[#1f22ff] text-white'
                   : 'border-(--ui-border) bg-(--ui-bg-quaternary)'
               )}
+              key={tier.id}
             >
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[11px] font-bold tracking-widest uppercase">{tier.id}</span>

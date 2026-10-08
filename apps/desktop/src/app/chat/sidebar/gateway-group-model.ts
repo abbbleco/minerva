@@ -2,8 +2,8 @@ import { useStore } from '@nanostores/react'
 import { useMemo } from 'react'
 
 import type { DesktopConnectionsRegistry } from '@/global'
-import type { SessionInfo } from '@/minerva'
 import { resolveProfileColor } from '@/lib/profile-color'
+import type { SessionInfo } from '@/minerva'
 import { $connectionsRegistry } from '@/store/connection-registry-state'
 import { $profileColors, normalizeProfileKey } from '@/store/profile'
 

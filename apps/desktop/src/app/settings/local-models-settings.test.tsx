@@ -51,7 +51,6 @@ vi.mock('@/minerva', () => ({
   sideloadLocalModel: vi.fn()
 }))
 
-import * as minerva from '@/minerva'
 
 const mocked = vi.mocked(hermes)
 

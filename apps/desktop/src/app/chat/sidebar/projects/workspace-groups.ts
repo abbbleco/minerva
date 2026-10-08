@@ -1,6 +1,6 @@
 import type { HermesGitBranch, HermesGitWorktree } from '@/global'
-import type { ProjectInfo, SessionInfo } from '@/minerva'
 import { normalize } from '@/lib/text'
+import type { ProjectInfo, SessionInfo } from '@/minerva'
 
 import { rankSessions } from '../order'
 

@@ -1,6 +1,9 @@
 import type { ModelOptionProvider } from '@hermes/shared'
 import { atom } from 'nanostores'
 
+import { translateNow } from '@/i18n'
+import { isProviderSetupErrorMessage } from '@/lib/provider-setup-errors'
+import { evaluateRuntimeReadiness, type RuntimeReadinessResult } from '@/lib/runtime-readiness'
 import {
   cancelOAuthSession,
   getGlobalModelOptions,
@@ -13,9 +16,6 @@ import {
   submitOAuthCode,
   validateProviderCredential
 } from '@/minerva'
-import { translateNow } from '@/i18n'
-import { isProviderSetupErrorMessage } from '@/lib/provider-setup-errors'
-import { evaluateRuntimeReadiness, type RuntimeReadinessResult } from '@/lib/runtime-readiness'
 import { ackFreeTierNotice, freeTierReadyPending, refreshFreeTierStatus, setFreeTierRoute } from '@/store/free-tier'
 import { $gatewayBootGeneration } from '@/store/live-sync'
 import { setMainModelAssignment } from '@/store/model-assignment'
@@ -39,6 +39,7 @@ const OAUTH_VEHICLE_TO_MODEL_SLUGS: Record<string, string[]> = {
 
 export function resolveModelSlugsForOAuth(providerId: string): string[] {
   const lower = providerId.trim().toLowerCase()
+
   return OAUTH_VEHICLE_TO_MODEL_SLUGS[lower] ?? [providerId]
 }
 

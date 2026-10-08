@@ -100,6 +100,7 @@ vi.mock('@/api/feeds', () => ({
 
 function renderPane() {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+
   return render(
     <QueryClientProvider client={client}>
       <FeedsPane />

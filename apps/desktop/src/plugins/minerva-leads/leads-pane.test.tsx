@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { LeadsPane, canReply } from './leads-pane'
+import { canReply, LeadsPane } from './leads-pane'
 
 const mocks = vi.hoisted(() => ({
   subscriptionData: null as null | { ok: boolean; data?: { current?: { tier_id?: string } } },
@@ -82,6 +82,7 @@ vi.mock('@/api/leads', () => ({
 
 function renderPane() {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+
   return render(
     <QueryClientProvider client={client}>
       <LeadsPane />
@@ -123,6 +124,7 @@ describe('LeadsPane', () => {
     mocks.detail = null
     mocks.intake = null
     mocks.requestBillingSettings.mockClear()
+
     for (const fn of [mocks.getLeads, mocks.getLead, mocks.getLeadIntake, mocks.patchLead, mocks.replyLead]) {
       fn.mockClear()
     }
@@ -198,9 +200,11 @@ describe('LeadsPane', () => {
 
   it('shows cross-channel hints on the detail view', async () => {
     paidSubscription()
+
     const hinted = contact({
       also_on: [{ contact_id: 'c2', display_name: 'Example Ltd', via: 'phone 15551234567' }],
     })
+
     mocks.contacts = [hinted]
     mocks.detail = { contact: hinted, messages: [] }
     renderPane()
@@ -239,10 +243,12 @@ describe('LeadsPane', () => {
 
   it('shows form submission intake on form contacts', async () => {
     paidSubscription()
+
     const form = contact({
       id: 'cf', display_name: 'Example Ltd', platform: 'form',
       channels: [{ platform: 'form', chat_type: 'form', chat_id: 'sub-1', thread_id: null, scope_id: null, session_key: '', last_active: 50 }],
     })
+
     mocks.contacts = [form]
     mocks.detail = { contact: form, messages: [] }
     mocks.intake = { events: [{ id: 'e1', text: 'Please add dark mode.', conversation_id: 'sub-1' }] }

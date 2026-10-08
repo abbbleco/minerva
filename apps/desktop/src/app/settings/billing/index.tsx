@@ -21,9 +21,9 @@ import {
   SettingsSection
 } from '../primitives'
 
+import { AbbblePlansSection } from './abbble-plans-section'
 import { RowValue } from './account-row-value'
 import { BillingApiProvider } from './api'
-import { AbbblePlansSection } from './abbble-plans-section'
 import { AutoReloadRow } from './auto-reload-row'
 import { clampAmount, formatMoney } from './billing-amounts'
 import { CurrentPlanCard } from './current-plan-card'

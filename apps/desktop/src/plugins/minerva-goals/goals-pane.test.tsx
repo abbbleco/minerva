@@ -86,6 +86,7 @@ vi.mock('@/api/goals', () => ({
 
 function renderPane() {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+
   return render(
     <QueryClientProvider client={client}>
       <GoalsPane />
@@ -117,6 +118,7 @@ describe('GoalsPane', () => {
     mocks.subscriptionData = null
     mocks.goals = []
     mocks.requestBillingSettings.mockClear()
+
     for (const fn of [mocks.createGoal, mocks.completeGoal, mocks.abandonGoal, mocks.pauseGoal,
       mocks.resumeGoal, mocks.confirmGoal, mocks.dismissGoal, mocks.reopenGoal, mocks.dispatchGoal]) {
       fn.mockClear()

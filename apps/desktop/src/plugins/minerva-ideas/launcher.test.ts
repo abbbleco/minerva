@@ -1,11 +1,11 @@
+import type { SubscriptionStateResponse } from '@hermes/shared/billing'
 import { describe, expect, it } from 'vitest'
 
-import type { SubscriptionStateResponse } from '@hermes/shared/billing'
-
-import { isCardLocked, launchIdea, type LauncherDeps } from './launcher'
+import { isCardLocked, type LauncherDeps, launchIdea } from './launcher'
 
 function deps(): LauncherDeps & { calls: string[] } {
   const calls: string[] = []
+
   return {
     calls,
     activeProfile: () => 'default',

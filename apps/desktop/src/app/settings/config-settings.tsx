@@ -6,10 +6,10 @@ import { useSearchParams } from 'react-router'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { getElevenLabsVoices, getHermesConfigSchema, saveHermesConfig } from '@/minerva'
 import { useI18n } from '@/i18n'
 import { triggerHaptic } from '@/lib/haptics'
 import { isSubmitEnter } from '@/lib/ime'
+import { getElevenLabsVoices, getHermesConfigSchema, saveHermesConfig } from '@/minerva'
 import { confirm } from '@/store/confirm'
 import {
   $dataUrlReadMaxMb,

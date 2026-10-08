@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
+import { useI18n } from '@/i18n'
 import {
   getElevenLabsVoices,
   getHermesConfigSchema,
@@ -8,7 +9,6 @@ import {
   profileScopeKey,
   saveHermesConfigRecord
 } from '@/minerva'
-import { useI18n } from '@/i18n'
 import { notifyError } from '@/store/notifications'
 import type { HermesConfigRecord } from '@/types/minerva'
 

@@ -1,5 +1,5 @@
-import { getApiRequestConnection, getApiRequestProfile, type ProfileScope } from '@/minerva'
 import { RECONNECT_ATTEMPT_TIMEOUT_MS, withTimeout } from '@/lib/with-timeout'
+import { getApiRequestConnection, getApiRequestProfile, type ProfileScope } from '@/minerva'
 import { requestGatewayForAgent } from '@/store/gateway'
 
 export interface OnboardingScope {

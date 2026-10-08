@@ -64,12 +64,17 @@ export const IDEA_CARDS: ReadonlyArray<IdeaCard> = [
 export function validateIdeasCatalog(cards: ReadonlyArray<IdeaCard> = IDEA_CARDS): string[] {
   const problems: string[] = []
   const seen = new Set<string>()
+
   for (const card of cards) {
-    if (!card.id) problems.push('card with empty id')
-    if (seen.has(card.id)) problems.push(`duplicate card id: ${card.id}`)
+    if (!card.id) {problems.push('card with empty id')}
+
+    if (seen.has(card.id)) {problems.push(`duplicate card id: ${card.id}`)}
     seen.add(card.id)
-    if (!IDEA_CATEGORIES.includes(card.category)) problems.push(`unknown category on ${card.id}`)
-    if (!IDEA_DIFFICULTIES.includes(card.difficulty)) problems.push(`unknown difficulty on ${card.id}`)
+
+    if (!IDEA_CATEGORIES.includes(card.category)) {problems.push(`unknown category on ${card.id}`)}
+
+    if (!IDEA_DIFFICULTIES.includes(card.difficulty)) {problems.push(`unknown difficulty on ${card.id}`)}
   }
+
   return problems
 }

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { getSkills, type ProfileScope, profileScopeKey } from '@/minerva'
 import { normalize } from '@/lib/text'
+import { getSkills, type ProfileScope, profileScopeKey } from '@/minerva'
 import type { OfficialSkillInfo, SkillInfo } from '@/types/minerva'
 
 import { asText, includesQuery } from '../../settings/helpers'

@@ -2,6 +2,11 @@ import { useStore } from '@nanostores/react'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
+import { useI18n } from '@/i18n'
+import { completeMcpDesktopOAuth } from '@/lib/mcp-dashboard-oauth'
+import { probeCache, probeKey } from '@/lib/mcp-probe-cache'
+import { getServers, type McpServerEntry, type McpServers } from '@/lib/mcp-servers'
+import { setDisabledTools, toggleToolInServer } from '@/lib/mcp-tool-filter'
 import {
   getMcpCatalog,
   type HermesGateway,
@@ -12,11 +17,6 @@ import {
   profileScopeKey,
   saveMcpServers
 } from '@/minerva'
-import { useI18n } from '@/i18n'
-import { completeMcpDesktopOAuth } from '@/lib/mcp-dashboard-oauth'
-import { probeCache, probeKey } from '@/lib/mcp-probe-cache'
-import { getServers, type McpServerEntry, type McpServers } from '@/lib/mcp-servers'
-import { setDisabledTools, toggleToolInServer } from '@/lib/mcp-tool-filter'
 import { notify, notifyError } from '@/store/notifications'
 import { $activeGatewayProfile, normalizeProfileKey } from '@/store/profile'
 import { $activeSessionId } from '@/store/session'

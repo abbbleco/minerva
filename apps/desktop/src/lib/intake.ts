@@ -34,7 +34,8 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 export function isIntakeAttachment(value: unknown): value is IntakeAttachment {
-  if (!isRecord(value)) return false
+  if (!isRecord(value)) {return false}
+
   return (
     typeof value.kind === 'string' &&
     ATTACHMENT_KINDS.has(value.kind) &&
@@ -48,7 +49,8 @@ export function isIntakeAttachment(value: unknown): value is IntakeAttachment {
 }
 
 export function isIntakeEvent(value: unknown): value is IntakeEvent {
-  if (!isRecord(value)) return false
+  if (!isRecord(value)) {return false}
+
   return (
     typeof value.id === 'string' &&
     value.id !== '' &&

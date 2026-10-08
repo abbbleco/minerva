@@ -13,12 +13,14 @@ import { ID } from './shared'
 describe('leads plugin registration', () => {
   function recordingCtx() {
     const registrations: Array<{ id: string; area: string; data?: Record<string, unknown>; render?: unknown }> = []
+
     return {
       registrations,
       ctx: {
         i18n: { register: vi.fn(() => () => {}) },
         register: (entry: { id: string; area: string; data?: Record<string, unknown>; render?: unknown }) => {
           registrations.push(entry)
+
           return () => {}
         },
       },
@@ -33,6 +35,7 @@ describe('leads plugin registration', () => {
   it('docks the pane into the sessions strip', () => {
     const { ctx, registrations } = recordingCtx()
     const dispose = (plugin.register as (ctx: unknown) => () => void)(ctx)
+
     try {
       const pane = registrations.find(entry => entry.id === 'pane')
       expect(pane, 'pane registration missing').toBeDefined()
@@ -48,6 +51,7 @@ describe('leads plugin registration', () => {
   it('registers locale bundles under the plugin', () => {
     const { ctx } = recordingCtx()
     const dispose = (plugin.register as (ctx: unknown) => () => void)(ctx)
+
     try {
       expect((ctx.i18n.register as ReturnType<typeof vi.fn>)).toHaveBeenCalledOnce()
     } finally {

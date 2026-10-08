@@ -1,18 +1,18 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 
-import { hasPremiumAccess } from '@/lib/entitlement'
-import { useSubscriptionState } from '@/app/settings/billing/use-billing-state'
-import { requestBillingSettings } from '@/store/billing-block'
 import {
   getLead,
   getLeadIntake,
   getLeads,
-  patchLead,
-  replyLead,
   type LeadContactView,
   type LeadMessageView,
+  patchLead,
+  replyLead,
 } from '@/api/leads'
+import { useSubscriptionState } from '@/app/settings/billing/use-billing-state'
+import { hasPremiumAccess } from '@/lib/entitlement'
+import { requestBillingSettings } from '@/store/billing-block'
 
 import { useLeads } from './i18n'
 
@@ -51,9 +51,9 @@ export function LeadsPane() {
         <p className="text-sm font-medium">{leads.pane.premiumTitle}</p>
         <p className="text-xs opacity-70">{leads.pane.premiumDesc}</p>
         <button
-          type="button"
-          onClick={() => requestBillingSettings()}
           className="mt-1 rounded border border-white/15 px-2 py-1 text-xs"
+          onClick={() => requestBillingSettings()}
+          type="button"
         >
           {leads.pane.viewPlans}
         </button>
@@ -65,17 +65,22 @@ export function LeadsPane() {
     queryClient.invalidateQueries({ queryKey: ['leads'] })
     queryClient.invalidateQueries({ queryKey: ['lead', selectedId] })
   }
+
   const all = leadsQuery.data?.contacts ?? []
+
   const platforms = useMemo(
     () => [...new Set(all.map(contact => contact.platform))].sort(),
     [all]
   )
+
   const q = query.trim().toLowerCase()
+
   const match = (contact: LeadContactView) =>
     (!channel || contact.platform === channel) &&
     (!q || contact.display_name.toLowerCase().includes(q) ||
       contact.snippet.toLowerCase().includes(q) ||
       (contact.emails ?? []).some(email => email.toLowerCase().includes(q)))
+
   const visible = useMemo(() => all.filter(c => !c.muted && match(c)), [all, q, channel])
   const muted = useMemo(() => all.filter(c => c.muted && match(c)), [all, q, channel])
   const error = leadsQuery.error
@@ -94,12 +99,12 @@ export function LeadsPane() {
     <div className="flex h-full flex-col gap-2 overflow-hidden p-3">
       <div className="flex items-center gap-2">
         <input
-          type="search"
-          value={query}
-          onChange={event => setQuery(event.target.value)}
-          placeholder={leads.pane.searchPlaceholder}
           aria-label={leads.pane.searchPlaceholder}
           className="min-w-0 flex-1 rounded border border-white/10 bg-white/5 px-2 py-1.5 text-sm"
+          onChange={event => setQuery(event.target.value)}
+          placeholder={leads.pane.searchPlaceholder}
+          type="search"
+          value={query}
         />
       </div>
       {platforms.length > 1 && (
@@ -108,7 +113,7 @@ export function LeadsPane() {
             {leads.pane.allChannels}
           </FilterChip>
           {platforms.map(platform => (
-            <FilterChip key={platform} active={channel === platform} onClick={() => setChannel(platform)}>
+            <FilterChip active={channel === platform} key={platform} onClick={() => setChannel(platform)}>
               {platform}
             </FilterChip>
           ))}
@@ -123,13 +128,13 @@ export function LeadsPane() {
 
       <div className="flex flex-col gap-1.5 overflow-y-auto">
         {visible.map(contact => (
-          <ContactRow key={contact.id} contact={contact} onOpen={() => setSelectedId(contact.id)} />
+          <ContactRow contact={contact} key={contact.id} onOpen={() => setSelectedId(contact.id)} />
         ))}
         {muted.length > 0 && (
           <section className="flex flex-col gap-1.5 pt-1">
             <p className="text-xs font-medium opacity-70">{leads.pane.mutedTitle}</p>
             {muted.map(contact => (
-              <ContactRow key={contact.id} contact={contact} onOpen={() => setSelectedId(contact.id)} />
+              <ContactRow contact={contact} key={contact.id} onOpen={() => setSelectedId(contact.id)} />
             ))}
           </section>
         )}
@@ -157,11 +162,11 @@ function FilterChip({
 }) {
   return (
     <button
-      type="button"
-      onClick={onClick}
       className={`rounded border px-1.5 py-0.5 font-mono text-[10px] uppercase ${
         active ? 'border-white/40 bg-white/10' : 'border-white/15 opacity-70'
       }`}
+      onClick={onClick}
+      type="button"
     >
       {children}
     </button>
@@ -171,9 +176,9 @@ function FilterChip({
 function ContactRow({ contact, onOpen }: { contact: LeadContactView; onOpen: () => void }) {
   return (
     <button
-      type="button"
-      onClick={onOpen}
       className="flex flex-col gap-0.5 rounded border border-white/10 bg-white/[0.03] p-2 text-left"
+      onClick={onOpen}
+      type="button"
     >
       <span className="flex items-center gap-1.5">
         <span className="min-w-0 flex-1 truncate text-sm font-medium">{contact.display_name}</span>
@@ -201,10 +206,12 @@ function ContactDetail({
   onChanged: () => void
 }) {
   const leads = useLeads()
+
   const detailQuery = useQuery({
     queryKey: ['lead', contactId],
     queryFn: () => getLead(contactId),
   })
+
   const contact = detailQuery.data?.contact
   const messages = detailQuery.data?.messages ?? []
 
@@ -212,9 +219,9 @@ function ContactDetail({
     <div className="flex h-full flex-col gap-2 overflow-hidden p-3">
       <div className="flex items-center gap-2">
         <button
-          type="button"
-          onClick={onBack}
           className="rounded border border-white/15 px-2 py-1 text-xs"
+          onClick={onBack}
+          type="button"
         >
           {leads.pane.backToList}
         </button>
@@ -246,6 +253,7 @@ function ContactDetail({
 
 function MessageBubble({ message }: { message: LeadMessageView }) {
   const mine = message.role !== 'user'
+
   return (
     <div className={`flex flex-col gap-0.5 rounded border border-white/10 bg-white/[0.03] p-2 ${mine ? 'ml-4' : 'mr-4'}`}>
       <p className="break-words text-xs">{message.text}</p>
@@ -270,8 +278,8 @@ function ContactInfo({ contact, onChanged, onGone }: { contact: LeadContactView;
     setError(null)
     void fn()
       .then(() => {
-        if (gone) onGone()
-        else onChanged()
+        if (gone) {onGone()}
+        else {onChanged()}
       })
       .catch((err: unknown) => setError(err instanceof Error ? err.message : String(err)))
       .finally(() => {
@@ -287,10 +295,10 @@ function ContactInfo({ contact, onChanged, onGone }: { contact: LeadContactView;
         {leads.pane.channelsLabel}: {contact.channels.map(c => c.platform).filter((v, i, a) => a.indexOf(v) === i).join(', ')}
       </p>
       {(contact.emails ?? []).map(email => (
-        <p key={email} className="break-all opacity-70">{leads.pane.emailsLabel}: {email}</p>
+        <p className="break-all opacity-70" key={email}>{leads.pane.emailsLabel}: {email}</p>
       ))}
       {(contact.phones ?? []).map(phone => (
-        <p key={phone} className="opacity-70">{leads.pane.phonesLabel}: {phone}</p>
+        <p className="opacity-70" key={phone}>{leads.pane.phonesLabel}: {phone}</p>
       ))}
       {contact.note && !editingNote && (
         <p className="opacity-70">{leads.pane.noteLabel}: {contact.note}</p>
@@ -304,7 +312,7 @@ function ContactInfo({ contact, onChanged, onGone }: { contact: LeadContactView;
         <div className="flex flex-col gap-1">
           <p className="opacity-70">{leads.pane.mergedFromLabel}:</p>
           {(contact.merged_from ?? []).map(ref => (
-            <div key={ref.contact_id} className="flex items-center gap-1">
+            <div className="flex items-center gap-1" key={ref.contact_id}>
               <span className="min-w-0 flex-1 truncate">{ref.display_name}</span>
               <ActionButton disabled={busy} onClick={() => act(() => patchLead(ref.contact_id, { merged_into: '' }))}>
                 {leads.pane.unmerge}
@@ -316,11 +324,11 @@ function ContactInfo({ contact, onChanged, onGone }: { contact: LeadContactView;
       {editingNote ? (
         <div className="flex flex-col gap-1">
           <textarea
-            value={note}
+            className="rounded border border-white/10 bg-white/5 px-2 py-1 text-[11px]"
             onChange={event => setNote(event.target.value)}
             placeholder={leads.pane.notePlaceholder}
             rows={2}
-            className="rounded border border-white/10 bg-white/5 px-2 py-1 text-[11px]"
+            value={note}
           />
           <div className="flex gap-1">
             <ActionButton disabled={busy} onClick={() => act(() => patchLead(contact.id, { note: note.trim() }))}>
@@ -333,10 +341,10 @@ function ContactInfo({ contact, onChanged, onGone }: { contact: LeadContactView;
         </div>
       ) : merging ? (
         <MergePicker
-          excludeId={contact.id}
-          onPick={targetId => act(() => patchLead(contact.id, { merged_into: targetId }), true)}
-          onCancel={() => setMerging(false)}
           disabled={busy}
+          excludeId={contact.id}
+          onCancel={() => setMerging(false)}
+          onPick={targetId => act(() => patchLead(contact.id, { merged_into: targetId }), true)}
         />
       ) : (
         <div className="flex flex-wrap gap-1">
@@ -376,11 +384,14 @@ function MergePicker({
 }) {
   const leads = useLeads()
   const [filter, setFilter] = useState('')
+
   const candidatesQuery = useQuery({
     queryKey: ['leads'],
     queryFn: () => getLeads(),
   })
+
   const q = filter.trim().toLowerCase()
+
   const candidates = (candidatesQuery.data?.contacts ?? []).filter(
     contact => contact.id !== excludeId &&
       (!q || contact.display_name.toLowerCase().includes(q))
@@ -390,15 +401,15 @@ function MergePicker({
     <div className="flex flex-col gap-1 rounded border border-white/10 bg-white/[0.03] p-2">
       <p className="text-[11px] font-medium">{leads.pane.mergeTitle}</p>
       <input
-        value={filter}
-        onChange={event => setFilter(event.target.value)}
-        placeholder={leads.pane.searchPlaceholder}
         aria-label={leads.pane.searchPlaceholder}
         className="rounded border border-white/10 bg-white/5 px-2 py-1 text-[11px]"
+        onChange={event => setFilter(event.target.value)}
+        placeholder={leads.pane.searchPlaceholder}
+        value={filter}
       />
       <div className="flex max-h-32 flex-col gap-1 overflow-y-auto">
         {candidates.map(contact => (
-          <div key={contact.id} className="flex items-center gap-1">
+          <div className="flex items-center gap-1" key={contact.id}>
             <span className="min-w-0 flex-1 truncate text-[11px]">{contact.display_name}</span>
             <ActionButton disabled={disabled} onClick={() => onPick(contact.id)}>
               {leads.pane.mergeHere}
@@ -418,19 +429,23 @@ function MergePicker({
 function IntakeViewer({ contact }: { contact: LeadContactView }) {
   const leads = useLeads()
   const hasForm = (contact.channels ?? []).some(channel => channel.chat_type === 'form')
+
   const intakeQuery = useQuery({
     queryKey: ['lead-intake', contact.id],
     queryFn: () => getLeadIntake(contact.id),
     enabled: hasForm,
   })
-  if (!hasForm) return null
+
+  if (!hasForm) {return null}
   const events = intakeQuery.data?.events ?? []
-  if (events.length === 0) return null
+
+  if (events.length === 0) {return null}
+
   return (
     <div className="flex flex-col gap-1.5 rounded border border-white/10 bg-white/[0.03] p-2.5">
       <p className="text-xs font-medium">{leads.pane.intakeTitle}</p>
       {events.map(event => (
-        <p key={event.id ?? event.text.slice(0, 24)} className="break-words text-[11px] opacity-80">
+        <p className="break-words text-[11px] opacity-80" key={event.id ?? event.text.slice(0, 24)}>
           {event.text}
         </p>
       ))}
@@ -447,6 +462,7 @@ function ReplyBox({ contact, onChanged }: { contact: LeadContactView; onChanged:
 
   if (!canReply(contact)) {
     const formOnly = contact.platform === 'form'
+
     return (
       <p className="rounded border border-white/10 bg-white/[0.03] p-2 text-[11px] opacity-70">
         {formOnly ? leads.pane.formNoChat : leads.pane.groupReadOnly}
@@ -491,11 +507,11 @@ function ReplyBox({ contact, onChanged }: { contact: LeadContactView; onChanged:
           <label className="flex flex-col gap-1 text-xs">
             {leads.pane.replyLabel}
             <textarea
-              value={text}
+              className="rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs"
               onChange={event => { setText(event.target.value); setSent(false) }}
               placeholder={leads.pane.replyPlaceholder}
               rows={2}
-              className="rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs"
+              value={text}
             />
           </label>
           <div>
@@ -526,10 +542,10 @@ function ActionButton({
 }) {
   return (
     <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
       className="rounded border border-white/15 px-1.5 py-0.5 text-[11px] disabled:opacity-50"
+      disabled={disabled}
+      onClick={onClick}
+      type="button"
     >
       {children}
     </button>

@@ -9,8 +9,8 @@
 import { LocalizedTabTitle, translateNow } from '@hermes/plugin-sdk'
 import type { PluginContext } from '@hermes/plugin-sdk'
 
-import { PrdsPane } from './prds-pane'
 import { PRDS_LOCALES } from './i18n'
+import { PrdsPane } from './prds-pane'
 import { ID, setPluginCtx } from './shared'
 
 export default {

@@ -65,9 +65,12 @@ export function getLeads(options?: {
   include_muted?: boolean
 }): Promise<{ contacts: LeadContactView[] }> {
   const params = new URLSearchParams()
-  if (options?.platform) params.set('platform', options.platform)
-  if (options?.include_muted) params.set('include_muted', 'true')
+
+  if (options?.platform) {params.set('platform', options.platform)}
+
+  if (options?.include_muted) {params.set('include_muted', 'true')}
   const suffix = params.size ? `?${params}` : ''
+
   return hermesApi({
     ...profileScoped(),
     ...connectionScoped(),

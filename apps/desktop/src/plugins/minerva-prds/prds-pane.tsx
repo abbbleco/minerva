@@ -1,20 +1,20 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 
-import { hasPremiumAccess } from '@/lib/entitlement'
-import { useSubscriptionState } from '@/app/settings/billing/use-billing-state'
-import { requestBillingSettings } from '@/store/billing-block'
 import {
   dispatchPrd,
   getPrdCases,
   getPrds,
   injectPrdIntake,
-  reviewPrd,
   type PrdCaseView,
   type PrdView,
+  reviewPrd,
 } from '@/api/prds'
+import { useSubscriptionState } from '@/app/settings/billing/use-billing-state'
+import { hasPremiumAccess } from '@/lib/entitlement'
+import { requestBillingSettings } from '@/store/billing-block'
 
-import { usePrds, type PrdsMessages } from './i18n'
+import { type PrdsMessages, usePrds } from './i18n'
 
 /**
  * PRDs pane: the review queue for the intake pipeline, docked beside
@@ -59,6 +59,7 @@ const LIST_FIELDS: ReadonlySet<string> = new Set([
 export function statusLabel(pane: PrdsMessages['pane'], status: string): string {
   const key = STATUS_LABEL_KEY[status]
   const label = key ? pane[key] : undefined
+
   return typeof label === 'string' ? label : status
 }
 
@@ -75,6 +76,7 @@ export function PrdsPane() {
     queryFn: () => getPrds(),
     enabled: premium,
   })
+
   const casesQuery = useQuery({
     queryKey: ['prds-cases'],
     queryFn: () => getPrdCases(),
@@ -87,9 +89,9 @@ export function PrdsPane() {
         <p className="text-sm font-medium">{prds.pane.premiumTitle}</p>
         <p className="text-xs opacity-70">{prds.pane.premiumDesc}</p>
         <button
-          type="button"
-          onClick={() => requestBillingSettings()}
           className="mt-1 rounded border border-white/15 px-2 py-1 text-xs"
+          onClick={() => requestBillingSettings()}
+          type="button"
         >
           {prds.pane.viewPlans}
         </button>
@@ -101,20 +103,26 @@ export function PrdsPane() {
     queryClient.invalidateQueries({ queryKey: ['prds'] })
     queryClient.invalidateQueries({ queryKey: ['prds-cases'] })
   }
+
   const all = prdsQuery.data?.prds ?? []
   const cases = casesQuery.data?.cases ?? []
   const q = query.trim().toLowerCase()
+
   const matchDoc = (doc: PrdView) =>
     !q || doc.title.toLowerCase().includes(q) ||
     doc.problem.toLowerCase().includes(q)
+
   const matchCase = (c: PrdCaseView) =>
     !q || c.reason.toLowerCase().includes(q) ||
     c.conversation_id.toLowerCase().includes(q)
+
   const review = useMemo(
     () => all.filter(d => (d.status === 'draft' || d.status === 'in_review') && matchDoc(d)),
     [all, q]
   )
+
   const watching = useMemo(() => cases.filter(c => c.status === 'watch' && matchCase(c)), [cases, q])
+
   const history = useMemo(
     () => [
       ...all.filter(d => (d.status === 'approved' || d.status === 'rejected') && matchDoc(d)),
@@ -122,23 +130,24 @@ export function PrdsPane() {
     ],
     [all, cases, q]
   )
+
   const error = prdsQuery.error ?? casesQuery.error
 
   return (
     <div className="flex h-full flex-col gap-2 overflow-hidden p-3">
       <div className="flex items-center gap-2">
         <input
-          type="search"
-          value={query}
-          onChange={event => setQuery(event.target.value)}
-          placeholder={prds.pane.searchPlaceholder}
           aria-label={prds.pane.searchPlaceholder}
           className="min-w-0 flex-1 rounded border border-white/10 bg-white/5 px-2 py-1.5 text-sm"
+          onChange={event => setQuery(event.target.value)}
+          placeholder={prds.pane.searchPlaceholder}
+          type="search"
+          value={query}
         />
         <button
-          type="button"
-          onClick={() => setInjecting(value => !value)}
           className="rounded border border-white/15 px-2 py-1.5 text-xs"
+          onClick={() => setInjecting(value => !value)}
+          type="button"
         >
           {prds.pane.newIntake}
         </button>
@@ -146,11 +155,11 @@ export function PrdsPane() {
 
       {injecting && (
         <NewIntakeForm
+          onCancel={() => setInjecting(false)}
           onDone={() => {
             setInjecting(false)
             void refresh()
           }}
-          onCancel={() => setInjecting(false)}
         />
       )}
 
@@ -166,7 +175,7 @@ export function PrdsPane() {
             <p className="text-xs font-medium">{prds.pane.reviewTitle}</p>
             <p className="text-[11px] opacity-70">{prds.pane.reviewDesc}</p>
             {review.map(doc => (
-              <PrdRow key={doc.id} doc={doc} onChanged={refresh} />
+              <PrdRow doc={doc} key={doc.id} onChanged={refresh} />
             ))}
           </section>
         )}
@@ -188,7 +197,7 @@ export function PrdsPane() {
               'event_ids' in item ? (
                 <WatchRow key={item.id} watch={item as PrdCaseView} />
               ) : (
-                <PrdRow key={item.id} doc={item as PrdView} onChanged={refresh} />
+                <PrdRow doc={item as PrdView} key={item.id} onChanged={refresh} />
               )
             )}
           </section>
@@ -209,6 +218,7 @@ export function PrdsPane() {
 
 function WatchRow({ watch }: { watch: PrdCaseView }) {
   const prds = usePrds()
+
   return (
     <div className="flex flex-col gap-1 rounded border border-white/10 bg-white/[0.03] p-2.5">
       <div className="flex items-start gap-1.5">
@@ -268,7 +278,7 @@ function PrdRow({ doc, onChanged }: { doc: PrdView; onChanged: () => void }) {
       {doc.requirements.length > 0 && (
         <ul className="list-disc pl-4 text-[11px] opacity-70">
           {doc.requirements.slice(0, 5).map((req, i) => (
-            <li key={i} className="break-words">{req}</li>
+            <li className="break-words" key={i}>{req}</li>
           ))}
         </ul>
       )}
@@ -289,10 +299,10 @@ function PrdRow({ doc, onChanged }: { doc: PrdView; onChanged: () => void }) {
           <label className="flex flex-col gap-1 text-[11px]">
             {prds.pane.rejectReasonLabel}
             <input
-              value={reason}
+              className="rounded border border-white/10 bg-white/5 px-2 py-1 text-[11px]"
               onChange={event => setReason(event.target.value)}
               placeholder={prds.pane.rejectReasonPlaceholder}
-              className="rounded border border-white/10 bg-white/5 px-2 py-1 text-[11px]"
+              value={reason}
             />
           </label>
           <div className="flex gap-1">
@@ -310,9 +320,9 @@ function PrdRow({ doc, onChanged }: { doc: PrdView; onChanged: () => void }) {
           <label className="flex flex-col gap-1 text-[11px]">
             {prds.pane.reviseFieldLabel}
             <select
-              value={field}
-              onChange={event => setField(event.target.value)}
               className="rounded border border-white/10 bg-white/5 px-2 py-1 text-[11px]"
+              onChange={event => setField(event.target.value)}
+              value={field}
             >
               {REVISABLE_FIELDS.map(name => (
                 <option key={name} value={name}>{name}</option>
@@ -322,10 +332,10 @@ function PrdRow({ doc, onChanged }: { doc: PrdView; onChanged: () => void }) {
           <label className="flex flex-col gap-1 text-[11px]">
             {prds.pane.reviseValueLabel}
             <textarea
-              value={value}
+              className="rounded border border-white/10 bg-white/5 px-2 py-1 text-[11px]"
               onChange={event => setValue(event.target.value)}
               rows={3}
-              className="rounded border border-white/10 bg-white/5 px-2 py-1 text-[11px]"
+              value={value}
             />
           </label>
           <div className="flex gap-1">
@@ -380,10 +390,10 @@ function ActionButton({
 }) {
   return (
     <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
       className="rounded border border-white/15 px-1.5 py-0.5 text-[11px] disabled:opacity-50"
+      disabled={disabled}
+      onClick={onClick}
+      type="button"
     >
       {children}
     </button>
@@ -410,11 +420,11 @@ function NewIntakeForm({ onDone, onCancel }: { onDone: () => void; onCancel: () 
       <label className="flex flex-col gap-1 text-xs">
         {prds.pane.intakeLabel}
         <textarea
-          value={text}
+          className="rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs"
           onChange={event => setText(event.target.value)}
           placeholder={prds.pane.intakePlaceholder}
           rows={4}
-          className="rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs"
+          value={text}
         />
       </label>
       {error && (
@@ -424,14 +434,14 @@ function NewIntakeForm({ onDone, onCancel }: { onDone: () => void; onCancel: () 
       )}
       <div className="flex gap-1">
         <button
-          type="button"
-          onClick={save}
-          disabled={saving || !text.trim()}
           className="rounded border border-white/15 px-2 py-1 text-xs disabled:opacity-50"
+          disabled={saving || !text.trim()}
+          onClick={save}
+          type="button"
         >
           {saving ? prds.pane.injecting : prds.pane.inject}
         </button>
-        <button type="button" onClick={onCancel} className="rounded border border-white/15 px-2 py-1 text-xs">
+        <button className="rounded border border-white/15 px-2 py-1 text-xs" onClick={onCancel} type="button">
           {prds.pane.cancel}
         </button>
       </div>

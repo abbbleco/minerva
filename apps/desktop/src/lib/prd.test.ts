@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+
 import { isPrdDocument, isPrdTransition } from './prd'
 
 const transition = { at: 1728120000, from_status: '', to_status: 'draft', actor: 'triage', reason: 'created by triage' }

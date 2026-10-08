@@ -39,9 +39,12 @@ export interface GoalsList {
 
 export function getGoals(options?: { status?: string; profile?: string }): Promise<GoalsList> {
   const params = new URLSearchParams()
-  if (options?.profile) params.set('profile', options.profile)
-  if (options?.status) params.set('status', options.status)
+
+  if (options?.profile) {params.set('profile', options.profile)}
+
+  if (options?.status) {params.set('status', options.status)}
   const suffix = params.size ? `?${params}` : ''
+
   return hermesApi({
     ...profileScoped(),
     ...connectionScoped(),

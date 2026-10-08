@@ -1,8 +1,8 @@
+import type { SubscriptionStateResponse } from '@hermes/shared/billing'
 import { useMemo, useState } from 'react'
 
 import { useSubscriptionState } from '@/app/settings/billing/use-billing-state'
 import { requestBillingSettings } from '@/store/billing-block'
-import type { SubscriptionStateResponse } from '@hermes/shared/billing'
 
 import { IDEA_CARDS, type IdeaCard } from './data'
 import { useIdeas } from './i18n'
@@ -21,14 +21,19 @@ export function IdeasPane() {
   const ideas = useIdeas()
   const [query, setQuery] = useState('')
   const subscription = useSubscriptionState()
+
   const subscriptionData: SubscriptionStateResponse | null =
     subscription.data?.ok ? subscription.data.data : null
 
   const visible = useMemo(() => {    const q = query.trim().toLowerCase()
-    if (!q) return IDEA_CARDS
+
+    if (!q) {return IDEA_CARDS}
+
     return IDEA_CARDS.filter(card => {
       const copy = ideas.cards[card.id]
-      if (!copy) return false
+
+      if (!copy) {return false}
+
       return (
         copy.title.toLowerCase().includes(q) ||
         copy.pitch.toLowerCase().includes(q) ||
@@ -40,12 +45,12 @@ export function IdeasPane() {
   return (
     <div className="flex h-full flex-col gap-3 overflow-y-auto p-3">
       <input
-        type="search"
-        value={query}
-        onChange={event => setQuery(event.target.value)}
-        placeholder={ideas.pane.searchPlaceholder}
         aria-label={ideas.pane.searchPlaceholder}
         className="w-full rounded border border-white/10 bg-white/5 px-2 py-1.5 text-sm"
+        onChange={event => setQuery(event.target.value)}
+        placeholder={ideas.pane.searchPlaceholder}
+        type="search"
+        value={query}
       />
       {visible.length === 0 ? (
         <div className="flex flex-1 flex-col items-center justify-center gap-1 text-center">
@@ -55,7 +60,7 @@ export function IdeasPane() {
       ) : (
         <div className="grid gap-2">
           {visible.map(card => (
-            <IdeaRow key={card.id} card={card} subscription={subscriptionData} />
+            <IdeaRow card={card} key={card.id} subscription={subscriptionData} />
           ))}
         </div>
       )}
@@ -66,10 +71,11 @@ export function IdeasPane() {
 function IdeaRow({ card, subscription }: { card: IdeaCard; subscription: SubscriptionStateResponse | null }) {
   const ideas = useIdeas()
   const copy = ideas.cards[card.id]
+
   // A card without copy in the active locale is a content bug, not a render
   // crash: the English fallback in `useIdeas` covers it, and this guard covers
   // a card id missing even there (added to data but never translated).
-  if (!copy) return null
+  if (!copy) {return null}
   const category = ideas.categories[card.category]
   const locked = isCardLocked(card, subscription)
 
@@ -94,17 +100,17 @@ function IdeaRow({ card, subscription }: { card: IdeaCard; subscription: Subscri
       </div>
       {locked ? (
         <button
-          type="button"
-          onClick={() => requestBillingSettings()}
           className="mt-1 w-full rounded border border-white/15 px-2 py-1 text-xs"
+          onClick={() => requestBillingSettings()}
+          type="button"
         >
           {ideas.pane.premiumLocked} — {ideas.pane.tryIt}
         </button>
       ) : (
         <button
-          type="button"
-          onClick={() => launchIdea({ starter: copy.starter })}
           className="mt-1 w-full rounded border border-white/15 px-2 py-1 text-xs"
+          onClick={() => launchIdea({ starter: copy.starter })}
+          type="button"
         >
           {ideas.pane.tryIt}
         </button>

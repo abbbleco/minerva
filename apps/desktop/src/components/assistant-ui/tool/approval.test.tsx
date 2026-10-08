@@ -3,8 +3,8 @@ import { act, cleanup, fireEvent, render as renderUi, screen, waitFor } from '@t
 import type { ReactNode } from 'react'
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import type { HermesGateway } from '@/minerva'
 import { handleApprovalKey, releaseApprovalKey } from '@/lib/keybinds/approval-keys'
+import type { HermesGateway } from '@/minerva'
 import { $gateway } from '@/store/gateway'
 import {
   $approvalRequest,

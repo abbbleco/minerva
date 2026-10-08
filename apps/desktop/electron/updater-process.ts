@@ -76,6 +76,7 @@ function userBinLaunchers(isWindows: boolean, hermesHome: string, extraDirs: str
   const names: string[] = isWindows
     ? ['minerva.exe', 'minerva.cmd', 'hermes.exe', 'hermes.cmd']
     : ['minerva', 'hermes']
+
   const defaultHome: string = platformDefaultHermesHome(os.homedir(), process.env, isWindows ? 'win32' : 'linux')
 
   const dirs: string[] = isWindows

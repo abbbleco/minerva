@@ -1,6 +1,7 @@
-import { describe, expect, it } from 'vitest'
-import { currentTierId, hasPremiumAccess, isPremiumTier } from './entitlement'
 import type { SubscriptionStateResponse } from '@hermes/shared/billing'
+import { describe, expect, it } from 'vitest'
+
+import { currentTierId, hasPremiumAccess, isPremiumTier } from './entitlement'
 
 function subscription(overrides: Partial<SubscriptionStateResponse> = {}): SubscriptionStateResponse {
   return {

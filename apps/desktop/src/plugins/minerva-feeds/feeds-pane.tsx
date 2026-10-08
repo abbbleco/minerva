@@ -1,14 +1,11 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 
-import { hasPremiumAccess } from '@/lib/entitlement'
-import { useSubscriptionState } from '@/app/settings/billing/use-billing-state'
-import { $activeGatewayProfile, newSessionInProfile } from '@/store/profile'
-import { setComposerDraft } from '@/store/composer'
-import { requestBillingSettings } from '@/store/billing-block'
 import { deleteEnvVar, setEnvVar } from '@/api/config'
 import {
   addFeedSource,
+  type FeedItemView,
+  type FeedSourceView,
   getFeedItems,
   getFeedProviderStatus,
   getFeedSources,
@@ -17,11 +14,14 @@ import {
   removeFeedSource,
   setFeedSourceEnabled,
   validateFeedProvider,
-  type FeedItemView,
-  type FeedSourceView,
 } from '@/api/feeds'
+import { useSubscriptionState } from '@/app/settings/billing/use-billing-state'
+import { hasPremiumAccess } from '@/lib/entitlement'
+import { requestBillingSettings } from '@/store/billing-block'
+import { setComposerDraft } from '@/store/composer'
+import { $activeGatewayProfile, newSessionInProfile } from '@/store/profile'
 
-import { useFeeds, type FeedsMessages } from './i18n'
+import { type FeedsMessages, useFeeds } from './i18n'
 
 /**
  * Feeds pane: curated sources with ingest-time briefs, docked beside Bots.
@@ -53,12 +53,14 @@ const TOKEN_HELP_KEY: Record<string, keyof FeedsMessages['pane']> = {
 export function providerLabel(pane: FeedsMessages['pane'], id: string): string {
   const key = PROVIDER_LABEL_KEY[id]
   const label = key ? pane[key] : undefined
+
   return typeof label === 'string' ? label : id
 }
 
 export function tokenHelp(pane: FeedsMessages['pane'], provider: string): string {
   const key = TOKEN_HELP_KEY[provider] ?? 'tokenPlaceholder'
   const help = pane[key]
+
   return typeof help === 'string' ? help : pane.tokenPlaceholder
 }
 
@@ -71,11 +73,13 @@ export function FeedsPane() {
   const [managing, setManaging] = useState(false)
 
   const queryClient = useQueryClient()
+
   const itemsQuery = useQuery({
     queryKey: ['feeds', 'items', { unreadOnly }],
     queryFn: () => getFeedItems({ unread_only: unreadOnly, limit: 200 }),
     enabled: premium,
   })
+
   const sourcesQuery = useQuery({
     queryKey: ['feeds', 'sources'],
     queryFn: () => getFeedSources(),
@@ -96,9 +100,9 @@ export function FeedsPane() {
         <p className="text-sm font-medium">{feeds.pane.premiumTitle}</p>
         <p className="text-xs opacity-70">{feeds.pane.premiumDesc}</p>
         <button
-          type="button"
-          onClick={() => requestBillingSettings()}
           className="mt-1 rounded border border-white/15 px-2 py-1 text-xs"
+          onClick={() => requestBillingSettings()}
+          type="button"
         >
           {feeds.pane.viewPlans}
         </button>
@@ -109,7 +113,9 @@ export function FeedsPane() {
   const items = useMemo(() => {
     const q = query.trim().toLowerCase()
     const all = itemsQuery.data?.items ?? []
-    if (!q) return all
+
+    if (!q) {return all}
+
     return all.filter(
       item =>
         item.title.toLowerCase().includes(q) ||
@@ -121,34 +127,34 @@ export function FeedsPane() {
     <div className="flex h-full flex-col gap-2 overflow-hidden p-3">
       <div className="flex items-center gap-2">
         <input
-          type="search"
-          value={query}
-          onChange={event => setQuery(event.target.value)}
-          placeholder={feeds.pane.searchPlaceholder}
           aria-label={feeds.pane.searchPlaceholder}
           className="min-w-0 flex-1 rounded border border-white/10 bg-white/5 px-2 py-1.5 text-sm"
+          onChange={event => setQuery(event.target.value)}
+          placeholder={feeds.pane.searchPlaceholder}
+          type="search"
+          value={query}
         />
         <RefreshButton onRefresh={refresh} />
         <button
-          type="button"
-          onClick={() => setManaging(value => !value)}
           className="rounded border border-white/15 px-2 py-1.5 text-xs"
+          onClick={() => setManaging(value => !value)}
+          type="button"
         >
           {managing ? feeds.pane.doneManaging : feeds.pane.manageSources}
         </button>
       </div>
       <label className="flex items-center gap-1.5 text-xs opacity-70">
-        <input type="checkbox" checked={unreadOnly} onChange={event => setUnreadOnly(event.target.checked)} />
+        <input checked={unreadOnly} onChange={event => setUnreadOnly(event.target.checked)} type="checkbox" />
         {feeds.pane.unreadOnly}
       </label>
       {managing ? (
         <ManageSources
-          sources={sourcesQuery.data?.sources ?? []}
-          providers={sourcesQuery.data?.providers ?? ['rss']}
           onChanged={() => {
             void queryClient.invalidateQueries({ queryKey: ['feeds', 'sources'] })
             void queryClient.invalidateQueries({ queryKey: ['feeds', 'items'] })
           }}
+          providers={sourcesQuery.data?.providers ?? ['rss']}
+          sources={sourcesQuery.data?.sources ?? []}
         />
       ) : items.length === 0 ? (
         <div className="flex flex-1 flex-col items-center justify-center gap-1 text-center">
@@ -159,8 +165,8 @@ export function FeedsPane() {
         <div className="grid gap-2 overflow-y-auto">
           {items.map(item => (
             <FeedRow
-              key={item.id}
               item={item}
+              key={item.id}
               onChanged={() => void queryClient.invalidateQueries({ queryKey: ['feeds', 'items'] })}
             />
           ))}
@@ -174,10 +180,11 @@ function RefreshButton({ onRefresh }: { onRefresh: () => Promise<void> }) {
   const feeds = useFeeds()
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
   return (
     <span className="flex flex-col items-end gap-1">
       <button
-        type="button"
+        className="rounded border border-white/15 px-2 py-1.5 text-xs disabled:opacity-50"
         disabled={busy}
         onClick={() => {
           setBusy(true)
@@ -186,7 +193,7 @@ function RefreshButton({ onRefresh }: { onRefresh: () => Promise<void> }) {
             setError(err instanceof Error ? err.message : String(err))
           ).finally(() => setBusy(false))
         }}
-        className="rounded border border-white/15 px-2 py-1.5 text-xs disabled:opacity-50"
+        type="button"
       >
         {busy ? feeds.pane.refreshing : feeds.pane.refresh}
       </button>
@@ -197,14 +204,17 @@ function RefreshButton({ onRefresh }: { onRefresh: () => Promise<void> }) {
 
 function FeedRow({ item, onChanged }: { item: FeedItemView; onChanged: () => void }) {
   const feeds = useFeeds()
+
   const openOriginal = () => {
-    if (item.url) void window.hermesDesktop?.openExternal(item.url)
+    if (item.url) {void window.hermesDesktop?.openExternal(item.url)}
   }
+
   const saveToSession = () => {
     newSessionInProfile($activeGatewayProfile.get())
     const brief = item.brief ? `${item.brief}\n\n${item.why_it_matters}`.trim() : item.title
     setComposerDraft(`${brief}\n\nSource: ${item.url || item.title}`)
   }
+
   const toggleRead = () => {
     void markFeedItemRead(item.id, !item.read).then(onChanged)
   }
@@ -216,14 +226,14 @@ function FeedRow({ item, onChanged }: { item: FeedItemView; onChanged: () => voi
       {item.why_it_matters && <p className="text-xs opacity-60">{item.why_it_matters}</p>}
       <div className="mt-1 flex flex-wrap gap-1">
         {item.url && (
-          <button type="button" onClick={openOriginal} className="rounded border border-white/15 px-1.5 py-0.5 text-[11px]">
+          <button className="rounded border border-white/15 px-1.5 py-0.5 text-[11px]" onClick={openOriginal} type="button">
             {feeds.pane.openOriginal}
           </button>
         )}
-        <button type="button" onClick={saveToSession} className="rounded border border-white/15 px-1.5 py-0.5 text-[11px]">
+        <button className="rounded border border-white/15 px-1.5 py-0.5 text-[11px]" onClick={saveToSession} type="button">
           {feeds.pane.saveToSession}
         </button>
-        <button type="button" onClick={toggleRead} className="rounded border border-white/15 px-1.5 py-0.5 text-[11px]">
+        <button className="rounded border border-white/15 px-1.5 py-0.5 text-[11px]" onClick={toggleRead} type="button">
           {item.read ? feeds.pane.markUnread : feeds.pane.markRead}
         </button>
       </div>
@@ -258,33 +268,33 @@ function ManageSources({
     <div className="flex flex-col gap-2 overflow-y-auto">
       {sources.map(source => (
         <SourceRow
-          key={source.id}
-          source={source}
           connected={providerStatus[source.provider]?.connected ?? source.connected}
+          key={source.id}
           onChanged={() => {
             onChanged()
             void refreshStatus()
           }}
+          source={source}
         />
       ))}
       {showAdd ? (
         <AddSourceForm
-          providers={providers}
+          onCancel={() => setShowAdd(false)}
           onDone={() => {
             setShowAdd(false)
             onChanged()
             void refreshStatus()
           }}
-          onCancel={() => setShowAdd(false)}
+          providers={providers}
         />
       ) : (
         <button
-          type="button"
+          className="rounded border border-white/15 px-2 py-1.5 text-xs"
           onClick={() => {
             setShowAdd(true)
             void refreshStatus()
           }}
-          className="rounded border border-white/15 px-2 py-1.5 text-xs"
+          type="button"
         >
           {feeds.pane.addSource}
         </button>
@@ -311,13 +321,16 @@ function SourceRow({
   const toggle = () => {
     void setFeedSourceEnabled(source.id, !source.enabled).then(onChanged)
   }
+
   const remove = () => {
-    if (!window.confirm(feeds.pane.removeConfirm(source.name))) return
+    if (!window.confirm(feeds.pane.removeConfirm(source.name))) {return}
     void removeFeedSource(source.id).then(onChanged)
   }
+
   const connect = async () => {
     setConnecting(true)
     setConnectError(null)
+
     try {
       await validateFeedProvider(source.provider, token)
       await setEnvVar(providerTokenEnv(source.provider), token)
@@ -329,6 +342,7 @@ function SourceRow({
       setConnecting(false)
     }
   }
+
   const disconnect = async () => {
     await deleteEnvVar(providerTokenEnv(source.provider))
     onChanged()
@@ -352,12 +366,12 @@ function SourceRow({
       {needsToken && !connected && (
         <div className="flex flex-col gap-1.5">
           <input
-            type="password"
-            value={token}
-            onChange={event => setToken(event.target.value)}
-            placeholder={feeds.pane.tokenPlaceholder}
             aria-label={feeds.pane.tokenPlaceholder}
             className="w-full rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs"
+            onChange={event => setToken(event.target.value)}
+            placeholder={feeds.pane.tokenPlaceholder}
+            type="password"
+            value={token}
           />
           <p className="text-[11px] opacity-60">
             {tokenHelp(feeds.pane, source.provider)}
@@ -368,10 +382,10 @@ function SourceRow({
             </p>
           )}
           <button
-            type="button"
-            onClick={() => void connect()}
-            disabled={connecting || !token.trim()}
             className="rounded border border-white/15 px-2 py-1 text-xs disabled:opacity-50"
+            disabled={connecting || !token.trim()}
+            onClick={() => void connect()}
+            type="button"
           >
             {connecting ? feeds.pane.connecting : feeds.pane.connect}
           </button>
@@ -379,18 +393,18 @@ function SourceRow({
       )}
       {needsToken && connected && (
         <button
-          type="button"
-          onClick={() => void disconnect()}
           className="rounded border border-white/15 px-2 py-1 text-xs"
+          onClick={() => void disconnect()}
+          type="button"
         >
           {feeds.pane.disconnect}
         </button>
       )}
       <div className="flex gap-1">
-        <button type="button" onClick={toggle} className="rounded border border-white/15 px-1.5 py-0.5 text-[11px]">
+        <button className="rounded border border-white/15 px-1.5 py-0.5 text-[11px]" onClick={toggle} type="button">
           {source.enabled ? feeds.pane.disable : feeds.pane.enable}
         </button>
-        <button type="button" onClick={remove} className="rounded border border-white/15 px-1.5 py-0.5 text-[11px]">
+        <button className="rounded border border-white/15 px-1.5 py-0.5 text-[11px]" onClick={remove} type="button">
           {feeds.pane.remove}
         </button>
       </div>
@@ -418,6 +432,7 @@ function AddSourceForm({
   const save = async () => {
     setSaving(true)
     setError(null)
+
     try {
       await addFeedSource({
         name: name.trim() || url.trim(),
@@ -438,15 +453,15 @@ function AddSourceForm({
       <label className="flex flex-col gap-1 text-xs">
         {feeds.pane.sourceName}
         <input
-          value={name}
+          className="rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs"
           onChange={event => setName(event.target.value)}
           placeholder={feeds.pane.sourceNamePlaceholder}
-          className="rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs"
+          value={name}
         />
       </label>
       <label className="flex flex-col gap-1 text-xs">
         Provider
-        <select value={provider} onChange={event => setProvider(event.target.value)} className="rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs">
+        <select className="rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs" onChange={event => setProvider(event.target.value)} value={provider}>
           {providers.map(id => (
             <option key={id} value={id}>
               {providerLabel(feeds.pane, id)}
@@ -458,20 +473,20 @@ function AddSourceForm({
         <label className="flex flex-col gap-1 text-xs">
           {feeds.pane.sourceUrl}
           <input
-            value={url}
+            className="rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs"
             onChange={event => setUrl(event.target.value)}
             placeholder={feeds.pane.sourceUrlPlaceholder}
-            className="rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs"
+            value={url}
           />
         </label>
       )}
       <label className="flex flex-col gap-1 text-xs">
         {feeds.pane.intervalMinutes}
         <input
-          value={interval}
-          onChange={event => setInterval(event.target.value)}
-          inputMode="numeric"
           className="rounded border border-white/10 bg-white/5 px-2 py-1.5 text-xs"
+          inputMode="numeric"
+          onChange={event => setInterval(event.target.value)}
+          value={interval}
         />
       </label>
       {error && (
@@ -481,14 +496,14 @@ function AddSourceForm({
       )}
       <div className="flex gap-1">
         <button
-          type="button"
-          onClick={() => void save()}
-          disabled={saving || (provider === 'rss' && !url.trim())}
           className="rounded border border-white/15 px-2 py-1 text-xs disabled:opacity-50"
+          disabled={saving || (provider === 'rss' && !url.trim())}
+          onClick={() => void save()}
+          type="button"
         >
           {feeds.pane.addSource}
         </button>
-        <button type="button" onClick={onCancel} className="rounded border border-white/15 px-2 py-1 text-xs">
+        <button className="rounded border border-white/15 px-2 py-1 text-xs" onClick={onCancel} type="button">
           {feeds.pane.doneManaging}
         </button>
       </div>

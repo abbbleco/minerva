@@ -1,7 +1,8 @@
-import { hasPremiumAccess } from '@/lib/entitlement'
 import type { SubscriptionStateResponse } from '@hermes/shared/billing'
-import { $activeGatewayProfile, newSessionInProfile } from '@/store/profile'
+
+import { hasPremiumAccess } from '@/lib/entitlement'
 import { setComposerDraft } from '@/store/composer'
+import { $activeGatewayProfile, newSessionInProfile } from '@/store/profile'
 
 import type { IdeaCard } from './data'
 

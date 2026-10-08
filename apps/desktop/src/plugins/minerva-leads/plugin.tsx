@@ -10,8 +10,8 @@
 import { LocalizedTabTitle, translateNow } from '@hermes/plugin-sdk'
 import type { PluginContext } from '@hermes/plugin-sdk'
 
-import { LeadsPane } from './leads-pane'
 import { LEADS_LOCALES } from './i18n'
+import { LeadsPane } from './leads-pane'
 import { ID, setPluginCtx } from './shared'
 
 export default {
