@@ -1906,23 +1906,45 @@ Operator runs it with their own key â€” no credentials handled here.
 
 
 
-# Session 40 — Website session recognized by billing API (2026-10-07)
+# Session 40 ï¿½ Website session recognized by billing API (2026-10-07)
 
-Signed-in website users were sent to login/signup from plan CTAs: resolveAgencyContext (portal agency-billing.ts) accepted Bearer tokens only, but browser fetches (plans-grid to /api/billing/subscription) carry the Supabase session in cookies — so every website read resolved logged-out. No Bearer means no session proof, and none was ever sent.
+Signed-in website users were sent to login/signup from plan CTAs: resolveAgencyContext (portal agency-billing.ts) accepted Bearer tokens only, but browser fetches (plans-grid to /api/billing/subscription) carry the Supabase session in cookies ï¿½ so every website read resolved logged-out. No Bearer means no session proof, and none was ever sent.
 
 - resolveAgencyContext falls back to the cookie session when no Bearer header is present (shared contextForUser/contextForAgency tail for all three credential shapes; only a missing user is 401, broken env/transport still surfaces 5xx). Backend Bearer behavior unchanged.
 - No UI change needed: the grid's subscription-aware CTAs and manage-page state now resolve for website sessions as designed.
 
-Deliberately not changed: desktop and website sessions stay separate (a desktop device sign-in holds a router key, not browser cookies — the website still correctly shows signed-out until a web sign-in; no SSO invented here); engine NAS paths untouched.
+Deliberately not changed: desktop and website sessions stay separate (a desktop device sign-in holds a router key, not browser cookies ï¿½ the website still correctly shows signed-out until a web sign-in; no SSO invented here); engine NAS paths untouched.
 
 Verify: portal typecheck clean, test 33 pass / 0 fail.
 
 
-# Session 41 — Session-aware overview hero (2026-10-07)
+# Session 41 ï¿½ Session-aware overview hero (2026-10-07)
 
 The overview hero hardcoded Create Account next to Download Minerva, so signed-in visitors were pitched signup on every visit. OverviewPage is now async and reads the Supabase session server-side (fail-open to the signed-out hero): signed in renders Go to your agency (/minerva), signed out keeps Create Account. Download Minerva unchanged.
 
-Also kept: the account-button session-presence fix from the same investigation (email-less Discord/wallet sessions rendered the sidebar signed-out UI) — same symptom class, verified harmless.
+Also kept: the account-button session-presence fix from the same investigation (email-less Discord/wallet sessions rendered the sidebar signed-out UI) ï¿½ same symptom class, verified harmless.
 
 Verify: portal typecheck clean; touched files eslint-clean.
+
+
+# Session 42 â€” Windows runners: larger â†’ standard hosted (2026-10-08)
+
+Windows desktop builds queued 24h then failed with "exceeded maximum execution
+time while awaiting a runner". Cause: workflows pinned GitHub Larger Runner
+labels (`windows-latest-32-core`, `windows-latest-32-arm-core`) which do not
+exist on this fork â€” no runner ever picks the job up.
+
+- `windows-latest-32-core` â†’ `windows-latest` (x64, free hosted)
+- `windows-latest-32-arm-core` â†’ `windows-11-arm` (arm64 hosted)
+- Touched: `desktop-bundled-release.yml` (win32-x64, win32-arm64, win32-bundle
+  assemble, stable-store), `desktop-bundle-smoke.yml`, `install-e2e-windows-run.yml`
+  (both jobs), `tests-os.yml` (both matrix rows + header comment), `pm-bundle.yml`,
+  `windows-bundle-sdk.yml` (also fixed duplicated `[arm, arm]` matrix â†’ `[x64, arm]`),
+  `windows-venv-e2e.yml`, `windows-install-update-e2e.yml`
+- Deliberately not changed: `ubuntu-latest-32-core` / `ubuntu-latest-32-arm-core`
+  legs (same larger-runner risk, but out of scope for this Windows-queue fix);
+  no build logic, signing, or timeout values touched. Expect slower builds
+  (2â€“4 vCPU vs 32-core) but jobs start immediately.
+
+Verify: grep `.github` for `windows-latest-32` â†’ 0 matches.
 
