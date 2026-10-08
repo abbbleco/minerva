@@ -1969,3 +1969,36 @@ publishing` — `release-signing` on this fork holds only `CLOUDFLARE_R2_*`
 Verify: `git diff` shows +19/-4 in `desktop-bundled-release.yml` only; re-run
 the commit build and expect a warning instead of exit 1 at the signing gate.
 
+
+# Session 44 — Icon generator: multi-path portraits (2026-10-08)
+
+Desktop build failed past signing at icon render:
+`AssertionError: no <path> found in nous-girl-black.svg` from
+`scripts/generate_icons.py::girl_path`. Root cause (verified, not assumed):
+the fork's `assets/nous-girl-{black,white}.svg` are identical full-color
+portrait illustrations (same SHA256, 2493 paired `<path>…</path>` shapes, ~120
+fills, zero self-closing paths) while the script assumed the upstream
+single self-closing silhouette path — icon generation never worked on this
+fork, on any runner.
+
+- `girl_path`: extract ALL path elements (paired + self-closing), strip
+  editor attrs, join. `girl_layer` and every caller work unchanged.
+- `girl_bbox`: new `_girl_canvas` helper reads the file's own root viewBox
+  (fork: 1024) instead of the hardcoded kit `GIRL_VIEWBOX` (5487) — without
+  this the portrait renders at ~19% size in the corner. Constant kept as
+  fallback.
+- `portrait_layer`: `drag_bottom_nodes` now applies to every descendant with
+  a `d` attr (was `portrait[0]` only); skipped when distance is 0. All 2493
+  paths verified M/L/C/z/Z-only, no transforms, so the drag generalizes.
+- Deliberately not changed: fitted `GIRL_BOXES`, badge/ring logic, target
+  list; light/dark icons are near-identical by fork art (files identical
+  except tile), border stroke still differs.
+
+Verify: ran only the failing step locally
+(`.venv\Scripts\python.exe -I scripts/generate_icons.py --source . --out
+<TEMP>\icons-out`) — 99/99 targets wrote + verified, `--check` prints
+`[ok] all 99 targets…`, and the 1024 icon shows the full portrait correctly
+registered with transparent squircle corners. pytest not run locally (no
+pytest in `.venv`, no bash for `run_tests.sh` here) — `test_icon_flavors.py`
+and `icons-freshness-check` ride on CI.
+

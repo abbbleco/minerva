@@ -148,7 +148,9 @@ GIRL_BOXES = {
 _mx, _my, _mw, _mh = GIRL_BOXES["squircle-mac-light.svg"]
 _plate = 1024.0 / 824.0
 GIRL_BOXES["icon.icon"] = ((_mx - 100.0) * _plate, (_my - 100.0) * _plate, _mw * _plate, _mh * _plate)
-# The brand-kit SVG canvas (both girl svgs share this viewBox).
+# The brand-kit SVG canvas (both girl svgs share this viewBox); kept as the
+# fallback when a re-exported portrait carries its own (_girl_canvas reads
+# the file first).
 GIRL_VIEWBOX = 5487.0615
 
 # ─── MSIX (Windows) asset catalog ───────────────────────────────────────────
@@ -317,15 +319,32 @@ class IconArt:
 
 
 def girl_path(art: IconArt, girl: str) -> str:
-    """The girl `<path>` element with editor metadata stripped (resvg rejects
-    undeclared inkscape/sodipodi prefixes)."""
+    """Every girl `<path>` element joined, with editor metadata stripped
+    (resvg rejects undeclared inkscape/sodipodi prefixes). A single-silhouette
+    brand kit yields one path; a detailed multi-path portrait export yields
+    them all — both embed identically into the portrait layer."""
     if girl not in art.paths:
         src = art.girls[girl].read_text(encoding="utf-8-sig")
-        m = re.search(r"<path\b.*?/>", src, re.S)
-        assert m, f"no <path> found in {art.girls[girl].name}"
-        path = re.sub(r'\s+(inkscape|sodipodi):[a-zA-Z-]+="[^"]*"', "", m.group(0))
-        art.paths[girl] = path
+        paths = re.findall(r"<path\b[^>]*?>.*?</path>|<path\b[^>]*?/>", src, re.S)
+        assert paths, f"no <path> found in {art.girls[girl].name}"
+        art.paths[girl] = "\n    ".join(
+            re.sub(r'\s+(inkscape|sodipodi):[a-zA-Z-]+="[^"]*"', "", p) for p in paths
+        )
     return art.paths[girl]
+
+
+def _girl_canvas(art: IconArt, girl: str) -> float:
+    """Width of the girl SVG's own canvas in its own units. Brand-kit exports
+    share one viewBox, but a re-exported portrait carries its own (the fork's
+    is 1024, the original kit's GIRL_VIEWBOX) — read it from the file so the
+    alpha-bbox maps back to the coordinates the path data actually uses."""
+    src = art.girls[girl].read_text(encoding="utf-8-sig")
+    m = re.search(r'<svg\b[^>]*?\bviewBox="([^"]*)"', src)
+    if m:
+        parts = m.group(1).split()
+        if len(parts) == 4:
+            return float(parts[2])
+    return GIRL_VIEWBOX
 
 
 def girl_bbox(art: IconArt, girl: str) -> tuple[float, float, float, float]:
@@ -335,7 +354,7 @@ def girl_bbox(art: IconArt, girl: str) -> tuple[float, float, float, float]:
         data = resvg_py.svg_to_bytes(svg_path=str(art.girls[girl]), width=512, height=512)
         im = Image.open(io.BytesIO(data))
         bx, by, bx2, by2 = im.getchannel("A").point(lambda v: 255 if v > 0 else 0).getbbox()
-        s = GIRL_VIEWBOX / 512.0
+        s = _girl_canvas(art, girl) / 512.0
         art.bboxes[girl] = (bx * s, by * s, (bx2 - bx) * s, (by2 - by) * s)
     return art.bboxes[girl]
 
@@ -465,10 +484,16 @@ def portrait_layer(art: IconArt, girl: str, bg: str, join_bottom: float) -> ET.E
     _, y, portrait_width, portrait_height = box
     _, by, bw, bh = girl_bbox(art, girl)
     scale = min(portrait_width / bw, portrait_height / bh)
-    drag_bottom_nodes(
-        portrait[0], cutoff=by + bh * 0.97, band=bh * 0.02,
-        distance=max(0.0, join_bottom - (y + portrait_height)) / scale,
-    )
+    distance = max(0.0, join_bottom - (y + portrait_height)) / scale
+    if distance:
+        # A single-silhouette kit has one path child; a detailed export has
+        # one per shape — every bottom node joins the border either way.
+        for node in portrait.iter():
+            if "d" in node.attrib:
+                drag_bottom_nodes(
+                    node, cutoff=by + bh * 0.97, band=bh * 0.02,
+                    distance=distance,
+                )
     # Keep the fitted viewBox fixed, but let edited nodes reach into the border.
     portrait.set("overflow", "visible")
     return portrait
