@@ -14,9 +14,7 @@ name: Install & Update E2E red tracker
 # Dispatch it by hand to preview (dry-run, the default) or replay a run.
 
 on:
-  workflow_run:
-    workflows: ['Install & Update E2E']
-    types: [completed]
+  # FORK-LOCAL (abbbleco/minerva): auto triggers disabled to save Actions minutes; manual runs only.
   workflow_dispatch:
     inputs:
       run-id:

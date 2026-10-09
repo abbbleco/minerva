@@ -13,9 +13,9 @@ name: Windows install + update E2E
 # rest of CI.
 
 on:
+  # FORK-LOCAL (abbbleco/minerva): auto triggers disabled to save Actions minutes; manual runs only.
+  workflow_dispatch:
   workflow_call:
-  push:
-    branches: ['wine2e-install/**']
 
 permissions:
   contents: read

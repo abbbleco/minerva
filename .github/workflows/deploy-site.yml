@@ -1,18 +1,7 @@
 name: Deploy Site
 
 on:
-  release:
-    types: [published]
-  push:
-    branches: [main]
-    paths:
-      - 'website/**'
-      - 'skills/**'
-      - 'optional-skills/**'
-      # Catalog entry/removal merges must republish /docs/api/plugin-catalog.json —
-      # installed clients fetch it for live catalog refresh.
-      - 'plugin-catalog/**'
-      - '.github/workflows/deploy-site.yml'
+  # FORK-LOCAL (abbbleco/minerva): auto triggers disabled to save Actions minutes; manual runs only.
   workflow_dispatch:
     inputs:
       skills_index_run_id:

@@ -12,13 +12,7 @@ name: Sandbox desktop image
 # for an image that changes a few times a year.
 
 on:
-  pull_request:
-    paths:
-      - docker/sandbox-desktop.Dockerfile
-      - docker/sandbox-desktop-smoke.sh
-      - .github/workflows/sandbox-image.yml
-  release:
-    types: [published]
+  # FORK-LOCAL (abbbleco/minerva): auto triggers disabled to save Actions minutes; manual runs only.
   workflow_dispatch:
     inputs:
       publish:

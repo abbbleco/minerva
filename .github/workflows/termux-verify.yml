@@ -1,19 +1,7 @@
 name: Termux verification
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'scripts/termux/**'
-      - 'pm/**'
-      - 'tests/scripts/test_termux*'
-      - '.github/workflows/termux-verify.yml'
-  pull_request:
-    paths:
-      - 'scripts/termux/**'
-      - 'pm/**'
-      - 'tests/scripts/test_termux*'
-      - '.github/workflows/termux-verify.yml'
+  # FORK-LOCAL (abbbleco/minerva): auto triggers disabled to save Actions minutes; manual runs only.
   workflow_dispatch:
   workflow_call:
     inputs:

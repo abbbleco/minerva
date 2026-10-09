@@ -11,9 +11,8 @@ name: Plugin Catalog CI
 #                            `minerva plugins validate`.
 
 on:
-  pull_request:
-    paths:
-      - "plugin-catalog/**"
+  # FORK-LOCAL (abbbleco/minerva): auto triggers disabled to save Actions minutes; manual runs only.
+  workflow_dispatch:
 
 permissions:
   contents: read

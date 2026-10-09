@@ -2002,3 +2002,44 @@ registered with transparent squircle corners. pytest not run locally (no
 pytest in `.venv`, no bash for `run_tests.sh` here) — `test_icon_flavors.py`
 and `icons-freshness-check` ride on CI.
 
+# Session 45 — Fork Actions spend: all workflows manual-only (2026-10-09)
+
+Every push/PR commit was fanning out into the full upstream CI matrix
+(`ci.yaml` + `docker.yml` + `nix.yml` + macOS/Windows lanes + schedules),
+burning the fork's free Actions minutes. All 51 workflows under
+`.github/workflows/` now trigger on `workflow_dispatch` (manual) and/or
+`workflow_call` (reusable, zero cost standalone) only.
+
+- 23 files rewritten: `push`/`pull_request`/`schedule`/`workflow_run`/
+  `release` triggers removed; `workflow_dispatch` + `workflow_call` bodies
+  (inputs, outputs) preserved byte-for-byte. Each carries a
+  `FORK-LOCAL (abbbleco/minerva)` comment on its `on:` block.
+  Removed auto triggers: ci.yaml (PR+push main), docker.yml/nix.yml
+  (PR+push), install-e2e.yml (schedule+PR), pm-bundle/termux-verify
+  (PR+push), plugin-catalog-ci/sandbox-image/windows-bundle-sdk/label-rerun
+  (PR), archive-inputs/js-autofix (push), canary-release/osv-scanner/
+  skills-index-freshness (schedule), skills-index (schedule+push),
+  live-providers (schedule+push), deploy-site (release+push),
+  ci-review-comment/install-e2e-red/stable-release-publication
+  (workflow_run), windows-install-update-e2e/windows-venv-e2e (push on
+  wine2e(-install)/**).
+- 28 files untouched: 24 pure `workflow_call` lanes (cost nothing alone),
+  `stable-release.yml` + `bootstrap-installer-build.yml` (already
+  dispatch-only), `desktop-bundled-release.yml` (already call+dispatch).
+- One lost comment restored: `stable-release-publication.yml` col-0
+  `concurrency:` doc (script dropped it with the `workflow_run` body).
+
+Deliberately not changed: job logic, runners, branch protection (still
+references CI checks — runs now only exist after a manual dispatch);
+`run-e2e` label flow and `wine2e/**` push lanes go quiet with their
+triggers (dispatch manually instead). Nothing committed (working tree
+only); push at will. To re-enable upstream behavior per file, restore its
+`on:` trigger lines from `git diff`.
+
+Verify:
+- Trigger scan (PowerShell, all 51 files): only `workflow_dispatch` /
+  `workflow_call` remain; 23 rewritten, 0 auto left.
+- `node -e` with repo `node_modules/js-yaml`: all 51 parse, `on:` keys
+  clean.
+- `git diff --stat`: 23 files, +33/-182, `on:` blocks only.
+
