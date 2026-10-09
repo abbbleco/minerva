@@ -49,7 +49,19 @@ try {
     @{ path=$Artifact; sha256=$beforeHash } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $Out 'artifact.json')
     $signature = Get-AuthenticodeSignature -LiteralPath $Artifact
     if ($signature.Status -ne 'Valid' -or -not $signature.SignerCertificate -or
-        $signature.SignerCertificate.Subject -cne $Expected.publisher) { throw 'Artifact signature/publisher invalid' }
+        $signature.SignerCertificate.Subject -cne $Expected.publisher) {
+        # FORK-LOCAL (abbbleco/minerva): commit/channel test builds ship
+        # UNSIGNED (no Azure Trusted Signing on this fork), and an unsigned
+        # MSIX cannot install via Add-AppxPackage. Tag/release builds must
+        # stay signed, so only untagged test bytes may skip install+chat.
+        if (-not $Tag) {
+            'unsigned test artifact; install+chat skipped (no signing on this fork)' |
+                Set-Content -LiteralPath (Join-Path $Out 'smoke-skipped.txt')
+            Write-Warning 'Artifact is unsigned and this is an untagged test build; skipping install and chat'
+            exit 0
+        }
+        throw 'Artifact signature/publisher invalid'
+    }
     $inputMetadata = Read-BundleSmokeMetadata $Artifact $Arch $Expected
     $inputMetadata | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $Out 'artifact-metadata.json')
     if (@(Get-AppxPackage -AllUsers -Name $Expected.msixIdentity).Count) { throw 'Package identity already exists; refusing to replace it' }

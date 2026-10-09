@@ -1083,7 +1083,10 @@ jobs:
         # The backstop against a silent unsigned publish: assess the packed
         # app against the real Gatekeeper policy (requires a Developer ID
         # signature AND a stapled notarization ticket to pass offline).
-        if: inputs.upload_release == true || inputs.release-phase == 'candidate' || inputs.build_commit != '' || inputs.channel != ''
+        # FORK-LOCAL (abbbleco/minerva): commit/channel test builds ship
+        # UNSIGNED (no Apple credentials on this fork; the credential gate
+        # above already warns). Enforce only for real publishes.
+        if: inputs.upload_release == true || inputs.release-phase == 'candidate'
         shell: bash
         run: |
           shopt -s nullglob
@@ -1596,6 +1599,10 @@ jobs:
           fi
 
       - name: Azure login (OIDC)
+        # FORK-LOCAL (abbbleco/minerva): no Azure credentials on this fork;
+        # commit/channel assembles never sign, so skip login like the build
+        # legs above (which carry the same guard since Session 43).
+        if: vars.AZURE_CLIENT_ID != ''
         uses: azure/login@f5d393ae46f8fde4be8b75f32e3fc50e654ad0ca # v3.0.1
         with:
           client-id: ${{ vars.AZURE_CLIENT_ID }}
@@ -1603,6 +1610,7 @@ jobs:
           allow-no-subscriptions: true
 
       - name: Mint federated token for the signing dlib
+        if: vars.AZURE_CLIENT_ID != ''
         shell: bash
         run: |
           file="$RUNNER_TEMP/azure-federated-token"

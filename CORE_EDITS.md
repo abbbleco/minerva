@@ -2043,3 +2043,61 @@ Verify:
   clean.
 - `git diff --stat`: 23 files, +33/-182, `on:` blocks only.
 
+# Session 46 — Unsigned test builds pass smoke + darwin verify (2026-10-09)
+
+Commit build failed at `Install and chat on Windows`:
+`windows-bundle-smoke.ps1: Artifact signature/publisher invalid`. Root
+cause (verified, not assumed): Session 43 lets commit/channel builds ship
+UNSIGNED (no Azure/Apple credentials on this fork) but two downstream
+gates still demanded signatures — the Windows smoke's Authenticode +
+publisher check (`Status -ne 'Valid'` on any unsigned MSIX, which
+`Add-AppxPackage` couldn't install anyway) and the darwin leg's `Verify
+the build is signed and notarized` (ran for `build_commit`/`channel`
+too, so macOS commit builds were next in line).
+
+- `tests/install/windows-bundle-smoke.ps1` — unsigned/publish-mismatch
+  with no `-Tag` (commit or channel test bytes) now writes
+  `smoke-skipped.txt`, warns, and exits 0 (`finally` still stops the
+  transcript and records exit 0). Tag/release builds keep the hard throw.
+- `desktop-bundled-release.yml` darwin verify `if:` narrowed to
+  `upload_release == true || release-phase == 'candidate'` (was also
+  `build_commit`/`channel`); the credential gate above already warns for
+  test builds, so nothing observable is lost.
+
+Deliberately not changed: macOS smoke (no signature gate — mounts and
+runs directly); release/candidate publish path still refuses unsigned;
+test-signing with a self-signed cert rejected (4 moving parts in a
+security-critical test for zero publisher-identity value). Note: an
+unsigned channel smoke now reports success-skipped, so channel publish
+of unsigned bytes is the operator's call — same posture as Session 43.
+
+Verify: PSParser tokenize → 0 errors; js-yaml parses the workflow
+(33 jobs); `git diff --stat` → 2 files, +17/-2, gate lines only.
+Uncommitted; push and re-run the commit build — expect the Windows smoke
+to pass skipped with warning instead of exit 1.
+
+# Session 47 — Assemble job skips Azure login without credentials (2026-10-09)
+
+Follow-up to Session 46: the commit build next failed at `Assemble and
+stage the Windows universal bundle` → `Azure login (OIDC)` →
+`SERVICE_PRINCIPAL: client-id and tenant-id are not supplied`. Root cause:
+Session 43 guarded the per-arch build legs' login/token steps with
+`if: vars.AZURE_CLIENT_ID != ''` but the assemble job's identical pair
+had no guard — and the fork sets no `AZURE_CLIENT_ID`, so azure/login
+fails before doing anything the commit path needs (commit/channel
+assembles exit early with `--no-upload` and never sign).
+
+- `desktop-bundled-release.yml` assemble job: same
+  `if: vars.AZURE_CLIENT_ID != ''` on `Azure login (OIDC)` + `Mint
+  federated token for the signing dlib`, with a FORK-LOCAL comment.
+  Upstream (creds present) unaffected; fork tag/release assembles would
+  fail later at the actual signing call with a clear missing-creds error.
+
+Deliberately not changed: Apple key step (writes an empty file when
+secrets absent — harmless, notarize never runs unsigned); R2 staging
+(fork holds `CLOUDFLARE_R2_*`); publish jobs (commit builds never reach
+them).
+
+Verify: js-yaml parses the workflow (33 jobs); `git diff` → the two
+`if:` lines + comment only. Uncommitted; push and re-run.
+
