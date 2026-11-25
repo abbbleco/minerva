@@ -17,7 +17,7 @@ export default function Awards(): JSX.Element {
           </div>
           <div className="services-page-awards_cards">
             <a
-              href="https://clutch.co/profile/abbbleco"
+              href="https://clutch.co/profile/abbble-co"
               target="_blank"
               className="w-inline-block"
             >

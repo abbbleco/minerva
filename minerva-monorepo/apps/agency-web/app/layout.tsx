@@ -56,7 +56,7 @@ const organizationJsonLd = {
     "https://www.instagram.com/abbble.co/",
     "https://dribbble.com/abbbleco",
     "https://www.behance.net/abbbleco",
-    "https://clutch.co/profile/abbbleco",
+    "https://clutch.co/profile/abbble-co",
     "https://webflow.com/@abbbleco",
     "https://www.linkedin.com/company/abbbleco",
     "https://www.facebook.com/abbble.co",

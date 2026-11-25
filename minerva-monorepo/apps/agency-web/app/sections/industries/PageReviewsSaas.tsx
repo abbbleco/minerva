@@ -44,7 +44,7 @@ export default function PageReviewsSaas(): JSX.Element {
                     ></div>
                   </div>
                   <a
-                    href="https://clutch.co/profile/abbbleco"
+                    href="https://clutch.co/profile/abbble-co"
                     target="_blank"
                     className="services-page-review_platform-label-wrap w-inline-block"
                     ><img

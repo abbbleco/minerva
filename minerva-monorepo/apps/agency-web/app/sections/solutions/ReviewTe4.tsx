@@ -30,9 +30,9 @@ export default function ReviewTe4(): JSX.Element {
                 <img
                   src="/img/2fe4535df52f.webp"
                   loading="lazy"
-                  alt="Vladislav Gavriluk"
+                  alt="Sibonginkosi Magagula"
                   className="review-card_author-image" />
-                <div className="review-card_author-name">Vladislav Gavriluk</div>
+                <div className="review-card_author-name">Sibonginkosi Magagula</div>
                 <div className="review-card_author-bio">
                   Founder &amp; CEO at Abbble Co
                 </div>

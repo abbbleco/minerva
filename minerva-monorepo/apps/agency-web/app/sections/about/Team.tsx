@@ -52,8 +52,8 @@ export default function Team(): JSX.Element {
                         <span className="about-p-team_info-bio-word">founder&nbsp;</span>
                       </div>
                       <div className="about-p-team_info-bio-row">
-                        Vladislav&nbsp;
-                        <span className="about-p-team_info-bio-word">Vladislav&nbsp;</span>
+                        Sibonginkosi&nbsp;
+                        <span className="about-p-team_info-bio-word">Sibonginkosi&nbsp;</span>
                       </div>
                       <div className="about-p-team_info-bio-row">
                         was&nbsp;
@@ -72,12 +72,9 @@ export default function Team(): JSX.Element {
                         <span className="about-p-team_info-bio-word">team&nbsp;</span>
                       </div>
                       <div className="about-p-team_info-bio-row">
-                        to
-                        <span className="about-p-team_info-bio-word">to&nbsp;</span>
+                        to&nbsp;<span className="about-p-team_info-bio-word">to&nbsp;</span>
                       </div>
-                      <div className="about-p-team_info-bio-row">
-                        bring&nbsp;
-                        <span className="about-p-team_info-bio-word">bring&nbsp;</span>
+                      <div className="about-p-team_info-bio-row"> bring&nbsp; <span className="about-p-team_info-bio-word">bring&nbsp;</span>
                       </div>
                       <div className="about-p-team_info-bio-row">
                         innovation

@@ -74,7 +74,7 @@ export default function VideoSlider(): JSX.Element {
                         >
                           <iframe
                             id="VimeoV1"
-                            src="https://youtube.com/watch"
+                            src="https://www.youtube.com/watch?v=bxLB7F9IBLw"
                             frameBorder="0"
                             allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
                             style={{
@@ -241,7 +241,7 @@ export default function VideoSlider(): JSX.Element {
                         >
                           <iframe
                             id="VimeoV2"
-                            src="https://youtube.com/watch"
+                            src="https://www.youtube.com/watch?v=bxLB7F9IBLw"
                             frameBorder="0"
                             allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
                             style={{
@@ -251,7 +251,7 @@ export default function VideoSlider(): JSX.Element {
                               width: '100%',
                               height: '100%'
                             }}
-                            title="Themba Fakudze - PM at Milla Nova Review"
+                            title="Moses Yangnemenga - PM at Milla Nova Review"
                             data-ready="true"
                           ></iframe>
                         </div>
@@ -346,14 +346,14 @@ export default function VideoSlider(): JSX.Element {
                         <div className="vs-slide_info-top">
                           <div className="vs-slide_author">
                             <img
-                              src="\img\tsela_nawe_chairperson.JPG"
+                              src="\img\reviews\moses.jpg"
                               loading="lazy"
-                              alt="Themba Fakudze"
+                              alt="Moses Yangnemenga"
                               className="vs-slide_author-image"
                             />
                             <div className="vs-slide_author-info">
-                              <h3 className="vs-slide_author-name">Themba Fakudze</h3>
-                              <div className="vs-slide_author-bio">Chairperson of Tsela Nawe</div>
+                              <h3 className="vs-slide_author-name">Moses Yangnemenga</h3>
+                              <div className="vs-slide_author-bio">Founder of Tieme Ndo</div>
                             </div>
                           </div>
                           <img
@@ -365,10 +365,10 @@ export default function VideoSlider(): JSX.Element {
                         </div>
                         <div className="vs-slide_info-middle">
                           <p className="vs-slide_info-review-text">
-                            “Our team has achieved our business goals with Abbble Co`s help for sure. It was beneficial
-                            to cooperate with design professionals instead of spending years of building an internal
-                            team like that on our own. It took them less time to provide us with more value than we
-                            would have struggled ourselves.”
+                            “The process was something to be admired, they have a
+                          great idea of how to turn an idea into a visual
+                          product. They would also immediately make changes to
+                          any improvements we mentioned.”
                           </p>
                         </div>
                       </div>
