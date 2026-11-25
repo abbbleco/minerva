@@ -1,4 +1,4 @@
-import type { JSX } from "react";
+import type { JSX } from 'react'
 
 /* eslint-disable @next/next/no-img-element */
 
@@ -10,8 +10,7 @@ export default function VideoSlider(): JSX.Element {
           <div className="vs_top-wrapper">
             <div className="vs_title-wrapper">
               <h2 className="heading-style-h2 vs-title">
-                Long-term partnerships is what we are always striving{" "}
-                <span className="is-toxic-green">to build</span>
+                Long-term partnerships is what we are always striving <span className="is-toxic-green">to build</span>
               </h2>
               <img
                 src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjM4IiBoZWlnaHQ9IjIxIiB2aWV3Qm94PSIwIDAgMjM4IDIxIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMiAxNC44NDA3QzUuNjA0NjMgMTMuNjM5IDguMDIwMjcgOS45OTI2MSAxMS44MzU2IDguODI0MUMxNi4xMTE1IDcuNDUwNDkgMjAuNzA2MyA3Ljk4MzMyIDI0LjYyODcgMTAuMzA3NkMyNy4yMzk5IDExLjk2NSAyOS40MDcyIDE0LjI5MzggMzEuOTA1NiAxNi4xMDg3QzM0LjQwNCAxNy45MjM2IDM3LjQ2NjkgMTkuMjkxIDQwLjM3MTYgMTguNDcwNUM0My43ODgxIDE3LjUwMDkgNDUuOTQ3OSAxMy45NDU2IDQ4LjA2MjUgMTAuODQ2MkM1MC4xNzcxIDcuNzQ2NzEgNTMuMTM0NiA0LjU4MTAxIDU2LjY0MTQgNC45OTUzN0M2MC44NzA2IDUuNTAwOSA2My4wNTMgMTAuNzIxOSA2Ni40MjQzIDEzLjU3MjdDNzIuMTQzNSAxOC4zODc2IDgwLjU4NyAxNS43MTA5IDg2LjM4OSAxMS4wMjg2QzkxLjI3MjkgNy4wODM4IDk2LjI5MjMgMS41NDc4NiAxMDIuMjY3IDIuNjI1MjFDMTA5LjM1NiAzLjkwOTc1IDExMy40MzUgMTQuMTExNCAxMjAuNjIyIDE0LjE3NzdDMTI3LjY1IDE0LjI0NCAxMzEuNjI0IDQuNjcyMTQgMTM4LjM2NiAyLjQ4NDI5QzE0NS4xMDkgMC4yOTY0NDIgMTUxLjYxOSA2LjA3MjcyIDE1OC4yMTEgOC44MjQxQzE2My40OTQgMTAuOTU0MSAxNjkuMjU1IDExLjE3NzYgMTc0LjY2MSA5LjQ2MjI0QzE3Ny40MjcgOC42MDU0MyAxODAuMDUgNy4yNjIxMiAxODIuNDI3IDUuNDg0MjlDMTg0LjkxMSAzLjYxOTY1IDE4Ni41ODEgMS4zNDA2IDE4OS45NTMgMi4yMzU2M0MxOTIuODQyIDIuOTczMiAxOTQuNjExIDYuMTU1NTQgMTk3LjE1NCA3LjgzNzg2QzIwMS42MDIgMTAuNzcxNiAyMDcuMjIzIDguNjY2NjEgMjEyLjIwNSA3LjEzMzQ2QzIxOS45NTkgNC44MzgzNCAyMjguMDU4IDQuMzIyMTggMjM2IDUuNjE2OTIiIHN0cm9rZT0iI0QwRjYwMSIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K"
@@ -30,31 +29,10 @@ export default function VideoSlider(): JSX.Element {
                 aria-disabled="true"
               >
                 <div className="code-embed w-embed">
-                  <svg
-                    width="50"
-                    height="50"
-                    viewBox="0 0 50 50"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect
-                      x="0.5"
-                      y="0.5"
-                      width="49"
-                      height="49"
-                      rx="24.5"
-                      stroke="white"
-                    ></rect>
-                    <path
-                      d="M34 25.001L16 25.001"
-                      stroke="white"
-                      strokeWidth="2"
-                    ></path>
-                    <path
-                      d="M25.0078 34.0002L16.0077 25.0001L25.0078 16"
-                      stroke="white"
-                      strokeWidth="2"
-                    ></path>
+                  <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0.5" y="0.5" width="49" height="49" rx="24.5" stroke="white"></rect>
+                    <path d="M34 25.001L16 25.001" stroke="white" strokeWidth="2"></path>
+                    <path d="M25.0078 34.0002L16.0077 25.0001L25.0078 16" stroke="white" strokeWidth="2"></path>
                   </svg>
                 </div>
               </div>
@@ -67,31 +45,10 @@ export default function VideoSlider(): JSX.Element {
                 aria-disabled="false"
               >
                 <div className="code-embed w-embed">
-                  <svg
-                    width="50"
-                    height="50"
-                    viewBox="0 0 50 50"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect
-                      x="0.5"
-                      y="0.5"
-                      width="49"
-                      height="49"
-                      rx="24.5"
-                      stroke="white"
-                    ></rect>
-                    <path
-                      d="M16 25.001L34 25.001"
-                      stroke="white"
-                      strokeWidth="2"
-                    ></path>
-                    <path
-                      d="M24.9922 34.0002L33.9923 25.0001L24.9922 16"
-                      stroke="white"
-                      strokeWidth="2"
-                    ></path>
+                  <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0.5" y="0.5" width="49" height="49" rx="24.5" stroke="white"></rect>
+                    <path d="M16 25.001L34 25.001" stroke="white" strokeWidth="2"></path>
+                    <path d="M24.9922 34.0002L33.9923 25.0001L24.9922 16" stroke="white" strokeWidth="2"></path>
                   </svg>
                 </div>
               </div>
@@ -99,14 +56,10 @@ export default function VideoSlider(): JSX.Element {
           </div>
           <div className="vs_block">
             <div className="swiper video-slider swiper-initialized swiper-horizontal swiper-backface-hidden">
-              <div
-                className="swiper-wrapper vs_wrapper"
-                id="swiper-wrapper-013b7b911faca34c"
-                aria-live="polite"
-              >
+              <div className="swiper-wrapper vs_wrapper" id="swiper-wrapper-013b7b911faca34c" aria-live="polite">
                 <div
                   className="swiper-slide vs_slide swiper-slide-active"
-                  style={{ width: "1173px", marginRight: "20px" }}
+                  style={{ width: '1173px', marginRight: '20px' }}
                   role="group"
                   aria-label="1 / 2"
                 >
@@ -115,32 +68,28 @@ export default function VideoSlider(): JSX.Element {
                       <div className="vs-slide_video-embed w-embed w-iframe w-script">
                         <div
                           style={{
-                            padding: "71.88% 0 0 0",
-                            position: "relative",
+                            padding: '71.88% 0 0 0',
+                            position: 'relative'
                           }}
                         >
                           <iframe
                             id="VimeoV1"
-                            src="https://player.vimeo.com/video/"
+                            src="https://youtube.com/watch"
                             frameBorder="0"
                             allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
                             style={{
-                              position: "absolute",
-                              top: "0",
-                              left: "0",
-                              width: "100%",
-                              height: "100%",
+                              position: 'absolute',
+                              top: '0',
+                              left: '0',
+                              width: '100%',
+                              height: '100%'
                             }}
                             title="Themba Fakudze - PM at Milla Nova Review"
                             data-ready="true"
                           ></iframe>
                         </div>
                       </div>
-                      <div
-                        id="togglePlayPauseV1"
-                        className="vs-slide_video-controls"
-                        style={{ opacity: "1" }}
-                      >
+                      <div id="togglePlayPauseV1" className="vs-slide_video-controls" style={{ opacity: '1' }}>
                         <div className="vs-slide_video-play-btn w-embed">
                           <svg
                             width="72"
@@ -150,12 +99,7 @@ export default function VideoSlider(): JSX.Element {
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <g filter="url(#filter0_b_8729_7743)">
-                              <rect
-                                width="72"
-                                height="72"
-                                rx="36"
-                                fill="white"
-                              ></rect>
+                              <rect width="72" height="72" rx="36" fill="white"></rect>
                             </g>
                             <path
                               d="M47.9983 32.9436C50.2826 34.3493 50.2826 37.6697 47.9983 39.0755L32.4672 48.633C30.0687 50.1091 26.9805 48.3834 26.9805 45.5671L26.9805 26.452C26.9805 23.6356 30.0687 21.9099 32.4672 23.386L47.9983 32.9436Z"
@@ -171,14 +115,8 @@ export default function VideoSlider(): JSX.Element {
                                 filterUnits="userSpaceOnUse"
                                 colorInterpolationFilters="sRGB"
                               >
-                                <feFlood
-                                  floodOpacity="0"
-                                  result="BackgroundImageFix"
-                                ></feFlood>
-                                <feGaussianBlur
-                                  in="BackgroundImageFix"
-                                  stdDeviation="3.19756"
-                                ></feGaussianBlur>
+                                <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
+                                <feGaussianBlur in="BackgroundImageFix" stdDeviation="3.19756"></feGaussianBlur>
                                 <feComposite
                                   in2="SourceAlpha"
                                   operator="in"
@@ -194,10 +132,7 @@ export default function VideoSlider(): JSX.Element {
                             </defs>
                           </svg>
                         </div>
-                        <div
-                          className="vs-slide_video-pause-btn w-embed"
-                          style={{ opacity: "0" }}
-                        >
+                        <div className="vs-slide_video-pause-btn w-embed" style={{ opacity: '0' }}>
                           <svg
                             width="72"
                             height="72"
@@ -206,25 +141,10 @@ export default function VideoSlider(): JSX.Element {
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <g filter="url(#filter0_b_8729_7760)">
-                              <rect
-                                width="72"
-                                height="72"
-                                rx="36"
-                                fill="white"
-                              ></rect>
+                              <rect width="72" height="72" rx="36" fill="white"></rect>
                             </g>
-                            <path
-                              d="M30 26L30 46"
-                              stroke="black"
-                              strokeWidth="6"
-                              strokeLinecap="round"
-                            ></path>
-                            <path
-                              d="M42 26L42 46"
-                              stroke="black"
-                              strokeWidth="6"
-                              strokeLinecap="round"
-                            ></path>
+                            <path d="M30 26L30 46" stroke="black" strokeWidth="6" strokeLinecap="round"></path>
+                            <path d="M42 26L42 46" stroke="black" strokeWidth="6" strokeLinecap="round"></path>
                             <defs>
                               <filter
                                 id="filter0_b_8729_7760"
@@ -235,14 +155,8 @@ export default function VideoSlider(): JSX.Element {
                                 filterUnits="userSpaceOnUse"
                                 colorInterpolationFilters="sRGB"
                               >
-                                <feFlood
-                                  floodOpacity="0"
-                                  result="BackgroundImageFix"
-                                ></feFlood>
-                                <feGaussianBlur
-                                  in="BackgroundImageFix"
-                                  stdDeviation="3.19756"
-                                ></feGaussianBlur>
+                                <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
+                                <feGaussianBlur in="BackgroundImageFix" stdDeviation="3.19756"></feGaussianBlur>
                                 <feComposite
                                   in2="SourceAlpha"
                                   operator="in"
@@ -271,12 +185,8 @@ export default function VideoSlider(): JSX.Element {
                               className="vs-slide_author-image"
                             />
                             <div className="vs-slide_author-info">
-                              <h3 className="vs-slide_author-name">
-                                Themba Fakudze
-                              </h3>
-                              <div className="vs-slide_author-bio">
-                                Chairperson of Tsela Nawe
-                              </div>
+                              <h3 className="vs-slide_author-name">Themba Fakudze</h3>
+                              <div className="vs-slide_author-bio">Chairperson of Tsela Nawe</div>
                             </div>
                           </div>
                           <img
@@ -288,21 +198,14 @@ export default function VideoSlider(): JSX.Element {
                         </div>
                         <div className="vs-slide_info-middle">
                           <p className="vs-slide_info-review-text">
-                            “Our team has achieved our business goals with
-                            Abbble Co`s help for sure. It was beneficial to
-                            cooperate with design professionals instead of
-                            spending years of building an internal team like
-                            that on our own. It took them less time to provide
-                            us with more value than we would have struggled
-                            ourselves.”
+                            “Our team has achieved our business goals with Abbble Co`s help for sure. It was beneficial
+                            to cooperate with design professionals instead of spending years of building an internal
+                            team like that on our own. It took them less time to provide us with more value than we
+                            would have struggled ourselves.”
                           </p>
                         </div>
                       </div>
-                      <a
-                        target=""
-                        href="works"
-                        className="button fill-black arrow-button w-inline-block"
-                      >
+                      <a target="" href="works" className="button fill-black arrow-button w-inline-block">
                         <div>View case study</div>
                         <div className="code-embed w-embed">
                           <svg
@@ -313,16 +216,8 @@ export default function VideoSlider(): JSX.Element {
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
                           >
-                            <path
-                              d="M2.8335 10.5L18.8335 10.5"
-                              stroke="white"
-                              strokeWidth="2"
-                            ></path>
-                            <path
-                              d="M10.8335 18.5L18.8335 10.5L10.8335 2.5"
-                              stroke="white"
-                              strokeWidth="2"
-                            ></path>
+                            <path d="M2.8335 10.5L18.8335 10.5" stroke="white" strokeWidth="2"></path>
+                            <path d="M10.8335 18.5L18.8335 10.5L10.8335 2.5" stroke="white" strokeWidth="2"></path>
                           </svg>
                         </div>
                       </a>
@@ -333,39 +228,35 @@ export default function VideoSlider(): JSX.Element {
                   className="swiper-slide vs_slide swiper-slide-next"
                   role="group"
                   aria-label="2 / 2"
-                  style={{ width: "1173px", marginRight: "20px" }}
+                  style={{ width: '1173px', marginRight: '20px' }}
                 >
                   <div className="vs_slide-wrapper">
                     <div className="vs-slide_video-wrapper">
                       <div className="vs-slide_video-embed w-embed w-iframe w-script">
                         <div
                           style={{
-                            padding: "71.88% 0 0 0",
-                            position: "relative",
+                            padding: '71.88% 0 0 0',
+                            position: 'relative'
                           }}
                         >
                           <iframe
                             id="VimeoV2"
-                            src="https://player.vimeo.com/video/"
+                            src="https://youtube.com/watch"
                             frameBorder="0"
                             allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
                             style={{
-                              position: "absolute",
-                              top: "0",
-                              left: "0",
-                              width: "100%",
-                              height: "100%",
+                              position: 'absolute',
+                              top: '0',
+                              left: '0',
+                              width: '100%',
+                              height: '100%'
                             }}
                             title="Themba Fakudze - PM at Milla Nova Review"
                             data-ready="true"
                           ></iframe>
                         </div>
                       </div>
-                      <address
-                        id="togglePlayPauseV2"
-                        className="vs-slide_video-controls"
-                        style={{ opacity: "1" }}
-                      >
+                      <address id="togglePlayPauseV2" className="vs-slide_video-controls" style={{ opacity: '1' }}>
                         <div className="vs-slide_video-play-btn w-embed">
                           <svg
                             width="72"
@@ -375,12 +266,7 @@ export default function VideoSlider(): JSX.Element {
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <g filter="url(#filter0_b_8729_7743)">
-                              <rect
-                                width="72"
-                                height="72"
-                                rx="36"
-                                fill="white"
-                              ></rect>
+                              <rect width="72" height="72" rx="36" fill="white"></rect>
                             </g>
                             <path
                               d="M47.9983 32.9436C50.2826 34.3493 50.2826 37.6697 47.9983 39.0755L32.4672 48.633C30.0687 50.1091 26.9805 48.3834 26.9805 45.5671L26.9805 26.452C26.9805 23.6356 30.0687 21.9099 32.4672 23.386L47.9983 32.9436Z"
@@ -396,14 +282,8 @@ export default function VideoSlider(): JSX.Element {
                                 filterUnits="userSpaceOnUse"
                                 colorInterpolationFilters="sRGB"
                               >
-                                <feFlood
-                                  floodOpacity="0"
-                                  result="BackgroundImageFix"
-                                ></feFlood>
-                                <feGaussianBlur
-                                  in="BackgroundImageFix"
-                                  stdDeviation="3.19756"
-                                ></feGaussianBlur>
+                                <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
+                                <feGaussianBlur in="BackgroundImageFix" stdDeviation="3.19756"></feGaussianBlur>
                                 <feComposite
                                   in2="SourceAlpha"
                                   operator="in"
@@ -419,10 +299,7 @@ export default function VideoSlider(): JSX.Element {
                             </defs>
                           </svg>
                         </div>
-                        <div
-                          className="vs-slide_video-pause-btn w-embed"
-                          style={{ opacity: "0" }}
-                        >
+                        <div className="vs-slide_video-pause-btn w-embed" style={{ opacity: '0' }}>
                           <svg
                             width="72"
                             height="72"
@@ -431,25 +308,10 @@ export default function VideoSlider(): JSX.Element {
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <g filter="url(#filter0_b_8729_7760)">
-                              <rect
-                                width="72"
-                                height="72"
-                                rx="36"
-                                fill="white"
-                              ></rect>
+                              <rect width="72" height="72" rx="36" fill="white"></rect>
                             </g>
-                            <path
-                              d="M30 26L30 46"
-                              stroke="black"
-                              strokeWidth="6"
-                              strokeLinecap="round"
-                            ></path>
-                            <path
-                              d="M42 26L42 46"
-                              stroke="black"
-                              strokeWidth="6"
-                              strokeLinecap="round"
-                            ></path>
+                            <path d="M30 26L30 46" stroke="black" strokeWidth="6" strokeLinecap="round"></path>
+                            <path d="M42 26L42 46" stroke="black" strokeWidth="6" strokeLinecap="round"></path>
                             <defs>
                               <filter
                                 id="filter0_b_8729_7760"
@@ -460,14 +322,8 @@ export default function VideoSlider(): JSX.Element {
                                 filterUnits="userSpaceOnUse"
                                 colorInterpolationFilters="sRGB"
                               >
-                                <feFlood
-                                  floodOpacity="0"
-                                  result="BackgroundImageFix"
-                                ></feFlood>
-                                <feGaussianBlur
-                                  in="BackgroundImageFix"
-                                  stdDeviation="3.19756"
-                                ></feGaussianBlur>
+                                <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
+                                <feGaussianBlur in="BackgroundImageFix" stdDeviation="3.19756"></feGaussianBlur>
                                 <feComposite
                                   in2="SourceAlpha"
                                   operator="in"
@@ -496,12 +352,8 @@ export default function VideoSlider(): JSX.Element {
                               className="vs-slide_author-image"
                             />
                             <div className="vs-slide_author-info">
-                              <h3 className="vs-slide_author-name">
-                                Themba Fakudze
-                              </h3>
-                              <div className="vs-slide_author-bio">
-                                Chairperson of Tsela Nawe
-                              </div>
+                              <h3 className="vs-slide_author-name">Themba Fakudze</h3>
+                              <div className="vs-slide_author-bio">Chairperson of Tsela Nawe</div>
                             </div>
                           </div>
                           <img
@@ -513,21 +365,14 @@ export default function VideoSlider(): JSX.Element {
                         </div>
                         <div className="vs-slide_info-middle">
                           <p className="vs-slide_info-review-text">
-                            “Our team has achieved our business goals with
-                            Abbble Co`s help for sure. It was beneficial to
-                            cooperate with design professionals instead of
-                            spending years of building an internal team like
-                            that on our own. It took them less time to provide
-                            us with more value than we would have struggled
-                            ourselves.”
+                            “Our team has achieved our business goals with Abbble Co`s help for sure. It was beneficial
+                            to cooperate with design professionals instead of spending years of building an internal
+                            team like that on our own. It took them less time to provide us with more value than we
+                            would have struggled ourselves.”
                           </p>
                         </div>
                       </div>
-                      <a
-                        target=""
-                        href="works"
-                        className="button fill-black arrow-button w-inline-block"
-                      >
+                      <a target="" href="works" className="button fill-black arrow-button w-inline-block">
                         <div>View case study</div>
                         <div className="code-embed w-embed">
                           <svg
@@ -538,16 +383,8 @@ export default function VideoSlider(): JSX.Element {
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
                           >
-                            <path
-                              d="M2.8335 10.5L18.8335 10.5"
-                              stroke="white"
-                              strokeWidth="2"
-                            ></path>
-                            <path
-                              d="M10.8335 18.5L18.8335 10.5L10.8335 2.5"
-                              stroke="white"
-                              strokeWidth="2"
-                            ></path>
+                            <path d="M2.8335 10.5L18.8335 10.5" stroke="white" strokeWidth="2"></path>
+                            <path d="M10.8335 18.5L18.8335 10.5L10.8335 2.5" stroke="white" strokeWidth="2"></path>
                           </svg>
                         </div>
                       </a>
@@ -555,11 +392,7 @@ export default function VideoSlider(): JSX.Element {
                   </div>
                 </div>
               </div>
-              <span
-                className="swiper-notification"
-                aria-live="assertive"
-                aria-atomic="true"
-              ></span>
+              <span className="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
             </div>
           </div>
           <div className="vs_swiper-nav is-mob">
@@ -572,31 +405,10 @@ export default function VideoSlider(): JSX.Element {
               aria-disabled="true"
             >
               <div className="code-embed w-embed">
-                <svg
-                  width="50"
-                  height="50"
-                  viewBox="0 0 50 50"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    x="0.5"
-                    y="0.5"
-                    width="49"
-                    height="49"
-                    rx="24.5"
-                    stroke="white"
-                  ></rect>
-                  <path
-                    d="M34 25.001L16 25.001"
-                    stroke="white"
-                    strokeWidth="2"
-                  ></path>
-                  <path
-                    d="M25.0078 34.0002L16.0077 25.0001L25.0078 16"
-                    stroke="white"
-                    strokeWidth="2"
-                  ></path>
+                <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="0.5" y="0.5" width="49" height="49" rx="24.5" stroke="white"></rect>
+                  <path d="M34 25.001L16 25.001" stroke="white" strokeWidth="2"></path>
+                  <path d="M25.0078 34.0002L16.0077 25.0001L25.0078 16" stroke="white" strokeWidth="2"></path>
                 </svg>
               </div>
             </div>
@@ -609,31 +421,10 @@ export default function VideoSlider(): JSX.Element {
               aria-disabled="false"
             >
               <div className="code-embed w-embed">
-                <svg
-                  width="50"
-                  height="50"
-                  viewBox="0 0 50 50"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    x="0.5"
-                    y="0.5"
-                    width="49"
-                    height="49"
-                    rx="24.5"
-                    stroke="white"
-                  ></rect>
-                  <path
-                    d="M16 25.001L34 25.001"
-                    stroke="white"
-                    strokeWidth="2"
-                  ></path>
-                  <path
-                    d="M24.9922 34.0002L33.9923 25.0001L24.9922 16"
-                    stroke="white"
-                    strokeWidth="2"
-                  ></path>
+                <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="0.5" y="0.5" width="49" height="49" rx="24.5" stroke="white"></rect>
+                  <path d="M16 25.001L34 25.001" stroke="white" strokeWidth="2"></path>
+                  <path d="M24.9922 34.0002L33.9923 25.0001L24.9922 16" stroke="white" strokeWidth="2"></path>
                 </svg>
               </div>
             </div>
@@ -646,7 +437,7 @@ export default function VideoSlider(): JSX.Element {
         alt=""
         className="vs_bg"
       />
-      <div className="section-separator"></div>{" "}
+      <div className="section-separator"></div>{' '}
     </section>
-  );
+  )
 }

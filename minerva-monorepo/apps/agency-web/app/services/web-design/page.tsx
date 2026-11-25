@@ -9,7 +9,7 @@ import AwardsMobileDesign from "../../sections/services/AwardsMobileDesign";
 import MvpInvestorsWebDesign from "../../sections/services/MvpInvestorsWebDesign";
 import CasesWebDesign from "../../sections/services/CasesWebDesign";
 import CasesBannerWebDesign from "../../sections/services/CasesBannerWebDesign";
-import PageReviews from "../../sections/services/PageReviews";
+import Reviews from '../../sections/common/Reviews';
 import ForYouWebDesign from "../../sections/services/ForYouWebDesign";
 import Partners from "../../sections/services/Partners";
 import QualityGraphicDesign from "../../sections/services/QualityGraphicDesign";
@@ -43,7 +43,7 @@ export default function WebDesignPage() {
       <MvpInvestorsWebDesign />
       <CasesWebDesign />
       <CasesBannerWebDesign />
-      <PageReviews />
+      <Reviews />
       <ForYouWebDesign />
       <Partners />
       <QualityGraphicDesign />

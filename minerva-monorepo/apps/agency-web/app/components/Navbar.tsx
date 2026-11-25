@@ -700,7 +700,7 @@ export default function Navbar(): JSX.Element {
                             </div>
                           </a>
                           <a
-                            href="https://case.abbble.co.za/services/devops"
+                            href="/services/devops"
                             className="navbar_dropmenu-link is-hidden w-inline-block"
                             tabIndex={0}
                           >
@@ -1690,7 +1690,7 @@ export default function Navbar(): JSX.Element {
                     </div>
                   </a>
                   <a
-                    href="https://case.abbble.co.za/services/devops"
+                    href="/services/devops"
                     className="navbar_dropmenu-link is-hidden w-inline-block"
                     tabIndex={0}
                   >

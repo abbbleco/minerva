@@ -40,7 +40,7 @@ PRs will be accepted to fix issues with them, but they will take precedence belo
 The native bundle pipeline includes Intel macOS (`x64`) as well as Apple Silicon.
 It also defines signed-package update acceptance for both architectures.
 That coverage does not change the Tier 1 priority assigned to Apple Silicon.
-The `Hermes-Setup.dmg` bootstrap installer is the exception: it is built for
+The `Minerva-Setup.dmg` bootstrap installer is the exception: it is built for
 Apple Silicon (`arm64`) only, so on an Intel Mac it reports "not supported on
 this Mac". Intel Macs use the `darwin-x64` desktop bundle instead, or install
 the [CLI](./installation.md#linux--macos--wsl2--android-termux) and run

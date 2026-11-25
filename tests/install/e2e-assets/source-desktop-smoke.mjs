@@ -29,7 +29,7 @@ if (values.desktop === 'absent') {
   const release = path.join(values.root, 'apps', 'desktop', 'release');
   const candidates = {
     linux: ['linux-unpacked/Hermes', 'linux-unpacked/hermes'],
-    darwin: [process.arch === 'arm64' ? 'mac-arm64/Hermes.app/Contents/MacOS/Hermes' : 'mac/Hermes.app/Contents/MacOS/Hermes'],
+    darwin: [process.arch === 'arm64' ? 'mac-arm64/Minerva.app/Contents/MacOS/Hermes' : 'mac/Minerva.app/Contents/MacOS/Hermes'],
     win32: [process.arch === 'arm64' ? 'win-arm64-unpacked/Hermes.exe' : 'win-unpacked/Hermes.exe'],
   }[process.platform];
   if (!candidates) throw new Error(`unsupported source smoke host: ${process.platform}`);

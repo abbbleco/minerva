@@ -1,42 +1,26 @@
-﻿import type { JSX } from "react";
+﻿import type { JSX } from 'react'
 
 /* eslint-disable @next/next/no-img-element */
 
 export default function ContactHero(): JSX.Element {
   return (
-    <section
-      id="contact-hero"
-      data-w-id="ccddabd8-e5c8-45b4-08da-4c73743a60dd"
-      className="section_contact-hero"
-    >
+    <section id="contact-hero" data-w-id="ccddabd8-e5c8-45b4-08da-4c73743a60dd" className="section_contact-hero">
       <div className="w-layout-blockcontainer container w-container">
         <div className="contact_hero_wrapper">
-          <div
-            data-w-id="0d597f1d-dbb1-b85b-eb9d-529b351866c5"
-            className="contact_breadcrumbs-wrapper"
-          >
+          <div data-w-id="0d597f1d-dbb1-b85b-eb9d-529b351866c5" className="contact_breadcrumbs-wrapper">
             <div data-wf--breadcrumbs--variant="base" className="breadcrumbs">
               <a href="https://abbble.co.za" className="breadcrumbs_link">
                 Home
               </a>
-              <div className="breadcrumbs_text is-not-active">
-                &nbsp;/&nbsp;
-              </div>
-              <a
-                href="."
-                aria-current="page"
-                className="breadcrumbs_link is-current w--current"
-              >
+              <div className="breadcrumbs_text is-not-active">&nbsp;/&nbsp;</div>
+              <a href="." aria-current="page" className="breadcrumbs_link is-current w--current">
                 Contact Us
               </a>
             </div>
           </div>
           <div className="contact-hero_main">
             <div className="contact-hero_form-container">
-              <div
-                data-w-id="57844906-0ab7-0748-64f4-7919443abf8c"
-                className="contact-hero_form-info"
-              >
+              <div data-w-id="57844906-0ab7-0748-64f4-7919443abf8c" className="contact-hero_form-info">
                 <div className="contact-hero_form-info-top">
                   <div className="contact-hero_form-people">
                     <div
@@ -51,7 +35,7 @@ export default function ContactHero(): JSX.Element {
                         <div className="contact-hero_persone-card-image-wrapper">
                           <div className="contact-hero_persone-image-wrapper">
                             <img
-                              src="/img/dfb301ada05d.webp"
+                              src="/img/hlengiwe-circle.png"
                               loading="eager"
                               alt=""
                               className="contact-hero_persone-image"
@@ -66,10 +50,8 @@ export default function ContactHero(): JSX.Element {
                             />
                           </div>
                         </div>
-                        <div className="contact-hero_persone-name">
-                          Nokulunga
-                        </div>
-                        <div className="contact-hero_person-bio">Director</div>
+                        <div className="contact-hero_persone-name">Hlengiwe</div>
+                        <div className="contact-hero_person-bio">Sales</div>
                       </a>
                     </div>
                     <div
@@ -85,7 +67,7 @@ export default function ContactHero(): JSX.Element {
                         <div className="contact-hero_persone-card-image-wrapper">
                           <div className="contact-hero_persone-image-wrapper">
                             <img
-                              src="/img/0b88dc7ef7c1.webp"
+                              src="/img/sibo-circle.png"
                               loading="eager"
                               alt="Roman"
                               className="contact-hero_persone-image"
@@ -100,12 +82,8 @@ export default function ContactHero(): JSX.Element {
                             />
                           </div>
                         </div>
-                        <div className="contact-hero_persone-name">
-                          Sibonginkosi
-                        </div>
-                        <div className="contact-hero_person-bio">
-                          Founder & Owner
-                        </div>
+                        <div className="contact-hero_persone-name">Sibonginkosi</div>
+                        <div className="contact-hero_person-bio">Founder & Owner</div>
                       </a>
                     </div>
                     <div
@@ -136,95 +114,56 @@ export default function ContactHero(): JSX.Element {
                           </div>
                         </div>
                         <div className="contact-hero_persone-name">Sihle</div>
-                        <div className="contact-hero_person-bio">
-                          Sales Manager
-                        </div>
+                        <div className="contact-hero_person-bio">Bizdev Manager</div>
                       </a>
                     </div>
                   </div>
                   <div className="services-page-process_bottom-list">
-                    <div
-                      data-w-id="3592d8ff-a0b7-32ca-5c46-9a10cd5ee18a"
-                      className="services-page-process_bottom-item"
-                    >
+                    <div data-w-id="3592d8ff-a0b7-32ca-5c46-9a10cd5ee18a" className="services-page-process_bottom-item">
                       <img
                         src="/svg/da1e9c97957f.svg"
                         loading="lazy"
                         alt=""
                         className="services-page-process_bottom-item-icon"
                       />
-                      <h4 className="contact-hero_info-list-text">
-                        We will respond to you within 12 hours
-                      </h4>
+                      <h4 className="contact-hero_info-list-text">We will respond to you within 12 hours</h4>
                     </div>
-                    <div
-                      data-w-id="3592d8ff-a0b7-32ca-5c46-9a10cd5ee18e"
-                      className="services-page-process_bottom-item"
-                    >
+                    <div data-w-id="3592d8ff-a0b7-32ca-5c46-9a10cd5ee18e" className="services-page-process_bottom-item">
                       <img
                         src="/svg/da1e9c97957f.svg"
                         loading="lazy"
                         alt=""
                         className="services-page-process_bottom-item-icon"
                       />
-                      <h4 className="contact-hero_info-list-text">
-                        We`ll sign an NDA if requested
-                      </h4>
+                      <h4 className="contact-hero_info-list-text">We`ll sign an NDA if requested</h4>
                     </div>
-                    <div
-                      data-w-id="3592d8ff-a0b7-32ca-5c46-9a10cd5ee192"
-                      className="services-page-process_bottom-item"
-                    >
+                    <div data-w-id="3592d8ff-a0b7-32ca-5c46-9a10cd5ee192" className="services-page-process_bottom-item">
                       <img
                         src="/svg/da1e9c97957f.svg"
                         loading="lazy"
                         alt=""
                         className="services-page-process_bottom-item-icon"
                       />
-                      <h4 className="contact-hero_info-list-text">
-                        Access to dedicated product specialists
-                      </h4>
+                      <h4 className="contact-hero_info-list-text">Access to dedicated product specialists</h4>
                     </div>
                   </div>
                 </div>
                 <div className="contact-hero_form-info-bottom">
-                  <div
-                    data-w-id="e554bc63-9a6d-7efb-1c19-e8e3577625dc"
-                    className="contact-hero_info-label"
-                  >
+                  <div data-w-id="e554bc63-9a6d-7efb-1c19-e8e3577625dc" className="contact-hero_info-label">
                     Project inquiries
                   </div>
                   <div className="contact-hero_reach-out-info">
-                    <div
-                      data-w-id="c6f7f807-1d38-7091-7753-14ab623bdd7c"
-                      className="contact-hero_reach-out-option"
-                    >
-                      <img
-                        src="/svg/79b31f8a586a.svg"
-                        loading="eager"
-                        alt=""
-                        className="contact-hero_reach-out-icon"
-                      />
+                    <div data-w-id="c6f7f807-1d38-7091-7753-14ab623bdd7c" className="contact-hero_reach-out-option">
+                      <img src="/svg/79b31f8a586a.svg" loading="eager" alt="" className="contact-hero_reach-out-icon" />
                       <div className="contact-hero_reach-out-info-link-wrap">
-                        <a
-                          href="mailto:info@abbble.co.za"
-                          className="contact-hero_reach-out-info-link"
-                        >
+                        <a href="mailto:info@abbble.co.za" className="contact-hero_reach-out-info-link">
                           info@abbble.co.za
                         </a>
                         <div className="contact-hero_reach-out-info-link-underline"></div>
                       </div>
                     </div>
-                    <div
-                      data-w-id="a9665c90-ce13-cf8b-f254-d0441a55148c"
-                      className="contact-hero_reach-out-option"
-                    >
-                      <img
-                        src="/svg/28d4da26a8e4.svg"
-                        loading="eager"
-                        alt=""
-                        className="contact-hero_reach-out-icon"
-                      />
+                    <div data-w-id="a9665c90-ce13-cf8b-f254-d0441a55148c" className="contact-hero_reach-out-option">
+                      <img src="/svg/28d4da26a8e4.svg" loading="eager" alt="" className="contact-hero_reach-out-icon" />
                       <div className="contact-hero_reach-out-info-link-wrap">
                         <a
                           href="https://calendly.com/abbbleco"
@@ -244,9 +183,7 @@ export default function ContactHero(): JSX.Element {
                 data-w-id="6921f70b-b841-7396-1cb7-1542659a285b"
                 className="contact-hero_form-wrapper"
               >
-                <h1 className="contact-hero-h1-heading">
-                  Tell us about your project
-                </h1>
+                <h1 className="contact-hero-h1-heading">Tell us about your project</h1>
                 <div className="contact-hero_form-block w-form">
                   <form
                     id="email-form"
@@ -272,18 +209,17 @@ export default function ContactHero(): JSX.Element {
                         autoComplete="off"
                         tabIndex={-1}
                         aria-hidden="true"
-                        style={{ position: "absolute", left: "-9999px", top: "auto", width: "1px", height: "1px", overflow: "hidden" }}
+                        style={{
+                          position: 'absolute',
+                          left: '-9999px',
+                          top: 'auto',
+                          width: '1px',
+                          height: '1px',
+                          overflow: 'hidden'
+                        }}
                       />
-                      <input
-                        type="hidden"
-                        name="utm_first_site_page"
-                        value=""
-                      />
-                      <input
-                        type="hidden"
-                        name="utm_previous_site_page"
-                        value=""
-                      />
+                      <input type="hidden" name="utm_first_site_page" value="" />
+                      <input type="hidden" name="utm_previous_site_page" value="" />
                     </div>
                     <div className="contact-hero_form-fields">
                       <div className="contact-hero_form-input-wrapper">
@@ -296,15 +232,10 @@ export default function ContactHero(): JSX.Element {
                           type="text"
                           id="Full-name"
                         />
-                        <label
-                          htmlFor="Full-name"
-                          className="contact-hero_form-label"
-                        >
+                        <label htmlFor="Full-name" className="contact-hero_form-label">
                           Full name *
                         </label>
-                        <div className="contact-hero_form-field-error-msg">
-                          Please enter your name
-                        </div>
+                        <div className="contact-hero_form-field-error-msg">Please enter your name</div>
                       </div>
                       <div className="contact-hero_form-input-wrapper">
                         <input
@@ -316,15 +247,10 @@ export default function ContactHero(): JSX.Element {
                           type="email"
                           id="Corporate-email"
                         />
-                        <label
-                          htmlFor="Corporate-email"
-                          className="contact-hero_form-label"
-                        >
+                        <label htmlFor="Corporate-email" className="contact-hero_form-label">
                           Corporate email*
                         </label>
-                        <div className="contact-hero_form-field-error-msg">
-                          Please enter valid email
-                        </div>
+                        <div className="contact-hero_form-field-error-msg">Please enter valid email</div>
                       </div>
                       <div className="contact-hero_form-input-wrapper">
                         <input
@@ -337,15 +263,10 @@ export default function ContactHero(): JSX.Element {
                           type="tel"
                           id="Phone-number"
                         />
-                        <label
-                          htmlFor="Phone-number"
-                          className="contact-hero_form-label"
-                        >
+                        <label htmlFor="Phone-number" className="contact-hero_form-label">
                           Phone (optional)
                         </label>
-                        <div className="contact-hero_form-field-error-msg">
-                          Please enter a valid phone number
-                        </div>
+                        <div className="contact-hero_form-field-error-msg">Please enter a valid phone number</div>
                       </div>
                       <div
                         id="w-node-f80dd656-88ac-ef28-c9c1-9381b33e7c2a-660424d1"
@@ -360,23 +281,15 @@ export default function ContactHero(): JSX.Element {
                           type="text"
                           id="About-project"
                         />
-                        <label
-                          htmlFor="About-project"
-                          className="contact-hero_form-label"
-                        >
+                        <label htmlFor="About-project" className="contact-hero_form-label">
                           About project*
                         </label>
-                        <div className="contact-hero_form-field-error-msg">
-                          Fill the description
-                        </div>
+                        <div className="contact-hero_form-field-error-msg">Fill the description</div>
                       </div>
                     </div>
                     <div className="contact-hero_form-btn-wrapper">
                       <div className="contact_submit-btns-wrapper">
-                        <a
-                          href="."
-                          className="button contact-form-cta w-inline-block"
-                        >
+                        <a href="." className="button contact-form-cta w-inline-block">
                           <div className="button-arrow is-solution-page-arrow">
                             <div className="code-embed w-embed">
                               <svg
@@ -386,16 +299,8 @@ export default function ContactHero(): JSX.Element {
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
-                                <path
-                                  d="M8.99805 9.00098L26.998 27.001"
-                                  stroke="#141515"
-                                  strokeWidth="2"
-                                ></path>
-                                <path
-                                  d="M8.99203 26.9923H26.9922V8.99219"
-                                  stroke="#141515"
-                                  strokeWidth="2"
-                                ></path>
+                                <path d="M8.99805 9.00098L26.998 27.001" stroke="#141515" strokeWidth="2"></path>
+                                <path d="M8.99203 26.9923H26.9922V8.99219" stroke="#141515" strokeWidth="2"></path>
                               </svg>
                             </div>
                           </div>
@@ -417,15 +322,11 @@ export default function ContactHero(): JSX.Element {
                         By submitting this form you agree to <br />
                         our
                         <a href="cookie-policy" target="_blank">
-                          <span className="contact-hero_form-agreement-link">
-                            Cookie Policy
-                          </span>
+                          <span className="contact-hero_form-agreement-link">Cookie Policy</span>
                         </a>
                         and
                         <a href="privacy-policy" target="_blank">
-                          <span className="contact-hero_form-agreement-link">
-                            Privacy Policy
-                          </span>
+                          <span className="contact-hero_form-agreement-link">Privacy Policy</span>
                         </a>
                       </div>
                     </div>
@@ -441,9 +342,7 @@ export default function ContactHero(): JSX.Element {
                         </div>
                       </div>
                       <div className="contact-hero_success-action">
-                        <div className="contact-hero_success-label">
-                          While you wait
-                        </div>
+                        <div className="contact-hero_success-label">While you wait</div>
                         <a
                           data-wf--yellow-fill-arrow-button--variant="base"
                           href="works"
@@ -458,16 +357,8 @@ export default function ContactHero(): JSX.Element {
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
-                                <path
-                                  d="M8.99805 9.00098L26.998 27.001"
-                                  stroke="#141515"
-                                  strokeWidth="2"
-                                ></path>
-                                <path
-                                  d="M8.99203 26.9923H26.9922V8.99219"
-                                  stroke="#141515"
-                                  strokeWidth="2"
-                                ></path>
+                                <path d="M8.99805 9.00098L26.998 27.001" stroke="#141515" strokeWidth="2"></path>
+                                <path d="M8.99203 26.9923H26.9922V8.99219" stroke="#141515" strokeWidth="2"></path>
                               </svg>
                             </div>
                           </div>
@@ -507,9 +398,7 @@ export default function ContactHero(): JSX.Element {
                     />
                   </div>
                   <div className="w-form-fail">
-                    <div>
-                      Oops! Something went wrong while submitting the form.
-                    </div>
+                    <div>Oops! Something went wrong while submitting the form.</div>
                   </div>
                 </div>
               </div>
@@ -558,13 +447,8 @@ export default function ContactHero(): JSX.Element {
           </div>
         </div>
       </div>
-      <img
-        src="/svg/0ae3cec19a8f.svg"
-        loading="eager"
-        alt=""
-        className="contact_hero-bg"
-      />
+      <img src="/svg/0ae3cec19a8f.svg" loading="eager" alt="" className="contact_hero-bg" />
       <div className="section-separator"></div>
     </section>
-  );
+  )
 }

@@ -308,7 +308,7 @@ class TestSubprocessCompatHelpers:
         """CREATE_BREAKAWAY_FROM_JOB is load-bearing for the GUI-driven update path.
 
         Without it, the gateway-respawn watcher spawned by ``minerva update``
-        (which runs under hermes-setup.exe, itself a grandchild of the
+        (which runs under minerva-setup.exe, itself a grandchild of the
         Electron Desktop app) gets reaped when Electron exits and its
         Win32 job object is torn down by the OS.  Result: gateway dies
         during update and never comes back.

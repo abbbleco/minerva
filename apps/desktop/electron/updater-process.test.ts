@@ -27,7 +27,7 @@ test('stagedUpdaterSupportsPrewrittenMarker rejects installers predating the sel
   // The real-world trap: an installer staged at first install months ago, never
   // refreshed because copy_self_to_hermes_home no-ops during --update.
   assert.equal(
-    stagedUpdaterSupportsPrewrittenMarker('C:\\Hermes\\hermes-setup.exe', {
+    stagedUpdaterSupportsPrewrittenMarker('C:\\Hermes\\minerva-setup.exe', {
       stagedMtimeMs: () => MARKER_SELF_ADOPT_EPOCH_MS - 60 * DAY_MS
     }),
     false
@@ -36,13 +36,13 @@ test('stagedUpdaterSupportsPrewrittenMarker rejects installers predating the sel
 
 test('stagedUpdaterSupportsPrewrittenMarker accepts installers from the fix onward', () => {
   assert.equal(
-    stagedUpdaterSupportsPrewrittenMarker('C:\\Hermes\\hermes-setup.exe', {
+    stagedUpdaterSupportsPrewrittenMarker('C:\\Hermes\\minerva-setup.exe', {
       stagedMtimeMs: () => MARKER_SELF_ADOPT_EPOCH_MS
     }),
     true
   )
   assert.equal(
-    stagedUpdaterSupportsPrewrittenMarker('C:\\Hermes\\hermes-setup.exe', {
+    stagedUpdaterSupportsPrewrittenMarker('C:\\Hermes\\minerva-setup.exe', {
       stagedMtimeMs: () => MARKER_SELF_ADOPT_EPOCH_MS + 30 * DAY_MS
     }),
     true
@@ -53,7 +53,7 @@ test('stagedUpdaterSupportsPrewrittenMarker treats an unreadable mtime as unsupp
   // Bias toward the path that can always make progress: a skipped pre-write
   // loses anti-respawn hardening, a wedged updater can never update again.
   assert.equal(
-    stagedUpdaterSupportsPrewrittenMarker('C:\\Hermes\\hermes-setup.exe', {
+    stagedUpdaterSupportsPrewrittenMarker('C:\\Hermes\\minerva-setup.exe', {
       stagedMtimeMs: () => null
     }),
     false
@@ -70,7 +70,7 @@ test('resolveStagedUpdaterBinary still returns a stale staged updater on Windows
       isWindows: true,
       stagedMtimeMs: () => MARKER_SELF_ADOPT_EPOCH_MS - 60 * DAY_MS
     }),
-    path.join('C:\\Hermes', 'hermes-setup.exe')
+    path.join('C:\\Hermes', 'minerva-setup.exe')
   )
 })
 
@@ -86,7 +86,7 @@ test('spawnUpdaterProcess hides the updater console and detaches the child on Wi
   }
 
   const result = spawnUpdaterProcess(
-    'hermes-setup.exe',
+    'minerva-setup.exe',
     ['--update', '--branch', 'main'],
     { cwd: 'C:\\Hermes', detached: true, stdio: 'ignore' },
     {
@@ -104,7 +104,7 @@ test('spawnUpdaterProcess hides the updater console and detaches the child on Wi
   assert.deepEqual(calls, [
     {
       args: ['--update', '--branch', 'main'],
-      command: 'hermes-setup.exe',
+      command: 'minerva-setup.exe',
       options: { cwd: 'C:\\Hermes', detached: true, stdio: 'ignore', windowsHide: true }
     }
   ])
@@ -114,7 +114,7 @@ test('spawnUpdaterProcess preserves updater options off Windows', () => {
   let capturedOptions: SpawnOptions | undefined
 
   spawnUpdaterProcess(
-    'hermes-setup',
+    'minerva-setup',
     ['--update'],
     { detached: true, stdio: 'ignore' },
     {
@@ -132,7 +132,7 @@ test('spawnUpdaterProcess preserves updater options off Windows', () => {
 
 test('resolveStagedUpdaterBinary hands Windows the staged installer it finds', () => {
   const home = 'C:\\Users\\hermes\\AppData\\Local\\hermes'
-  const staged = path.join(home, 'hermes-setup.exe')
+  const staged = path.join(home, 'minerva-setup.exe')
   const probed: string[] = []
 
   const resolved = resolveStagedUpdaterBinary(home, {
@@ -148,12 +148,49 @@ test('resolveStagedUpdaterBinary hands Windows the staged installer it finds', (
   assert.deepEqual(probed, [staged])
 })
 
-test('resolveStagedUpdaterBinary returns null off Windows even when hermes-setup is staged (#74836)', () => {
+test('resolveStagedUpdaterBinary prefers minerva-setup.exe over the legacy name', () => {
+  const home = 'C:\\Users\\hermes\\AppData\\Local\\hermes'
+  const probed: string[] = []
+
+  const resolved = resolveStagedUpdaterBinary(home, {
+    fileExists: candidate => {
+      probed.push(candidate)
+
+      return true
+    },
+    isWindows: true
+  })
+
+  assert.equal(resolved, path.join(home, 'minerva-setup.exe'))
+  assert.deepEqual(probed, [path.join(home, 'minerva-setup.exe')])
+})
+
+test('resolveStagedUpdaterBinary falls back to legacy hermes-setup.exe', () => {
+  // Installs predating the Minerva rebrand staged hermes-setup.exe; the new
+  // desktop must still hand updates to it until a reinstall restages.
+  const home = 'C:\\Users\\hermes\\AppData\\Local\\hermes'
+  const legacy = path.join(home, 'hermes-setup.exe')
+  const probed: string[] = []
+
+  const resolved = resolveStagedUpdaterBinary(home, {
+    fileExists: candidate => {
+      probed.push(candidate)
+
+      return candidate === legacy
+    },
+    isWindows: true
+  })
+
+  assert.equal(resolved, legacy)
+  assert.deepEqual(probed, [path.join(home, 'minerva-setup.exe'), legacy])
+})
+
+test('resolveStagedUpdaterBinary returns null off Windows even when minerva-setup is staged (#74836)', () => {
   const home = '/Users/hermes/.hermes'
   let probes = 0
 
   const resolved = resolveStagedUpdaterBinary(home, {
-    // The installer stages hermes-setup on macOS/Linux too, so "it exists" is
+    // The installer stages minerva-setup on macOS/Linux too, so "it exists" is
     // the normal case — and precisely the one that must not win.
     fileExists: () => {
       probes += 1

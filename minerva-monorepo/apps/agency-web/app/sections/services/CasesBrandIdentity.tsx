@@ -81,7 +81,7 @@ export default function CasesBrandIdentity(): JSX.Element {
                         loading="lazy"
                         alt="Compodium"
                         className="solution-page_case-card-logo" />
-                      <p className="solution-page_case-card-text is-black">
+                      <p className="solution-page_case-card-text">
                         Compodium is platform for truly secure digital meetings
                         and communication. Compodium’s mission is to deliver
                         reliable solutions for effective online collaboration to

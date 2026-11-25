@@ -54,7 +54,7 @@ export default function Values(): JSX.Element {
               data-w-id="6b6e26ca-383f-278d-08c9-d0a21e16328a"
               className="regular-text is-centered"
             >
-              People, awareness and growth. The conceptual idea of â€‹â€‹the
+              People, awareness and growth. The conceptual idea of the
               value system is a consistent trinity. Our people, being the main
               value of the company, come to effective growth while remaining
               purposeful.

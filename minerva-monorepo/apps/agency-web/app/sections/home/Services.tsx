@@ -528,7 +528,7 @@ export default function Services(): JSX.Element {
                     </div>
                   </a>
                   <a
-                    href="https://case.abbble.co.za/services/devops"
+                    href="/services/devops"
                     className="services_tabs-content-link w-inline-block"
                   >
                     <div className="services_tabs-content-link-text-wrap">

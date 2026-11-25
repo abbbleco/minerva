@@ -185,10 +185,10 @@ describe('resolveOutsideAsar', () => {
   it('redirects a packaged specifier into app.asar.unpacked', () => {
     expect(
       resolveOutsideAsar(
-        'file:///Applications/Hermes.app/Contents/Resources/app.asar/dist/node_modules/get-windows/index.js'
+        'file:///Applications/Minerva.app/Contents/Resources/app.asar/dist/node_modules/get-windows/index.js'
       )
     ).toBe(
-      'file:///Applications/Hermes.app/Contents/Resources/app.asar.unpacked/dist/node_modules/get-windows/index.js'
+      'file:///Applications/Minerva.app/Contents/Resources/app.asar.unpacked/dist/node_modules/get-windows/index.js'
     )
   })
 

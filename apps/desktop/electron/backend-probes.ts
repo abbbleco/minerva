@@ -97,7 +97,7 @@ async function execProbe(
       throw err
     }
 
-    // One cold-cache / AV miss should not force hermes-setup --update (#61764).
+    // One cold-cache / AV miss should not force minerva-setup --update (#61764).
     await run()
   }
 }

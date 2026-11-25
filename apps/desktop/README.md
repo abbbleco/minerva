@@ -9,7 +9,7 @@
 
 **The native desktop app for [Minerva Agent](../../README.md) — the self-improving AI agent from [ABBBLE CO](https://nousresearch.com).** Same agent, same skills, same memory as the CLI and gateway, in a polished native window — chat with streaming tool output, side-by-side previews, a file browser, voice, and settings, no terminal required. Available for **macOS, Windows, and Linux**.
 
-> **Intel Macs:** the `Hermes-Setup.dmg` bootstrap installer is built for
+> **Intel Macs:** the `Minerva-Setup.dmg` bootstrap installer is built for
 > Apple Silicon (arm64) only, so on an Intel Mac it reports "not supported on
 > this Mac". The desktop release pipeline also builds a native `darwin-x64`
 > bundle (signed, notarized, with its own update feed); use that build, or

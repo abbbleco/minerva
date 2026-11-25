@@ -108,9 +108,9 @@ source "$(dirname "${BASH_SOURCE[0]}")/source-driver.sh"
 installed_app() {
   local cand
   for cand in \
-    "$INSTALL_DIR/apps/desktop/release/mac-arm64/Hermes.app" \
-    "$INSTALL_DIR/apps/desktop/release/mac/Hermes.app" \
-    "/Applications/Hermes.app"; do
+    "$INSTALL_DIR/apps/desktop/release/mac-arm64/Minerva.app" \
+    "$INSTALL_DIR/apps/desktop/release/mac/Minerva.app" \
+    "/Applications/Minerva.app"; do
     [ -d "$cand" ] && return 0
   done
   return 1
@@ -164,7 +164,7 @@ while :; do
     sleep 5
     install_complete && continue
     shot "ERROR-setup-exited"
-    log "Hermes-Setup exited (pid $SETUP_PID) before the install landed"
+    log "Minerva-Setup exited (pid $SETUP_PID) before the install landed"
     exit 1
   fi
   err="$(bootstrap_error)"

@@ -123,7 +123,7 @@ def test_current_installer_publishes_real_dependencies_and_warm_path(tmp_path, s
          "commit", "-m", "fixture"], cwd=source)
     commit = run(["git", "rev-parse", "HEAD"], cwd=source).stdout.strip()
     install = tmp_path / "installed source"
-    env["HERMES_REPO_URL"] = str(source)
+    env["MINERVA_REPO_URL"] = str(source)
     command = ["bash", str(ROOT / "scripts/install.sh"), "--dir", str(install),
                "--branch", "fixture", "--commit", commit, "--non-interactive", "--json"]
     result = run(command, expected=1 if fault else 0)

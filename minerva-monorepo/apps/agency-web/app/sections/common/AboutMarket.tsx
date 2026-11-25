@@ -134,7 +134,7 @@ export default function AboutMarket(): JSX.Element {
               <a href="about" className="w-inline-block">
                 <div className="about-p-market_card team-card-home-p">
                   <img
-                    src="img\sbo_maggz.png"
+                    src="img\team\team-circles.png"
                     loading="lazy"
                     sizes="(max-width: 767px) 100vw, (max-width: 987px) 95vw, 938px"
                     alt=""

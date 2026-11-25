@@ -84,7 +84,7 @@ def _windows_bundle(tmp_path: Path) -> Path:
 
 
 def _macos_bundle(tmp_path: Path) -> Path:
-    app = tmp_path / "Hermes.app"
+    app = tmp_path / "Minerva.app"
     repo = _payload(app / "Contents", resources_name="Resources")
     _exe(app / "Contents" / "MacOS" / "Hermes")
     return repo
@@ -101,7 +101,7 @@ def _host_bundle(tmp_path: Path) -> tuple[Path, Path]:
         repo = _windows_bundle(tmp_path)
         return repo, tmp_path / "Hermes" / "Hermes.exe"
     if sys.platform == "darwin":
-        return _macos_bundle(tmp_path), tmp_path / "Hermes.app/Contents/MacOS/Hermes"
+        return _macos_bundle(tmp_path), tmp_path / "Minerva.app/Contents/MacOS/Hermes"
     repo = _linux_bundle(tmp_path)
     return repo, tmp_path / "linux-unpacked" / "Hermes"
 
@@ -123,9 +123,9 @@ class TestResolveBundleLayout:
     def test_macos_app_root_climbs_out_of_contents_resources(self, tmp_path):
         repo = _macos_bundle(tmp_path)
         layout = resolve_bundle_layout(repo, platform="darwin")
-        assert layout.app_root == tmp_path / "Hermes.app"
-        assert layout.resources == tmp_path / "Hermes.app" / "Contents" / "Resources"
-        assert layout.launcher == tmp_path / "Hermes.app" / "Contents" / "MacOS" / "Hermes"
+        assert layout.app_root == tmp_path / "Minerva.app"
+        assert layout.resources == tmp_path / "Minerva.app" / "Contents" / "Resources"
+        assert layout.launcher == tmp_path / "Minerva.app" / "Contents" / "MacOS" / "Hermes"
 
     def test_ambiguous_launcher_reports_none_rather_than_guessing(self, tmp_path):
         repo = _windows_bundle(tmp_path)

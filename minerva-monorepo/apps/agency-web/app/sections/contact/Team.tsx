@@ -15,8 +15,7 @@ export default function Team(): JSX.Element {
               className="contact-page_team-title-underline is-image"
             />
             <h2 className="heading-style-h2 is-centered">
-              Let`s create
-              <span className="is-toxic-green">outstanding</span> digital
+              Let`s create <span className="is-toxic-green">outstanding</span> digital
               products
             </h2>
             <h2 className="heading-style-h2 is-centered">together!</h2>
@@ -112,7 +111,7 @@ export default function Team(): JSX.Element {
         alt=""
         className="contact-page_team-bg-1440"
       />
-          <div className="section-separator"></div>
+          {/* <div className="section-separator"></div> */}
     </section>
   );
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Prove a macOS user who installed OLD via the published desktop installer
-# (Hermes-Setup.dmg from the website) can reach HEAD.
+# (Minerva-Setup.dmg from the website) can reach HEAD.
 #
 # The macOS sibling of tests/install/windows-e2e.ps1's desktop-installer
 # arm, sharing the staging trick: every git process is pointed at a local
@@ -49,7 +49,7 @@ PHASE="all"
 UPDATE_METHOD=""
 INSTALL_REF=""
 UPDATE_REF=""
-DMG_URL="https://hermes-assets.nousresearch.com/Hermes-Setup.dmg"
+DMG_URL="https://minerva-assets.abbble.co.za/Minerva-Setup.dmg"
 while [ "$#" -gt 0 ]; do
   case "$1" in
     --phase)
@@ -171,8 +171,8 @@ find_installed_app() {
   # Require this installation's app, never an unrelated /Applications copy.
   local cand
   for cand in \
-    "$INSTALL_DIR/apps/desktop/release/mac-arm64/Hermes.app" \
-    "$INSTALL_DIR/apps/desktop/release/mac/Hermes.app"; do
+    "$INSTALL_DIR/apps/desktop/release/mac-arm64/Minerva.app" \
+    "$INSTALL_DIR/apps/desktop/release/mac/Minerva.app"; do
     [ -d "$cand" ] && { printf '%s' "$cand"; return 0; }
   done
   return 1
@@ -196,7 +196,7 @@ phase_install() {
     > "$LOG_DIR/bootstrap-install-script.txt"
   ok "bootstrap script is unmodified scripts/install.sh from $OLD_REF ($OLD_SHA)"
 
-  local dmg="$WORK_ROOT/Hermes-Setup.dmg"
+  local dmg="$WORK_ROOT/Minerva-Setup.dmg"
   [ -f "$dmg" ] || curl -fsSL -o "$dmg" "$DMG_URL"
   [ "$(stat -f%z "$dmg")" -gt 1000000 ] || fail "dmg download too small: $(stat -f%z "$dmg") bytes"
   # curl'd files carry no quarantine attr, but belt and braces on a runner.
@@ -225,10 +225,10 @@ phase_install() {
     --install-dir "$INSTALL_DIR" \
     --proof-dir "$LOG_DIR" 2>&1 \
     | ts_prefix > "$LOG_DIR/bootstrap-install.log" || rc=$?
-  log_group "Hermes-Setup (dmg bootstrap) transcript" "$LOG_DIR/bootstrap-install.log"
+  log_group "Minerva-Setup (dmg bootstrap) transcript" "$LOG_DIR/bootstrap-install.log"
   local bootstrap_log="$LOG_DIR/bootstrap-logs/bootstrap-installer.log"
   if [ -f "$bootstrap_log" ]; then
-    log_group "Hermes-Setup inner installer log" "$bootstrap_log"
+    log_group "Minerva-Setup inner installer log" "$bootstrap_log"
   fi
   hdiutil detach "$mount" >/dev/null 2>&1 || true
   [ "$rc" -eq 0 ] || fail "dmg bootstrap exited $rc; transcript above"
@@ -332,8 +332,8 @@ phase_update() {
       # The desktop stage is this leg's claim: the rebuilt app must exist.
       head_app=""
       for cand in \
-        "$INSTALL_DIR/apps/desktop/release/mac-arm64/Hermes.app" \
-        "$INSTALL_DIR/apps/desktop/release/mac/Hermes.app"; do
+        "$INSTALL_DIR/apps/desktop/release/mac-arm64/Minerva.app" \
+        "$INSTALL_DIR/apps/desktop/release/mac/Minerva.app"; do
         [ -d "$cand" ] && { head_app="$cand"; break; }
       done
       [ -n "$head_app" ] || fail "no built Minerva.app under the checkout after the +desktop update"

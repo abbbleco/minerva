@@ -73,7 +73,7 @@ if _SPEC_PATH:
             return ""
         # Packaged shape: argv[0] is the packaged app executable under
         # apps/desktop/release/ (win-unpacked/Hermes.exe, linux-unpacked/...,
-        # mac*/Hermes.app/Contents/MacOS/...).
+        # mac*/Minerva.app/Contents/MacOS/...).
         first = tokens[0].replace("\\", "/")
         if "apps/desktop/release/" in first:
             return "packaged"

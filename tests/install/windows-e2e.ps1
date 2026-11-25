@@ -109,7 +109,7 @@ param(
 
     [string]$WorkRoot = $(if ($env:HERMES_E2E_WORKROOT) { $env:HERMES_E2E_WORKROOT } else { Join-Path $env:TEMP "hermes-desktop-gui-e2e" }),
 
-    [string]$SetupExeUrl = "https://hermes-assets.nousresearch.com/Hermes-Setup.exe",
+    [string]$SetupExeUrl = "https://minerva-assets.abbble.co.za/Minerva-Setup.exe",
 
     # Driver dependencies come from the current checkout lockfile.
     [string]$DriverNode = $env:HERMES_E2E_NODE
@@ -777,7 +777,7 @@ function Save-GuiDriverFailureEvidence([System.Diagnostics.Process]$Installer, [
 public static extern bool MiniDumpWriteDump(IntPtr hProcess, uint processId, Microsoft.Win32.SafeHandles.SafeFileHandle hFile, uint dumpType, IntPtr exceptionParam, IntPtr userStreamParam, IntPtr callbackParam);
 '@
     }
-    $dumpPath = Join-Path $OutDir "Hermes-Setup.dmp"
+    $dumpPath = Join-Path $OutDir "Minerva-Setup.dmp"
     $file = [System.IO.File]::Create($dumpPath)
     try {
         # MiniDumpWithFullMemory | MiniDumpWithHandleData | MiniDumpWithThreadInfo
@@ -984,12 +984,12 @@ function Invoke-PhaseInstallGui {
     ) | Set-Content -LiteralPath (Join-Path $proof "bootstrap-install-script.txt") -Encoding ASCII
     Write-Host "  bootstrap script is scripts/install.ps1 from $ExpectedLabel ($ExpectedSha)"
 
-    $setupExe = Join-Path $WorkRoot "Hermes-Setup.exe"
+    $setupExe = Join-Path $WorkRoot "Minerva-Setup.exe"
     if (-not (Test-Path -LiteralPath $setupExe)) {
         Write-Host "  downloading $SetupExeUrl"
         Invoke-WebRequest -Uri $SetupExeUrl -OutFile $setupExe
     }
-    Assert-True ((Get-Item $setupExe).Length -gt 1MB) "Hermes-Setup.exe downloaded ($([math]::Round((Get-Item $setupExe).Length / 1MB, 1)) MB)"
+    Assert-True ((Get-Item $setupExe).Length -gt 1MB) "Minerva-Setup.exe downloaded ($([math]::Round((Get-Item $setupExe).Length / 1MB, 1)) MB)"
 
     # AutoHotkey v2, portable zip (no installer, no winget flakes).
     $ahkExe = Join-Path $AhkDir "AutoHotkey64.exe"
@@ -1033,7 +1033,7 @@ function Invoke-PhaseInstallGui {
         # Arg 3 lets the AHK script use the installer's own log as the
         # install-finished fallback signal.
         $ahk = Start-Process -FilePath $ahkExe `
-            -ArgumentList (Join-Path $AhkDir "install-and-launch.ahk"), $ahkLog, "Hermes-Setup.exe", (Join-Path $HermesHome "logs\bootstrap-installer.log") `
+            -ArgumentList (Join-Path $AhkDir "install-and-launch.ahk"), $ahkLog, "Minerva-Setup.exe", (Join-Path $HermesHome "logs\bootstrap-installer.log") `
             -PassThru
         # Install on a cold runner takes a while; the AHK script's own inner
         # timeout (45 min on the Launch wait) is the effective budget.
@@ -1061,7 +1061,7 @@ function Invoke-PhaseInstallGui {
         if (-not $installer.HasExited) {
             Start-Sleep -Seconds 10
         }
-        Assert-True $installer.HasExited "Hermes-Setup.exe exited after Launch"
+        Assert-True $installer.HasExited "Minerva-Setup.exe exited after Launch"
     }
     finally {
         Stop-DesktopRecorder $recorder (Join-Path $proof "desktop-frames")
@@ -1160,7 +1160,7 @@ function Invoke-GuiUpdateDesktopRoute([string]$TargetSha) {
         # on the installed checkout, and BOTH are production paths:
         #   * checkouts shipping scripts/desktop-update.ps1 -> that script,
         #     which writes .hermes-update-result.json on every exit;
-        #   * older checkouts -> the staged hermes-setup.exe --update flow,
+        #   * older checkouts -> the staged Minerva-Setup.exe --update flow,
         #     which does NOT write the result JSON.
         # So: poll for COMPLETION = (result JSON) OR (checkout reached the
         # target sha AND the marker is gone). The sha/marker/hermes/relaunch
@@ -1660,8 +1660,8 @@ function Invoke-CheckedPhaseUpdate {
 function Invoke-PhaseVerifyStamp {
     # Runs AFTER everything (install, update, the new runtime's launch and its
     # smoke checks): the bootstrap-complete receipt and the checkout's source
-    # stamp must both tell the truth about the final HEAD. A separate phase —
-    # not an install-phase check — because the bootstrap marker can complete
+    # stamp must both tell the truth about the final HEAD. A separate phase â€”
+    # not an install-phase check â€” because the bootstrap marker can complete
     # on a LATER run than the install itself.
     $state = Read-State
     $head = Get-InstalledHead
@@ -1695,10 +1695,10 @@ function Invoke-PhaseVerifyStamp {
     $setupExeReceipt = $receipt -and ($receipt.PSObject.Properties.Name -contains 'completedAtUnix')
     if ($setupExeReceipt -and $fails.Count -and -not @($fails | Where-Object { $_ -notmatch $legacyOnly }).Count) {
         $unix = $receipt.completedAtUnix
-        Assert-True ((($unix -is [int]) -or ($unix -is [long])) -and $unix -gt 0) "Hermes-Setup.exe receipt completedAtUnix is epoch seconds: '$unix'"
+        Assert-True ((($unix -is [int]) -or ($unix -is [long])) -and $unix -gt 0) "Minerva-Setup.exe receipt completedAtUnix is epoch seconds: '$unix'"
         # The receipt cannot vouch for the commit, so the checkout must.
         Assert-True ($head -eq $state.current) "installed checkout is at the expected commit ($($state.current.Substring(0, 12)))"
-        $note = "Hermes-Setup.exe legacy receipt accepted (#124949; the released exe is not rebuilt): $($fails -join '; ')"
+        $note = "Minerva-Setup.exe legacy receipt accepted (#124949; the released exe is not rebuilt): $($fails -join '; ')"
         Write-Host "  $note"
         if ($env:GITHUB_STEP_SUMMARY) { Add-Content -LiteralPath $env:GITHUB_STEP_SUMMARY -Value $note -Encoding UTF8 }
         return

@@ -183,7 +183,7 @@ pub async fn launch_hermes_desktop(
     tracing::info!(?exe_path, "launching Minerva desktop");
 
     // Detach from us — the installer is about to exit. On macOS launch the
-    // bundle through LaunchServices instead of exec'ing Contents/MacOS/Hermes
+    // bundle through LaunchServices instead of exec'ing Contents/MacOS/Minerva
     // directly; this matches user double-click/open behavior and avoids cwd /
     // quarantine oddities after a self-update rebuild.
     let mut cmd = desktop_launch_command(&exe_path, &install_root);
@@ -206,23 +206,33 @@ pub async fn launch_hermes_desktop(
 
 /// Walks the well-known electron-builder unpacked-app paths under
 /// `install_root`. Mirrors the resolver in `cmd_gui` (apps/desktop/release/
-/// <os>-unpacked/<exe>).
+/// <os>-unpacked/<exe>). Probes Minerva names first; Hermes names are the
+/// pre-rebrand fallback so older checkouts keep launching.
 pub(crate) fn resolve_hermes_desktop_exe(install_root: &std::path::Path) -> Option<PathBuf> {
     let release_dir = install_root.join("apps").join("desktop").join("release");
     let candidates: &[(&str, &str)] = if cfg!(target_os = "windows") {
         &[
+            ("win-unpacked", "Minerva.exe"),
+            ("win-arm64-unpacked", "Minerva.exe"),
             ("win-unpacked", "Hermes.exe"),
             ("win-arm64-unpacked", "Hermes.exe"),
         ]
     } else if cfg!(target_os = "macos") {
         &[
-            ("mac/Hermes.app/Contents/MacOS", "Hermes"),
-            ("mac-arm64/Hermes.app/Contents/MacOS", "Hermes"),
+            ("mac/Minerva.app/Contents/MacOS", "Minerva"),
+            ("mac-arm64/Minerva.app/Contents/MacOS", "Minerva"),
+            ("mac/Minerva.app/Contents/MacOS", "Hermes"),
+            ("mac-arm64/Minerva.app/Contents/MacOS", "Hermes"),
         ]
     } else {
         // electron-builder names the x64 dir `linux-unpacked` and every other
         // arch `linux-<arch>-unpacked` (#94703).
-        &[("linux-unpacked", "hermes"), ("linux-arm64-unpacked", "hermes")]
+        &[
+            ("linux-unpacked", "minerva"),
+            ("linux-arm64-unpacked", "minerva"),
+            ("linux-unpacked", "hermes"),
+            ("linux-arm64-unpacked", "hermes"),
+        ]
     };
     for (subdir, exe) in candidates {
         let p = release_dir.join(subdir).join(exe);
@@ -237,7 +247,7 @@ pub(crate) fn resolve_hermes_desktop_app(install_root: &std::path::Path) -> Opti
     let exe = resolve_hermes_desktop_exe(install_root)?;
     #[cfg(target_os = "macos")]
     {
-        // .../Hermes.app/Contents/MacOS/Minerva -> .../Hermes.app
+        // .../Minerva.app/Contents/MacOS/Minerva -> .../Minerva.app
         let app = exe.parent()?.parent()?.parent()?.to_path_buf();
         if app.extension().and_then(|e| e.to_str()) == Some("app") && app.is_dir() {
             return Some(app);
@@ -898,7 +908,7 @@ async fn run_bootstrap(
         }
     };
 
-    // Copy ourselves to HERMES_HOME/hermes-setup.exe so the desktop app can
+    // Copy ourselves to HERMES_HOME/minerva-setup.exe so the desktop app can
     // re-invoke us with `--update` and shortcuts have a stable target. This is
     // a one-shot install concern; an `--update` re-invocation no-ops because
     // we're already running from that path. Best-effort — a failure here must
@@ -1136,12 +1146,12 @@ mod tests {
         if cfg!(target_os = "macos") {
             let macos_dir = release
                 .join("mac-arm64")
-                .join("Hermes.app")
+                .join("Minerva.app")
                 .join("Contents")
                 .join("MacOS");
             std::fs::create_dir_all(&macos_dir).unwrap();
             std::fs::write(macos_dir.join("Hermes"), b"#!/bin/sh\n").unwrap();
-            macos_dir.parent().unwrap().parent().unwrap().to_path_buf() // .../Hermes.app
+            macos_dir.parent().unwrap().parent().unwrap().to_path_buf() // .../Minerva.app
         } else if cfg!(target_os = "windows") {
             let dir = release.join("win-unpacked");
             std::fs::create_dir_all(&dir).unwrap();
@@ -1159,7 +1169,7 @@ mod tests {
 
     // The relaunch / install target is derived from the rebuilt desktop app.
     // On macOS this MUST resolve to the .app bundle (what `open` relaunches and
-    // what the updater ditto's over /Applications/Hermes.app). A regression in
+    // what the updater ditto's over /Applications/Minerva.app). A regression in
     // this derivation breaks the post-update auto-relaunch, so guard it.
     #[test]
     fn resolve_hermes_desktop_app_finds_built_bundle() {
@@ -1197,6 +1207,39 @@ mod tests {
         std::fs::write(&exe, b"stub").unwrap();
 
         assert_eq!(resolve_hermes_desktop_exe(&root), Some(exe));
+        let _ = std::fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn resolve_hermes_desktop_exe_finds_minerva_build() {
+        // New builds emit Minerva names (product-identity.cjs); Hermes names
+        // are the pre-rebrand fallback. A Minerva-only tree must resolve.
+        let root = unique_tmp_dir("app-minerva");
+        let release = root.join("apps").join("desktop").join("release");
+        let expected: PathBuf = if cfg!(target_os = "macos") {
+            let macos_dir = release
+                .join("mac-arm64")
+                .join("Minerva.app")
+                .join("Contents")
+                .join("MacOS");
+            std::fs::create_dir_all(&macos_dir).unwrap();
+            std::fs::write(macos_dir.join("Minerva"), b"#!/bin/sh\n").unwrap();
+            macos_dir
+        } else if cfg!(target_os = "windows") {
+            let dir = release.join("win-unpacked");
+            std::fs::create_dir_all(&dir).unwrap();
+            let exe = dir.join("Minerva.exe");
+            std::fs::write(&exe, b"stub").unwrap();
+            exe
+        } else {
+            let dir = release.join("linux-unpacked");
+            std::fs::create_dir_all(&dir).unwrap();
+            let exe = dir.join("minerva");
+            std::fs::write(&exe, b"stub").unwrap();
+            exe
+        };
+
+        assert_eq!(resolve_hermes_desktop_exe(&root), Some(expected));
         let _ = std::fs::remove_dir_all(&root);
     }
 

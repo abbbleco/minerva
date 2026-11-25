@@ -22,14 +22,14 @@ Download the package for your platform from the
 - **Windows:** open the `.appinstaller` download with Windows App Installer.
   It installs the signed MSIX bundle and records its update source.
   Microsoft Store packages have separate Store ownership.
-- **macOS:** open the DMG, then copy `Hermes.app` to Applications. The ZIP
+- **macOS:** open the DMG, then copy `Minerva.app` to Applications. The ZIP
   artifact carries the signed app used by the automatic updater.
 
 Bundled packages contain the agent, Python, supported dependencies, and prebuilt
 interfaces. First launch does not build that base runtime. Provider access and
 optional integrations can still require network access.
 
-A `Hermes-Setup` bootstrap installer is different: it downloads a source
+A `Minerva-Setup` bootstrap installer is different: it downloads a source
 installation and builds the desktop app. Light is a remote-only build variant,
 not a bundled local runtime. See [Minerva Desktop](../user-guide/desktop.md).
 

@@ -98,14 +98,14 @@ test('resolving a packaged icon never probes a path inside app.asar', () => {
 test('appIconCandidates keeps the documented precedence ladder', () => {
   const mac = appIconCandidates({
     isWindows: false,
-    appRoot: '/Applications/Hermes.app/Contents/Resources',
+    appRoot: '/Applications/Minerva.app/Contents/Resources',
     unpackedPathFor: p => `${p}.unpacked`
   })
 
   assert.deepEqual(mac, [
-    path.join('/Applications/Hermes.app/Contents/Resources.unpacked', 'dist', 'apple-touch-icon.png'),
-    path.join('/Applications/Hermes.app/Contents/Resources', 'public', 'apple-touch-icon.png'),
-    path.join('/Applications/Hermes.app/Contents/Resources', 'dist', 'apple-touch-icon.png')
+    path.join('/Applications/Minerva.app/Contents/Resources.unpacked', 'dist', 'apple-touch-icon.png'),
+    path.join('/Applications/Minerva.app/Contents/Resources', 'public', 'apple-touch-icon.png'),
+    path.join('/Applications/Minerva.app/Contents/Resources', 'dist', 'apple-touch-icon.png')
   ])
 
   // Windows prepends the two full-bleed .ico rungs ahead of the PNG ladder.

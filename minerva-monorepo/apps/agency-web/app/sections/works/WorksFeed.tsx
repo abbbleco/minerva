@@ -1,4 +1,4 @@
-import type { JSX } from "react";
+import type { JSX } from 'react'
 
 /* eslint-disable @next/next/no-img-element */
 
@@ -8,38 +8,23 @@ export default function WorksFeed(): JSX.Element {
       <div className="works-p_feed-filters">
         <div className="w-layout-blockcontainer container w-container">
           <div className="works-p_filters-cms-list">
-            <a
-              href="."
-              className="works-p_filters-cms-item-wrapper is-all w-inline-block"
-            >
+            <a href="." className="works-p_filters-cms-item-wrapper is-all w-inline-block">
               <div className="works-p_filters-item-name">All</div>
               <div className="works-p_filters-item-name is-number">( 12 )</div>
             </a>
-            <a
-              href="."
-              className="works-p_filters-cms-item-wrapper is-web-3-0 w-inline-block"
-            >
+            <a href="." className="works-p_filters-cms-item-wrapper is-web-3-0 w-inline-block">
               <div className="works-p_filters-item-name">Web 3.0</div>
               <div className="works-p_filters-item-name is-number">(0)</div>
             </a>
-            <a
-              href="."
-              className="works-p_filters-cms-item-wrapper is-saas w-inline-block"
-            >
+            <a href="." className="works-p_filters-cms-item-wrapper is-saas w-inline-block">
               <div className="works-p_filters-item-name">SaaS</div>
               <div className="works-p_filters-item-name is-number">(0)</div>
             </a>
-            <a
-              href="."
-              className="works-p_filters-cms-item-wrapper is-fintech w-inline-block"
-            >
+            <a href="." className="works-p_filters-cms-item-wrapper is-fintech w-inline-block">
               <div className="works-p_filters-item-name">Fintech</div>
               <div className="works-p_filters-item-name is-number">(0)</div>
             </a>
-            <a
-              href="."
-              className="works-p_filters-cms-item-wrapper is-healthcare w-inline-block"
-            >
+            <a href="." className="works-p_filters-cms-item-wrapper is-healthcare w-inline-block">
               <div className="works-p_filters-item-name">Healthcare</div>
               <div className="works-p_filters-item-name is-number">(0)</div>
             </a>
@@ -55,17 +40,11 @@ export default function WorksFeed(): JSX.Element {
         </div>
       </div>
       <div className="w-layout-blockcontainer container w-container">
-        <div
-          data-w-id="f8497902-9022-ada8-f62e-5206b6ab8864"
-          className="works-p_feed-main"
-        >
+        <div data-w-id="f8497902-9022-ada8-f62e-5206b6ab8864" className="works-p_feed-main">
           <div className="works-p_feed-wrapper">
             <div id="web-3-0" className="works-p_feed-cms-block w-dyn-list">
               <div role="list" className="works-p_feed-cms-list w-dyn-items">
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <div className="works-p-feed-cms-item-core-styles w-embed"></div>
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab8869"
@@ -104,20 +83,13 @@ export default function WorksFeed(): JSX.Element {
                             <div className="works-p_feed-item-value-text w-dyn-bind-empty"></div>
                           </div>
                         </div>
-                        <p className="works-p_feed-item-details">
-                          Elegant and Functional Design for Web3 Trading
-                        </p>
-                        <div className="works-p_feed-item-region">
-                          UK, London
-                        </div>
+                        <p className="works-p_feed-item-details">Elegant and Functional Design for Web3 Trading</p>
+                        <div className="works-p_feed-item-region">UK, London</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <div className="works-p-feed-cms-item-core-styles w-embed"></div>
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab8869"
@@ -157,21 +129,15 @@ export default function WorksFeed(): JSX.Element {
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          Galaxy is a decentralized hub offering pre- and
-                          post-market trading, along with dApps like real yield
-                          and flash loans.
+                          Galaxy is a decentralized hub offering pre- and post-market trading, along with dApps like
+                          real yield and flash loans.
                         </p>
-                        <div className="works-p_feed-item-region">
-                          Malta · 2024
-                        </div>
+                        <div className="works-p_feed-item-region">Malta · 2024</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <div className="works-p-feed-cms-item-core-styles w-embed"></div>
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab8869"
@@ -211,20 +177,15 @@ export default function WorksFeed(): JSX.Element {
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          The ultimate gateway to decentralized finance in a
-                          multi-currency and convenient cryptocurrency wallet.
+                          The ultimate gateway to decentralized finance in a multi-currency and convenient
+                          cryptocurrency wallet.
                         </p>
-                        <div className="works-p_feed-item-region">
-                          United Kingdom · 2023
-                        </div>
+                        <div className="works-p_feed-item-region">United Kingdom · 2023</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <div className="works-p-feed-cms-item-core-styles w-embed"></div>
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab8869"
@@ -252,9 +213,7 @@ export default function WorksFeed(): JSX.Element {
                       </div>
                       <div className="works-p_feed-item-info">
                         <div className="works-p_feed-item-title-wrap">
-                          <h3 className="works-p_feed-item-title">
-                            Myso Finance
-                          </h3>
+                          <h3 className="works-p_feed-item-title">Myso Finance</h3>
                           <div className="works-p_feed-item-value-wrap">
                             <img
                               src="/svg/bb35aad32ac8.svg"
@@ -262,27 +221,19 @@ export default function WorksFeed(): JSX.Element {
                               alt=""
                               className="works-p_feed-item-value-icon"
                             />
-                            <div className="works-p_feed-item-value-text">
-                              $2.4 M Raised
-                            </div>
+                            <div className="works-p_feed-item-value-text">$2.4 M Raised</div>
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          {" "}
-                          MYSO revolutionizes DeFi with innovative Web3 finance
-                          solutions.
+                          {' '}
+                          MYSO revolutionizes DeFi with innovative Web3 finance solutions.
                         </p>
-                        <div className="works-p_feed-item-region">
-                          Bern, Switzerland · 2023
-                        </div>
+                        <div className="works-p_feed-item-region">Bern, Switzerland · 2023</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <div className="works-p-feed-cms-item-core-styles w-embed"></div>
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab8869"
@@ -318,26 +269,19 @@ export default function WorksFeed(): JSX.Element {
                               alt=""
                               className="works-p_feed-item-value-icon"
                             />
-                            <div className="works-p_feed-item-value-text">
-                              $160K Raised
-                            </div>
+                            <div className="works-p_feed-item-value-text">$160K Raised</div>
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          VOXE: Revolutionize social media with crypto wallets,
-                          a world map, and customizable experiences.
+                          VOXE: Revolutionize social media with crypto wallets, a world map, and customizable
+                          experiences.
                         </p>
-                        <div className="works-p_feed-item-region">
-                          Czech Republic · 2023
-                        </div>
+                        <div className="works-p_feed-item-region">Czech Republic · 2023</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <div className="works-p-feed-cms-item-core-styles w-embed"></div>
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab8869"
@@ -377,20 +321,14 @@ export default function WorksFeed(): JSX.Element {
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          XBlock simplifies blockchain exploration with
-                          intuitive tools and analytics.
+                          XBlock simplifies blockchain exploration with intuitive tools and analytics.
                         </p>
-                        <div className="works-p_feed-item-region">
-                          California, USA · 2022
-                        </div>
+                        <div className="works-p_feed-item-region">California, USA · 2022</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <div className="works-p-feed-cms-item-core-styles w-embed"></div>
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab8869"
@@ -418,9 +356,7 @@ export default function WorksFeed(): JSX.Element {
                       </div>
                       <div className="works-p_feed-item-info">
                         <div className="works-p_feed-item-title-wrap">
-                          <h3 className="works-p_feed-item-title">
-                            Minty Swap
-                          </h3>
+                          <h3 className="works-p_feed-item-title">Minty Swap</h3>
                           <div className="works-p_feed-item-value-wrap">
                             <img
                               src="/svg/bb35aad32ac8.svg"
@@ -428,19 +364,14 @@ export default function WorksFeed(): JSX.Element {
                               alt=""
                               className="works-p_feed-item-value-icon"
                             />
-                            <div className="works-p_feed-item-value-text">
-                              $2.4 M Raised
-                            </div>
+                            <div className="works-p_feed-item-value-text">$2.4 M Raised</div>
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          Digital marketplace for crypto collectibles and
-                          non-fungible tokens. Buy, sell, and discover digital
-                          assets.
+                          Digital marketplace for crypto collectibles and non-fungible tokens. Buy, sell, and discover
+                          digital assets.
                         </p>
-                        <div className="works-p_feed-item-region">
-                          New York, USA · 2022
-                        </div>
+                        <div className="works-p_feed-item-region">New York, USA · 2022</div>
                       </div>
                     </div>
                   </a>
@@ -449,10 +380,7 @@ export default function WorksFeed(): JSX.Element {
             </div>
             <div id="saas" className="works-p_feed-cms-block w-dyn-list">
               <div role="list" className="works-p_feed-cms-list w-dyn-items">
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab887d"
                     href="https://abbble.co.za/case/documotor"
@@ -490,20 +418,13 @@ export default function WorksFeed(): JSX.Element {
                             <div className="works-p_feed-item-value-text w-dyn-bind-empty"></div>
                           </div>
                         </div>
-                        <p className="works-p_feed-item-details">
-                          Documotor: Designing a Powerful New Brand Story
-                        </p>
-                        <div className="works-p_feed-item-region">
-                          Denmark, Copenhagen
-                        </div>
+                        <p className="works-p_feed-item-details">Documotor: Designing a Powerful New Brand Story</p>
+                        <div className="works-p_feed-item-region">Denmark, Copenhagen</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab887d"
                     href="https://abbble.co.za/case/altflow"
@@ -541,20 +462,13 @@ export default function WorksFeed(): JSX.Element {
                             <div className="works-p_feed-item-value-text w-dyn-bind-empty"></div>
                           </div>
                         </div>
-                        <p className="works-p_feed-item-details">
-                          Empathy and innovation for human-centric AI
-                        </p>
-                        <div className="works-p_feed-item-region">
-                          The USA, Dallas, Texas
-                        </div>
+                        <p className="works-p_feed-item-details">Empathy and innovation for human-centric AI</p>
+                        <div className="works-p_feed-item-region">The USA, Dallas, Texas</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab887d"
                     href="https://abbble.co.za/case/flair-ai-powered-workflow-automation"
@@ -589,23 +503,16 @@ export default function WorksFeed(): JSX.Element {
                               alt=""
                               className="works-p_feed-item-value-icon"
                             />
-                            <div className="works-p_feed-item-value-text">
-                              $1.5M raised
-                            </div>
+                            <div className="works-p_feed-item-value-text">$1.5M raised</div>
                           </div>
                         </div>
-                        <p className="works-p_feed-item-details">
-                          Smart Design to Streamline Business Workflows
-                        </p>
+                        <p className="works-p_feed-item-details">Smart Design to Streamline Business Workflows</p>
                         <div className="works-p_feed-item-region">USA</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab887d"
                     href="https://abbble.co.za/case/sinta"
@@ -644,21 +551,15 @@ export default function WorksFeed(): JSX.Element {
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          Sinta is your all-in-one hiring solution. Streamline
-                          interviews with AI-powered tools, customizable
-                          templates, and video transcripts.
+                          Sinta is your all-in-one hiring solution. Streamline interviews with AI-powered tools,
+                          customizable templates, and video transcripts.
                         </p>
-                        <div className="works-p_feed-item-region">
-                          Netherlands · 2024
-                        </div>
+                        <div className="works-p_feed-item-region">Netherlands · 2024</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab887d"
                     href="https://abbble.co.za/case/mojo-cx"
@@ -697,20 +598,14 @@ export default function WorksFeed(): JSX.Element {
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          MOJO-CX by TMAC streamlines contact centers with
-                          AI-powered coaching and prompts.
+                          MOJO-CX by TMAC streamlines contact centers with AI-powered coaching and prompts.
                         </p>
-                        <div className="works-p_feed-item-region">
-                          United Kingdom
-                        </div>
+                        <div className="works-p_feed-item-region">United Kingdom</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab887d"
                     href="https://abbble.co.za/case/gradwork"
@@ -745,29 +640,21 @@ export default function WorksFeed(): JSX.Element {
                               alt=""
                               className="works-p_feed-item-value-icon"
                             />
-                            <div className="works-p_feed-item-value-text">
-                              $2.4 M Raised
-                            </div>
+                            <div className="works-p_feed-item-value-text">$2.4 M Raised</div>
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          Recruitment platform that bridges the employment gap
-                          between college and company.
+                          Recruitment platform that bridges the employment gap between college and company.
                         </p>
-                        <div className="works-p_feed-item-region">
-                          Dublin, Ireland · 2022
-                        </div>
+                        <div className="works-p_feed-item-region">Dublin, Ireland · 2022</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab887d"
-                    href="https://case.abbble.co.za/case/metricly"
+                    href="/case/metricly"
                     className="works-p-feed-cms-item-link w-inline-block"
                   >
                     <div className="works-p_feed-item-wrapper">
@@ -799,26 +686,18 @@ export default function WorksFeed(): JSX.Element {
                               alt=""
                               className="works-p_feed-item-value-icon"
                             />
-                            <div className="works-p_feed-item-value-text">
-                              $11 M Raised
-                            </div>
+                            <div className="works-p_feed-item-value-text">$11 M Raised</div>
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          Сloud cost platform that offers instruments to help
-                          with management of AWS costs.
+                          Сloud cost platform that offers instruments to help with management of AWS costs.
                         </p>
-                        <div className="works-p_feed-item-region">
-                          New York, USA · 2022
-                        </div>
+                        <div className="works-p_feed-item-region">New York, USA · 2022</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab887d"
                     href="https://abbble.co.za/case/qtalent"
@@ -857,20 +736,14 @@ export default function WorksFeed(): JSX.Element {
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          SaaS-based recruiting platform that hosts the largest
-                          community of professionals.
+                          SaaS-based recruiting platform that hosts the largest community of professionals.
                         </p>
-                        <div className="works-p_feed-item-region">
-                          Toronto, Canada · 2024
-                        </div>
+                        <div className="works-p_feed-item-region">Toronto, Canada · 2024</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab887d"
                     href="case/wordpress"
@@ -909,13 +782,10 @@ export default function WorksFeed(): JSX.Element {
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          {" "}
-                          WordPress: Build and grow your website with
-                          customizable templates and plugins.
+                          {' '}
+                          WordPress: Build and grow your website with customizable templates and plugins.
                         </p>
-                        <div className="works-p_feed-item-region">
-                          New York, USA · 2022
-                        </div>
+                        <div className="works-p_feed-item-region">New York, USA · 2022</div>
                       </div>
                     </div>
                   </a>
@@ -924,10 +794,7 @@ export default function WorksFeed(): JSX.Element {
             </div>
             <div id="fintech" className="works-p_feed-cms-block w-dyn-list">
               <div role="list" className="works-p_feed-cms-list w-dyn-items">
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab8891"
                     href="https://abbble.co.za/case/unlockscalendar"
@@ -954,9 +821,7 @@ export default function WorksFeed(): JSX.Element {
                       </div>
                       <div className="works-p_feed-item-info">
                         <div className="works-p_feed-item-title-wrap">
-                          <h3 className="works-p_feed-item-title">
-                            Unlockscalendar
-                          </h3>
+                          <h3 className="works-p_feed-item-title">Unlockscalendar</h3>
                           <div className="works-p_feed-item-value-wrap w-condition-invisible">
                             <img
                               src="/svg/bb35aad32ac8.svg"
@@ -970,17 +835,12 @@ export default function WorksFeed(): JSX.Element {
                         <p className="works-p_feed-item-details">
                           Transforming UX/UI Design for Smarter Crypto Decisions
                         </p>
-                        <div className="works-p_feed-item-region">
-                          France, Paris
-                        </div>
+                        <div className="works-p_feed-item-region">France, Paris</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab8891"
                     href="https://abbble.co.za/case/xpence"
@@ -1015,30 +875,22 @@ export default function WorksFeed(): JSX.Element {
                               alt=""
                               className="works-p_feed-item-value-icon"
                             />
-                            <div className="works-p_feed-item-value-text">
-                              $2.3 M Raised
-                            </div>
+                            <div className="works-p_feed-item-value-text">$2.3 M Raised</div>
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          Xpence: Gain full control over your spending with our
-                          innovative platform offering card issuance, invoicing,
-                          and secure payments.
+                          Xpence: Gain full control over your spending with our innovative platform offering card
+                          issuance, invoicing, and secure payments.
                         </p>
-                        <div className="works-p_feed-item-region">
-                          Dubai, UAE · 2022
-                        </div>
+                        <div className="works-p_feed-item-region">Dubai, UAE · 2022</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab8891"
-                    href="https://case.abbble.co.za/case/gigzi"
+                    href="/case/gigzi"
                     className="works-p-feed-cms-item-link w-inline-block"
                   >
                     <div className="works-p_feed-item-wrapper">
@@ -1074,20 +926,15 @@ export default function WorksFeed(): JSX.Element {
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          Innovative financial system that provides users with
-                          blockchain security and wealth management.
+                          Innovative financial system that provides users with blockchain security and wealth
+                          management.
                         </p>
-                        <div className="works-p_feed-item-region">
-                          London, UK · 2021
-                        </div>
+                        <div className="works-p_feed-item-region">London, UK · 2021</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab8891"
                     href="https://abbble.co.za/case/klasha"
@@ -1122,26 +969,19 @@ export default function WorksFeed(): JSX.Element {
                               alt=""
                               className="works-p_feed-item-value-icon"
                             />
-                            <div className="works-p_feed-item-value-text">
-                              $4.7 M Raised
-                            </div>
+                            <div className="works-p_feed-item-value-text">$4.7 M Raised</div>
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          Fintech platform that allows consumers to make and
-                          receive payments in their local currencies.{" "}
+                          Fintech platform that allows consumers to make and receive payments in their local
+                          currencies.{' '}
                         </p>
-                        <div className="works-p_feed-item-region">
-                          California, USA · 2022
-                        </div>
+                        <div className="works-p_feed-item-region">California, USA · 2022</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab8891"
                     href="https://abbble.co.za/case/sageexpress"
@@ -1168,9 +1008,7 @@ export default function WorksFeed(): JSX.Element {
                       </div>
                       <div className="works-p_feed-item-info">
                         <div className="works-p_feed-item-title-wrap">
-                          <h3 className="works-p_feed-item-title">
-                            SageExpress
-                          </h3>
+                          <h3 className="works-p_feed-item-title">SageExpress</h3>
                           <div className="works-p_feed-item-value-wrap">
                             <img
                               src="/svg/bb35aad32ac8.svg"
@@ -1178,26 +1016,18 @@ export default function WorksFeed(): JSX.Element {
                               alt=""
                               className="works-p_feed-item-value-icon"
                             />
-                            <div className="works-p_feed-item-value-text">
-                              $700 M Raised
-                            </div>
+                            <div className="works-p_feed-item-value-text">$700 M Raised</div>
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          AI-driven data discovery tool that presents validated
-                          insights related to KPI.
+                          AI-driven data discovery tool that presents validated insights related to KPI.
                         </p>
-                        <div className="works-p_feed-item-region">
-                          Dublin, Ireland · 2022
-                        </div>
+                        <div className="works-p_feed-item-region">Dublin, Ireland · 2022</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab8891"
                     href="case/players-health"
@@ -1224,9 +1054,7 @@ export default function WorksFeed(): JSX.Element {
                       </div>
                       <div className="works-p_feed-item-info">
                         <div className="works-p_feed-item-title-wrap">
-                          <h3 className="works-p_feed-item-title">
-                            Player’s Health
-                          </h3>
+                          <h3 className="works-p_feed-item-title">Player’s Health</h3>
                           <div className="works-p_feed-item-value-wrap">
                             <img
                               src="/svg/bb35aad32ac8.svg"
@@ -1234,18 +1062,13 @@ export default function WorksFeed(): JSX.Element {
                               alt=""
                               className="works-p_feed-item-value-icon"
                             />
-                            <div className="works-p_feed-item-value-text">
-                              $34 M Raised
-                            </div>
+                            <div className="works-p_feed-item-value-text">$34 M Raised</div>
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          Explore how Abbble Co&apos;s UI/UX design benefits
-                          youth sports organizations.
+                          Explore how Abbble Co&apos;s UI/UX design benefits youth sports organizations.
                         </p>
-                        <div className="works-p_feed-item-region">
-                          Minnesota, USA · 2022
-                        </div>
+                        <div className="works-p_feed-item-region">Minnesota, USA · 2022</div>
                       </div>
                     </div>
                   </a>
@@ -1254,10 +1077,7 @@ export default function WorksFeed(): JSX.Element {
             </div>
             <div id="healthcare" className="works-p_feed-cms-block w-dyn-list">
               <div role="list" className="works-p_feed-cms-list w-dyn-items">
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab88a5"
                     href="https://abbble.co.za/case/bogat"
@@ -1292,23 +1112,16 @@ export default function WorksFeed(): JSX.Element {
                               alt=""
                               className="works-p_feed-item-value-icon"
                             />
-                            <div className="works-p_feed-item-value-text">
-                              $1.5M raised
-                            </div>
+                            <div className="works-p_feed-item-value-text">$1.5M raised</div>
                           </div>
                         </div>
-                        <p className="works-p_feed-item-details">
-                          Refined Brand and Web Design for Aesthetic Clinic
-                        </p>
+                        <p className="works-p_feed-item-details">Refined Brand and Web Design for Aesthetic Clinic</p>
                         <div className="works-p_feed-item-region">USA</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab88a5"
                     href="https://abbble.co.za/case/smoothline"
@@ -1335,9 +1148,7 @@ export default function WorksFeed(): JSX.Element {
                       </div>
                       <div className="works-p_feed-item-info">
                         <div className="works-p_feed-item-title-wrap">
-                          <h3 className="works-p_feed-item-title">
-                            Smoothline
-                          </h3>
+                          <h3 className="works-p_feed-item-title">Smoothline</h3>
                           <div className="works-p_feed-item-value-wrap w-condition-invisible">
                             <img
                               src="/svg/bb35aad32ac8.svg"
@@ -1345,25 +1156,16 @@ export default function WorksFeed(): JSX.Element {
                               alt=""
                               className="works-p_feed-item-value-icon"
                             />
-                            <div className="works-p_feed-item-value-text">
-                              $1.5M raised
-                            </div>
+                            <div className="works-p_feed-item-value-text">$1.5M raised</div>
                           </div>
                         </div>
-                        <p className="works-p_feed-item-details">
-                          Digital Presence as Elegant as Natural Beauty
-                        </p>
-                        <div className="works-p_feed-item-region">
-                          Switzerland
-                        </div>
+                        <p className="works-p_feed-item-details">Digital Presence as Elegant as Natural Beauty</p>
+                        <div className="works-p_feed-item-region">Switzerland</div>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div
-                  role="listitem"
-                  className="works-p_feed-cms-item w-dyn-item"
-                >
+                <div role="listitem" className="works-p_feed-cms-item w-dyn-item">
                   <a
                     data-w-id="f8497902-9022-ada8-f62e-5206b6ab88a5"
                     href="https://abbble.co.za/case/mined"
@@ -1402,22 +1204,16 @@ export default function WorksFeed(): JSX.Element {
                           </div>
                         </div>
                         <p className="works-p_feed-item-details">
-                          Healthcare platform that connects top emotional
-                          wellness experts and community.{" "}
+                          Healthcare platform that connects top emotional wellness experts and community.{' '}
                         </p>
-                        <div className="works-p_feed-item-region">
-                          New York, USA · 2022
-                        </div>
+                        <div className="works-p_feed-item-region">New York, USA · 2022</div>
                       </div>
                     </div>
                   </a>
                 </div>
               </div>
             </div>
-            <div
-              id="food-delivery"
-              className="works-p_feed-cms-block is-hidden w-dyn-list"
-            >
+            <div id="food-delivery" className="works-p_feed-cms-block is-hidden w-dyn-list">
               <div className="w-dyn-empty">
                 <div>No items found.</div>
               </div>
@@ -1426,22 +1222,18 @@ export default function WorksFeed(): JSX.Element {
           <div
             data-w-id="21df89de-b751-30d0-c71d-ecf460afb9b1"
             style={{
-              opacity: "0",
-              WebkitTransform:
-                "translate3d(0, 250px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-              MozTransform:
-                "translate3d(0, 250px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-              msTransform:
-                "translate3d(0, 250px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-              transform:
-                "translate3d(0, 250px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+              opacity: '0',
+              WebkitTransform: 'translate3d(0, 250px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+              MozTransform: 'translate3d(0, 250px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+              msTransform: 'translate3d(0, 250px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+              transform: 'translate3d(0, 250px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)'
             }}
             className="works-p_filters-cms-list-wrapper"
           >
             <div className="works-p_filters-cms-list is-bottom">
               <div className="works-p_filters-bottom">
                 <a
-                  {...{ "filter-option": "all-option" }}
+                  {...{ 'filter-option': 'all-option' }}
                   href="."
                   className="works-p_filters-cms-item-wrapper is-all is-bottom w-inline-block"
                 >
@@ -1449,7 +1241,7 @@ export default function WorksFeed(): JSX.Element {
                   <div className="works-p_filters-item-name is-number">(0)</div>
                 </a>
                 <a
-                  {...{ "filter-option": "web3-option" }}
+                  {...{ 'filter-option': 'web3-option' }}
                   href="."
                   className="works-p_filters-cms-item-wrapper is-web-3-0 is-bottom w-inline-block"
                 >
@@ -1457,7 +1249,7 @@ export default function WorksFeed(): JSX.Element {
                   <div className="works-p_filters-item-name is-number">(0)</div>
                 </a>
                 <a
-                  {...{ "filter-option": "saas-option" }}
+                  {...{ 'filter-option': 'saas-option' }}
                   href="."
                   className="works-p_filters-cms-item-wrapper is-saas is-bottom w-inline-block"
                 >
@@ -1465,7 +1257,7 @@ export default function WorksFeed(): JSX.Element {
                   <div className="works-p_filters-item-name is-number">(0)</div>
                 </a>
                 <a
-                  {...{ "filter-option": "fintech-option" }}
+                  {...{ 'filter-option': 'fintech-option' }}
                   href="."
                   className="works-p_filters-cms-item-wrapper is-fintech is-bottom w-inline-block"
                 >
@@ -1473,7 +1265,7 @@ export default function WorksFeed(): JSX.Element {
                   <div className="works-p_filters-item-name is-number">(0)</div>
                 </a>
                 <a
-                  {...{ "filter-option": "healthcare-option" }}
+                  {...{ 'filter-option': 'healthcare-option' }}
                   href="."
                   className="works-p_filters-cms-item-wrapper is-healthcare is-bottom w-inline-block"
                 >
@@ -1481,7 +1273,7 @@ export default function WorksFeed(): JSX.Element {
                   <div className="works-p_filters-item-name is-number">(0)</div>
                 </a>
                 <a
-                  {...{ "filter-option": "fd-option" }}
+                  {...{ 'filter-option': 'fd-option' }}
                   id="w-node-_21df89de-b751-30d0-c71d-ecf460afb9cc-c2bd02df"
                   href="."
                   className="works-p_filters-cms-item-wrapper is-food-delivery is-bottom w-inline-block"
@@ -1496,5 +1288,5 @@ export default function WorksFeed(): JSX.Element {
       </div>
       <div className="section-separator"></div>
     </section>
-  );
+  )
 }

@@ -142,9 +142,9 @@ export default function Market(): JSX.Element {
                     40+ successfully designed Angel/Seed startups
                   </h3>
                   <p className="about-p-market_card-text">
-                    â€œWe had a feeling that Abbble Co is not just a contract
+                    We had a feeling that Abbble Co is not just a contract
                     outsourcing team but part of our startup company. We had
-                    super close communication. â€
+                    super close communication.
                   </p>
                   <div className="about-p-market_card-author">
                     <img
@@ -246,7 +246,7 @@ export default function Market(): JSX.Element {
             >
               <div className="about-p-market_card is-5th">
                 <img
-                  src="/img/2d630e5e4c8f.webp"
+                  src="/img/team/team-circles.png"
                   loading="lazy"
                   sizes="100vw"
                   alt=""

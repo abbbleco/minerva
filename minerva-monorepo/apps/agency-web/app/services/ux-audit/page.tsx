@@ -8,7 +8,7 @@ import ProcessUxAudit from "../../sections/services/ProcessUxAudit";
 import MvpInvestorsUxAudit from "../../sections/services/MvpInvestorsUxAudit";
 import CasesUxAudit from "../../sections/services/CasesUxAudit";
 import CasesBannerUxAudit from "../../sections/services/CasesBannerUxAudit";
-import PageReviews from "../../sections/services/PageReviews";
+import Reviews from '../../sections/common/Reviews';
 import AwardsGraphicDesign from "../../sections/services/AwardsGraphicDesign";
 import ForYouPitchDeck from "../../sections/services/ForYouPitchDeck";
 import Partners from "../../sections/services/Partners";
@@ -42,7 +42,7 @@ export default function UxAuditPage() {
       <MvpInvestorsUxAudit />
       <CasesUxAudit />
       <CasesBannerUxAudit />
-      <PageReviews />
+      <Reviews />
       <AwardsGraphicDesign />
       <ForYouPitchDeck />
       <Partners />

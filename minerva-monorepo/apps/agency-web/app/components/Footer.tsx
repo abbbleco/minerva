@@ -107,7 +107,7 @@ export default function Footer(): JSX.Element {
                           <div className="footer_text is-faded is-link">Mobile Development</div>
                           <div className="footer_text is-faded is-link is-green">Mobile Development</div>
                         </div>
-                      </a><a href="https://case.abbble.co.za/services/devops" className="footer_link w-inline-block">
+                      </a><a href="/services/devops" className="footer_link w-inline-block">
                         <div className="footer_link-text">
                           <div className="footer_text is-faded is-link">DevOps</div>
                           <div className="footer_text is-faded is-link is-green">DevOps</div>

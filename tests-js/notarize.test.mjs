@@ -9,7 +9,7 @@ const missingTicket = () => Object.assign(new Error('CloudKit query for Minerva.
 
 function fixture() {
   const root = mkdtempSync(path.join(os.tmpdir(), 'hermes-notary-test-'))
-  mkdirSync(path.join(root, 'Hermes.app'))
+  mkdirSync(path.join(root, 'Minerva.app'))
   const key = path.join(root, 'api-key.p8')
   writeFileSync(key, 'test credential path only')
   return {

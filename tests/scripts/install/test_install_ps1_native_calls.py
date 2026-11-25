@@ -53,7 +53,7 @@ def _git(repo: Path, *args: str) -> str:
 
 
 def _stage(origin: Path, home: Path, *extra: str) -> tuple[subprocess.CompletedProcess, dict]:
-    env = dict(os.environ, HERMES_REPO_URL=str(origin), HERMES_HOME=str(home))
+    env = dict(os.environ, MINERVA_REPO_URL=str(origin), HERMES_HOME=str(home))
     result = subprocess.run([_powershell(), "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(INSTALLER),
                              "-Stage", "repository", "-Json", *extra],
                             env=env, capture_output=True, text=True, timeout=180)

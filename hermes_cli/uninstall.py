@@ -927,6 +927,10 @@ def _macos_cache_leftover_dirs() -> "list[Path]":
         caches / "com.nousresearch.hermes",
         caches / "hermes-setup",
         caches / "com.nousresearch.hermes.setup",
+        # Minerva rebrand (productName "Minerva Setup", id co.abbble.minerva.setup);
+        # legacy entries above stay so a full wipe also clears pre-rebrand caches.
+        caches / "Minerva Setup",
+        caches / "co.abbble.minerva.setup",
     ]
 
 

@@ -4232,11 +4232,13 @@ strong {
   margin-bottom: 1.6rem;
   font-weight: 500;
   line-height: 150%;
+  color: var(--global--white);
 }
 
 .solution-page_pros-card-text {
   font-size: var(--font--laptop--body-m);
   max-width: 495px;
+  color: var(--global--white);
 }
 
 .solution-page_pros-card-text.is-white {
@@ -5172,7 +5174,7 @@ strong {
 }
 
 .section-separator {
-  height: 14rem;
+  height: 10rem;
 }
 
 .section-separator.is-dark {
@@ -6711,7 +6713,7 @@ strong {
 }
 
 .services-page-create_card.is-last.is-unique {
-  color: var(--global--white);
+  color: var(--global--black-bg);
 }
 
 .services-page-create_card-top {
@@ -7337,7 +7339,7 @@ strong {
 
 .section_contact-hero {
   padding-top: 15.2rem;
-  padding-bottom: 14rem;
+  padding-bottom: 5rem;
   position: relative;
 }
 
@@ -8597,7 +8599,7 @@ strong {
 }
 
 .about-p-team_card.is-unique {
-  color: var(--global--text-black);
+  color: var(--global--white);
   border-top-left-radius: 0;
   height: auto;
 }
@@ -8896,7 +8898,8 @@ strong {
 .about-p-market_card-title.is-large {
   font-size: var(--font--laptop--h1);
   margin-bottom: 0;
-  font-weight: 500;
+  font-weight: 700;
+  color: var(--global--white);
   line-height: 150%;
 }
 
@@ -8929,7 +8932,8 @@ strong {
 
 .about-p-market_card-text.is-large {
   font-size: var(--font--laptop--h5);
-  font-weight: 500;
+  font-weight: 700;
+  color: var(--global--white);
   line-height: 150%;
 }
 
@@ -9075,6 +9079,7 @@ strong {
   font-size: var(--font--laptop--h5);
   margin-bottom: 1rem;
   font-weight: 500;
+  color: var(--global--white);
   line-height: 150%;
 }
 
@@ -9082,6 +9087,7 @@ strong {
   font-size: var(--font--laptop--body-m);
   font-weight: 500;
   line-height: 150%;
+  color: var(--global--white);
 }
 
 .about-p-values_image {
@@ -9889,7 +9895,7 @@ strong {
     #2c41fe99 74%,
     var(--transparent)
   );
-  padding-top: 8.8rem;
+  padding-top: 0;
   position: relative;
 }
 
@@ -17762,7 +17768,7 @@ strong {
 
   .section_contact-hero {
     padding-top: 17.6rem;
-    padding-bottom: 20rem;
+    padding-bottom: 10rem;
   }
 
   .contact-hero_form-wrapper {

@@ -26,7 +26,7 @@ function preparedPython() {
 function fixture() {
   const python = preparedPython()
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'mac-digest-order-'))
-  const app = path.join(root, 'Hermes.app')
+  const app = path.join(root, 'Minerva.app')
   const payload = path.join(app, 'Contents', 'Resources', 'agent-payload')
   const tools = path.join(payload, 'tools')
   const nested = path.join(tools, 'chromium', 'Browser.app')

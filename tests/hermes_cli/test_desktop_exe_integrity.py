@@ -1,6 +1,6 @@
 """Behavior tests for the Windows desktop-exe integrity gate (#69179).
 
-The desktop self-update chain (Desktop → hermes-setup --update →
+The desktop self-update chain (Desktop → minerva-setup --update →
 ``minerva update`` → ``minerva desktop --build-only`` → relaunch) rebuilds
 Hermes.exe on the end user's machine. Before this gate, "build succeeded" was
 just "the file exists", so a truncated PE (corrupt cached Electron zip), a
@@ -306,7 +306,7 @@ def _ns(**kw):
 @pytest.mark.platforms("windows")
 def test_build_only_fails_when_pack_produces_corrupt_exe(tmp_path, monkeypatch, capsys):
     """The updater chain's contract: a rebuild whose Minerva.exe cannot launch
-    must exit nonzero (so hermes-setup's retry-once kicks in) and must leave
+    must exit nonzero (so minerva-setup's retry-once kicks in) and must leave
     the previous working build in place instead of installing the corrupt one.
 
     Stage-and-swap (#86443): the pack lands in a staging dir; the integrity

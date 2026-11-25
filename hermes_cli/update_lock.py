@@ -26,7 +26,7 @@ UPDATE_MARKER_MAX_AGE_SECONDS = 20 * 60
 
 MARKER_NAME = ".hermes-update-in-progress"
 
-# Set by an orchestrating updater (Tauri `hermes-setup --update`) to its own pid before
+# Set by an orchestrating updater (Tauri `minerva-setup --update`) to its own pid before
 # spawning `minerva update` as a child stage; the parent holds the marker for its whole run,
 # so without this the child would refuse its own parent's lock. Keep in sync with
 # update_child_env in apps/bootstrap-installer/src-tauri/src/update.rs.

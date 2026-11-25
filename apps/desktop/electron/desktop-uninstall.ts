@@ -227,7 +227,7 @@ function modeRemovesUserData(mode: string) {
  * Resolve the on-disk app bundle/dir to remove for the running desktop app,
  * given the path to the running executable (`process.execPath`) and platform.
  *
- *   macOS:   …/Hermes.app/Contents/MacOS/Minerva  → …/Hermes.app
+ *   macOS:   …/Minerva.app/Contents/MacOS/Minerva  → …/Minerva.app
  *   Windows: …\Hermes\Hermes.exe                 → …\Minerva  (install dir)
  *   Linux:   AppImage → the APPIMAGE env path; unpacked → the *-unpacked dir
  *
@@ -247,10 +247,10 @@ function resolveRemovableAppPath(execPath, platform, env: any = {}) {
   const p = platform === 'win32' ? path.win32 : path.posix
 
   if (platform === 'darwin') {
-    // …/Hermes.app/Contents/MacOS/Minerva → strip 3 segments to the .app
+    // …/Minerva.app/Contents/MacOS/Minerva → strip 3 segments to the .app
     const macOsDir = p.dirname(exe) // …/Contents/MacOS
     const contents = p.dirname(macOsDir) // …/Contents
-    const appBundle = p.dirname(contents) // …/Hermes.app
+    const appBundle = p.dirname(contents) // …/Minerva.app
 
     if (appBundle.endsWith('.app')) {
       return appBundle

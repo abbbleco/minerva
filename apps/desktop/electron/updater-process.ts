@@ -195,7 +195,7 @@ export interface UpdateScriptHandoff {
 /**
  * Repo-owned Windows update hand-off (frozen-binary escape hatch).
  *
- * The staged Tauri `hermes-setup.exe` has no self-update path, so every
+ * The staged Tauri `minerva-setup.exe` has no self-update path, so every
  * updater-side fix only reaches users when a new binary is built, signed and
  * published — which historically lags main by months and strands users on
  * long-fixed bugs (cache resolver #67369, marker self-adopt #74782; the
@@ -410,10 +410,12 @@ function stagedFileMtimeMs(candidate: string): number | null {
  * Decide which staged installer binary — if any — may be handed an update.
  *
  * The Tauri installer self-copies into HERMES_HOME on *every* platform
- * (`hermes-setup.exe` on Windows, `hermes-setup` elsewhere — see
+ * (`minerva-setup.exe` on Windows, `minerva-setup` elsewhere — see
  * apps/bootstrap-installer `paths::installer_dest` and
  * `bootstrap::copy_self_to_hermes_home`), so finding that binary on macOS or
- * Linux is expected, not leftover junk.
+ * Linux is expected, not leftover junk. Installs predating the Minerva rebrand
+ * staged `hermes-setup.exe` instead; the resolver probes the new name first
+ * and falls back to the legacy one so those installs keep updating.
  *
  * Handing an update to it is nonetheless a Windows-only policy. Windows needs
  * the quit -> hand-off -> rebuild dance because a venv shim file lock keeps the
@@ -440,9 +442,14 @@ export function resolveStagedUpdaterBinary(
   }
 
   const fileExists = deps.fileExists ?? stagedFileExists
-  const candidate = path.join(hermesHome, 'hermes-setup.exe')
+  for (const name of ['minerva-setup.exe', 'hermes-setup.exe']) {
+    const candidate = path.join(hermesHome, name)
+    if (fileExists(candidate)) {
+      return candidate
+    }
+  }
 
-  return fileExists(candidate) ? candidate : null
+  return null
 }
 
 /**

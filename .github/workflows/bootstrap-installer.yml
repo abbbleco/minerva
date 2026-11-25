@@ -74,7 +74,7 @@ jobs:
           HERMES_INSTALL_DIR: ${{ runner.temp }}/bootstrap-install
           HERMES_HOME: ${{ runner.temp }}/hermes-home
           HERMES_RUNTIME_DIR: ${{ runner.temp }}/hermes-tools
-          HERMES_REPO_URL: ${{ steps.source.outputs.mirror }}
+          MINERVA_REPO_URL: ${{ steps.source.outputs.mirror }}
         run: |
           set -euo pipefail
           sha="${{ steps.source.outputs.sha }}"

@@ -17,7 +17,7 @@ const PLATFORM = process.platform
 // shell and the PM payload under resources/agent-payload.
 const APP = (() => {
   if (PLATFORM === 'darwin') {
-    const appPath = path.join(RELEASE_ROOT, `mac-${ARCH}`, 'Hermes.app')
+    const appPath = path.join(RELEASE_ROOT, `mac-${ARCH}`, 'Minerva.app')
     return {
       appPath,
       binary: path.join(appPath, 'Contents', 'MacOS', 'Minerva'),

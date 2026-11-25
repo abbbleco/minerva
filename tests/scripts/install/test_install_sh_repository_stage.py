@@ -44,7 +44,7 @@ def _run(tmp_path: Path, body: str, *, env: dict | None = None, **kwargs) -> sub
 
 def _stage(tmp_path: Path, origin: Path, *, commit: str = "", extra_env: dict | None = None,
            prelude: str = "") -> subprocess.CompletedProcess:
-    env = {"HERMES_REPO_URL": origin.as_posix(), **(extra_env or {})}
+    env = {"MINERVA_REPO_URL": origin.as_posix(), **(extra_env or {})}
     return _run(tmp_path, f"{prelude}\nINSTALL_COMMIT={shlex.quote(commit)}\nstage_repository", env=env)
 
 

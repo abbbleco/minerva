@@ -1,5 +1,5 @@
 {
-  "name": "@hermes/bootstrap-installer",
+  "name": "@minerva/bootstrap-installer",
   "private": true,
   "version": "0.0.0",
   "description": "Minerva Setup — signed installer that drives scripts/install.ps1 with a polished native UI.",

@@ -65,7 +65,7 @@ if [[ ! "$SHA" =~ ^[0-9a-f]{40}$ ]]; then
   exit 1
 fi
 
-curl -fsSL "https://raw.githubusercontent.com/$REPO_ID/$SHA/scripts/install.sh" | HERMES_REPO_URL="https://github.com/$REPO_ID.git" bash
+curl -fsSL "https://raw.githubusercontent.com/$REPO_ID/$SHA/scripts/install.sh" | MINERVA_REPO_URL="https://github.com/$REPO_ID.git" bash
 ```
 
 windows, in powershell
@@ -74,6 +74,6 @@ windows, in powershell
 $repo_id = "abbbleco/minerva"
 $sha = (irm "https://api.github.com/repos/$repo_id/commits/main" -Headers @{ "User-Agent" = "ps-installer" }).sha
 $scriptUrl = "https://raw.githubusercontent.com/$repo_id/$sha/scripts/install.ps1"
-$env:HERMES_REPO_URL = "https://github.com/$repo_id.git"
+$env:MINERVA_REPO_URL = "https://github.com/$repo_id.git"
 & ([scriptblock]::Create((irm $scriptUrl)))
 ```

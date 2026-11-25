@@ -773,7 +773,7 @@ with Minerva' stable signing identities it survives every update:
 
 1. System Settings → **Privacy & Security → Full Disk Access** (or run
    `open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"`)
-2. Enable your terminal app — and **Hermes.app** if you use Desktop.
+2. Enable your terminal app — and **Minerva.app** if you use Desktop.
 3. Fully quit and relaunch them once.
 
 `minerva doctor` reports whether the current terminal context already has the

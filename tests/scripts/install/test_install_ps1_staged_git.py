@@ -31,7 +31,7 @@ def test_stage_processes_restore_pinned_git_and_never_fall_back(tmp_path):
     home = tmp_path / "home"
     store = tmp_path / "tools"
     env = dict(os.environ, HERMES_HOME=str(home), HERMES_RUNTIME_DIR=str(store),
-               HERMES_REPO_URL=str(origin))
+               MINERVA_REPO_URL=str(origin))
 
     def stage(name):
         result = subprocess.run([powershell, "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass",

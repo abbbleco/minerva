@@ -1,34 +1,36 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
-import HeroUiUxDesign from "../../sections/services/HeroUiUxDesign";
-import ReviewUiUxDesign from "../../sections/services/ReviewUiUxDesign";
-import DiscoverUiUxDesign from "../../sections/services/DiscoverUiUxDesign";
-import ProcessUiUxDesign from "../../sections/services/ProcessUiUxDesign";
-import AwardsMobileDesign from "../../sections/services/AwardsMobileDesign";
-import MvpInvestorsUiUxDesign from "../../sections/services/MvpInvestorsUiUxDesign";
-import CasesUiUxDesign from "../../sections/services/CasesUiUxDesign";
-import CasesBannerUiUxDesign from "../../sections/services/CasesBannerUiUxDesign";
-import PageReviews from "../../sections/services/PageReviews";
-import ForYouUiUxDesign from "../../sections/services/ForYouUiUxDesign";
-import Partners from "../../sections/services/Partners";
-import QualityGraphicDesign from "../../sections/services/QualityGraphicDesign";
-import TeamPitchDeck from "../../sections/services/TeamPitchDeck";
-import FaqUiUxDesign from "../../sections/services/FaqUiUxDesign";
-import MatchUiUxDesign from "../../sections/services/MatchUiUxDesign";
-import { ServicesScripts } from "../../components/ServicesScripts";
+import HeroUiUxDesign from '../../sections/services/HeroUiUxDesign'
+import ReviewUiUxDesign from '../../sections/services/ReviewUiUxDesign'
+import DiscoverUiUxDesign from '../../sections/services/DiscoverUiUxDesign'
+import ProcessUiUxDesign from '../../sections/services/ProcessUiUxDesign'
+import AwardsMobileDesign from '../../sections/services/AwardsMobileDesign'
+import MvpInvestorsUiUxDesign from '../../sections/services/MvpInvestorsUiUxDesign'
+import CasesUiUxDesign from '../../sections/services/CasesUiUxDesign'
+import CasesBannerUiUxDesign from '../../sections/services/CasesBannerUiUxDesign'
+import Reviews from '../../sections/common/Reviews'
+import ForYouUiUxDesign from '../../sections/services/ForYouUiUxDesign'
+import Partners from '../../sections/services/Partners'
+import QualityGraphicDesign from '../../sections/services/QualityGraphicDesign'
+import TeamPitchDeck from '../../sections/services/TeamPitchDeck'
+import FaqUiUxDesign from '../../sections/services/FaqUiUxDesign'
+import MatchUiUxDesign from '../../sections/services/MatchUiUxDesign'
+import { ServicesScripts } from '../../components/ServicesScripts'
 
 export const metadata: Metadata = {
-  title: "UI/UX Design Services, User Experience Design Agency | Abbble Co",
-  description: "UI/UX Design Services Company Abbble Co provides best UI/UX Design products. Create new UI &amp; UX design services or improve existing products with Abbble Co.",
-  alternates: { canonical: "/services/ui-ux-design" },
+  title: 'UI/UX Design Services, User Experience Design Agency | Abbble Co',
+  description:
+    'UI/UX Design Services Company Abbble Co provides best UI/UX Design products. Create new UI &amp; UX design services or improve existing products with Abbble Co.',
+  alternates: { canonical: '/services/ui-ux-design' },
   openGraph: {
-    title: "UI/UX Design Services, User Experience Design Agency | Abbble Co",
-    description: "UI/UX Design Services Company Abbble Co provides best UI/UX Design products. Create new UI &amp; UX design services or improve existing products with Abbble Co.",
-    url: `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://abbble.co.za"}/services/ui-ux-design`,
-    siteName: "Abbble Co",
-    type: "website",
-  },
-};
+    title: 'UI/UX Design Services, User Experience Design Agency | Abbble Co',
+    description:
+      'UI/UX Design Services Company Abbble Co provides best UI/UX Design products. Create new UI &amp; UX design services or improve existing products with Abbble Co.',
+    url: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://abbble.co.za'}/services/ui-ux-design`,
+    siteName: 'Abbble Co',
+    type: 'website'
+  }
+}
 
 export default function UiUxDesignPage() {
   return (
@@ -41,7 +43,7 @@ export default function UiUxDesignPage() {
       <MvpInvestorsUiUxDesign />
       <CasesUiUxDesign />
       <CasesBannerUiUxDesign />
-      <PageReviews />
+      <Reviews />
       <ForYouUiUxDesign />
       <Partners />
       <QualityGraphicDesign />
@@ -50,5 +52,5 @@ export default function UiUxDesignPage() {
       <MatchUiUxDesign />
       <ServicesScripts />
     </div>
-  );
+  )
 }

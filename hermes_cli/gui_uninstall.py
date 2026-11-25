@@ -45,7 +45,7 @@ def source_built_gui_artifacts(hermes_home: Path) -> "list[Path]":
 
 
 def desktop_install_record() -> Path:
-    """Where ``minerva update`` records the installed ``Hermes.app`` copies it keeps current. The apps
+    """Where ``minerva update`` records the installed ``Minerva.app`` copies it keeps current. The apps
     are machine-wide, so the record sits under the default root whichever profile runs; deleting it
     is what stops an uninstalled app from being put back by the next update."""
     from hermes_constants import get_default_hermes_root  # noqa: PLC0415
@@ -58,7 +58,7 @@ def packaged_gui_app_paths() -> "list[Path]":
     electron-builder output locations for the "Hermes" product."""
     home = Path.home()
     if sys.platform == "darwin":
-        return [Path("/Applications/Hermes.app"), home / "Applications" / "Hermes.app"]
+        return [Path("/Applications/Minerva.app"), home / "Applications" / "Minerva.app"]
     if sys.platform == "win32":
         local_base = _env_dir("LOCALAPPDATA", home / "AppData" / "Local")
         # NSIS per-user install (perMachine=false), an older/alternate layout, NSIS per-machine (needs admin).

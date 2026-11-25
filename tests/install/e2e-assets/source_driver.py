@@ -18,7 +18,7 @@ def desktop_outputs(root: Path) -> list[Path]:
     desktop = root / "apps/desktop"
     return [path for pattern in (
         "release/*/resources/app.asar.unpacked/dist",
-        "release/mac*/Hermes.app/Contents/Resources/app.asar.unpacked/dist",
+        "release/mac*/Minerva.app/Contents/Resources/app.asar.unpacked/dist",
     ) for path in desktop.glob(pattern)]
 
 
@@ -33,7 +33,7 @@ def verify_products(root: Path, desktop: str, node: Path | None = None) -> None:
             raise RuntimeError("desktop packaged renderer is missing or incomplete")
         executables = [path for pattern in (
             "release/*/Hermes.exe", "release/*/Hermes", "release/*/hermes",
-            "release/mac*/Hermes.app/Contents/MacOS/Hermes",
+            "release/mac*/Minerva.app/Contents/MacOS/Hermes",
         ) for path in app.glob(pattern) if path.is_file() and path.stat().st_size]
         if not executables:
             raise RuntimeError("desktop executable is missing or empty")

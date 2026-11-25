@@ -2101,3 +2101,77 @@ them).
 Verify: js-yaml parses the workflow (33 jobs); `git diff` → the two
 `if:` lines + comment only. Uncommitted; push and re-run.
 
+# Session 48 — Minerva-Setup.exe bootstrap rebrand (2026-10-13)
+
+Why: the bundled MSIX is ~1.9 GB because `HERMES_DESKTOP_VARIANT=bundled`
+embeds the whole agent payload (`build/agent-payload`: Python 3.14 + all
+extras + Node/Chromium) via `extraResources` in
+`apps/desktop/electron-builder.config.cjs`. That is by design for an
+offline self-contained package — it cannot slim down without dropping the
+payload. The small-footprint answer is the Tauri bootstrap installer
+(`apps/bootstrap-installer`, ~5–10 MB, LTO/size-opt/stripped release
+profile), which provisions a source install at runtime via
+install.ps1/install.sh. It existed but was still branded `Hermes-Setup.exe`
+and pointed at upstream. This session rebrands it to `Minerva-Setup.exe`.
+
+Renamed identity/origin (old → new):
+- `[[bin]] Hermes-Setup` → `Minerva-Setup` (`src-tauri/Cargo.toml`;
+  package `hermes-bootstrap` → `minerva-bootstrap`, lib
+  `hermes_bootstrap_lib` → `minerva_bootstrap_lib` + `src/main.rs`;
+  author mail → `hello@abbble.co.za`).
+- `tauri.conf.json`: productName `Hermes` → `Minerva Setup`, identifier
+  `com.nousresearch.hermes.setup` → `co.abbble.minerva.setup`, window
+  title + shortDescription. `index.html` title, npm scope
+  `@hermes/bootstrap-installer` → `@minerva/bootstrap-installer`
+  (+ `package-lock.json` workspace/link entries), mac manifest
+  `hermes-setup.manifest` → `minerva-setup.manifest` (assembly
+  `NousResearch.Hermes.Setup` → `Abbble.Minerva.Setup`).
+- Download origin: `install_script.rs` fetched install.ps1/sh from
+  `NousResearch/hermes-agent` (upstream product!) → `abbbleco/minerva`,
+  matching the desktop's own `bootstrap-runner.ts`; UA
+  `hermes-setup/0.0.1` → `minerva-setup/0.0.1`.
+- Staged updater binary (`installer_dest()`): `hermes-setup(.exe)` →
+  `minerva-setup(.exe)`; desktop `resolveStagedUpdaterBinary` probes the
+  new name first with legacy fallback so pre-rebrand installs keep
+  updating. New vitest cases: preference + fallback.
+- Desktop-app discovery was stale for the whole fork (resolvers probed
+  only `Hermes.exe`/`Hermes.app`/`hermes` while `product-identity.cjs`
+  emits Minerva names and E2E already waits for `Minerva.exe`/
+  `Minerva.app`): Rust `resolve_hermes_desktop_exe`, Python
+  `_desktop_packaged_executable_in`, and the mac asar lock-probe paths
+  now probe Minerva names first with Hermes fallback (additive; old
+  trees still resolve). New Rust test `..._finds_minerva_build`.
+- macOS uninstall sweep keeps legacy `~/Library/Caches` ids and adds
+  `Minerva Setup` + `co.abbble.minerva.setup`.
+- Workflows: `bootstrap-installer-build.yml` builds/signs/uploads
+  `Minerva-Setup.exe`/`.dmg`; `stable-release.yml` Cargo jq selects
+  `minerva-bootstrap`; install-E2E defaults →
+  `https://minerva-assets.abbble.co.za/Minerva-Setup.(exe|dmg)`;
+  docs/tests/AHK/comments updated (`rust-tests.yml`,
+  `classify_changes.py`, install guides + zh-Hans, `main.py`,
+  `main_desktop.py`, `update_cmd_windows.py`, `update_lock.py`,
+  `backend-probes.ts`, `checkout.ts`, `update-marker.ts`,
+  `windows.ps1`, `updater-process.test.ts`, dmg/e2e drivers,
+  entitlements test message).
+
+Deliberately not changed: MSIX bundled target (still the offline
+self-contained package); `install.ps1`/`install.sh` default clone URL
+(still upstream — fork-wide origin decision, `HERMES_REPO_URL` override
+exists; E2E always passes it); ACP `hermes-setup` setup-profile id,
+Docker `01-hermes-setup` hook, `setup-hermes.ps1` (different features);
+installed-app discovery (`/Applications/Hermes.app`,
+`gui_uninstall.py`, `doctor_platform.py` — needs a product decision on
+old/new coexistence); historical comments naming old builds.
+New bundle id means Gatekeeper treats Minerva-Setup as a new app
+(one-time approval) and mac caches start fresh.
+
+Verify: vitest `updater-process.test.ts` 30/30 (incl. 2 new),
+`desktop-mac-entitlements` 4/4, `tsc -p tsconfig.electron.json`
+clean; live `_desktop_packaged_executable_in` probe (empty→None,
+legacy→Hermes.exe, new→Minerva.exe); `py_compile` on all touched
+Python; PS Parser 0 errors on edited ps1; JSON parses
+(tauri/package/package-lock); no `cargo`/`pytest`/`bash` on this box
+so Rust unit tests + full Python suite ride CI (`rust-tests.yml`,
+`bootstrap-installer.yml`). windows-e2e.ps1 kept LF/no-BOM.
+Uncommitted.
+

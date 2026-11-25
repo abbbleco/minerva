@@ -319,7 +319,7 @@ def test_venv_layout_explicit_and_native(tmp_path, windows, folder, executable):
 def test_installed_app_without_a_checkout_build_is_still_rebuilt(zip_update, monkeypatch, tmp_path, mechanism, rebuilt):
     """#52339: an installed Minerva.app only ``minerva update`` refreshes needs a Desktop build even
     when release/ is gone, or it never gets newer. A self-updating release is not ours to rebuild."""
-    installed = tmp_path / "Applications" / "Hermes.app"
+    installed = tmp_path / "Applications" / "Minerva.app"
     (installed / "Contents" / "Resources").mkdir(parents=True)
     (installed / "Contents" / "Resources" / "install-stamp.json").write_text(
         json.dumps({"updateMechanism": mechanism}), encoding="utf-8")

@@ -10,7 +10,7 @@ import ForYouSaas from "../../sections/industries/ForYouSaas";
 import IApproachSaas from "../../sections/industries/IApproachSaas";
 import PartnersSaas from "../../sections/industries/PartnersSaas";
 import QualitySaas from "../../sections/industries/QualitySaas";
-import PageReviewsSaas from "../../sections/industries/PageReviewsSaas";
+import Reviews from '../../sections/common/Reviews';
 import IndustryNichesSaas from "../../sections/industries/IndustryNichesSaas";
 import FaqSaas from "../../sections/industries/FaqSaas";
 import MatchSaas from "../../sections/industries/MatchSaas";
@@ -42,7 +42,7 @@ export default function SaasPage() {
       <IApproachSaas />
       <PartnersSaas />
       <QualitySaas />
-      <PageReviewsSaas />
+      <Reviews />
       <IndustryNichesSaas />
       <FaqSaas />
       <MatchSaas />
