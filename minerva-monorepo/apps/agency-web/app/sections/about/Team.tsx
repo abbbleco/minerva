@@ -10,14 +10,14 @@ export default function Team(): JSX.Element {
         <div className="about-p-start_team">
           <div className="about-p-team_image-wrapper">
             <img
-              src="/img/team-about.png"
+              src="/img/team/team.jpg"
               loading="eager"
               sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
               alt="Abbble Co team"
               className="about-p-team_image"
             />
             <img
-              src="/img/team-about.png"
+              src="/img/team/team.jpg"
               loading="eager"
               sizes="(max-width: 686px) 100vw, 686px"
               alt="Abbble Co team"
@@ -247,7 +247,7 @@ export default function Team(): JSX.Element {
                     <div className="about-p-team_card-bio">Head of Design</div>
                   </div>
                   <img
-                    src="/img/sandile.png"
+                    src="/img/sandile-removebg-preview.png"
                     loading="eager"
                     sizes="(max-width: 537px) 100vw, 537px"
                     alt="Diana"
@@ -298,7 +298,7 @@ export default function Team(): JSX.Element {
                     <div className="about-p-team_card-bio">Bizdev Manager</div>
                   </div>
                   <img
-                    src="/img/0d2d05468905.png"
+                    src="/img/sihle-removebg-preview.png"
                     loading="eager"
                     alt=""
                     className="about-p-team_card-image is-eugene"
@@ -391,7 +391,7 @@ export default function Team(): JSX.Element {
                     <div className="about-p-team_card-bio">Director</div>
                   </div>
                   <img
-                    src="/img/IMG_6882.jpeg"
+                    src="/img/nokulunga_comp-removebg-preview.png"
                     loading="eager"
                     alt="Olesya"
                     className="about-p-team_card-image is-olesya"
@@ -437,7 +437,7 @@ export default function Team(): JSX.Element {
                     <div className="about-p-team_card-bio">Customer Support</div>
                   </div>
                   <img
-                    src="/img/hleng.jpg"
+                    src="/img/hlengiwe-removebg-preview.png"
                     loading="eager"
                     alt="Tina"
                     className="about-p-team_card-image is-tina"
@@ -483,7 +483,7 @@ export default function Team(): JSX.Element {
                     <div className="about-p-team_card-bio">Graphic Design</div>
                   </div>
                   <img
-                    src="/img/c8a67b6fe692.webp"
+                    src="/img/trevor_compressed-removebg-preview.png"
                     loading="eager"
                     alt="Roman"
                     className="about-p-team_card-image is-roman"
