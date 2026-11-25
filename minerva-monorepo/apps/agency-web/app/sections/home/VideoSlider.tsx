@@ -179,7 +179,7 @@ export default function VideoSlider(): JSX.Element {
                         <div className="vs-slide_info-top">
                           <div className="vs-slide_author">
                             <img
-                              src="img\tsela_nawe_chairperson.JPG"
+                              src="\img\tsela_nawe_chairperson.JPG"
                               loading="lazy"
                               alt="Themba Fakudze"
                               className="vs-slide_author-image"
@@ -346,7 +346,7 @@ export default function VideoSlider(): JSX.Element {
                         <div className="vs-slide_info-top">
                           <div className="vs-slide_author">
                             <img
-                              src="img\tsela_nawe_chairperson.JPG"
+                              src="\img\tsela_nawe_chairperson.JPG"
                               loading="lazy"
                               alt="Themba Fakudze"
                               className="vs-slide_author-image"

@@ -10,7 +10,7 @@ export default function Footer(): JSX.Element {
         <div className="w-layout-blockcontainer container is-relative w-container">
           <div className="footer_main">
             <div className="footer_top">
-              <div className="footer_top-brand"><Link href="/" aria-current="page" className="footer_top-brand-logo w-inline-block w--current"><img src="img\logo.svg" loading="lazy" alt="Abbble Co" className="footer_logo" /></Link>
+              <div className="footer_top-brand"><Link href="/" aria-current="page" className="footer_top-brand-logo w-inline-block w--current"><img src="\img\logo.svg" loading="lazy" alt="Abbble Co" className="footer_logo" /></Link>
                 <div className="footer_company-location">
                   <div className="footer_content-label">Offices</div>
                   <p className="footer_text is-faded">South Africa, Midrand<br />22 Magwa Crescent

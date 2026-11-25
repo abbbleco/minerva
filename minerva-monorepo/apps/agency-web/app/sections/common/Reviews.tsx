@@ -472,7 +472,7 @@ export default function Reviews(): JSX.Element {
                       <img
                         loading="lazy"
                         alt="Oheneba Kumiprempehgh"
-                        src="img\reviews\oheneba.jpeg"
+                        src="/img/reviews/oheneba.jpeg"
                         className="services-page-review_card-author-image"
                       />
                       <div className="services-page-review_card-author">
@@ -585,7 +585,7 @@ export default function Reviews(): JSX.Element {
                       <img
                         loading="lazy"
                         alt="Themba Fakudze"
-                        src="img\reviews\tsela_nawe_chairperson.JPG"
+                        src="\img\reviews\tsela_nawe_chairperson.JPG"
                         className="services-page-review_card-author-image"
                       />
                       <div className="services-page-review_card-author">
@@ -698,7 +698,7 @@ export default function Reviews(): JSX.Element {
                       <img
                         loading="lazy"
                         alt="Moses Yangnemenga"
-                        src="img\reviews\moses.jpg"
+                        src="\img\reviews\moses.jpg"
                         className="services-page-review_card-author-image"
                       />
                       <div className="services-page-review_card-author">
@@ -811,7 +811,7 @@ export default function Reviews(): JSX.Element {
                       <img
                         loading="lazy"
                         alt="Amara Rossi"
-                        src="img\reviews\amara_rossi.PNG"
+                        src="\img\reviews\amara_rossi.PNG"
                         className="services-page-review_card-author-image"
                       />
                       <div className="services-page-review_card-author">
@@ -924,7 +924,7 @@ export default function Reviews(): JSX.Element {
                       <img
                         loading="lazy"
                         alt="Hennsion Marx"
-                        src="img\reviews\hennsion.PNG"
+                        src="\img\reviews\hennsion.PNG"
                         className="services-page-review_card-author-image"
                       />
                       <div className="services-page-review_card-author">
@@ -1044,7 +1044,7 @@ export default function Reviews(): JSX.Element {
                       <img
                         loading="lazy"
                         alt="Oheneba Kumiprempehgh"
-                        src="img\reviews\oheneba.jpeg"
+                        src="\img\reviews\oheneba.jpeg"
                         className="services-page-review_card-author-image"
                       />
                       <div className="services-page-review_card-author">
@@ -1162,7 +1162,7 @@ export default function Reviews(): JSX.Element {
                       <img
                         loading="lazy"
                         alt="Themba Fakudze"
-                        src="img\reviews\tsela_nawe_chairperson.JPG"
+                        src="\img\reviews\tsela_nawe_chairperson.JPG"
                         className="services-page-review_card-author-image"
                       />
                       <div className="services-page-review_card-author">
@@ -1273,7 +1273,7 @@ export default function Reviews(): JSX.Element {
                       <img
                         loading="lazy"
                         alt="Moses Yangnemenga"
-                        src="img\reviews\moses.jpg"
+                        src="\img\reviews\moses.jpg"
                         className="services-page-review_card-author-image"
                       />
                       <div className="services-page-review_card-author">
@@ -1383,7 +1383,7 @@ export default function Reviews(): JSX.Element {
                       <img
                         loading="lazy"
                         alt="Amara Rossi"
-                        src="img\reviews\amara_rossi.PNG"
+                        src="\img\reviews\amara_rossi.PNG"
                         className="services-page-review_card-author-image"
                       />
                       <div className="services-page-review_card-author">
@@ -1494,7 +1494,7 @@ export default function Reviews(): JSX.Element {
                       <img
                         loading="lazy"
                         alt="Hennsion Marx"
-                        src="img\reviews\hennsion.PNG"
+                        src="\img\reviews\hennsion.PNG"
                         className="services-page-review_card-author-image"
                       />
                       <div className="services-page-review_card-author">

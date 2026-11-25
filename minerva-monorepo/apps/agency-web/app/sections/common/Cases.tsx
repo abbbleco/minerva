@@ -93,7 +93,7 @@ export default function Cases(): JSX.Element {
               <div className="solution-page_case-card players-health-case">
                 <div className="solution-page_case-card-text-block-1024">
                   <img
-                    src="img\brands\lamatfull_logo_sq.png"
+                    src="\img\brands\lamatfull_logo_sq.png"
                     loading="lazy"
                     alt="Players Health"
                     className="solution-page_case-card-logo is-small"
@@ -104,7 +104,7 @@ export default function Cases(): JSX.Element {
                     in $34M funding raised.
                   </p>
                   <img
-                    src="img\LAMATNEW-modified.png"
+                    src="\img\LAMATNEW-modified.png"
                     loading="lazy"
                     sizes="100vw"
                     alt="Players Health"
@@ -132,7 +132,7 @@ export default function Cases(): JSX.Element {
               </div>
             </div>
             <img
-              src="img\LAMATNEW.png"
+              src="\img\LAMATNEW.png"
               loading="lazy"
               sizes="(max-width: 1068px) 100vw, 1068px"
               alt="Players Health"
@@ -146,7 +146,7 @@ export default function Cases(): JSX.Element {
                 <div className="solution-page_case-card-text-block-1024">
                   <div className="solution-page_case-card-logo-with-text">
                     <img
-                      src="img\brands\bangarooplaystore.png"
+                      src="\img\brands\bangarooplaystore.png"
                       loading="lazy"
                       alt="MYSO"
                       className="solution-page_case-card-logo"
@@ -159,7 +159,7 @@ export default function Cases(): JSX.Element {
                     (Instagram-style Reels) into one stunning, high-performance package.
                   </p>
                   <img
-                    src="img\4.png"
+                    src="\img\4.png"
                     loading="lazy"
                     sizes="100vw"
                     alt="MYSO"
@@ -187,7 +187,7 @@ export default function Cases(): JSX.Element {
               </div>
             </div>
             <img
-              src="img\Bangaroo-inline-thumb.png"
+              src="\img\Bangaroo-inline-thumb.png"
               loading="lazy"
               sizes="(max-width: 1080px) 100vw, 1080px"
               alt="MYSO"
